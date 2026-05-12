@@ -1,0 +1,56 @@
+/* App-local styles. Mesh chrome (settings drawer, self-ref bar) is provided by
+ * @baditaflorin/mesh-common/styles.css imported in main.tsx. */
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: var(--mesh-bg);
+  color: var(--mesh-fg);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.feature-placeholder {
+  padding: 6rem 1.5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feature-placeholder h1 {
+  font-size: 1.6rem;
+  margin: 0;
+  color: var(--mesh-accent);
+}
+
+.feature-placeholder p {
+  max-width: 32rem;
+  margin: 0;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.feature-status {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}

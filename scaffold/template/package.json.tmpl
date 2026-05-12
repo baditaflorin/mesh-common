@@ -1,0 +1,44 @@
+{
+  "name": "__APP_NAME__",
+  "version": "0.1.0",
+  "description": "__DESCRIPTION__",
+  "type": "module",
+  "private": false,
+  "homepage": "https://baditaflorin.github.io/__APP_NAME__/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baditaflorin/__APP_NAME__.git"
+  },
+  "bugs": {
+    "url": "https://github.com/baditaflorin/__APP_NAME__/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "bash scripts/build-pages.sh",
+    "preview": "vite preview --host 0.0.0.0",
+    "pages-preview": "vite preview --host 0.0.0.0 --port 4174",
+    "smoke": "bash scripts/smoke.sh",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json"
+  },
+  "dependencies": {
+    "@baditaflorin/mesh-common": "file:../mesh-common",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "y-webrtc": "^10.3.0",
+    "yjs": "^13.6.27"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.6",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3",
+    "vite": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
