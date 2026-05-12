@@ -59,6 +59,52 @@ gh api -X POST repos/baditaflorin/mesh-when2meet/pages \
   -f 'source[branch]=main' -f 'source[path]=/docs'
 ```
 
+## Testing — CPU only
+
+Build once (GPU), run many times (CPU). Three test layers, all in the scaffold so every new app inherits them.
+
+| Layer | Tool | What it covers | Cost per run |
+|---|---|---|---|
+| Unit / pure logic | Vitest | `commitReveal`, `clockSync`, `combineSalts`, component renders with `createMockRoom` | <1 s |
+| Smoke (e2e) | Playwright + Chromium | Page loads, settings drawer opens, source/tip/version visible, no console errors | ~3 s |
+| Multi-peer (e2e) | Playwright | Two pages in the same browser context sync via y-webrtc's BroadcastChannel fallback — **no signaling server, no network** | ~3 s |
+
+```bash
+npm install
+npm run test:unit                          # 200-700 ms, runs everywhere
+npx playwright install chromium            # one-time, ~120 MB, cached globally
+npm run test:e2e                           # 3-5 s per app
+```
+
+### Cross-repo orchestration
+
+```bash
+# Run a command in every sibling mesh-* dir.
+./mesh-common/scripts/across.sh npm run test:unit
+./mesh-common/scripts/across.sh --parallel npm run smoke
+
+# Aggregate Playwright JSON results from every repo into one summary.
+./mesh-common/scripts/across.sh npm run test:e2e
+./mesh-common/scripts/judge.sh   # → /tmp/mesh-judge/summary.json + markdown table
+```
+
+The `judge.sh` output is structured JSON an LLM can ingest in one short prompt — that's the "let CPU run tests, let LLM judge when something looks off" pattern. Re-running tests is free; only the judging step costs GPU tokens.
+
+### Adding tests to an existing app
+
+```bash
+cd mesh-foo
+bash ../mesh-common/scripts/install-tests-into-app.sh
+npm install
+npm test
+```
+
+Idempotent — re-running just refreshes the generic test files and merges any missing devDeps / scripts.
+
+### Per-app feature tests
+
+The scaffold provides two generic tests that work without modification (`smoke.spec.ts` and `mesh.spec.ts`). Apps that want richer assertions add a `tests/e2e/feature.spec.ts` with app-specific multi-peer logic. See `mesh-when2meet/tests/e2e/feature.spec.ts` for the canonical pattern: open two peers, do something on page A, assert the effect on page B.
+
 ## No GitHub Actions
 
 The `baditaflorin` GitHub account has an Actions billing lock. CI is **local Husky-style hooks** instead:

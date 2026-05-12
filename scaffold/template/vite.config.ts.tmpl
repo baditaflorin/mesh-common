@@ -13,6 +13,11 @@ export default defineConfig(({ mode }) => {
       __APP_VERSION__: JSON.stringify(version),
       __GIT_COMMIT__: JSON.stringify(commit.slice(0, 12)),
     },
+    // file:../mesh-common can resolve React/Yjs from its own node_modules,
+    // creating duplicate instances. Dedupe forces the app's copy to win.
+    resolve: {
+      dedupe: ["react", "react-dom", "yjs", "y-webrtc"],
+    },
     build: {
       outDir: "docs",
       emptyOutDir: false,

@@ -97,6 +97,9 @@ npm install --silent
 echo "==> initial build"
 npm run build >/dev/null
 
+echo "==> format"
+npm run fmt --silent >/dev/null
+
 echo "==> git init + first commit"
 git init -q
 git config core.hooksPath .githooks

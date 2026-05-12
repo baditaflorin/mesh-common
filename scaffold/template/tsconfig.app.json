@@ -18,7 +18,7 @@
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    "types": ["vite/client", "node"]
+    "types": ["vite/client", "node", "vitest/globals"]
   },
-  "include": ["src", "../mesh-common/src"]
+  "include": ["src", "tests", "../mesh-common/src", "../mesh-common/testing"]
 }

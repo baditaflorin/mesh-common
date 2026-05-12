@@ -1,3 +1,5 @@
 node_modules
 docs/assets
+docs/index.html
+docs/404.html
 package-lock.json
