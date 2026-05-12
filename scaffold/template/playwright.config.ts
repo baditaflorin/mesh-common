@@ -22,10 +22,12 @@ export default defineConfig({
     navigationTimeout: 10_000,
   },
   webServer: {
-    command: `npx vite preview --host 127.0.0.1 --port ${PORT} --strictPort`,
+    // Build (cheap when up-to-date) + preview, so tests always run against
+    // the current source — never a stale docs/.
+    command: `npm run build && npx vite preview --host 127.0.0.1 --port ${PORT} --strictPort`,
     url: baseURL,
     reuseExistingServer: !process.env["CI"],
-    timeout: 30_000,
+    timeout: 60_000,
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
 });
