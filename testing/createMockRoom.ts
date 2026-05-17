@@ -15,6 +15,7 @@ export function createMockRoom(overrides: Partial<YRoom> = {}): YRoom {
     provider: null,
     peerId: overrides.peerId ?? `mock-${Math.random().toString(36).slice(2, 8)}`,
     peerCount: overrides.peerCount ?? 0,
+    roomId: overrides.roomId ?? "mock-room",
     ...overrides,
   };
 }

@@ -13,7 +13,12 @@
 #
 set -euo pipefail
 
-npm run test:unit
+# Unit tests run only when the canonical src/Feature.tsx is present.
+# Legacy apps that predate mesh-common have a different layout; their
+# coverage is end-to-end via Playwright instead.
+if [ -d tests/unit ] && ls tests/unit/*.test.* > /dev/null 2>&1; then
+  npm run test:unit
+fi
 
 npm run build
 

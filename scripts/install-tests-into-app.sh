@@ -37,8 +37,14 @@ cp "$TEMPLATE_DIR/tests/setup.ts" tests/setup.ts
 cp "$TEMPLATE_DIR/tests/e2e/smoke.spec.ts" tests/e2e/smoke.spec.ts
 cp "$TEMPLATE_DIR/tests/e2e/mesh.spec.ts" tests/e2e/mesh.spec.ts
 
-# 2. Drop in the placeholder unit test only if no unit tests exist yet.
-if [[ ! -e tests/unit/Feature.test.tsx ]] && ls tests/unit/*.test.* >/dev/null 2>&1; then
+# 2. Drop in the placeholder unit test only if (a) src/Feature.tsx exists (the
+#    canonical mesh-common-scaffolded shape), and (b) no unit tests exist yet.
+#    Legacy apps that predate mesh-common have src/App.tsx + src/features/<x>
+#    instead — skip the placeholder there and keep e2e-only coverage.
+if [[ ! -f "src/Feature.tsx" ]]; then
+  rm -f tests/unit/Feature.test.tsx
+  rmdir tests/unit 2>/dev/null || true
+elif [[ ! -e tests/unit/Feature.test.tsx ]] && ls tests/unit/*.test.* >/dev/null 2>&1; then
   : # has other unit tests already, skip placeholder
 elif [[ ! -e tests/unit/Feature.test.tsx ]]; then
   cp "$TEMPLATE_DIR/tests/unit/Feature.test.tsx" tests/unit/Feature.test.tsx
@@ -81,8 +87,17 @@ const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 pkg.scripts = { ...pkg.scripts, ...tmpl.scripts };
 pkg.devDependencies = { ...(pkg.devDependencies || {}), ...tmpl.devDependencies };
 
+// mesh-common lives in the template's `dependencies` (the canonical layout
+// also imports it at runtime). For legacy apps, it's only needed for the
+// test helpers — but it must be in `dependencies` for npm to install it
+// since the test files import it at e2e time.
+pkg.dependencies = pkg.dependencies || {};
+if (tmpl.dependencies && tmpl.dependencies["@baditaflorin/mesh-common"]) {
+  pkg.dependencies["@baditaflorin/mesh-common"] = tmpl.dependencies["@baditaflorin/mesh-common"];
+}
+
 fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
-console.log('  merged scripts + devDependencies');
+console.log('  merged scripts + devDependencies + mesh-common dep');
 NODE
 
 # 5. Mark scripts executable.

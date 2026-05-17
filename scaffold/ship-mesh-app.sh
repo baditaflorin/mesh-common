@@ -23,6 +23,12 @@ npm run fmt --silent >/dev/null
 echo "==> [$APP_NAME] smoke build"
 npm run smoke >/dev/null
 
+if [ "${SKIP_SCREENSHOT:-}" = "" ]; then
+  echo "==> [$APP_NAME] screenshot"
+  bash "$(dirname "$0")/../scripts/screenshot-app.sh" >/dev/null 2>&1 \
+    || echo "    (screenshot skipped)"
+fi
+
 echo "==> [$APP_NAME] commit"
 git add -A
 git -c user.name="Florin Badita" -c user.email="baditaflorin@gmail.com" \

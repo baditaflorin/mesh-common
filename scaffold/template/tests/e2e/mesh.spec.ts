@@ -18,8 +18,8 @@ const storagePrefix = pkg.name;
 test("two peers in the same room can both load", async ({ browser, baseURL }) => {
   const { a, b, cleanup } = await openTwoPeers(browser, baseURL ?? "", { storagePrefix });
   try {
-    await expect(a.locator(".mesh-self-ref")).toBeVisible();
-    await expect(b.locator(".mesh-self-ref")).toBeVisible();
+    await expect(a.locator(".mesh-self-ref, .self-ref").first()).toBeVisible();
+    await expect(b.locator(".mesh-self-ref, .self-ref").first()).toBeVisible();
     // Both should reach a non-loading state within the timeout — most apps
     // either show a count, a heading, or a primary control. We assert that
     // at least one <h1> is present on both pages.

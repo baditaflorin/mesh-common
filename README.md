@@ -17,6 +17,13 @@ Shared scaffolding + runtime for the `baditaflorin/mesh-*` family of rootless pe
 | `iceConfig` | Load/save signaling URL, TURN token URL, ICE servers; dead-server pruning |
 | `clockSync` | NTP-over-Yjs offset → mesh-median time, stable to ~10–30 ms |
 | `commitReveal` | SHA-256 commit/reveal for anonymous votes / fair RNG / role assignment |
+| `PersonalQR` / `useQRScanner` / `QRExchange` | Inline-SVG QR (real-URL payload) + camera scanner + paste-fallback widget |
+| `useDirectedEdges` / `shortestPath` / `longestSimplePath` | Append-only `Y.Array<Edge>` + graph helpers for the social-graph apps |
+| `useIncomingScanLink` | One-shot consume of `#r=…&p=…&x=…` hash params after a QR-scan navigation |
+| **`identity`** ⭐ | **Ed25519 keypair generation, persistence, sign/verify, `useIdentity` hook (~32 KB)** |
+| **`tofuRegistry`** ⭐ | **`Y.Map<peerId, signed pubkey record>` with first-use trust pinning** |
+| **`moderator`** ⭐ | **Signed first-claim-wins role, 30-min auto-expire, partition-aware tiebreak** |
+| **`ModeratorBadge`** ⭐ | **Drop-in UI: "alice is moderating · auto-clears in 28m · soft role, not enforcement"** |
 | `scaffold/create-mesh-app.sh` | One-shot CLI that creates a new app from the template |
 
 Apps depend on this via `file:../mesh-common` (publish to npm later if/when useful — Vite bundles the package output into each app's `docs/` so live sites are self-contained).
@@ -128,3 +135,56 @@ Every app defaults to these endpoints (overridable in the settings drawer):
 ## License
 
 MIT.
+
+## Security model — the four-layer stack
+
+> One cryptographic foundation (layer 1), the moderator is the first feature it powers, and layers 2–4 stay opt-in and honest.
+
+| Layer | Status | What it gives you | Bundle cost |
+|---|---|---|---:|
+| **1. Default everywhere** | Lives in `mesh-common` — every app inherits | TOFU pubkey registry, Ed25519-signed sensitive writes, moderator role | ~35 KB |
+| **2. Per-app opt-in** | App imports a helper when needed | Commit-reveal RNG, E2E DMs (X25519 + AES-GCM via WebCrypto) | ~0 KB (native) |
+| **3. Specialty only** | Lazy-loaded for the one or two apps that need it | Shamir secret-sharing for vault-style, SNARKs for anon-attestation | 10 KB / 3 MB |
+| **4. Never claim** | Honesty contract in every README's privacy section | "End-to-end private" is not what we sell — peers in the room see the Yjs state | — |
+
+### Using layer 1 in an app
+
+```tsx
+import { useIdentity, useModerator, ModeratorBadge } from "@baditaflorin/mesh-common";
+
+function Body({ room, config }) {
+  const identity = useIdentity(config.storagePrefix);
+  const moderator = useModerator(room, config.storagePrefix, identity);
+
+  return (
+    <>
+      <ModeratorBadge state={moderator} resolveName={(id) => names.get(id)} />
+      {moderator.isMe && <button onClick={() => triggerRound()}>start round</button>}
+      {/* Sign any sensitive write so peers can verify provenance: */}
+      <button onClick={() => {
+        const payload = { vote: "yes", round: 3 };
+        const sig = identity.sign(payload);
+        ballots.set(room.peerId, { ...payload, sig, pubkey: identity.pubkey });
+      }}>vote</button>
+    </>
+  );
+}
+```
+
+### What the moderator role can and cannot do
+
+**Can**: lead UI ceremonies, authoritative-looking display, soft moderation (a flag peers running the standard client honor by default), tiebreaks on CRDT-merged contradictions.
+
+**Cannot**: kick peers off the mesh, force-delete data, rate-limit, or prevent a hostile fork from ignoring the role. The role is a **coordination affordance, not an enforcement boundary** — the UI labels it "moderator (auto-clears in 30 min)" precisely to set that expectation.
+
+### The honesty contract
+
+Three things never to claim in any mesh-* app's README:
+
+1. **"End-to-end private"** — peers in the room see the Yjs state. We protect *integrity* (signed who-said-what), not *secrecy* (who-saw-what).
+2. **"Admin enforces rules"** — peers can ignore moderator commands. Display, don't deny.
+3. **"Data is deleted"** — CRDT history is monotone. Redaction marks bytes; the bytes still exist on every peer who synced.
+
+Correct phrasing for every app's privacy section:
+
+> Everything you publish to a room is visible to every peer in that room. Your local device's name, key, and choices stay local. Cryptographic signatures prove **who** wrote each entry; they do **not** prevent peers from reading or copying entries. The room URL is the access control — share it deliberately.

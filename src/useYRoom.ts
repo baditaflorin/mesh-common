@@ -10,6 +10,7 @@ export type YRoom = {
   provider: WebrtcProvider | null;
   peerId: string;
   peerCount: number;
+  roomId: string;
 };
 
 /**
@@ -58,6 +59,7 @@ export function useYRoom(config: MeshConfig, roomId: string): YRoom | null {
           provider: sync!.provider,
           peerId: sync!.peerId,
           peerCount: count,
+          roomId,
         });
       };
       updatePeers();

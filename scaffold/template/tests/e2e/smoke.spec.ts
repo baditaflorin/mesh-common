@@ -14,7 +14,11 @@ test("page loads with version + source + tip visible", async ({ page }) => {
   // Self-ref bar contains a "source" link, a "tip" link, and a version stamp.
   await expect(page.getByRole("link", { name: /source/i }).first()).toBeVisible();
   await expect(page.getByRole("link", { name: /tip/i }).first()).toBeVisible();
-  await expect(page.locator(".mesh-self-ref").getByText(/^v\d/)).toBeVisible();
+  // Version stamp lives in the self-ref bar — mesh-common's class is
+  // `.mesh-self-ref`, legacy apps use `.self-ref`. Both render a `vN.N.N`
+  // string in that footer.
+  const versionLocator = page.locator(".mesh-self-ref, .self-ref").getByText(/^v\d/);
+  await expect(versionLocator.first()).toBeVisible();
 
   // Allow a moment for async TURN fetch / WebRTC handshake; benign warnings
   // about TURN unreachable are OK, but real errors are not.
@@ -29,9 +33,16 @@ test("page loads with version + source + tip visible", async ({ page }) => {
   expect(errors, errors.join("\n")).toHaveLength(0);
 });
 
-test("settings drawer opens and shows infra fields", async ({ page }) => {
+test("settings drawer can be opened (or is already open) and shows infra fields", async ({
+  page,
+}) => {
   await page.goto("./");
-  await page.getByLabel("Open settings").click();
+  // Some legacy apps auto-open the drawer on first load (e.g. when no name
+  // is set yet). Click the FAB only if the drawer isn't already showing.
+  const drawer = page.locator(".mesh-settings-drawer, .settings-drawer");
+  if ((await drawer.count()) === 0) {
+    await page.getByLabel("Open settings").click();
+  }
   await expect(page.getByText(/Self-hosted infra/i)).toBeVisible();
   await expect(page.getByText(/Signaling URL/i)).toBeVisible();
   await expect(page.getByText(/TURN credentials URL/i)).toBeVisible();
