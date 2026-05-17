@@ -15,7 +15,7 @@ export function App() {
   const room = useYRoom(config, roomId);
 
   return (
-    <MeshShell config={config} roomId={roomId} onRoomChange={setRoomId}>
+    <MeshShell config={config} roomId={roomId} onRoomChange={setRoomId} room={room}>
       <Feature room={room} config={config} />
     </MeshShell>
   );

@@ -39,6 +39,165 @@
   z-index: 30;
 }
 
+.mesh-invite-fab {
+  position: absolute;
+  top: max(env(safe-area-inset-top), 1rem);
+  right: calc(1rem + 44px + 0.5rem);
+  width: 44px;
+  height: 44px;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  background: var(--mesh-accent);
+  color: #0b0a06;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  z-index: 30;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.mesh-invite-fab:hover {
+  opacity: 0.85;
+}
+
+.mesh-invite-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+}
+
+.mesh-invite-modal {
+  background: var(--mesh-surface);
+  color: var(--mesh-fg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.8rem;
+  width: min(360px, 100%);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.mesh-invite-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mesh-invite-title {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--mesh-accent);
+  letter-spacing: 0.02em;
+}
+
+.mesh-invite-close {
+  background: transparent;
+  color: var(--mesh-fg);
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.4rem;
+}
+
+.mesh-invite-close:hover {
+  opacity: 0.7;
+}
+
+.mesh-invite-qr {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+  background: #fff;
+  border-radius: 0.5rem;
+}
+
+.mesh-invite-url {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  padding: 0.5rem 0.7rem;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  word-break: break-all;
+  cursor: pointer;
+  user-select: all;
+}
+
+.mesh-invite-url:hover {
+  border-color: var(--mesh-accent);
+}
+
+.mesh-invite-actions {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.mesh-invite-share {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  background: var(--mesh-accent);
+  color: #0b0a06;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.mesh-invite-share:hover {
+  opacity: 0.9;
+}
+
+.mesh-invite-copied {
+  color: var(--mesh-accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.mesh-invite-extras {
+  padding: 0.6rem 0.7rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mesh-invite-chain {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-size: 0.8rem;
+  color: var(--mesh-muted);
+}
+
+.mesh-invite-chain strong {
+  color: var(--mesh-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.mesh-invite-room {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--mesh-muted);
+  text-align: center;
+}
+
+.mesh-invite-room code {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
 .mesh-self-ref {
   position: absolute;
   bottom: max(env(safe-area-inset-bottom), 0.5rem);

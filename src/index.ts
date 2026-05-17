@@ -30,6 +30,8 @@ export { randomSalt, sha256Hex, commit, verifyReveal, combineSalts } from "./com
 export { MeshShell } from "./MeshShell";
 export { SelfRefBar } from "./SelfRefBar";
 export { SettingsDrawer } from "./SettingsDrawer";
+export { InviteShareButton } from "./InviteShareButton";
+export { useInviteChain, type InviteEdge, type InviteChainState } from "./useInviteChain";
 
 export { PersonalQR } from "./PersonalQR";
 export { QRExchange } from "./QRExchange";
