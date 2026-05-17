@@ -256,3 +256,235 @@ describe("MeshToasts integration", () => {
     unlink();
   });
 });
+
+// ============================================================================
+// Batch 2: 10 more primitives shipped 2026-05-17
+// ============================================================================
+import { usePerPeerValue } from "../src/usePerPeerValue";
+import { useDraft } from "../src/useDraft";
+import { useDeadline } from "../src/useDeadline";
+import { useFlashOnChange } from "../src/useFlashOnChange";
+import { useRoster } from "../src/useRoster";
+import { useRotatingTurn } from "../src/useRotatingTurn";
+import { useExpiringClaim } from "../src/useExpiringClaim";
+import { useReactions } from "../src/useReactions";
+
+describe("usePerPeerValue", () => {
+  it("setMy writes to Y.Map and other peers observe", () => {
+    const a = createMockRoom({ peerId: "alice" });
+    const b = createMockRoom({ peerId: "bob" });
+    const unlink = linkMockRooms(a, b);
+    const aHook = renderHook(() => usePerPeerValue<number>(a, "hue", 0));
+    const bHook = renderHook(() => usePerPeerValue<number>(b, "hue", 0));
+    act(() => aHook.result.current.setMy(120));
+    bHook.rerender();
+    expect(bHook.result.current.valueOf("alice")).toBe(120);
+    expect(bHook.result.current.size).toBe(1);
+    act(() => bHook.result.current.setMy(240));
+    aHook.rerender();
+    expect(aHook.result.current.entries.length).toBe(2);
+    unlink();
+  });
+
+  it("clearMy removes the peer's entry", () => {
+    const room = createMockRoom({ peerId: "alice" });
+    const h = renderHook(() => usePerPeerValue<string>(room, "k", ""));
+    act(() => h.result.current.setMy("x"));
+    expect(h.result.current.size).toBe(1);
+    act(() => h.result.current.clearMy());
+    expect(h.result.current.size).toBe(0);
+  });
+});
+
+describe("useDraft", () => {
+  it("persists value to localStorage and restores on rerender", () => {
+    const { result } = renderHook(() => useDraft<string>("draft:k", ""));
+    act(() => result.current.setValue("typing…"));
+    expect(localStorage.getItem("draft:k")).toBe("typing…");
+    expect(result.current.dirty).toBe(true);
+    const { result: r2 } = renderHook(() => useDraft<string>("draft:k", ""));
+    expect(r2.current.value).toBe("typing…");
+  });
+
+  it("commit invokes publish then clears", async () => {
+    const { result } = renderHook(() => useDraft<string>("draft:c", ""));
+    act(() => result.current.setValue("hi"));
+    const publish = vi.fn();
+    await act(async () => {
+      await result.current.commit(publish);
+    });
+    expect(publish).toHaveBeenCalledWith("hi");
+    expect(result.current.value).toBe("");
+    expect(localStorage.getItem("draft:c")).toBeNull();
+  });
+
+  it("commit retains draft if publish returns false", async () => {
+    const { result } = renderHook(() => useDraft<string>("draft:f", ""));
+    act(() => result.current.setValue("retry"));
+    await act(async () => {
+      await result.current.commit(() => false);
+    });
+    expect(result.current.value).toBe("retry");
+  });
+});
+
+describe("useDeadline", () => {
+  it("formats remaining time + flips isPast", () => {
+    vi.useFakeTimers();
+    const target = Date.now() + 90_000;
+    const { result, rerender } = renderHook(() => useDeadline(target, { tickMs: 100 }));
+    expect(result.current.isPast).toBe(false);
+    expect(result.current.fmt).toMatch(/1:30|1:29/);
+    vi.advanceTimersByTime(100_000);
+    rerender();
+    expect(result.current.isPast).toBe(true);
+    expect(result.current.fmt).toBe("now");
+    vi.useRealTimers();
+  });
+
+  it("fmt handles minute/hour/day boundaries", () => {
+    const make = (ms: number) => {
+      vi.useFakeTimers();
+      const t = Date.now() + ms;
+      const { result } = renderHook(() => useDeadline(t));
+      const out = result.current.fmt;
+      vi.useRealTimers();
+      return out;
+    };
+    expect(make(5_000)).toMatch(/^\ds$/);
+    expect(make(125_000)).toMatch(/^2:0\d$/);
+    expect(make(3 * 86_400_000)).toBe("3 days");
+  });
+});
+
+describe("useFlashOnChange", () => {
+  it("flashes true for durationMs after value changes", () => {
+    vi.useFakeTimers();
+    let v = 1;
+    const { result, rerender } = renderHook(() => useFlashOnChange(v, 300));
+    expect(result.current).toBe(false);
+    v = 2;
+    rerender();
+    expect(result.current).toBe(true);
+    act(() => {
+      vi.advanceTimersByTime(350);
+    });
+    expect(result.current).toBe(false);
+    vi.useRealTimers();
+  });
+});
+
+describe("useRoster", () => {
+  it("heartbeats and reports the peer as present", () => {
+    const room = createMockRoom({ peerId: "alice" });
+    const { result, rerender } = renderHook(() =>
+      useRoster(room, { heartbeatMs: 100, freshnessMs: 5_000 }),
+    );
+    rerender();
+    expect(result.current.present).toContain("alice");
+    expect(result.current.isPresent("alice")).toBe(true);
+  });
+
+  it("two linked peers each appear in the other's present list", () => {
+    const a = createMockRoom({ peerId: "alice" });
+    const b = createMockRoom({ peerId: "bob" });
+    const unlink = linkMockRooms(a, b);
+    const aH = renderHook(() => useRoster(a, { heartbeatMs: 100, freshnessMs: 5_000 }));
+    const bH = renderHook(() => useRoster(b, { heartbeatMs: 100, freshnessMs: 5_000 }));
+    aH.rerender();
+    bH.rerender();
+    expect(aH.result.current.present).toEqual(expect.arrayContaining(["alice", "bob"]));
+    expect(bH.result.current.present).toEqual(expect.arrayContaining(["alice", "bob"]));
+    unlink();
+  });
+});
+
+describe("useRotatingTurn", () => {
+  it("rotates currentPeerId across slots in stable mode", () => {
+    const a = createMockRoom({ peerId: "alice" });
+    const b = createMockRoom({ peerId: "bob" });
+    const unlink = linkMockRooms(a, b);
+    const aR = renderHook(() => useRoster(a));
+    const bR = renderHook(() => useRoster(b));
+    aR.rerender();
+    bR.rerender();
+    const fakeClock = {
+      meshNow: () => 5_000,
+      stop: () => {},
+      add: () => {},
+      remove: () => {},
+    } as unknown as Parameters<typeof useRotatingTurn>[1];
+    const { result } = renderHook(() =>
+      useRotatingTurn(a, fakeClock, { slotMs: 1_000, order: "stable" }),
+    );
+    expect(result.current.order.length).toBeGreaterThan(0);
+    expect(result.current.currentPeerId).not.toBeNull();
+    expect(["alice", "bob"]).toContain(result.current.currentPeerId);
+    unlink();
+  });
+});
+
+describe("useExpiringClaim", () => {
+  it("claim then release toggles claimedBy", () => {
+    const room = createMockRoom({ peerId: "alice" });
+    const { result } = renderHook(() => useExpiringClaim(room, "dj", 5_000));
+    expect(result.current.isFree).toBe(true);
+    act(() => result.current.claim());
+    expect(result.current.isMine).toBe(true);
+    expect(result.current.claimedBy).toBe("alice");
+    act(() => result.current.release());
+    expect(result.current.isFree).toBe(true);
+  });
+
+  it("expired record stored in Y.Map is treated as free by isFree check", () => {
+    // Write a stale claim directly so the assertion doesn't depend on timer
+    // mocking that the hook's internal Date.now() doesn't honor.
+    const room = createMockRoom({ peerId: "alice" });
+    const map = room.doc.getMap("__mesh_claims");
+    map.set("k", { peerId: "bob", ts: Date.now() - 10_000, ttl: 1_000 });
+    const { result } = renderHook(() => useExpiringClaim(room, "k", 1_000));
+    expect(result.current.isFree).toBe(true);
+    expect(result.current.claimedBy).toBeNull();
+  });
+});
+
+describe("useReactions", () => {
+  it("react + countsFor + score", () => {
+    const a = createMockRoom({ peerId: "alice" });
+    const b = createMockRoom({ peerId: "bob" });
+    const unlink = linkMockRooms(a, b);
+    const aH = renderHook(() => useReactions(a, "thoughts"));
+    const bH = renderHook(() => useReactions(b, "thoughts"));
+    act(() => aH.result.current.react("t1", "up"));
+    act(() => bH.result.current.react("t1", "up"));
+    act(() => bH.result.current.react("t1", "fire"));
+    aH.rerender();
+    bH.rerender();
+    expect(aH.result.current.countsFor("t1").up).toBe(2);
+    expect(aH.result.current.countsFor("t1").fire).toBe(1);
+    expect(aH.result.current.scoreOf("t1")).toBe(2);
+    expect(bH.result.current.myReactionsOn("t1").has("up")).toBe(true);
+    expect(bH.result.current.myReactionsOn("t1").has("fire")).toBe(true);
+    act(() => bH.result.current.toggle("t1", "up")); // un-up
+    aH.rerender();
+    expect(aH.result.current.countsFor("t1").up).toBe(1);
+    unlink();
+  });
+});
+
+describe("useConfetti", () => {
+  it("burst is a no-op when no listeners are mounted (does not throw)", async () => {
+    const { useConfetti } = await import("../src/useConfetti");
+    const { result } = renderHook(() => useConfetti());
+    expect(() => result.current.burst({ count: 10 })).not.toThrow();
+  });
+});
+
+describe("useMicLevel", () => {
+  it("returns zero level when not armed", async () => {
+    const { useMicLevel } = await import("../src/useMicLevel");
+    const { result } = renderHook(() => useMicLevel({ armed: false }));
+    expect(result.current.level).toBe(0);
+    expect(result.current.armed).toBe(false);
+  });
+});

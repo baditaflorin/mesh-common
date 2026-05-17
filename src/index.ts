@@ -96,3 +96,15 @@ export { useFairRng, type FairRng } from "./useFairRng";
 export { useSharedLocation, type Fix, type SharedLocation } from "./useSharedLocation";
 export { Leaderboard, type LeaderboardItem } from "./Leaderboard";
 export { MeshToasts, pushToast, type Toast } from "./MeshToasts";
+
+// ---- 10 more primitives (extracted 2026-05-17, batch 2) ----
+export { usePerPeerValue, type PerPeerValue } from "./usePerPeerValue";
+export { useDraft, type Draft } from "./useDraft";
+export { useDeadline, type DeadlineState } from "./useDeadline";
+export { useFlashOnChange } from "./useFlashOnChange";
+export { useRoster, type RosterState } from "./useRoster";
+export { useRotatingTurn, type RotatingTurn } from "./useRotatingTurn";
+export { useExpiringClaim, type ExpiringClaim, type ClaimRecord } from "./useExpiringClaim";
+export { useReactions, type ReactionsState } from "./useReactions";
+export { useMicLevel, ArmGate, type MicLevel } from "./useMicLevel";
+export { useConfetti, ConfettiLayer, type ConfettiBurst } from "./useConfetti";
