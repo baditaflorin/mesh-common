@@ -79,3 +79,20 @@ export {
   type UseModeratorOptions,
 } from "./moderator";
 export { ModeratorBadge } from "./ModeratorBadge";
+
+// ---- 10 primitives (extracted 2026-05-17) ----
+export { useNamedPeer, type NamedPeer } from "./useNamedPeer";
+export { useEventLog, type EventLog } from "./useEventLog";
+export { useVotes, type VotesState } from "./useVotes";
+export { usePhase, type PhaseState } from "./usePhase";
+export {
+  useCommitRevealHook,
+  type CommitRevealState,
+  type CommitRevealEntry,
+  type CommitRevealStatus,
+} from "./useCommitRevealHook";
+export { useMeshSlot, type MeshSlot } from "./useMeshSlot";
+export { useFairRng, type FairRng } from "./useFairRng";
+export { useSharedLocation, type Fix, type SharedLocation } from "./useSharedLocation";
+export { Leaderboard, type LeaderboardItem } from "./Leaderboard";
+export { MeshToasts, pushToast, type Toast } from "./MeshToasts";

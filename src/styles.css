@@ -537,3 +537,141 @@
   border-color: var(--mesh-accent);
   font-weight: 600;
 }
+
+/* ------------------------------------------------------------------------- */
+/* <Leaderboard> primitive — drop-in ranked list, used by gratitude, tag,    */
+/* tournament, voting, attendance apps.                                       */
+/* ------------------------------------------------------------------------- */
+
+.mesh-leaderboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.mesh-leaderboard-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.6;
+  margin: 0 0 0.15rem;
+}
+
+.mesh-leaderboard-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mesh-leaderboard-row {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0.35rem;
+}
+
+.mesh-leaderboard-row.is-me {
+  border: 1px solid var(--mesh-accent);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mesh-leaderboard-rank {
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+
+.mesh-leaderboard-name {
+  font-weight: 500;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mesh-leaderboard-you {
+  opacity: 0.55;
+  font-weight: 400;
+}
+
+.mesh-leaderboard-sub {
+  grid-column: 2 / -1;
+  font-size: 0.78rem;
+  opacity: 0.55;
+}
+
+.mesh-leaderboard-score {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--mesh-accent);
+}
+
+.mesh-leaderboard-empty {
+  opacity: 0.5;
+  font-style: italic;
+  margin: 0.2rem 0;
+}
+
+/* ------------------------------------------------------------------------- */
+/* <MeshToasts> primitive — fleet-wide transient announcements                */
+/* ------------------------------------------------------------------------- */
+
+.mesh-toasts {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  z-index: 9000;
+  pointer-events: none;
+  max-width: min(90vw, 26rem);
+  width: 100%;
+}
+
+.mesh-toasts-top {
+  top: 1rem;
+}
+
+.mesh-toasts-bottom {
+  bottom: 1rem;
+}
+
+.mesh-toast {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  background: rgba(10, 14, 22, 0.92);
+  color: var(--mesh-fg);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-left: 3px solid var(--mesh-accent);
+  border-radius: 0.4rem;
+  font-size: 0.88rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  transition: opacity 0.3s ease;
+}
+
+.mesh-toast.is-warning {
+  border-left-color: #f59e0b;
+}
+
+.mesh-toast.is-error {
+  border-left-color: #f87171;
+}
+
+.mesh-toast-author {
+  font-weight: 600;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+.mesh-toast-msg {
+  min-width: 0;
+}
