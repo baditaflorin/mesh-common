@@ -46,7 +46,9 @@ export function useSignedWrite<T>(
   key: string,
   identity: Identity | null,
 ): SignedWriter<T> {
-  const registry = usePeerRegistry(room);
+  // NB: storagePrefix arg added to usePeerRegistry by a parallel refactor;
+  // we pass the Y-doc-key as a stable namespace until callers pass their own.
+  const registry = usePeerRegistry(room, key);
 
   // Register self in TOFU once identity + room are available.
   useEffect(() => {
