@@ -47,7 +47,11 @@ for app in "${APPS[@]}"; do
   DIR="$PARENT/$app"
   printf '[%d/%d] %s ' "$i" "$total" "$app"
 
-  if ! (cd "$DIR" && npm run smoke) > "$LOG_DIR/$app.log" 2>&1; then
+  # Auto-format first so the pre-commit hook's `fmt:check` doesn't reject
+  # commits caused by agent-touched files that aren't prettier-clean.
+  (cd "$DIR" && npm run fmt) > "$LOG_DIR/$app.log" 2>&1 || true
+
+  if ! (cd "$DIR" && npm run smoke) >> "$LOG_DIR/$app.log" 2>&1; then
     echo "✗ smoke"
     echo "✗ $app  (smoke failed — see $LOG_DIR/$app.log)" >> "$LOG_DIR/summary"
     fail=$((fail + 1))

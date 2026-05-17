@@ -5,6 +5,9 @@
  * Each app's accent is set via --mesh-accent (defaulted by MeshShell).
  */
 
+/* Third-party CSS imports must precede all other rules (PostCSS) */
+@import "react-day-picker/style.css";
+
 :root {
   --mesh-accent: #3aa8a1;
   --mesh-fg: #f6e9c0;
@@ -730,8 +733,6 @@
    UI primitives (v0.4.0) — production-ready Radix + Sonner-backed components
    with consistent dark-mode styling.
    ========================================================================= */
-
-@import "react-day-picker/style.css";
 
 /* Common button surface used by MeshConfirm + MeshSheet footers */
 .mesh-btn {
