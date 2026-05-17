@@ -9,6 +9,8 @@ export default defineConfig({
       ["tests/securityAudit.test.ts", "jsdom"],
       ["tests/primitives.test.ts", "jsdom"],
       ["tests/ui.test.tsx", "jsdom"],
+      ["tests/security.test.ts", "jsdom"],
+      ["tests/multiplayer.test.ts", "jsdom"],
     ],
   },
 });

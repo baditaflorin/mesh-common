@@ -127,3 +127,9 @@ export { useGesture, type GestureState, type GestureKind } from "./useGesture";
 
 // ---- 12 production-ready UI primitives (Radix + Sonner-backed) ----
 export * from "./ui";
+
+// ---- 10 security + 0-day proofing primitives ----
+export * from "./security";
+
+// ---- 10 multiplayer + levels-of-play primitives ----
+export * from "./multiplayer";
