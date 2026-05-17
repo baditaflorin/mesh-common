@@ -50,7 +50,7 @@ export function MeshShell({
     <div className="mesh-app-root">
       {children}
       <InviteShareButton
-        config={config}
+        appName={config.appName}
         roomId={roomId}
         peerId={room?.peerId}
         extras={

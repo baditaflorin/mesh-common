@@ -1,10 +1,10 @@
 import { useState, type ReactNode } from "react";
-import type { MeshConfig } from "./MeshConfig";
 import { PersonalQR } from "./PersonalQR";
 import { useWebShare } from "./useWebShare";
 
 type Props = {
-  config: MeshConfig;
+  /** App name shown in the modal title + native share sheet. */
+  appName: string;
   roomId: string;
   /** Inviter peer id — embedded as `p=` so the receiver can record a chain edge. */
   peerId?: string;
@@ -28,7 +28,7 @@ function buildInviteUrl(roomId: string, peerId: string | undefined): string {
  * auto-join the room AND record the chain edge if the host app uses
  * `useInviteChain`.
  */
-export function InviteShareButton({ config, roomId, peerId, extras }: Props) {
+export function InviteShareButton({ appName, roomId, peerId, extras }: Props) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const ws = useWebShare();
@@ -36,8 +36,8 @@ export function InviteShareButton({ config, roomId, peerId, extras }: Props) {
 
   const onShare = async () => {
     const result = await ws.share({
-      title: `${config.appName} — join my room`,
-      text: `tap to join: ${config.appName}`,
+      title: `${appName} — join my room`,
+      text: `tap to join: ${appName}`,
       url,
     });
     if (result === "copied") {
@@ -80,7 +80,7 @@ export function InviteShareButton({ config, roomId, peerId, extras }: Props) {
             onClick={(e) => e.stopPropagation()}
           >
             <header className="mesh-invite-header">
-              <h2 className="mesh-invite-title">invite to {config.appName}</h2>
+              <h2 className="mesh-invite-title">invite to {appName}</h2>
               <button
                 type="button"
                 className="mesh-invite-close"
