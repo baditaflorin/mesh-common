@@ -28,9 +28,12 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.50.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^22.10.0",
     "@types/react": "^19.2.6",
     "@types/react-dom": "^19.2.3",
+    "jsdom": "^29.1.1",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "typescript": "^5.9.0",
@@ -55,7 +58,6 @@
   "dependencies": {
     "@noble/curves": "^2.2.0",
     "@noble/hashes": "^2.2.0",
-    "jsdom": "^29.1.1",
     "jsqr": "^1.4.0",
     "qrcode-generator": "^2.0.4"
   }
