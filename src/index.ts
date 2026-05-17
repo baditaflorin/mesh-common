@@ -122,3 +122,6 @@ export { useVibration, type VibrationState } from "./useVibration";
 export { useWakeLock, type WakeLockState } from "./useWakeLock";
 export { useWebShare, type WebShareState, type ShareData } from "./useWebShare";
 export { useGesture, type GestureState, type GestureKind } from "./useGesture";
+
+// ---- 12 production-ready UI primitives (Radix + Sonner-backed) ----
+export * from "./ui";
