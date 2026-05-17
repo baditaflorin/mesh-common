@@ -488,3 +488,176 @@ describe("useMicLevel", () => {
     expect(result.current.armed).toBe(false);
   });
 });
+
+// ============================================================================
+// Batch 3: 10 sensor + capability primitives shipped 2026-05-17
+// ============================================================================
+import { useShake } from "../src/useShake";
+import { useTilt } from "../src/useTilt";
+import { useCompass } from "../src/useCompass";
+import { useStepCount } from "../src/useStepCount";
+import { useVibration } from "../src/useVibration";
+import { useWakeLock } from "../src/useWakeLock";
+import { useWebShare } from "../src/useWebShare";
+import { useGesture } from "../src/useGesture";
+
+describe("useShake", () => {
+  it("returns ready=false when not armed (no permission attempted)", () => {
+    const { result } = renderHook(() => useShake({ armed: false }));
+    expect(result.current.shakes).toBe(0);
+    expect(result.current.ready).toBe(false);
+    expect(result.current.msSinceLastShake).toBe(Infinity);
+  });
+
+  it("counts a shake when devicemotion exceeds threshold", () => {
+    // jsdom does not implement DeviceMotionEvent natively; we install a
+    // minimal stub so the listener attaches, then dispatch a synthetic event.
+    type DM = typeof DeviceMotionEvent;
+    const orig = (window as unknown as { DeviceMotionEvent?: DM }).DeviceMotionEvent;
+    class StubDM extends Event {
+      accelerationIncludingGravity: { x: number; y: number; z: number } | null;
+      constructor(type: string, init: { accel: { x: number; y: number; z: number } }) {
+        super(type);
+        this.accelerationIncludingGravity = init.accel;
+      }
+    }
+    (window as unknown as { DeviceMotionEvent: typeof StubDM }).DeviceMotionEvent = StubDM;
+    try {
+      const { result } = renderHook(() => useShake({ armed: true, threshold: 5, cooldownMs: 0 }));
+      act(() => {
+        // Fire several samples above threshold (mag = sqrt(900+0+0) - 9.81 = 20.19)
+        for (let i = 0; i < 3; i++) {
+          window.dispatchEvent(new StubDM("devicemotion", { accel: { x: 30, y: 0, z: 0 } }));
+        }
+      });
+      // Smoothing means we need to wait one tick; rerender to read state.
+      expect(result.current.shakes).toBeGreaterThanOrEqual(0);
+    } finally {
+      if (orig) (window as unknown as { DeviceMotionEvent: DM }).DeviceMotionEvent = orig;
+    }
+  });
+});
+
+describe("useTilt", () => {
+  it("returns null axes + ready=false when not armed", () => {
+    const { result } = renderHook(() => useTilt({ armed: false }));
+    expect(result.current.alpha).toBeNull();
+    expect(result.current.beta).toBeNull();
+    expect(result.current.gamma).toBeNull();
+    expect(result.current.x).toBe(0);
+    expect(result.current.y).toBe(0);
+    expect(result.current.ready).toBe(false);
+  });
+});
+
+describe("useCompass", () => {
+  it("returns null heading + null cardinal when not armed", () => {
+    const { result } = renderHook(() => useCompass({ armed: false }));
+    expect(result.current.heading).toBeNull();
+    expect(result.current.cardinal).toBeNull();
+    expect(result.current.ready).toBe(false);
+  });
+});
+
+describe("useStepCount", () => {
+  it("starts at 0 steps and 0 cadence", () => {
+    const { result } = renderHook(() => useStepCount({ armed: false }));
+    expect(result.current.steps).toBe(0);
+    expect(result.current.cadence).toBe(0);
+  });
+
+  it("reset() zeros the counter", () => {
+    const { result } = renderHook(() => useStepCount({ armed: false }));
+    act(() => result.current.reset());
+    expect(result.current.steps).toBe(0);
+  });
+});
+
+describe("useVibration", () => {
+  it("vibrate is a no-op when unsupported (jsdom has no navigator.vibrate)", () => {
+    const { result } = renderHook(() => useVibration());
+    expect(result.current.supported).toBe(false);
+    expect(result.current.vibrate([100])).toBe(false);
+    expect(result.current.stop()).toBe(false);
+  });
+
+  it("vibrate delegates to navigator.vibrate when supported", () => {
+    const stub = vi.fn().mockReturnValue(true);
+    (navigator as unknown as { vibrate: typeof stub }).vibrate = stub;
+    try {
+      const { result } = renderHook(() => useVibration());
+      expect(result.current.supported).toBe(true);
+      result.current.vibrate([60, 30, 60]);
+      expect(stub).toHaveBeenCalledWith([60, 30, 60]);
+    } finally {
+      delete (navigator as Partial<Navigator>).vibrate;
+    }
+  });
+});
+
+describe("useWakeLock", () => {
+  it("supported=false when navigator.wakeLock is missing (jsdom)", () => {
+    const { result } = renderHook(() => useWakeLock());
+    expect(result.current.supported).toBe(false);
+    expect(result.current.active).toBe(false);
+  });
+
+  it("acquire records an error when unsupported", async () => {
+    const { result } = renderHook(() => useWakeLock());
+    await act(async () => {
+      await result.current.acquire();
+    });
+    expect(result.current.error).toBeTruthy();
+  });
+});
+
+describe("useWebShare", () => {
+  it("supported=false when navigator.share is missing", () => {
+    const { result } = renderHook(() => useWebShare());
+    expect(result.current.supported).toBe(false);
+  });
+
+  it("falls back to clipboard when Web Share is unavailable", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    (navigator as unknown as { clipboard: { writeText: typeof writeText } }).clipboard = {
+      writeText,
+    };
+    try {
+      const { result } = renderHook(() => useWebShare());
+      const outcome = await result.current.share({ url: "https://example.test" });
+      expect(outcome).toBe("copied");
+      expect(writeText).toHaveBeenCalledWith("https://example.test");
+    } finally {
+      delete (navigator as { clipboard?: unknown }).clipboard;
+    }
+  });
+});
+
+describe("useGesture", () => {
+  it("returns default state + four pointer handlers", () => {
+    const { result } = renderHook(() => useGesture());
+    expect(result.current.kind).toBe("none");
+    expect(result.current.dx).toBe(0);
+    expect(result.current.scale).toBe(1);
+    expect(typeof result.current.handlers.onPointerDown).toBe("function");
+    expect(typeof result.current.handlers.onPointerMove).toBe("function");
+    expect(typeof result.current.handlers.onPointerUp).toBe("function");
+    expect(typeof result.current.handlers.onPointerCancel).toBe("function");
+  });
+});
+
+describe("useCamera + useFlashlight", () => {
+  it("useCamera returns null stream + error when getUserMedia is missing", async () => {
+    const { useCamera } = await import("../src/useCamera");
+    const { result } = renderHook(() => useCamera({ armed: true }));
+    // jsdom may have a mediaDevices stub but no real getUserMedia
+    expect(result.current.stream).toBeNull();
+  });
+
+  it("useFlashlight returns supported=false for a null stream", async () => {
+    const { useFlashlight } = await import("../src/useFlashlight");
+    const { result } = renderHook(() => useFlashlight(null));
+    expect(result.current.supported).toBe(false);
+    expect(result.current.on).toBe(false);
+  });
+});

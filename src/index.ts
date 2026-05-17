@@ -108,3 +108,17 @@ export { useExpiringClaim, type ExpiringClaim, type ClaimRecord } from "./useExp
 export { useReactions, type ReactionsState } from "./useReactions";
 export { useMicLevel, ArmGate, type MicLevel } from "./useMicLevel";
 export { useConfetti, ConfettiLayer, type ConfettiBurst } from "./useConfetti";
+
+// ---- 10 sensor + capability primitives (extracted 2026-05-17, batch 3) ----
+export { useDeviceMotion, type MotionSample } from "./useDeviceMotion";
+export { useShake, type ShakeState } from "./useShake";
+export { useDeviceOrientation, type Orientation } from "./useDeviceOrientation";
+export { useTilt, type TiltState } from "./useTilt";
+export { useCompass, type CompassState } from "./useCompass";
+export { useStepCount, type StepCountState } from "./useStepCount";
+export { useCamera, type CameraState, type CameraFacing } from "./useCamera";
+export { useFlashlight, type FlashlightState } from "./useFlashlight";
+export { useVibration, type VibrationState } from "./useVibration";
+export { useWakeLock, type WakeLockState } from "./useWakeLock";
+export { useWebShare, type WebShareState, type ShareData } from "./useWebShare";
+export { useGesture, type GestureState, type GestureKind } from "./useGesture";
