@@ -56,6 +56,9 @@ entries.sort((a, b) => a.id.localeCompare(b.id));
 
 const passed = entries.filter((e) => e.result === "pass").length;
 const failed = entries.filter((e) => e.result === "fail").length;
+const ranUi = process.env.RAN_UI === "1";
+const uiCount = entries.filter((e) => e.id.startsWith("UI.")).length;
+const cryptoCount = entries.filter((e) => !e.id.startsWith("UI.")).length;
 const completedAt = runCompletedAt ?? Date.now();
 const completedAtIso = new Date(completedAt).toISOString();
 
@@ -78,12 +81,16 @@ md.push("");
 md.push(`Generated: **${completedAtIso}** · ${entries.length} checks · ${passed} pass · ${failed} fail`);
 md.push("");
 md.push(`> A programmatic, CPU-only verification of every claim in the four-layer security stack.`);
-md.push(`> Re-run with \`npm run audit:security\` from this repo. Source: \`tests/securityAudit.test.ts\``);
-md.push(`> + \`tests/e2e/security-audit.spec.ts\`.`);
+md.push(`> Re-run with \`npm run audit:security\` from this repo. Source: \`mesh-common/tests/securityAudit.test.ts\``);
+if (ranUi) md.push(`> + this app's \`tests/e2e/security-audit.spec.ts\`.`);
+else md.push(`> This app does not render the moderator badge yet — only the shared crypto invariants are exercised. The layer-1 guarantees still apply by virtue of bundling \`mesh-common\`.`);
 md.push("");
 md.push(`## Result`);
 md.push("");
 md.push(failed === 0 ? "✅ **All checks pass.**" : `❌ **${failed} check${failed === 1 ? "" : "s"} failing.**`);
+md.push("");
+md.push(`- crypto / Y.Doc invariants: **${cryptoCount} / 16**`);
+md.push(`- UI-flow checks: **${uiCount}**${ranUi ? "" : "  _(this app does not yet expose the moderator UI; pass 2 skipped)_"}`);
 md.push("");
 md.push(`## Checks`);
 md.push("");
