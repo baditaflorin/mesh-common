@@ -5,6 +5,7 @@ import { SelfRefBar } from "./SelfRefBar";
 import { SettingsDrawer } from "./SettingsDrawer";
 import { InviteShareButton } from "./InviteShareButton";
 import { useInviteChain } from "./useInviteChain";
+import { useMeshBeacon } from "./useMeshBeacon";
 
 type Props = {
   config: MeshConfig;
@@ -41,6 +42,13 @@ export function MeshShell({
 }: Props) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const chain = useInviteChain(room ?? null, config);
+  useMeshBeacon({
+    app: config.appName,
+    room: roomId,
+    peer: room?.peerId,
+    v: config.commit,
+    event: "pv",
+  });
 
   useEffect(() => {
     document.documentElement.style.setProperty("--mesh-accent", config.accentHex);

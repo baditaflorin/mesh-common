@@ -8,6 +8,30 @@ import {
   saveSignalingUrl,
   saveTurnTokenUrl,
 } from "./iceConfig";
+import { beaconOptedOut, setBeaconOptOut } from "./useMeshBeacon";
+
+function BeaconOptOutToggle() {
+  const [out, setOut] = useState<boolean>(() => beaconOptedOut());
+  return (
+    <label className="mesh-settings-beacon">
+      <input
+        type="checkbox"
+        checked={out}
+        onChange={(e) => {
+          const v = e.target.checked;
+          setBeaconOptOut(v);
+          setOut(v);
+        }}
+      />{" "}
+      Opt out of anonymous pageview pings
+      <p className="mesh-settings-help">
+        Each app fires a 1×1 GIF beacon with room id + first 6 chars of your peer
+        id when you join a room. IPs are truncated; Do-Not-Track is honoured.
+        Toggle this to disable per-device.
+      </p>
+    </label>
+  );
+}
 
 type Props = {
   config: MeshConfig;
@@ -104,6 +128,10 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
             Reset to defaults
           </button>
         </div>
+
+        <hr />
+
+        <BeaconOptOutToggle />
 
         <hr />
 

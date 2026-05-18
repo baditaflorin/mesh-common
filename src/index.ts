@@ -32,6 +32,14 @@ export { SelfRefBar } from "./SelfRefBar";
 export { SettingsDrawer } from "./SettingsDrawer";
 export { InviteShareButton } from "./InviteShareButton";
 export { useInviteChain, type InviteEdge, type InviteChainState } from "./useInviteChain";
+export {
+  useMeshBeacon,
+  fireBeacon,
+  beaconOptedOut,
+  setBeaconOptOut,
+  type BeaconParams,
+} from "./useMeshBeacon";
+export { MeshBeacon } from "./MeshBeacon";
 
 export { PersonalQR } from "./PersonalQR";
 export { QRExchange } from "./QRExchange";
