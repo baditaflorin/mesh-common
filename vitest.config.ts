@@ -11,6 +11,10 @@ export default defineConfig({
       ["tests/ui.test.tsx", "jsdom"],
       ["tests/security.test.ts", "jsdom"],
       ["tests/multiplayer.test.ts", "jsdom"],
+      ["tests/useAwareness.test.ts", "jsdom"],
+      ["tests/PeerAvatar.test.tsx", "jsdom"],
+      ["tests/useMultiRoom.test.tsx", "jsdom"],
+      ["tests/featureContract.test.ts", "jsdom"],
     ],
   },
 });

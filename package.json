@@ -1,6 +1,6 @@
 {
   "name": "@baditaflorin/mesh-common",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Shared scaffolding + runtime for baditaflorin/mesh-* rootless P2P apps. WebRTC mesh via Yjs, settings drawer, self-referential footer, clock sync, commit-reveal.",
   "type": "module",
   "private": false,
@@ -73,6 +73,7 @@
     "jsqr": "^1.4.0",
     "qrcode-generator": "^2.0.4",
     "react-day-picker": "^9.4.0",
-    "sonner": "^1.7.1"
+    "sonner": "^1.7.1",
+    "zod": "^4.4.3"
   }
 }
