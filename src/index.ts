@@ -141,3 +141,22 @@ export * from "./security";
 
 // ---- 10 multiplayer + levels-of-play primitives ----
 export * from "./multiplayer";
+
+// ---- ecosystem batch 3 (2026-05-19) ----
+// MeshErrorBoundary: drop-in class component that scopes crashes to the
+// Feature subtree with copy-diagnostics affordance for users.
+export {
+  MeshErrorBoundary,
+  type MeshErrorBoundaryProps,
+} from "./MeshErrorBoundary";
+
+// useMeshLink: canonical encoder + parser for the #r=…&p=…&x=… deep-link
+// fragment, replacing ad-hoc URL concat across the fleet.
+export {
+  useMeshLink,
+  makeMeshLinkFragment,
+  parseMeshLink,
+  type MeshLinkApi,
+  type MeshLinkPayload,
+  type ParsedMeshLink,
+} from "./useMeshLink";

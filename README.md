@@ -24,6 +24,12 @@ Shared scaffolding + runtime for the `baditaflorin/mesh-*` family of rootless pe
 | **`tofuRegistry`** ⭐ | **`Y.Map<peerId, signed pubkey record>` with first-use trust pinning** |
 | **`moderator`** ⭐ | **Signed first-claim-wins role, 30-min auto-expire, partition-aware tiebreak** |
 | **`ModeratorBadge`** ⭐ | **Drop-in UI: "alice is moderating · auto-clears in 28m · soft role, not enforcement"** |
+| **`MeshErrorBoundary`** 🆕 | **Drop-in crash containment for the `<Feature>` subtree. Fallback card with `try again`, `copy diagnostics` (clipboard blob), and `reload page`. Accepts `fallback` render-prop and `onError` handler. `MeshErrorBoundaryProps`.** |
+| **`useMeshLink` / `makeMeshLinkFragment` / `parseMeshLink`** 🆕 | **Type-safe encoder + parser for the `#r=…&p=…&x=…` deep-link fragment. JSON-encodes object payloads; raw strings pass through. Wire-format versioned via `&v=`. `MeshLinkApi`, `MeshLinkPayload`, `ParsedMeshLink`.** |
+| `@baditaflorin/mesh-common/eslint` 🆕 | **Shared ESLint flat config preset.** One import + one spread in each app's `eslint.config.js`. |
+| `@baditaflorin/mesh-common/prettier` 🆕 | **Shared Prettier preset.** `"prettier": "@baditaflorin/mesh-common/prettier"` in each app's `package.json`. |
+| `scripts/generate-privacy-section.mjs` 🆕 | **Rewrites the auto-generated `Capabilities used` block in `docs/privacy.md` from `src/` imports.** Run with `--check` in pre-push to fail the build if drift is detected. |
+| `scripts/install-perf-checks.sh` 🆕 | **Installs `tests/e2e/perf-budget.spec.ts` (LCP + INP + TBT budgets) and `tests/e2e/memory-leak.spec.ts` (heap growth detector) into an existing app.** |
 | `scaffold/create-mesh-app.sh` | One-shot CLI that creates a new app from the template |
 
 Apps depend on this via `file:../mesh-common` (publish to npm later if/when useful — Vite bundles the package output into each app's `docs/` so live sites are self-contained).
@@ -111,6 +117,66 @@ Idempotent — re-running just refreshes the generic test files and merges any m
 ### Per-app feature tests
 
 The scaffold provides two generic tests that work without modification (`smoke.spec.ts` and `mesh.spec.ts`). Apps that want richer assertions add a `tests/e2e/feature.spec.ts` with app-specific multi-peer logic. See `mesh-when2meet/tests/e2e/feature.spec.ts` for the canonical pattern: open two peers, do something on page A, assert the effect on page B.
+
+## Shared lint + format preset
+
+One bump fixes formatting and lint rules across every mesh-* app.
+
+```js
+// eslint.config.js — in any mesh-* app
+import meshCommon from "@baditaflorin/mesh-common/eslint";
+export default meshCommon();
+```
+
+```json
+// package.json — in any mesh-* app
+{
+  "prettier": "@baditaflorin/mesh-common/prettier"
+}
+```
+
+The eslint preset declares its own dependencies as peers — install once per app:
+
+```bash
+npm i -D eslint typescript-eslint eslint-plugin-react-hooks eslint-config-prettier
+```
+
+We don't bundle these into `mesh-common`'s `dependencies` because the linter belongs in `devDependencies`, not the runtime tree shipped to GitHub Pages.
+
+## Privacy section, auto-generated
+
+The privacy section of every app's `docs/privacy.md` must accurately reflect the capabilities the code actually uses (camera, location, motion, identity, etc.). Hand-typed privacy sections drift the moment a hook is added; this script makes drift impossible:
+
+```bash
+cd mesh-foo
+node ../mesh-common/scripts/generate-privacy-section.mjs           # rewrite
+node ../mesh-common/scripts/generate-privacy-section.mjs --check   # pre-push gate
+```
+
+The script walks `src/**` for imports from `@baditaflorin/mesh-common`, maps each capability-bearing hook (e.g. `useCamera` → "📷 Camera access") to a privacy bullet, and rewrites the `<!-- mesh:capabilities-block:start -->…end -->` region inside `docs-source/privacy.md` and `docs/privacy.md`.
+
+In `--check` mode the script exits non-zero if the file would change — wire this into your pre-push hook so the docs can never lag behind the code.
+
+## Performance budgets + memory leak detector
+
+Two Playwright specs live in the scaffold template and can be installed into any existing app:
+
+```bash
+cd mesh-foo
+bash ../mesh-common/scripts/install-perf-checks.sh
+```
+
+This drops two specs and adds one `npm` script:
+
+- `tests/e2e/perf-budget.spec.ts` — captures LCP + TBT on cold load + INP after one interaction; fails over configurable thresholds (defaults: LCP ≤ 2500 ms, TBT ≤ 600 ms, INP ≤ 300 ms). Runs in the default Playwright pass (≈3 s).
+- `tests/e2e/memory-leak.spec.ts` — two-peer 60 s noise loop, before/after heap deltas, fails over 15 MB growth. Long-running, so it's opt-in via `npm run test:leak`.
+
+Override thresholds per app via env vars:
+
+```bash
+MESH_BUDGET_LCP_MS=4000 MESH_BUDGET_INP_MS=500 npx playwright test tests/e2e/perf-budget.spec.ts
+MESH_LEAK_DURATION_MS=120000 MESH_LEAK_BUDGET_MB=10 npm run test:leak
+```
 
 ## No GitHub Actions
 

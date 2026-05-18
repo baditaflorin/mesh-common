@@ -1,6 +1,6 @@
 {
   "name": "@baditaflorin/mesh-common",
-  "version": "0.5.1",
+  "version": "0.7.0",
   "description": "Shared scaffolding + runtime for baditaflorin/mesh-* rootless P2P apps. WebRTC mesh via Yjs, settings drawer, self-referential footer, clock sync, commit-reveal.",
   "type": "module",
   "private": false,
@@ -10,17 +10,21 @@
   "exports": {
     ".": "./src/index.ts",
     "./styles.css": "./src/styles.css",
-    "./testing": "./testing/index.ts"
+    "./testing": "./testing/index.ts",
+    "./eslint": "./presets/eslint.js",
+    "./prettier": "./presets/prettier.json"
   },
   "files": [
     "src",
     "testing",
     "scaffold",
-    "scripts"
+    "scripts",
+    "presets"
   ],
   "bin": {
     "create-mesh-app": "./scaffold/create-mesh-app.sh",
-    "mesh-across": "./scripts/across.sh"
+    "mesh-across": "./scripts/across.sh",
+    "mesh-privacy": "./scripts/generate-privacy-section.mjs"
   },
   "scripts": {
     "test": "vitest run",

@@ -82,7 +82,11 @@ bash ../mesh-common/scripts/screenshot-app.sh    # regenerate docs/screenshot.pn
 
 ## Privacy
 
-See `docs/privacy.md` for the threat model — what other peers in the mesh see, what the self-hosted infra sees, what stays local.
+<!-- mesh:privacy-section:start -->
+Everything you publish to a room is visible to every peer in that room. Your local device's name, key, and choices stay local. Cryptographic signatures prove **who** wrote each entry; they do **not** prevent peers from reading or copying entries. The room URL is the access control — share it deliberately.
+
+See `docs/privacy.md` for the full threat model — capabilities used, what other peers in the mesh see, what the self-hosted infra sees, what stays local.
+<!-- mesh:privacy-section:end -->
 
 ## License
 
