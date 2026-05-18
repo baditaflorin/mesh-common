@@ -93,8 +93,14 @@ await ctx.addInitScript(seedInit, { prefix: APP, room: sharedRoom });
 
 const a = await ctx.newPage();
 const b = await ctx.newPage();
-await Promise.all([a.goto(url, { waitUntil: 'networkidle' }), b.goto(url, { waitUntil: 'networkidle' })]);
-await a.waitForTimeout(400);
+// 'domcontentloaded' instead of 'networkidle' — the v0.5.1 MeshBeacon
+// fires a long-lived fetch on init which prevents the network from ever
+// reaching idle in some apps.
+await Promise.all([
+  a.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 }),
+  b.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 }),
+]);
+await a.waitForTimeout(800);
 
 let scenario;
 const abs = path.resolve(SCENARIO);
