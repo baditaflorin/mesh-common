@@ -76,10 +76,18 @@ record_one() {
 
   # record-demo.sh writes to $DEMO_OUT. Point it directly at our central
   # destination so the app's own docs/ doesn't accumulate demo artifacts.
+  # If mesh-common/scenarios/<app>.mjs exists, use it instead of the app's
+  # own tests/demo/scenario.mjs (centralised gameplay scenarios = one repo
+  # to edit for richer fleet-wide demos).
+  local scenario_arg=""
+  if [ -f "$MESH_COMMON_DIR/scenarios/$app.mjs" ]; then
+    scenario_arg="$MESH_COMMON_DIR/scenarios/$app.mjs"
+  fi
   (
     cd "$app_dir"
     DEMO_PORT="$port" \
     DEMO_OUT="$out_dir" \
+    DEMO_SCENARIO="${scenario_arg:-tests/demo/scenario.mjs}" \
       bash "$RECORD_SCRIPT" \
       >"$log" 2>&1
   ) && {
