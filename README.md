@@ -48,6 +48,7 @@ Shared scaffolding + runtime for the `baditaflorin/mesh-*` family of rootless pe
 | **`useChangelogToast`** 🆕 | **One-shot "what's new in vX.Y" toast on the first session after a version bump. Per-peer state in `localStorage`.** |
 | **`CrdtInspector`** 🆕 | **Dev-only overlay (`?inspect=1`) showing every shared type, sizes, updates/sec, peer count, your peerId. Don't ship default-on.** |
 | **`useFakeTime` / `time` / `setFakeTime` / `advanceFakeTime`** 🆕 | **Test fixture: in production every call collapses to `Date.now()`; in tests you freeze and step the clock. `clockSync` honors it transparently.** |
+| **`useFleetPersona` / `FleetAvatar` / `FleetIdentityPanel`** 🆕 | **Cross-app + cross-origin display identity. L0 (per-app local) > L1 (same-origin shared) > L2 (optional `https://fleet-persona.0exec.com`). Captures nickname + name + avatar; apps pick what to render. Service URL defaults to the canonical fleet endpoint — pass `serviceUrl={null}` to disable L2. Includes argon2id-gated write tokens, strict-ASCII allowlist, and QR-able handoff URLs for cross-origin transfer.** |
 | `scaffold/create-mesh-app.sh` | One-shot CLI that creates a new app from the template |
 
 Apps depend on this via `file:../mesh-common` (publish to npm later if/when useful — Vite bundles the package output into each app's `docs/` so live sites are self-contained).

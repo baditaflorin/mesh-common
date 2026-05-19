@@ -275,3 +275,50 @@ export {
   resetFakeTime,
   isFakeTimeActive,
 } from "./useFakeTime";
+
+// ---- fleet identity (2026-05-19) ----
+// fleetPersona: cross-app + cross-origin display identity primitive.
+// L0 (per-app local) > L1 (same-origin shared) > L2 (optional Hetzner
+// service). Captures both nickname + name; apps can prefer either.
+export {
+  type FleetPersona,
+  type FleetSyncMode,
+  type PersonaSource,
+  type ResolvedPersona,
+  type ServiceClientOptions,
+  DEFAULT_PERSONA,
+  DEFAULT_FLEET_PERSONA_SERVICE_URL,
+  PERSONA_FIELD_RE,
+  FleetPersonaStorageKeys,
+  HANDOFF_HASH_KEY,
+  isValidPersonaField,
+  isValidAvatarSeed,
+  isValidVariant,
+  isPersonaEmpty,
+  sanitizePersona,
+  displayLabel,
+  avatarSeedFor,
+  readLocalPersona,
+  writeLocalPersona,
+  clearLocalPersona,
+  readFleetLocalPersona,
+  writeFleetLocalPersona,
+  clearFleetLocalPersona,
+  readMode,
+  writeMode,
+  ensureAnonId,
+  ensureWriteToken,
+  readAnonId,
+  readWriteToken,
+  clearRemoteCredentials,
+  setRemoteCredentials,
+  fetchRemotePersona,
+  publishRemotePersona,
+  deleteRemotePersona,
+  resolvePersonaSync,
+  buildHandoffUrl,
+  consumeHandoffFromHash,
+} from "./fleetPersona";
+export { useFleetPersona, type FleetPersonaApi, type UseFleetPersonaOptions } from "./useFleetPersona";
+export { FleetAvatar, type FleetAvatarProps } from "./FleetAvatar";
+export { FleetIdentityPanel, type FleetIdentityPanelProps } from "./FleetIdentityPanel";

@@ -10,6 +10,52 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+## [0.10.0] — 2026-05-20 — fleet identity (`fleetPersona`)
+
+### Added — cross-app + cross-origin display identity
+
+- **`useFleetPersona({ appName, serviceUrl? })`** — per-app hook that returns
+  `{ persona, source, label, avatarSeed, setNickname, setName, setAvatar,
+  setPersona, forgetLocal, forgetEverywhere, mode, setMode, buildHandoffUrl,
+  importHandoff, hasRemoteCredentials, suggestion, loading }`. Three-tier
+  resolution — L0 (per-app local) > L1 (same-origin shared) > L2 (optional
+  remote service). The L2 fetch is 2 s timeout, fire-and-forget, never blocks
+  the UI. `FleetPersona` carries both **nickname** and **name** so apps pick
+  what to render; the **avatar** (seed + variant + palette) rides along.
+- **`FleetAvatar`** — drop-in avatar for the current persona, built on
+  `PeerAvatar`. Same seed → same picture across every fleet app, no network.
+- **`FleetIdentityPanel`** — drop-in settings UI: nickname + name + avatar
+  picker, sync mode radio (off / same-browser / cross-domain), QR-able handoff
+  URL generator, and a "Forget me everywhere" kill switch. `serviceUrl`
+  defaults to the canonical fleet service; pass `null` to disable L2.
+- **`DEFAULT_FLEET_PERSONA_SERVICE_URL`** — canonical public URL
+  (`https://fleet-persona.0exec.com`) baked in so apps don't have to hard-code.
+- Low-level helpers: `readLocalPersona`, `writeFleetLocalPersona`,
+  `ensureAnonId`, `fetchRemotePersona`, `publishRemotePersona`,
+  `deleteRemotePersona`, `buildHandoffUrl`, `consumeHandoffFromHash`,
+  `sanitizePersona`, `isValidPersonaField`, `resolvePersonaSync`.
+
+### Wire surface
+
+Strict ASCII allowlist (`^[A-Za-z0-9_\- .]{1,32}$`) on every text field — same
+regex on the client and on the server, neutralising stored-XSS / homoglyph
+concerns. anonId + writeToken are 128-bit hex; the writeToken never leaves
+the primitive's module so app code can't accidentally exfiltrate it.
+
+### Tests
+
+39 new vitest tests (`tests/fleetPersona.test.ts` + `tests/useFleetPersona.test.tsx`)
+covering validation, L0/L1 storage isolation, mode toggling, resolution order,
+anon/token lifecycle, handoff URL round-trip, and service-client fetch/publish/delete
+under success, failure, timeout, and 5xx.
+
+### Companion service
+
+`github.com/baditaflorin/go-fleet-persona` — Go binary, pure-Go SQLite,
+argon2id writeToken hashing, fixed-window rate-limit, daily-rotated salted
+IP-hash, deployed at `https://fleet-persona.0exec.com` via the standard
+fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
+
 ## [0.9.0] — 2026-05-19 — consolidation batch 2 (13 primitives)
 
 ### Added — presence layer (built on `useAwareness`)
