@@ -75,33 +75,43 @@ function applyDeepLink(storagePrefix: string): void {
 }
 
 /**
- * Bridge between each mesh-* app's own `<storagePrefix>:myName` localStorage
- * key (the convention used by every app's `useState(myName)`) and the
- * cross-app fleet persona at `mesh-fleet:v1:fleet`. Runs synchronously
- * *before* App.tsx's `useState` callback so the app reads the bridged
- * value on first render — no reload needed in a fresh tab.
+ * Bridge between each mesh-* app's own per-app name localStorage key and
+ * the cross-app fleet persona at `mesh-fleet:v1:fleet`. Runs synchronously
+ * at module load (in `createMeshConfig`), *before* App.tsx's
+ * `useState(() => localStorage.getItem(...))` runs, so the app reads the
+ * bridged value on first render — no reload needed in a fresh tab.
+ *
+ * Three name-key conventions exist in the fleet (~134 apps inspected on
+ * 2026-05-20). We bridge all of them:
+ *   - `<prefix>:displayName` — used by ~54 apps via `useNamedPeer` (canonical)
+ *   - `<prefix>:name`        — used by ~7 apps directly (e.g. mesh-mafia)
+ *   - `<prefix>:myName`      — used by ~2 apps (e.g. mesh-applause)
  *
  * Two-way:
- *   - If `<prefix>:myName` is empty and fleet has a nickname → hydrate
- *     the app key from the fleet (this is the "open new tab, see the
- *     same name" case the user reported).
- *   - If `<prefix>:myName` is set and fleet is empty → migrate the
- *     app's name into the fleet (so future tabs in other apps pick it
- *     up automatically). Validated against the strict-ASCII allowlist;
- *     non-conforming names stay app-local.
+ *   - If every per-app key is empty and fleet has a nickname → hydrate
+ *     ALL three keys from the fleet (harmless: each app reads only its
+ *     own convention; the unused keys sit dormant). This is the
+ *     "open new tab, see the same name" case.
+ *   - If any per-app key is set and fleet is empty → publish the first
+ *     non-empty value to the fleet so future tabs pick it up. Strict-
+ *     ASCII allowlist gated; non-conforming names stay app-local.
  *
  * Cross-tab updates *after* this initial load are not handled here —
- * apps that want live-update can wire `useFleetPersona` directly.
+ * apps that want live cross-tab sync can wire `useFleetPersona` directly.
  */
+const NAME_KEYS = ["displayName", "name", "myName"] as const;
+const FLEET_KEY = "mesh-fleet:v1:fleet";
+const STRICT_ASCII_NAME = /^[A-Za-z0-9_\- .]{1,32}$/;
+
 function bridgeFleetIdentity(storagePrefix: string): void {
   if (typeof window === "undefined") return;
   try {
-    const myNameKey = `${storagePrefix}:myName`;
-    const fleetKey = "mesh-fleet:v1:fleet";
-    const existing = window.localStorage.getItem(myNameKey);
+    const ls = window.localStorage;
+    const keys = NAME_KEYS.map((k) => `${storagePrefix}:${k}`);
+    const existing = keys.map((k) => ls.getItem(k));
 
     let fleetNickname: string | null = null;
-    const fleetRaw = window.localStorage.getItem(fleetKey);
+    const fleetRaw = ls.getItem(FLEET_KEY);
     if (fleetRaw) {
       try {
         const parsed = JSON.parse(fleetRaw) as { nickname?: unknown; name?: unknown };
@@ -115,26 +125,34 @@ function bridgeFleetIdentity(storagePrefix: string): void {
       }
     }
 
-    if (!existing && fleetNickname) {
-      // Fresh app + fleet has a name → pre-populate the app's myName key
-      // before its useState reads localStorage.
-      window.localStorage.setItem(myNameKey, fleetNickname);
+    const firstExisting = existing.find((v): v is string => !!v && v.length > 0);
+
+    // Hydrate: app has no name in any of its possible conventions; fleet does.
+    // Write to ALL three keys so whichever the app reads, it gets the value.
+    if (!firstExisting && fleetNickname) {
+      for (const k of keys) ls.setItem(k, fleetNickname);
       return;
     }
 
-    if (existing && !fleetNickname && /^[A-Za-z0-9_\- .]{1,32}$/.test(existing)) {
-      // App has a name, fleet doesn't → publish it so other apps pick
-      // it up next time they load. Strict-ASCII gate matches the
-      // fleetPersona / go-fleet-persona allowlist.
-      window.localStorage.setItem(
-        fleetKey,
+    // Publish: app has a name, fleet is empty. Push the first existing value.
+    // Only if it matches the strict-ASCII allowlist (matches the
+    // fleetPersona client + go-fleet-persona server validation).
+    if (firstExisting && !fleetNickname && STRICT_ASCII_NAME.test(firstExisting)) {
+      ls.setItem(
+        FLEET_KEY,
         JSON.stringify({
-          nickname: existing,
+          nickname: firstExisting,
           name: "",
           avatarSeed: "",
           avatarVariant: "beam",
         }),
       );
+      // Also mirror to the OTHER conventions so apps using a different key
+      // pick it up in the same tab without waiting for a future cross-app
+      // bounce-back.
+      for (let i = 0; i < keys.length; i++) {
+        if (!existing[i]) ls.setItem(keys[i]!, firstExisting);
+      }
     }
   } catch {
     /* localStorage unavailable (private mode); silently noop */

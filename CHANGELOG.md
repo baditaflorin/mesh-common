@@ -10,6 +10,27 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+## [0.10.3] — 2026-05-20 — bridge all three per-app name-key conventions
+
+### Fixed
+
+- 0.10.2 only bridged `<prefix>:myName`, but the fleet uses three
+  conventions across ~134 apps (surveyed 2026-05-20):
+  - `<prefix>:displayName` — ~54 apps via `useNamedPeer` (canonical)
+  - `<prefix>:name`        — ~7 apps directly (e.g. mesh-mafia)
+  - `<prefix>:myName`      — ~2 apps (e.g. mesh-applause)
+  `createMeshConfig` now reads/writes all three. Hydrate writes the
+  fleet nickname into all three keys (harmless — apps read only their
+  own convention); publish takes the first non-empty value and also
+  mirrors it back into the other keys so same-tab consumers in the
+  same app stay consistent.
+
+### Tested
+
+- `tests/configBridge.test.ts` expanded to 9 cases — one per key
+  convention for both hydrate and publish, plus the same-tab mirror
+  invariant.
+
 ## [0.10.2] — 2026-05-20 — bridge per-app `myName` ↔ fleet persona
 
 ### Fixed

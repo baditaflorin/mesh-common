@@ -25,22 +25,26 @@ function makeConfig() {
 }
 
 describe("createMeshConfig fleetPersona bridge", () => {
-  it("hydrates per-app myName from fleet on first load", () => {
-    // Another app already published a fleet nickname.
+  it("hydrates all three per-app name keys from fleet on first load", () => {
     localStorage.setItem(
       FLEET_KEY,
       JSON.stringify({ nickname: "florin", name: "", avatarSeed: "", avatarVariant: "beam" }),
     );
-    expect(localStorage.getItem(`${PREFIX}:myName`)).toBe(null);
+    for (const k of ["displayName", "name", "myName"]) {
+      expect(localStorage.getItem(`${PREFIX}:${k}`)).toBe(null);
+    }
 
     makeConfig();
 
-    // The bridge ran synchronously — App.tsx's useState will see "florin".
+    // The bridge ran synchronously — each app's App.tsx useState will see "florin"
+    // regardless of which key convention it uses.
+    expect(localStorage.getItem(`${PREFIX}:displayName`)).toBe("florin");
+    expect(localStorage.getItem(`${PREFIX}:name`)).toBe("florin");
     expect(localStorage.getItem(`${PREFIX}:myName`)).toBe("florin");
   });
 
-  it("does NOT overwrite an existing per-app myName", () => {
-    localStorage.setItem(`${PREFIX}:myName`, "alice");
+  it("does NOT overwrite an existing per-app key (any convention)", () => {
+    localStorage.setItem(`${PREFIX}:name`, "alice"); // mesh-mafia convention
     localStorage.setItem(
       FLEET_KEY,
       JSON.stringify({ nickname: "florin", name: "", avatarSeed: "", avatarVariant: "beam" }),
@@ -48,29 +52,49 @@ describe("createMeshConfig fleetPersona bridge", () => {
 
     makeConfig();
 
-    expect(localStorage.getItem(`${PREFIX}:myName`)).toBe("alice"); // L0 wins
+    expect(localStorage.getItem(`${PREFIX}:name`)).toBe("alice");
   });
 
-  it("publishes existing per-app myName to fleet when fleet is empty", () => {
-    localStorage.setItem(`${PREFIX}:myName`, "alice");
-    expect(localStorage.getItem(FLEET_KEY)).toBe(null);
-
+  it("publishes from `:name` (mesh-mafia convention) to fleet", () => {
+    localStorage.setItem(`${PREFIX}:name`, "alice");
     makeConfig();
-
     const fleet = JSON.parse(localStorage.getItem(FLEET_KEY) ?? "null");
     expect(fleet?.nickname).toBe("alice");
   });
 
+  it("publishes from `:displayName` (useNamedPeer convention) to fleet", () => {
+    localStorage.setItem(`${PREFIX}:displayName`, "alice");
+    makeConfig();
+    const fleet = JSON.parse(localStorage.getItem(FLEET_KEY) ?? "null");
+    expect(fleet?.nickname).toBe("alice");
+  });
+
+  it("publishes from `:myName` (mesh-applause convention) to fleet", () => {
+    localStorage.setItem(`${PREFIX}:myName`, "alice");
+    makeConfig();
+    const fleet = JSON.parse(localStorage.getItem(FLEET_KEY) ?? "null");
+    expect(fleet?.nickname).toBe("alice");
+  });
+
+  it("publish mirrors the value into the other per-app keys (same-tab same-app sync)", () => {
+    localStorage.setItem(`${PREFIX}:name`, "alice");
+    makeConfig();
+    expect(localStorage.getItem(`${PREFIX}:displayName`)).toBe("alice");
+    expect(localStorage.getItem(`${PREFIX}:myName`)).toBe("alice");
+  });
+
   it("refuses to publish names that violate the strict-ASCII allowlist", () => {
-    localStorage.setItem(`${PREFIX}:myName`, "florín"); // non-ASCII
+    localStorage.setItem(`${PREFIX}:name`, "florín");
     makeConfig();
     expect(localStorage.getItem(FLEET_KEY)).toBe(null);
 
-    localStorage.setItem(`${PREFIX}:myName`, "alice🦊"); // emoji
+    localStorage.clear();
+    localStorage.setItem(`${PREFIX}:name`, "alice🦊");
     makeConfig();
     expect(localStorage.getItem(FLEET_KEY)).toBe(null);
 
-    localStorage.setItem(`${PREFIX}:myName`, "a".repeat(33)); // too long
+    localStorage.clear();
+    localStorage.setItem(`${PREFIX}:name`, "a".repeat(33));
     makeConfig();
     expect(localStorage.getItem(FLEET_KEY)).toBe(null);
   });
@@ -78,6 +102,8 @@ describe("createMeshConfig fleetPersona bridge", () => {
   it("ignores a corrupt fleet entry (does not throw, does not hydrate)", () => {
     localStorage.setItem(FLEET_KEY, "not-json");
     expect(() => makeConfig()).not.toThrow();
+    expect(localStorage.getItem(`${PREFIX}:displayName`)).toBe(null);
+    expect(localStorage.getItem(`${PREFIX}:name`)).toBe(null);
     expect(localStorage.getItem(`${PREFIX}:myName`)).toBe(null);
   });
 
@@ -87,6 +113,6 @@ describe("createMeshConfig fleetPersona bridge", () => {
       JSON.stringify({ nickname: "", name: "Florin", avatarSeed: "", avatarVariant: "beam" }),
     );
     makeConfig();
-    expect(localStorage.getItem(`${PREFIX}:myName`)).toBe("Florin");
+    expect(localStorage.getItem(`${PREFIX}:displayName`)).toBe("Florin");
   });
 });
