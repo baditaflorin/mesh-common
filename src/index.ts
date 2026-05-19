@@ -190,3 +190,88 @@ export {
   type TypedArray,
   type ContractOptions,
 } from "./featureContract";
+
+// ---- consolidation primitives, batch 2 (2026-05-19) ----
+
+// Presence layer built on useAwareness.
+export {
+  usePresenceCursors,
+  type PresenceCursorsApi,
+  type PresenceCursorsOptions,
+  type CursorState,
+} from "./usePresenceCursors";
+export {
+  useTypingIndicator,
+  type TypingIndicatorState,
+  type TypingIndicatorOptions,
+} from "./useTypingIndicator";
+export {
+  useNetworkQuality,
+  type NetworkQualityState,
+  type NetworkQualityOptions,
+} from "./useNetworkQuality";
+
+// Messaging.
+export {
+  useReadReceipts,
+  type ReadReceiptsApi,
+  type ReadReceiptsOptions,
+} from "./useReadReceipts";
+export {
+  useThreadedMessages,
+  type ThreadedMessage,
+  type ThreadedMessagesApi,
+  type ThreadedMessagesOptions,
+} from "./useThreadedMessages";
+
+// Network + lifecycle.
+export {
+  useNetworkOnline,
+  type NetworkOnlineState,
+  type NetworkOnlineOptions,
+} from "./useNetworkOnline";
+export {
+  useOfflineQueue,
+  type OfflineQueueApi,
+  type OfflineQueueOptions,
+  type QueueItem,
+} from "./useOfflineQueue";
+
+// Media.
+export {
+  useFileShare,
+  type FileShareApi,
+  type FileShareOptions,
+  type SharedFile,
+  type FileManifest,
+} from "./useFileShare";
+export {
+  useVoiceActivity,
+  type VoiceActivityOptions,
+  type VoiceActivityState,
+} from "./useVoiceActivity";
+
+// Rendering.
+export {
+  SafeMarkdown,
+  renderMarkdownToSafeHtml,
+  type SafeMarkdownProps,
+} from "./SafeMarkdown";
+
+// Lifecycle UX.
+export {
+  useChangelogToast,
+  type ChangelogToastOptions,
+} from "./useChangelogToast";
+
+// Dev tooling.
+export { CrdtInspector, type CrdtInspectorProps } from "./CrdtInspector";
+
+// Test fixture (production-safe; in prod every call collapses to Date.now()).
+export {
+  now as time,
+  setFakeTime,
+  advanceFakeTime,
+  resetFakeTime,
+  isFakeTimeActive,
+} from "./useFakeTime";
