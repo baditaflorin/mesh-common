@@ -10,6 +10,17 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+## [0.10.1] — 2026-05-20 — `MeshShell` integrates `FleetIdentityPanel`
+
+### Changed
+
+- **`MeshShell`** now renders `FleetIdentityPanel` inside the settings drawer
+  by default, so every app gets cross-app identity for free on rebuild — no
+  per-app code changes required. Apps that want to opt out (kiosks, apps that
+  own their own identity flow) can pass `fleetIdentityServiceUrl={null}`.
+- Apps that want to override the service URL (e.g. point at a staging
+  instance) pass `fleetIdentityServiceUrl="https://staging.example"`.
+
 ## [0.10.0] — 2026-05-20 — fleet identity (`fleetPersona`)
 
 ### Added — cross-app + cross-origin display identity

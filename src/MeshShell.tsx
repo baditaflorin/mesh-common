@@ -6,6 +6,7 @@ import { SettingsDrawer } from "./SettingsDrawer";
 import { InviteShareButton } from "./InviteShareButton";
 import { useInviteChain } from "./useInviteChain";
 import { useMeshBeacon } from "./useMeshBeacon";
+import { FleetIdentityPanel } from "./FleetIdentityPanel";
 
 type Props = {
   config: MeshConfig;
@@ -19,6 +20,12 @@ type Props = {
   room?: YRoom | null;
   /** App-specific settings UI injected into the drawer. */
   settingsExtras?: ReactNode;
+  /**
+   * Cross-origin persona sync service URL. Defaults to the fleet's canonical
+   * `https://fleet-persona.0exec.com`. Pass `null` to hide the fleet-identity
+   * panel entirely (e.g. for kiosks or apps that own their own identity flow).
+   */
+  fleetIdentityServiceUrl?: string | null;
   children: ReactNode;
 };
 
@@ -38,6 +45,7 @@ export function MeshShell({
   onRoomChange,
   room,
   settingsExtras,
+  fleetIdentityServiceUrl,
   children,
 }: Props) {
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -96,6 +104,12 @@ export function MeshShell({
         onRoomChange={onRoomChange}
       >
         {settingsExtras}
+        {fleetIdentityServiceUrl !== null ? (
+          <FleetIdentityPanel
+            appName={config.storagePrefix}
+            serviceUrl={fleetIdentityServiceUrl}
+          />
+        ) : null}
       </SettingsDrawer>
     </div>
   );
