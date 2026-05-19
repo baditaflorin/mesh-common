@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>mesh-common — shared runtime for mesh-* P2P apps</title>
+  <style>
+    :root { color-scheme: dark; }
+    html, body { margin: 0; padding: 0; background: #0e1117; color: #e6edf3; font: 14px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; }
+    a { color: #58a6ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+
+    /* hero */
+    .hero { padding: 56px 0 40px; border-bottom: 1px solid #21262d; }
+    .hero h1 { margin: 0 0 8px; font-size: 28px; font-weight: 700; }
+    .hero .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 16px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; background: #2d333b; color: #e6edf3; border: 1px solid #444c56; }
+    .badge.green { background: #133929; border-color: #196c2e; color: #56d364; }
+    .badge.blue  { background: #1a2e4a; border-color: #1f6feb; color: #58a6ff; }
+    .hero p { margin: 0 0 24px; color: #8b949e; max-width: 700px; font-size: 15px; line-height: 1.6; }
+    .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; border: 1px solid; }
+    .btn-primary { background: #238636; border-color: #2ea043; color: #fff; }
+    .btn-primary:hover { background: #2ea043; text-decoration: none; }
+    .btn-secondary { background: #21262d; border-color: #30363d; color: #e6edf3; }
+    .btn-secondary:hover { background: #30363d; text-decoration: none; }
+
+    /* sections */
+    section { padding: 40px 0; border-bottom: 1px solid #21262d; }
+    section:last-of-type { border-bottom: none; }
+    section h2 { margin: 0 0 20px; font-size: 18px; font-weight: 600; }
+
+    /* module table */
+    .module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+    .module-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px 16px; }
+    .module-card .name { font-family: ui-monospace, SF Mono, Menlo, monospace; color: #79c0ff; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .module-card .desc { color: #8b949e; font-size: 12px; line-height: 1.5; }
+    .new-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 3px; background: #1a2e4a; color: #58a6ff; border: 1px solid #1f6feb; vertical-align: middle; margin-left: 4px; }
+
+    /* install */
+    .code-block { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px 20px; font-family: ui-monospace, SF Mono, Menlo, monospace; font-size: 13px; color: #e6edf3; overflow-x: auto; }
+    .code-block .comment { color: #6e7681; }
+    .code-block .keyword { color: #ff7b72; }
+    .code-block .string { color: #a5d6ff; }
+    .code-block .fn { color: #d2a8ff; }
+
+    /* quick-links */
+    .link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .link-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+    .link-card .lc-title { font-weight: 600; font-size: 14px; }
+    .link-card .lc-sub { color: #8b949e; font-size: 12px; }
+
+    footer.page-footer { padding: 24px 0 32px; color: #6e7681; font-size: 12px; }
+    footer.page-footer a { color: #6e7681; }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="hero">
+    <h1>mesh-common</h1>
+    <div class="badge-row">
+      <span class="badge green">MIT</span>
+      <span class="badge blue">v0.9.0</span>
+      <span class="badge">WebRTC · Yjs · TypeScript</span>
+    </div>
+    <p>
+      Shared scaffolding and runtime for the <code>baditaflorin/mesh-*</code> family of rootless,
+      peer-to-peer browser apps. WebRTC mesh via Yjs, settings drawer, self-referential footer,
+      clock sync, commit-reveal — everything the 134 live apps share, factored into one package.
+    </p>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="demos/">View all 134 demos →</a>
+      <a class="btn btn-secondary" href="https://github.com/baditaflorin/mesh-common" target="_blank" rel="noreferrer">GitHub</a>
+      <a class="btn btn-secondary" href="https://www.paypal.com/paypalme/florinbadita" target="_blank" rel="noreferrer">Tip ♥</a>
+    </div>
+  </div>
+
+  <section>
+    <h2>Core modules</h2>
+    <div class="module-grid">
+      <div class="module-card">
+        <div class="name">createMeshConfig</div>
+        <div class="desc">One-call config factory: app name, accent, version, commit, signaling/TURN/PayPal defaults.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">MeshShell</div>
+        <div class="desc">Top-level chrome: ⚙ FAB → settings drawer, self-referential footer (source / tip / version).</div>
+      </div>
+      <div class="module-card">
+        <div class="name">useYRoom</div>
+        <div class="desc">React hook → <code>{ doc, provider, peerId, peerCount }</code> for a given room ID.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">clockSync</div>
+        <div class="desc">NTP-over-Yjs offset → mesh-median time, stable to ~10–30 ms.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">commitReveal</div>
+        <div class="desc">SHA-256 commit/reveal for anonymous votes, fair RNG, and role assignment.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">identity ⭐</div>
+        <div class="desc">Ed25519 keypair generation, persistence, sign/verify, <code>useIdentity</code> hook (~32 KB).</div>
+      </div>
+      <div class="module-card">
+        <div class="name">tofuRegistry ⭐</div>
+        <div class="desc"><code>Y.Map&lt;peerId, signed pubkey record&gt;</code> with first-use trust pinning.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">moderator ⭐</div>
+        <div class="desc">Signed first-claim-wins role, 30-min auto-expire, partition-aware tiebreak.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">PersonalQR / useQRScanner</div>
+        <div class="desc">Inline-SVG QR (real-URL payload) + camera scanner + paste-fallback widget.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">useDirectedEdges / shortestPath</div>
+        <div class="desc">Append-only <code>Y.Array&lt;Edge&gt;</code> + graph helpers for social-graph apps.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">MeshErrorBoundary <span class="new-badge">NEW</span></div>
+        <div class="desc">Drop-in crash containment: "try again", "copy diagnostics", "reload page". Accepts <code>fallback</code> render-prop and <code>onError</code>.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">useMeshLink <span class="new-badge">NEW</span></div>
+        <div class="desc">Type-safe encoder + parser for the <code>#r=…&amp;p=…&amp;x=…</code> deep-link fragment. Wire-format versioned via <code>&amp;v=</code>.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">useAwareness <span class="new-badge">NEW</span></div>
+        <div class="desc">Typed wrapper around <code>y-protocols/awareness</code> — presence, cursors, typing indicators with one hook.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">PeerAvatar <span class="new-badge">NEW</span></div>
+        <div class="desc">Deterministic inline-SVG avatar from a peerId. Zero network, zero PII.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">usePresenceCursors <span class="new-badge">NEW</span></div>
+        <div class="desc">Figma-style live cursors via <code>useAwareness</code>, throttled to ~30 Hz with auto-coloring per peerId.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">useRoomSeal <span class="new-badge">NEW</span></div>
+        <div class="desc">Room-wide AES-GCM seal via PBKDF2(passphrase, roomId). Opt-in E2E with no key-exchange UX.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">useTypedMap / useTypedArray <span class="new-badge">NEW</span></div>
+        <div class="desc">Zod-validated <code>Y.Map</code> / <code>Y.Array</code> — invalid writes from old/hostile peers filtered at the edge.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">useFileShare <span class="new-badge">NEW</span></div>
+        <div class="desc">Chunked file share through the Yjs transport (5 MB cap). Receiver gets <code>download(fileId)</code> + <code>blobOf(fileId)</code>.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">useVoiceActivity <span class="new-badge">NEW</span></div>
+        <div class="desc">VAD by RMS energy + zero-crossing rate. Pure Web Audio, ~100 lines, no ML payload.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">SafeMarkdown <span class="new-badge">NEW</span></div>
+        <div class="desc">Markdown via <code>marked</code> + allow-list sanitizer. No raw HTML pass-through.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">useMultiRoom <span class="new-badge">NEW</span></div>
+        <div class="desc">Run several Yjs rooms in one tab — facilitator dashboards, embeds, side-by-side mesh apps.</div>
+      </div>
+      <div class="module-card">
+        <div class="name">CrdtInspector <span class="new-badge">NEW</span></div>
+        <div class="desc">Dev-only overlay (<code>?inspect=1</code>): shared types, sizes, updates/sec, peer count, peerId.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Quick start</h2>
+    <div class="code-block">
+<span class="comment"># in a mesh-* app sibling folder</span>
+<span class="keyword">npm</span> install <span class="string">file:../mesh-common</span>
+    </div>
+    <br>
+    <div class="code-block">
+<span class="keyword">import</span> { <span class="fn">createMeshConfig</span>, <span class="fn">MeshShell</span>, <span class="fn">useYRoom</span> } <span class="keyword">from</span> <span class="string">'@baditaflorin/mesh-common'</span>;
+
+<span class="keyword">const</span> config = <span class="fn">createMeshConfig</span>({
+  appName: <span class="string">'my-app'</span>,
+  accent:  <span class="string">'#6f42c1'</span>,
+  version: <span class="string">'0.1.0'</span>,
+});
+
+<span class="keyword">export default function</span> <span class="fn">App</span>() {
+  <span class="keyword">const</span> { doc, provider, peerCount } = <span class="fn">useYRoom</span>(config.roomId);
+  <span class="keyword">return</span> &lt;<span class="fn">MeshShell</span> config={config}&gt;…&lt;/<span class="fn">MeshShell</span>&gt;;
+}
+    </div>
+    <br>
+    <p style="color:#8b949e; font-size:13px;">
+      Or scaffold a new app in one command:
+    </p>
+    <div class="code-block">
+bash scaffold/create-mesh-app.sh my-new-app
+    </div>
+  </section>
+
+  <section>
+    <h2>Links</h2>
+    <div class="link-grid">
+      <a class="link-card" href="demos/" style="color:inherit;">
+        <div class="lc-title">🎮 Live demos</div>
+        <div class="lc-sub">134 apps, all running in the browser</div>
+      </a>
+      <a class="link-card" href="https://github.com/baditaflorin/mesh-common" target="_blank" rel="noreferrer" style="color:inherit;">
+        <div class="lc-title">📦 GitHub repo</div>
+        <div class="lc-sub">Source, issues, PRs</div>
+      </a>
+      <a class="link-card" href="https://github.com/baditaflorin/mesh-common/blob/main/CHANGELOG.md" target="_blank" rel="noreferrer" style="color:inherit;">
+        <div class="lc-title">📋 Changelog</div>
+        <div class="lc-sub">Release notes per version</div>
+      </a>
+      <a class="link-card" href="https://github.com/baditaflorin/mesh-common/blob/main/scaffold/create-mesh-app.sh" target="_blank" rel="noreferrer" style="color:inherit;">
+        <div class="lc-title">🛠 Scaffold script</div>
+        <div class="lc-sub">Bootstrap a new mesh-* app</div>
+      </a>
+      <a class="link-card" href="https://www.paypal.com/paypalme/florinbadita" target="_blank" rel="noreferrer" style="color:inherit;">
+        <div class="lc-title">❤️ Tip / Support</div>
+        <div class="lc-sub">PayPal — every bit helps</div>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  <div class="page">
+    <a href="https://github.com/baditaflorin/mesh-common">mesh-common</a> v0.9.0 ·
+    <a href="https://github.com/baditaflorin/mesh-common/blob/main/LICENSE">MIT</a> ·
+    <a href="https://www.paypal.com/paypalme/florinbadita">tip ♥</a>
+  </div>
+</footer>
+
+</body>
+</html>
