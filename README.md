@@ -30,6 +30,11 @@ Shared scaffolding + runtime for the `baditaflorin/mesh-*` family of rootless pe
 | `@baditaflorin/mesh-common/prettier` 🆕 | **Shared Prettier preset.** `"prettier": "@baditaflorin/mesh-common/prettier"` in each app's `package.json`. |
 | `scripts/generate-privacy-section.mjs` 🆕 | **Rewrites the auto-generated `Capabilities used` block in `docs/privacy.md` from `src/` imports.** Run with `--check` in pre-push to fail the build if drift is detected. |
 | `scripts/install-perf-checks.sh` 🆕 | **Installs `tests/e2e/perf-budget.spec.ts` (LCP + INP + TBT budgets) and `tests/e2e/memory-leak.spec.ts` (heap growth detector) into an existing app.** |
+| **`useAwareness`** 🆕 | **Typed wrapper around `y-protocols/awareness` — presence / cursors / typing indicators with one hook. Returns `AwarenessApi<T>`.** |
+| **`PeerAvatar`** 🆕 | **Deterministic inline-SVG avatar from a peerId (`beam` blob or `grid` identicon). Props on `PeerAvatarProps`; selectable via `AvatarVariant`. Zero network, zero PII.** |
+| **`useMultiRoom`** 🆕 | **Run several Yjs rooms in one tab — facilitator dashboards, embeds, side-by-side mesh apps. Shape: `MultiRoomApi` over `MultiRoomEntry[]`.** |
+| **`useTypedMap` / `useTypedArray` / `defineFeatureContract`** 🆕 | **Zod-validated `Y.Map` / `Y.Array` — old/hostile peers' invalid writes get filtered at the edge. Returns `TypedMap` / `TypedArray`; configure via `ContractOptions`.** |
+| **`useRoomSeal` / `deriveRoomKey` / `sealerFromKey`** 🆕 | **Room-wide AES-GCM seal via PBKDF2(passphrase, roomId) — opt-in E2E with no key-exchange UX. Returns `RoomSeal`; configure via `RoomSealOptions`.** |
 | `scaffold/create-mesh-app.sh` | One-shot CLI that creates a new app from the template |
 
 Apps depend on this via `file:../mesh-common` (publish to npm later if/when useful — Vite bundles the package output into each app's `docs/` so live sites are self-contained).
@@ -177,6 +182,41 @@ Override thresholds per app via env vars:
 MESH_BUDGET_LCP_MS=4000 MESH_BUDGET_INP_MS=500 npx playwright test tests/e2e/perf-budget.spec.ts
 MESH_LEAK_DURATION_MS=120000 MESH_LEAK_BUDGET_MB=10 npm run test:leak
 ```
+
+### Recording specs interactively
+
+```bash
+cd mesh-foo
+bash ../mesh-common/scripts/test-record.sh
+```
+
+Builds the app, boots `vite preview`, opens chromium with `playwright codegen`, and writes your clicks/typing to `tests/e2e/recorded.spec.ts`. Clean up afterward (replace `waitForTimeout` with `locator.waitFor`, add `expect()` assertions, rename to `feature.spec.ts`) and commit.
+
+### Fleet drift audit
+
+```bash
+bash mesh-common/scripts/mesh-doctor.sh           # audit cwd app
+bash mesh-common/scripts/mesh-doctor.sh --fleet   # audit every sibling mesh-*
+```
+
+Reports mesh-common pin freshness, scaffold completeness, `MeshShell` presence, e2e spec count, Pages output, and README-vs-imports drift. Fails on missing essentials; warns on stale pins.
+
+## Documentation drift policy
+
+Every commit that adds a public `src/index.ts` export must also touch `README.md` and `CHANGELOG.md`. Enforced by `scripts/check-docs-updated.sh`, wired into the pre-commit hook via:
+
+```bash
+bash scripts/install-hooks.sh
+```
+
+The hook diffs `src/index.ts` against `HEAD`. For every newly exported identifier:
+
+1. The identifier name must appear somewhere in `README.md`.
+2. `CHANGELOG.md` must be touched in the same commit (staged, unstaged, or untracked).
+
+Reviewers can run `bash scripts/check-docs-updated.sh --range main..HEAD` on a PR branch before merge.
+
+Why this exists: a new primitive that ships without a README mention is invisible to the 135 apps that could use it — and to me, six months later, trying to remember what I built.
 
 ## No GitHub Actions
 

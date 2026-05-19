@@ -644,6 +644,53 @@ describe("useGesture", () => {
     expect(typeof result.current.handlers.onPointerUp).toBe("function");
     expect(typeof result.current.handlers.onPointerCancel).toBe("function");
   });
+
+  it("fires longpress + onLongPress after holding past the threshold", async () => {
+    vi.useFakeTimers();
+    const onLongPress = vi.fn();
+    const { result } = renderHook(() => useGesture({ longPressMs: 100, onLongPress }));
+    const fakeEvent = {
+      pointerId: 1,
+      clientX: 100,
+      clientY: 100,
+      target: { setPointerCapture: () => undefined },
+    } as unknown as React.PointerEvent;
+    act(() => {
+      result.current.handlers.onPointerDown(fakeEvent);
+    });
+    expect(result.current.kind).toBe("tap");
+    act(() => {
+      vi.advanceTimersByTime(150);
+    });
+    expect(result.current.kind).toBe("longpress");
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+    vi.useRealTimers();
+  });
+
+  it("does not fire longpress if the pointer moves before the threshold", () => {
+    vi.useFakeTimers();
+    const onLongPress = vi.fn();
+    const { result } = renderHook(() => useGesture({ longPressMs: 100, onLongPress }));
+    const down = {
+      pointerId: 1,
+      clientX: 100,
+      clientY: 100,
+      target: { setPointerCapture: () => undefined },
+    } as unknown as React.PointerEvent;
+    const moveFar = { pointerId: 1, clientX: 200, clientY: 200 } as unknown as React.PointerEvent;
+    act(() => {
+      result.current.handlers.onPointerDown(down);
+    });
+    act(() => {
+      result.current.handlers.onPointerMove(moveFar);
+    });
+    act(() => {
+      vi.advanceTimersByTime(200);
+    });
+    expect(onLongPress).not.toHaveBeenCalled();
+    expect(result.current.kind).toBe("pan");
+    vi.useRealTimers();
+  });
 });
 
 describe("useCamera + useFlashlight", () => {

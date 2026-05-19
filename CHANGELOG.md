@@ -4,7 +4,62 @@ All notable changes to `@baditaflorin/mesh-common` are recorded here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+The `scripts/check-docs-updated.sh` pre-commit hook fails any commit that
+adds a new `src/index.ts` export without a corresponding entry here and a
+mention in `README.md`.
+
 ## [Unreleased]
+
+## [0.8.0] — 2026-05-19 — consolidation batch 1 (5 primitives + docs-sync gate)
+
+### Added
+- **`useAwareness<T>(room)`** — typed wrapper around `y-protocols/awareness`
+  for ephemeral per-peer state (cursors, "typing…", live reactions). Sister
+  to `useRoster` (heartbeat-based, persistent) and `usePerPeerValue`
+  (CRDT-persisted) but explicitly *ephemeral* — disappears on disconnect,
+  not part of CRDT history. Replaces ad-hoc `provider.awareness.on(...)`
+  copies in apps.
+- **`PeerAvatar`** — deterministic inline-SVG avatar seeded from a peerId
+  or pubkey. Zero network, zero PII, zero new deps (uses existing
+  `@noble/hashes`). Two variants: `beam` (soft blob) and `grid`
+  (5×5 horizontally-symmetric identicon). Pairs with `tofuRegistry` for
+  soft "same person" recognition.
+- **`useRoomSeal({ roomId, passphrase })`** (security) — room-wide AES-GCM
+  envelope. Key derived from PBKDF2-SHA256 (200k iterations) over the
+  passphrase + room-scoped salt. Pure-function variants `deriveRoomKey` and
+  `sealerFromKey` for non-React contexts. Use when the room URL alone
+  shouldn't grant read access (e.g. sealed votes, forwarded invites).
+  Honest: metadata still leaks; pair with `useSignedWrite` for provenance.
+- **`useMultiRoom(config, [roomIds], { initialActive })`** — run several
+  Yjs WebRTC rooms in one tab without cross-talk. Tab-strip facilitator
+  pattern (`tabs.setActive("beta")`), each room gets its own Y.Doc + provider.
+- **Feature contract (Zod)** — `useTypedMap`, `useTypedArray`,
+  `defineFeatureContract`. Validates every read; filters out invalid
+  entries written by old/hostile peers and surfaces them via `lastInvalid`.
+  New runtime dep: `zod@^4` (zero transitive deps, ~14 KB gzip).
+- **Long-press gesture** — `useGesture({ longPressMs, onLongPress })` now
+  fires a dedicated `longpress` kind after the hold threshold (default
+  600 ms), with optional `navigator.vibrate(40)` haptic feedback when
+  available.
+- **`scripts/test-record.sh`** — interactive `playwright codegen` wrapper.
+  Boots `vite preview`, opens chromium, records clicks/typing to
+  `tests/e2e/recorded.spec.ts` for any mesh-* app.
+- **`scripts/mesh-doctor.sh`** — single-app or `--fleet` drift audit.
+  Reports mesh-common pin freshness, scaffold completeness, chrome
+  presence, test/Pages output, and README-vs-imports drift.
+- **`scripts/check-docs-updated.sh`** — diff `src/index.ts` against HEAD
+  (or a `--range A..B`); fail if new exports landed without README mention
+  and CHANGELOG entry.
+- **`scripts/install-hooks.sh`** — installs the pre-commit gate into
+  `.git/hooks/` (no Husky dependency).
+
+### Changed
+- `GestureKind` widened to include `"longpress"`.
+- `package.json` version bumped 0.7.0 → 0.8.0 (lands after ecosystem batch 3).
+
+### Infrastructure
+- Vitest `environmentMatchGlobs` extended for the new jsdom-needing tests.
+- `package.json` adds `zod` to `dependencies`.
 
 ## [0.7.0] — 2026-05-19 — ecosystem batch 3
 
@@ -87,8 +142,9 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [0.5.0] — 2026-05-17
 
-- 20 security + multiplayer primitives.
-- 30 hook primitives extracted from the live app fleet.
+- 20 security + multiplayer primitives (`security/*`, `multiplayer/*`).
+- 30 hook primitives extracted from the live app fleet (sensors, presence,
+  voting, reactions, confetti, gestures, …).
 
 ## Older
 

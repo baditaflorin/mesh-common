@@ -18,3 +18,10 @@ export {
 } from "./useStorageNamespace";
 export { useOriginGuard, type OriginGuardState } from "./useOriginGuard";
 export { useUpdateCheck, type UpdateCheckState } from "./useUpdateCheck";
+export {
+  deriveRoomKey,
+  sealerFromKey,
+  useRoomSeal,
+  type RoomSeal,
+  type RoomSealOptions,
+} from "./roomSeal";

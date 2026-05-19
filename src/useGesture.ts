@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 
-export type GestureKind = "tap" | "pan" | "pinch" | "rotate" | "swipe" | "none";
+export type GestureKind = "tap" | "longpress" | "pan" | "pinch" | "rotate" | "swipe" | "none";
 
 export type GestureState = {
   /** Currently active gesture (or "none"). */
@@ -48,13 +48,21 @@ function angle(a: ActivePointer, b: ActivePointer): number {
 export function useGesture(opts?: {
   swipeThresholdPx?: number;
   swipeMaxMs?: number;
+  /** Hold duration to fire a long-press (ms). Default 600. */
+  longPressMs?: number;
+  /** Called once when long-press fires. Optional convenience. */
+  onLongPress?: () => void;
 }): GestureState {
   const swipePx = opts?.swipeThresholdPx ?? 50;
   const swipeMs = opts?.swipeMaxMs ?? 400;
+  const longPressMs = opts?.longPressMs ?? 600;
+  const onLongPress = opts?.onLongPress;
   const pointers = useRef<Map<number, ActivePointer>>(new Map());
   const startAt = useRef(0);
   const startDist = useRef(0);
   const startAngle = useRef(0);
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const longPressFired = useRef(false);
   const [state, setState] = useState<Omit<GestureState, "handlers">>({
     kind: "none",
     dx: 0,
@@ -63,6 +71,13 @@ export function useGesture(opts?: {
     rotation: 0,
     swipeDir: null,
   });
+
+  const cancelLongPress = useCallback(() => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  }, []);
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     (e.target as Element).setPointerCapture?.(e.pointerId);
@@ -75,15 +90,31 @@ export function useGesture(opts?: {
     });
     if (pointers.current.size === 1) {
       startAt.current = Date.now();
+      longPressFired.current = false;
+      cancelLongPress();
+      longPressTimer.current = setTimeout(() => {
+        // Only fire if still pressed and hasn't moved (pan would have cleared kind=tap above)
+        if (pointers.current.size === 1) {
+          longPressFired.current = true;
+          setState((s) => (s.kind === "tap" ? { ...s, kind: "longpress" } : s));
+          try {
+            (navigator as { vibrate?: (p: number | number[]) => boolean }).vibrate?.(40);
+          } catch {
+            /* haptics best-effort */
+          }
+          onLongPress?.();
+        }
+      }, longPressMs);
       setState({ kind: "tap", dx: 0, dy: 0, scale: 1, rotation: 0, swipeDir: null });
     } else if (pointers.current.size === 2) {
+      cancelLongPress();
       const [a, b] = Array.from(pointers.current.values());
       if (a && b) {
         startDist.current = dist(a, b);
         startAngle.current = angle(a, b);
       }
     }
-  }, []);
+  }, [cancelLongPress, longPressMs, onLongPress]);
 
   const onPointerMove = useCallback((e: React.PointerEvent) => {
     const p = pointers.current.get(e.pointerId);
@@ -94,6 +125,7 @@ export function useGesture(opts?: {
       const dx = p.x - p.sx;
       const dy = p.y - p.sy;
       if (Math.hypot(dx, dy) > 5) {
+        cancelLongPress();
         setState((s) => ({ ...s, kind: "pan", dx, dy }));
       }
     } else if (pointers.current.size === 2) {
@@ -118,6 +150,7 @@ export function useGesture(opts?: {
       const p = pointers.current.get(e.pointerId);
       pointers.current.delete(e.pointerId);
       if (p && pointers.current.size === 0) {
+        cancelLongPress();
         const dt = Date.now() - startAt.current;
         const dx = p.x - p.sx;
         const dy = p.y - p.sy;
@@ -127,6 +160,7 @@ export function useGesture(opts?: {
         if (dt < swipeMs && Math.max(absDx, absDy) > swipePx) {
           swipeDir = absDx > absDy ? (dx > 0 ? "right" : "left") : dy > 0 ? "down" : "up";
         }
+        // A long-press release should reset to "none" — not swipe back to tap.
         setState({
           kind: swipeDir ? "swipe" : "none",
           dx: 0,
@@ -137,13 +171,14 @@ export function useGesture(opts?: {
         });
       }
     },
-    [swipeMs, swipePx],
+    [swipeMs, swipePx, cancelLongPress],
   );
 
   const onPointerCancel = useCallback((e: React.PointerEvent) => {
     pointers.current.delete(e.pointerId);
+    cancelLongPress();
     setState({ kind: "none", dx: 0, dy: 0, scale: 1, rotation: 0, swipeDir: null });
-  }, []);
+  }, [cancelLongPress]);
 
   return {
     ...state,

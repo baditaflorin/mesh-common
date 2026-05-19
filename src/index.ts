@@ -160,3 +160,33 @@ export {
   type MeshLinkPayload,
   type ParsedMeshLink,
 } from "./useMeshLink";
+
+// ---- consolidation primitives, batch 1 (2026-05-19) ----
+// useAwareness: typed wrapper around y-protocols/awareness (presence,
+// cursors, typing-indicators). Replaces per-app `provider.awareness.on(...)`
+// ad-hoc copies.
+export { useAwareness, type AwarenessApi } from "./useAwareness";
+
+// PeerAvatar: deterministic inline SVG seeded by peerId — zero network,
+// zero PII. Pairs with tofuRegistry: same peerId == same avatar across
+// every screen.
+export { PeerAvatar, type PeerAvatarProps, type AvatarVariant } from "./PeerAvatar";
+
+// useMultiRoom: run several Yjs rooms in one tab (facilitator running
+// mesh-buzzer + mesh-live-poll side-by-side, embeds, dashboards).
+export {
+  useMultiRoom,
+  type MultiRoomApi,
+  type MultiRoomEntry,
+} from "./useMultiRoom";
+
+// Feature contract: zod-typed Y.Map / Y.Array wrappers — peers on old
+// clients writing junk get filtered at the edge.
+export {
+  useTypedMap,
+  useTypedArray,
+  defineFeatureContract,
+  type TypedMap,
+  type TypedArray,
+  type ContractOptions,
+} from "./featureContract";
