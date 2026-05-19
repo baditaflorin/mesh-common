@@ -74,9 +74,77 @@ function applyDeepLink(storagePrefix: string): void {
   }
 }
 
+/**
+ * Bridge between each mesh-* app's own `<storagePrefix>:myName` localStorage
+ * key (the convention used by every app's `useState(myName)`) and the
+ * cross-app fleet persona at `mesh-fleet:v1:fleet`. Runs synchronously
+ * *before* App.tsx's `useState` callback so the app reads the bridged
+ * value on first render — no reload needed in a fresh tab.
+ *
+ * Two-way:
+ *   - If `<prefix>:myName` is empty and fleet has a nickname → hydrate
+ *     the app key from the fleet (this is the "open new tab, see the
+ *     same name" case the user reported).
+ *   - If `<prefix>:myName` is set and fleet is empty → migrate the
+ *     app's name into the fleet (so future tabs in other apps pick it
+ *     up automatically). Validated against the strict-ASCII allowlist;
+ *     non-conforming names stay app-local.
+ *
+ * Cross-tab updates *after* this initial load are not handled here —
+ * apps that want live-update can wire `useFleetPersona` directly.
+ */
+function bridgeFleetIdentity(storagePrefix: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    const myNameKey = `${storagePrefix}:myName`;
+    const fleetKey = "mesh-fleet:v1:fleet";
+    const existing = window.localStorage.getItem(myNameKey);
+
+    let fleetNickname: string | null = null;
+    const fleetRaw = window.localStorage.getItem(fleetKey);
+    if (fleetRaw) {
+      try {
+        const parsed = JSON.parse(fleetRaw) as { nickname?: unknown; name?: unknown };
+        if (typeof parsed?.nickname === "string" && parsed.nickname) {
+          fleetNickname = parsed.nickname;
+        } else if (typeof parsed?.name === "string" && parsed.name) {
+          fleetNickname = parsed.name;
+        }
+      } catch {
+        /* corrupt fleet entry; ignore */
+      }
+    }
+
+    if (!existing && fleetNickname) {
+      // Fresh app + fleet has a name → pre-populate the app's myName key
+      // before its useState reads localStorage.
+      window.localStorage.setItem(myNameKey, fleetNickname);
+      return;
+    }
+
+    if (existing && !fleetNickname && /^[A-Za-z0-9_\- .]{1,32}$/.test(existing)) {
+      // App has a name, fleet doesn't → publish it so other apps pick
+      // it up next time they load. Strict-ASCII gate matches the
+      // fleetPersona / go-fleet-persona allowlist.
+      window.localStorage.setItem(
+        fleetKey,
+        JSON.stringify({
+          nickname: existing,
+          name: "",
+          avatarSeed: "",
+          avatarVariant: "beam",
+        }),
+      );
+    }
+  } catch {
+    /* localStorage unavailable (private mode); silently noop */
+  }
+}
+
 export function createMeshConfig(input: MeshConfigInput): MeshConfig {
   const storagePrefix = input.appName;
   applyDeepLink(storagePrefix);
+  bridgeFleetIdentity(storagePrefix);
   return {
     appName: input.appName,
     storagePrefix,

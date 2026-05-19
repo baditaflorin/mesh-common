@@ -26,6 +26,7 @@ export default defineConfig({
       // fleet identity (2026-05-19)
       ["tests/fleetPersona.test.ts", "jsdom"],
       ["tests/useFleetPersona.test.tsx", "jsdom"],
+      ["tests/configBridge.test.ts", "jsdom"],
     ],
   },
 });

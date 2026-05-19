@@ -10,6 +10,30 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+## [0.10.2] — 2026-05-20 — bridge per-app `myName` ↔ fleet persona
+
+### Fixed
+
+- Each `mesh-*` app's existing name input writes to a per-app
+  `${storagePrefix}:myName` key and used to be independent of the
+  fleet persona shown in the settings drawer — so typing a name in
+  one app and opening another in the same browser produced an empty
+  field, not the cross-app suggestion. **Now `createMeshConfig`
+  bridges the two synchronously at module load**, *before*
+  `App.tsx`'s `useState(() => localStorage.getItem(...))` runs:
+  - If `<prefix>:myName` is empty and `mesh-fleet:v1:fleet` has a
+    nickname → hydrate the app key from the fleet.
+  - If `<prefix>:myName` is set and fleet is empty → publish the
+    name into the fleet (strict-ASCII-allowlist gated; non-conforming
+    names stay app-local).
+  No per-app code changes required — just rebuild.
+
+### Tested
+
+- 6 new vitest tests in `tests/configBridge.test.ts` covering
+  hydrate, no-overwrite-L0, publish-from-app, allowlist refusal,
+  corrupt-fleet-tolerance, and `name`-fallback-when-`nickname`-empty.
+
 ## [0.10.1] — 2026-05-20 — `MeshShell` integrates `FleetIdentityPanel`
 
 ### Changed
