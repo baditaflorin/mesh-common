@@ -23,6 +23,9 @@ export default defineConfig({
       ["tests/useFileShare.test.tsx", "jsdom"],
       ["tests/useNetworkOnline.test.tsx", "jsdom"],
       ["tests/SafeMarkdown.test.tsx", "jsdom"],
+      // fleet identity (2026-05-19)
+      ["tests/fleetPersona.test.ts", "jsdom"],
+      ["tests/useFleetPersona.test.tsx", "jsdom"],
     ],
   },
 });
