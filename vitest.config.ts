@@ -15,6 +15,14 @@ export default defineConfig({
       ["tests/PeerAvatar.test.tsx", "jsdom"],
       ["tests/useMultiRoom.test.tsx", "jsdom"],
       ["tests/featureContract.test.ts", "jsdom"],
+      // batch-2 (2026-05-19)
+      ["tests/useThreadedMessages.test.tsx", "jsdom"],
+      ["tests/useReadReceipts.test.tsx", "jsdom"],
+      ["tests/useChangelogToast.test.tsx", "jsdom"],
+      ["tests/useOfflineQueue.test.tsx", "jsdom"],
+      ["tests/useFileShare.test.tsx", "jsdom"],
+      ["tests/useNetworkOnline.test.tsx", "jsdom"],
+      ["tests/SafeMarkdown.test.tsx", "jsdom"],
     ],
   },
 });

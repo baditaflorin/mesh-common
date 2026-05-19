@@ -10,6 +10,85 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+## [0.9.0] — 2026-05-19 — consolidation batch 2 (13 primitives)
+
+### Added — presence layer (built on `useAwareness`)
+- **`usePresenceCursors(room, opts)`** — Figma-style live cursors throttled
+  to ~30 Hz. Returns `{ peers, setLocalCursor, CursorLayer }`. Deterministic
+  per-peer color. Replaces ad-hoc per-app cursor implementations.
+- **`useTypingIndicator(room, { name?, idleAfterMs? })`** — "alice is typing…"
+  with auto-expiry. Wire `bump()` to your input handler; the hook returns
+  `typing[]` + display `names[]` for everyone else.
+- **`useNetworkQuality(room, opts)`** — per-peer RTT via awareness ping/pong.
+  Returns `{ rtts, median, mine }`. Use the median to decide whether to
+  auto-degrade cursors / animations.
+
+### Added — messaging
+- **`useReadReceipts(room, { mapName? })`** — per-peer monotone "last seen at
+  message N" over a `Y.Map<peerId, number>`. `markSeen(n)` is monotone
+  (backward writes are ignored); `readersOf(n)` returns peers ≥ `n`.
+- **`useThreadedMessages<T>(room, { mapName? })`** — `Y.Map<msgId, {parent,
+  body, by, at, sig}>` with `post()`, `reply()`, and a pre-flattened
+  `threads` array (parent-first, depth-first) ready for render. `remove(id)`
+  drops a message; replies become orphans (callers can re-parent).
+
+### Added — network + lifecycle
+- **`useNetworkOnline({ probeUrl?, probeIntervalMs?, retryIntervalMs? })`** —
+  augments `navigator.onLine` with a periodic HEAD probe. Distinguishes
+  "really online" from "interface-up-but-captive-portal". Default probe
+  target is `https://www.gstatic.com/generate_204`.
+- **`useOfflineQueue<T>({ online, flush, storageKey?, retryMs?, maxAgeMs?,
+  maxItems? })`** — buffer writes when isolated, replay on reconnect.
+  Persisted to `localStorage` so writes survive a tab reload. At-least-once
+  delivery; make `flush` idempotent via the caller-supplied id.
+
+### Added — media
+- **`useFileShare(room, { mapName?, chunkBytes?, maxBytes? })`** — chunked
+  file share through the existing Yjs transport. Default 16 KB chunks,
+  5 MB cap. `send(blob)` returns the file id; receiver gets `download(id)`
+  and `blobOf(id)`. Honest: files live in Yjs history until the room is
+  GC'd; not for secrets — use `useRoomSeal` first if you care.
+- **`useVoiceActivity({ stream, rmsThreshold?, zcrMin?, zcrMax?, hangoverMs? })`**
+  — voice activity detection by RMS energy + zero-crossing rate. Pure Web
+  Audio, no ML payload. Returns `{ active, rms, zcr }`. Good enough for
+  "alice is speaking", not for speech-to-text gating.
+
+### Added — rendering
+- **`SafeMarkdown` / `renderMarkdownToSafeHtml(source, gfm?, inline?)`** —
+  markdown rendering via `marked` (single file, 0 deps) plus an allow-list
+  HTML sanitizer. Permitted: paragraphs, emphasis, lists, headings, code,
+  blockquote, `<a>` with `href` (scheme-validated, `javascript:` and
+  `data:text/*` rejected), `<span class>`. Adds `rel="noopener noreferrer"
+  target="_blank"` to every anchor. No raw HTML pass-through.
+
+### Added — lifecycle UX
+- **`useChangelogToast({ appName, version, onUpgrade, skipFirstInstall? })`** —
+  one-shot "what's new in vX.Y" toast on the first session after a version
+  bump. Per-app key in `localStorage`. First install is silent by default.
+
+### Added — dev tooling
+- **`CrdtInspector`** — `?inspect=1`-gated overlay showing shared types,
+  sizes, updates/sec, peer count, your peerId. Don't ship default-on
+  (observing every doc update is non-zero overhead).
+- **`useFakeTime` / `time` / `setFakeTime(ms)` / `advanceFakeTime(deltaMs)`
+  / `resetFakeTime()`** — test fixture: in production every call returns
+  `Date.now()`; in tests you freeze and step the clock. `clockSync` now
+  reads through this so awareness-based timing logic is deterministic
+  under Vitest / Playwright.
+
+### Changed
+- `clockSync.ts` reads `now()` from `useFakeTime` instead of calling
+  `Date.now()` directly. Default behavior is unchanged (no fake time set →
+  `Date.now()` passthrough).
+- `package.json` adds `marked@^16` (one file, zero transitive deps).
+
+### Not changed
+- Net new runtime payload (gzipped): `marked` (~14 KB) + the 13 hooks/
+  components (~10 KB combined). The `CrdtInspector` (~2 KB) is dev-only and
+  trivially tree-shakes if you don't import it.
+
+---
+
 ## [0.8.0] — 2026-05-19 — consolidation batch 1 (5 primitives + docs-sync gate)
 
 ### Added
@@ -42,20 +121,13 @@ mention in `README.md`.
   600 ms), with optional `navigator.vibrate(40)` haptic feedback when
   available.
 - **`scripts/test-record.sh`** — interactive `playwright codegen` wrapper.
-  Boots `vite preview`, opens chromium, records clicks/typing to
-  `tests/e2e/recorded.spec.ts` for any mesh-* app.
 - **`scripts/mesh-doctor.sh`** — single-app or `--fleet` drift audit.
-  Reports mesh-common pin freshness, scaffold completeness, chrome
-  presence, test/Pages output, and README-vs-imports drift.
-- **`scripts/check-docs-updated.sh`** — diff `src/index.ts` against HEAD
-  (or a `--range A..B`); fail if new exports landed without README mention
-  and CHANGELOG entry.
-- **`scripts/install-hooks.sh`** — installs the pre-commit gate into
-  `.git/hooks/` (no Husky dependency).
+- **`scripts/check-docs-updated.sh`** — diff `src/index.ts` against HEAD;
+  fail if new exports landed without README + CHANGELOG entry.
+- **`scripts/install-hooks.sh`** — installs the pre-commit gate.
 
 ### Changed
 - `GestureKind` widened to include `"longpress"`.
-- `package.json` version bumped 0.7.0 → 0.8.0 (lands after ecosystem batch 3).
 
 ### Infrastructure
 - Vitest `environmentMatchGlobs` extended for the new jsdom-needing tests.

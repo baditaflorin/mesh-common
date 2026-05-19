@@ -5,6 +5,7 @@
  */
 
 import type { WebrtcProvider } from "y-webrtc";
+import { now as defaultNow } from "./useFakeTime";
 
 const PING_INTERVAL_MS = 1500;
 const SAMPLE_TTL_MS = 5000;
@@ -27,18 +28,18 @@ type Awareness = {
 
 export function createClockSync(provider: WebrtcProvider | null): ClockSync {
   if (!provider) {
-    return { meshNow: () => Date.now(), destroy: () => undefined, peerCount: () => 0 };
+    return { meshNow: () => defaultNow(), destroy: () => undefined, peerCount: () => 0 };
   }
 
   const awareness = (provider as unknown as { awareness: Awareness }).awareness;
   const samples = new Map<number, Sample>();
 
   const publish = () => {
-    awareness.setLocalStateField("clock", { t: Date.now() });
+    awareness.setLocalStateField("clock", { t: defaultNow() });
   };
 
   const onChange = () => {
-    const now = Date.now();
+    const now = defaultNow();
     const states = awareness.getStates();
     samples.forEach((_, id) => {
       if (!states.has(id)) samples.delete(id);
@@ -59,19 +60,19 @@ export function createClockSync(provider: WebrtcProvider | null): ClockSync {
   awareness.on("change", onChange);
 
   const meshNow = () => {
-    const cutoff = Date.now() - SAMPLE_TTL_MS;
+    const cutoff = defaultNow() - SAMPLE_TTL_MS;
     const offsets: number[] = [];
     samples.forEach((s) => {
       if (s.receivedAt >= cutoff) offsets.push(s.offset);
     });
-    if (offsets.length === 0) return Date.now();
+    if (offsets.length === 0) return defaultNow();
     offsets.sort((a, b) => a - b);
     const mid = Math.floor(offsets.length / 2);
     const median =
       offsets.length % 2 === 1
         ? (offsets[mid] ?? 0)
         : ((offsets[mid - 1] ?? 0) + (offsets[mid] ?? 0)) / 2;
-    return Date.now() + median;
+    return defaultNow() + median;
   };
 
   const destroy = () => {

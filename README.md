@@ -35,6 +35,19 @@ Shared scaffolding + runtime for the `baditaflorin/mesh-*` family of rootless pe
 | **`useMultiRoom`** 🆕 | **Run several Yjs rooms in one tab — facilitator dashboards, embeds, side-by-side mesh apps. Shape: `MultiRoomApi` over `MultiRoomEntry[]`.** |
 | **`useTypedMap` / `useTypedArray` / `defineFeatureContract`** 🆕 | **Zod-validated `Y.Map` / `Y.Array` — old/hostile peers' invalid writes get filtered at the edge. Returns `TypedMap` / `TypedArray`; configure via `ContractOptions`.** |
 | **`useRoomSeal` / `deriveRoomKey` / `sealerFromKey`** 🆕 | **Room-wide AES-GCM seal via PBKDF2(passphrase, roomId) — opt-in E2E with no key-exchange UX. Returns `RoomSeal`; configure via `RoomSealOptions`.** |
+| **`usePresenceCursors`** 🆕 | **Figma-style live cursors built on `useAwareness`; throttled to ~30 Hz with auto-coloring per `peerId`. Drop in `<CursorLayer />` and call `setLocalCursor()` from `onPointerMove`.** |
+| **`useTypingIndicator`** 🆕 | **"alice is typing…" with idle-expiry. Wire `bump()` into your input handlers; the hook returns `typing[]` + `names[]` for everyone else.** |
+| **`useNetworkQuality`** 🆕 | **Per-peer RTT over awareness pings; returns a `median` you can use to auto-degrade animations on slow links.** |
+| **`useReadReceipts`** 🆕 | **Per-peer monotone "last seen at message N" over a `Y.Map`. `markSeen(n)` advances; `readersOf(n)` lists peers who reached `n`.** |
+| **`useThreadedMessages`** 🆕 | **`Y.Map<msgId, {parent, body, by, at, sig}>` with `post()` / `reply()` / pre-flattened `threads` for rendering.** |
+| **`useNetworkOnline`** 🆕 | **Honest online detector: `navigator.onLine` + a periodic 204 probe. Distinguishes "online" from "captive portal hostage".** |
+| **`useOfflineQueue`** 🆕 | **Buffer writes when isolated; replay through `flush()` when reconnected. Persisted in `localStorage`. At-least-once — make `flush` idempotent via the caller-supplied id.** |
+| **`useFileShare`** 🆕 | **Chunked file share through the existing Yjs transport (5 MB cap; tune `chunkBytes`). Receiver gets `download(fileId)` and `blobOf(fileId)`.** |
+| **`useVoiceActivity`** 🆕 | **VAD by RMS energy + zero-crossing rate. Pure Web Audio, ~100 lines, no ML payload. Returns `{ active, rms, zcr }`.** |
+| **`SafeMarkdown` / `renderMarkdownToSafeHtml`** 🆕 | **Markdown rendering via `marked` (single file, 0 deps) + an allow-list sanitizer. No raw HTML pass-through; safe schemes only.** |
+| **`useChangelogToast`** 🆕 | **One-shot "what's new in vX.Y" toast on the first session after a version bump. Per-peer state in `localStorage`.** |
+| **`CrdtInspector`** 🆕 | **Dev-only overlay (`?inspect=1`) showing every shared type, sizes, updates/sec, peer count, your peerId. Don't ship default-on.** |
+| **`useFakeTime` / `time` / `setFakeTime` / `advanceFakeTime`** 🆕 | **Test fixture: in production every call collapses to `Date.now()`; in tests you freeze and step the clock. `clockSync` honors it transparently.** |
 | `scaffold/create-mesh-app.sh` | One-shot CLI that creates a new app from the template |
 
 Apps depend on this via `file:../mesh-common` (publish to npm later if/when useful — Vite bundles the package output into each app's `docs/` so live sites are self-contained).
