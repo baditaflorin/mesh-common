@@ -10,6 +10,50 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+## [0.11.0] — 2026-05-31 — three consolidation primitives: useTone, useSharedStrokes, useHotkeys
+
+A fleet survey found three patterns still hand-rolled across apps despite the
+~90 existing primitives. Each new primitive is backed by real consumers (not
+speculative API surface), and `mesh-clap-track`/`mesh-tap-symphony` even
+shipped a byte-identical `drums.ts` copy.
+
+### Added
+
+- **`useTone` / `createToneEngine`** (`src/useTone.ts`) — WebAudio cue engine.
+  Owns one lazily-created `AudioContext`, plays short oscillator tones with an
+  exponential gain envelope, and `resume()`s the (browser-suspended) context on
+  first use — the autoplay-resume step every hand-rolled copy quietly relied on
+  being inside a click handler for. `play(spec)` / `sequence(specs)` / `beep()`.
+  React-free engine + `useTone()` hook that closes the context on unmount.
+  Replaces the duplicated oscillator+gain code in mesh-doorbell, mesh-metronome,
+  mesh-firefly-walk, mesh-pair-rotation and ~6 more.
+- **`useSharedStrokes`** (`src/useSharedStrokes.ts`) — collaborative freehand
+  drawing over `Y.Array<Stroke>`. The app keeps the canvas + pointer handling
+  (draw locally for low latency); the hook owns replication, `add(points,
+style)` (commit on pointer-up), `clear()`, `undoLast(peerId?)`, and a
+  `replay(ctx, { clear })` helper that lifts the duplicated `strokes.forEach(…
+ctx.stroke())` loop. `Stroke` matches the flat `[x0,y0,x1,y1,…]` shape
+  pictionary/exquisite-corpse/brain-write/light-paint/retro defined locally.
+- **`useHotkeys`** (`src/useHotkeys.ts`) — normalized keyboard-shortcut binding.
+  Case- and modifier-order-independent combos (`"space"`, `"ctrl+enter"`,
+  `"shift+?"`, `cmd`/`option` aliases), skips events from input/textarea/select/
+  contenteditable by default (so a spacebar shortcut never eats a typed space),
+  and reads the handler map via a ref so passing a fresh object literal each
+  render does not re-subscribe. Replaces ad-hoc `addEventListener("keydown")`
+  in mesh-applause, mesh-debate-clock, mesh-lunch-roulette, mesh-mind-meld,
+  mesh-storyworm.
+
+### Tested
+
+- `tests/useTone.test.ts` — oscillator scheduling + context resume via an
+  injected mock `AudioContext`, no-op when WebAudio is absent, stable engine +
+  context-close-on-unmount.
+- `tests/useSharedStrokes.test.tsx` — commit/tag-by-peer, odd/short-list
+  rejection, cross-peer replication on a shared doc, targeted `undoLast`, and
+  `replay` draw-call order against a mock 2D context.
+- `tests/useHotkeys.test.tsx` — bare keys, modifier-order independence,
+  `preventDefault`, form-field suppression toggle, disabled + unmount detach.
+
 ## [0.10.4] — 2026-05-31 — useNamedPeer is fleet-wide; openNPeers test helper
 
 ### Fixed

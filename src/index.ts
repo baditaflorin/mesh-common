@@ -25,13 +25,23 @@ export type { ClockSync } from "./clockSync";
 export { createClockSync } from "./clockSync";
 
 export type { Commitment, Reveal } from "./commitReveal";
-export { randomSalt, sha256Hex, commit, verifyReveal, combineSalts } from "./commitReveal";
+export {
+  randomSalt,
+  sha256Hex,
+  commit,
+  verifyReveal,
+  combineSalts,
+} from "./commitReveal";
 
 export { MeshShell } from "./MeshShell";
 export { SelfRefBar } from "./SelfRefBar";
 export { SettingsDrawer } from "./SettingsDrawer";
 export { InviteShareButton } from "./InviteShareButton";
-export { useInviteChain, type InviteEdge, type InviteChainState } from "./useInviteChain";
+export {
+  useInviteChain,
+  type InviteEdge,
+  type InviteChainState,
+} from "./useInviteChain";
 export {
   useMeshBeacon,
   fireBeacon,
@@ -57,10 +67,7 @@ export {
   longestSimplePath,
   type Edge,
 } from "./useDirectedEdges";
-export {
-  useIncomingScanLink,
-  type IncomingScan,
-} from "./useIncomingScanLink";
+export { useIncomingScanLink, type IncomingScan } from "./useIncomingScanLink";
 
 // ---- Layer 1 security: identity + signed writes + TOFU + moderator ----
 export {
@@ -103,7 +110,11 @@ export {
 } from "./useCommitRevealHook";
 export { useMeshSlot, type MeshSlot } from "./useMeshSlot";
 export { useFairRng, type FairRng } from "./useFairRng";
-export { useSharedLocation, type Fix, type SharedLocation } from "./useSharedLocation";
+export {
+  useSharedLocation,
+  type Fix,
+  type SharedLocation,
+} from "./useSharedLocation";
 export { Leaderboard, type LeaderboardItem } from "./Leaderboard";
 export { MeshToasts, pushToast, type Toast } from "./MeshToasts";
 
@@ -114,7 +125,11 @@ export { useDeadline, type DeadlineState } from "./useDeadline";
 export { useFlashOnChange } from "./useFlashOnChange";
 export { useRoster, type RosterState } from "./useRoster";
 export { useRotatingTurn, type RotatingTurn } from "./useRotatingTurn";
-export { useExpiringClaim, type ExpiringClaim, type ClaimRecord } from "./useExpiringClaim";
+export {
+  useExpiringClaim,
+  type ExpiringClaim,
+  type ClaimRecord,
+} from "./useExpiringClaim";
 export { useReactions, type ReactionsState } from "./useReactions";
 export { useMicLevel, ArmGate, type MicLevel } from "./useMicLevel";
 export { useConfetti, ConfettiLayer, type ConfettiBurst } from "./useConfetti";
@@ -170,7 +185,11 @@ export { useAwareness, type AwarenessApi } from "./useAwareness";
 // PeerAvatar: deterministic inline SVG seeded by peerId — zero network,
 // zero PII. Pairs with tofuRegistry: same peerId == same avatar across
 // every screen.
-export { PeerAvatar, type PeerAvatarProps, type AvatarVariant } from "./PeerAvatar";
+export {
+  PeerAvatar,
+  type PeerAvatarProps,
+  type AvatarVariant,
+} from "./PeerAvatar";
 
 // useMultiRoom: run several Yjs rooms in one tab (facilitator running
 // mesh-buzzer + mesh-live-poll side-by-side, embeds, dashboards).
@@ -319,6 +338,45 @@ export {
   buildHandoffUrl,
   consumeHandoffFromHash,
 } from "./fleetPersona";
-export { useFleetPersona, type FleetPersonaApi, type UseFleetPersonaOptions } from "./useFleetPersona";
+export {
+  useFleetPersona,
+  type FleetPersonaApi,
+  type UseFleetPersonaOptions,
+} from "./useFleetPersona";
 export { FleetAvatar, type FleetAvatarProps } from "./FleetAvatar";
-export { FleetIdentityPanel, type FleetIdentityPanelProps } from "./FleetIdentityPanel";
+export {
+  FleetIdentityPanel,
+  type FleetIdentityPanelProps,
+} from "./FleetIdentityPanel";
+
+// ---- consolidation primitives, batch 3 (2026-05-31) ----
+
+// useTone: WebAudio cue engine. Replaces the hand-rolled oscillator + gain
+// envelope in mesh-doorbell / mesh-metronome / mesh-firefly-walk / etc., and
+// handles the autoplay-resume footgun those copies all skipped.
+export {
+  useTone,
+  createToneEngine,
+  type ToneSpec,
+  type ToneApi,
+  type ToneEngine,
+  type ToneEngineOptions,
+} from "./useTone";
+
+// useSharedStrokes: collaborative freehand drawing over Y.Array<Stroke>, with
+// a replay() helper for the duplicated canvas draw loop. Used by pictionary,
+// exquisite-corpse, brain-write, light-paint, retro.
+export {
+  useSharedStrokes,
+  type Stroke,
+  type SharedStrokesApi,
+} from "./useSharedStrokes";
+
+// useHotkeys: normalized keyboard-shortcut binding (modifier-order
+// independent, skips form fields). Replaces ad-hoc keydown listeners.
+export {
+  useHotkeys,
+  type HotkeyMap,
+  type HotkeyHandler,
+  type HotkeysOptions,
+} from "./useHotkeys";

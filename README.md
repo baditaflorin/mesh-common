@@ -7,49 +7,52 @@ Shared scaffolding + runtime for the `baditaflorin/mesh-*` family of rootless pe
 
 ## What's in here
 
-| Module | Purpose |
-|---|---|
-| `createMeshConfig` | One-call config factory: app name, accent, version, commit, plus signaling / TURN / PayPal defaults |
-| `MeshShell` | Top-level chrome: ⚙ FAB → settings drawer, self-ref footer (source / tip / version) |
-| `SettingsDrawer` | Room ID + signaling / TURN overrides → localStorage |
-| `SelfRefBar` | Bottom-right footer with GitHub link, PayPal link, version + commit |
-| `useYRoom` | React hook → `{ doc, provider, peerId, peerCount }` for a given room ID |
-| `iceConfig` | Load/save signaling URL, TURN token URL, ICE servers; dead-server pruning |
-| `clockSync` | NTP-over-Yjs offset → mesh-median time, stable to ~10–30 ms |
-| `commitReveal` | SHA-256 commit/reveal for anonymous votes / fair RNG / role assignment |
-| `PersonalQR` / `useQRScanner` / `QRExchange` | Inline-SVG QR (real-URL payload) + camera scanner + paste-fallback widget |
-| `useDirectedEdges` / `shortestPath` / `longestSimplePath` | Append-only `Y.Array<Edge>` + graph helpers for the social-graph apps |
-| `useIncomingScanLink` | One-shot consume of `#r=…&p=…&x=…` hash params after a QR-scan navigation |
-| **`identity`** ⭐ | **Ed25519 keypair generation, persistence, sign/verify, `useIdentity` hook (~32 KB)** |
-| **`tofuRegistry`** ⭐ | **`Y.Map<peerId, signed pubkey record>` with first-use trust pinning** |
-| **`moderator`** ⭐ | **Signed first-claim-wins role, 30-min auto-expire, partition-aware tiebreak** |
-| **`ModeratorBadge`** ⭐ | **Drop-in UI: "alice is moderating · auto-clears in 28m · soft role, not enforcement"** |
-| **`MeshErrorBoundary`** 🆕 | **Drop-in crash containment for the `<Feature>` subtree. Fallback card with `try again`, `copy diagnostics` (clipboard blob), and `reload page`. Accepts `fallback` render-prop and `onError` handler. `MeshErrorBoundaryProps`.** |
-| **`useMeshLink` / `makeMeshLinkFragment` / `parseMeshLink`** 🆕 | **Type-safe encoder + parser for the `#r=…&p=…&x=…` deep-link fragment. JSON-encodes object payloads; raw strings pass through. Wire-format versioned via `&v=`. `MeshLinkApi`, `MeshLinkPayload`, `ParsedMeshLink`.** |
-| `@baditaflorin/mesh-common/eslint` 🆕 | **Shared ESLint flat config preset.** One import + one spread in each app's `eslint.config.js`. |
-| `@baditaflorin/mesh-common/prettier` 🆕 | **Shared Prettier preset.** `"prettier": "@baditaflorin/mesh-common/prettier"` in each app's `package.json`. |
-| `scripts/generate-privacy-section.mjs` 🆕 | **Rewrites the auto-generated `Capabilities used` block in `docs/privacy.md` from `src/` imports.** Run with `--check` in pre-push to fail the build if drift is detected. |
-| `scripts/install-perf-checks.sh` 🆕 | **Installs `tests/e2e/perf-budget.spec.ts` (LCP + INP + TBT budgets) and `tests/e2e/memory-leak.spec.ts` (heap growth detector) into an existing app.** |
-| **`useAwareness`** 🆕 | **Typed wrapper around `y-protocols/awareness` — presence / cursors / typing indicators with one hook. Returns `AwarenessApi<T>`.** |
-| **`PeerAvatar`** 🆕 | **Deterministic inline-SVG avatar from a peerId (`beam` blob or `grid` identicon). Props on `PeerAvatarProps`; selectable via `AvatarVariant`. Zero network, zero PII.** |
-| **`useMultiRoom`** 🆕 | **Run several Yjs rooms in one tab — facilitator dashboards, embeds, side-by-side mesh apps. Shape: `MultiRoomApi` over `MultiRoomEntry[]`.** |
-| **`useTypedMap` / `useTypedArray` / `defineFeatureContract`** 🆕 | **Zod-validated `Y.Map` / `Y.Array` — old/hostile peers' invalid writes get filtered at the edge. Returns `TypedMap` / `TypedArray`; configure via `ContractOptions`.** |
-| **`useRoomSeal` / `deriveRoomKey` / `sealerFromKey`** 🆕 | **Room-wide AES-GCM seal via PBKDF2(passphrase, roomId) — opt-in E2E with no key-exchange UX. Returns `RoomSeal`; configure via `RoomSealOptions`.** |
-| **`usePresenceCursors`** 🆕 | **Figma-style live cursors built on `useAwareness`; throttled to ~30 Hz with auto-coloring per `peerId`. Drop in `<CursorLayer />` and call `setLocalCursor()` from `onPointerMove`.** |
-| **`useTypingIndicator`** 🆕 | **"alice is typing…" with idle-expiry. Wire `bump()` into your input handlers; the hook returns `typing[]` + `names[]` for everyone else.** |
-| **`useNetworkQuality`** 🆕 | **Per-peer RTT over awareness pings; returns a `median` you can use to auto-degrade animations on slow links.** |
-| **`useReadReceipts`** 🆕 | **Per-peer monotone "last seen at message N" over a `Y.Map`. `markSeen(n)` advances; `readersOf(n)` lists peers who reached `n`.** |
-| **`useThreadedMessages`** 🆕 | **`Y.Map<msgId, {parent, body, by, at, sig}>` with `post()` / `reply()` / pre-flattened `threads` for rendering.** |
-| **`useNetworkOnline`** 🆕 | **Honest online detector: `navigator.onLine` + a periodic 204 probe. Distinguishes "online" from "captive portal hostage".** |
-| **`useOfflineQueue`** 🆕 | **Buffer writes when isolated; replay through `flush()` when reconnected. Persisted in `localStorage`. At-least-once — make `flush` idempotent via the caller-supplied id.** |
-| **`useFileShare`** 🆕 | **Chunked file share through the existing Yjs transport (5 MB cap; tune `chunkBytes`). Receiver gets `download(fileId)` and `blobOf(fileId)`.** |
-| **`useVoiceActivity`** 🆕 | **VAD by RMS energy + zero-crossing rate. Pure Web Audio, ~100 lines, no ML payload. Returns `{ active, rms, zcr }`.** |
-| **`SafeMarkdown` / `renderMarkdownToSafeHtml`** 🆕 | **Markdown rendering via `marked` (single file, 0 deps) + an allow-list sanitizer. No raw HTML pass-through; safe schemes only.** |
-| **`useChangelogToast`** 🆕 | **One-shot "what's new in vX.Y" toast on the first session after a version bump. Per-peer state in `localStorage`.** |
-| **`CrdtInspector`** 🆕 | **Dev-only overlay (`?inspect=1`) showing every shared type, sizes, updates/sec, peer count, your peerId. Don't ship default-on.** |
-| **`useFakeTime` / `time` / `setFakeTime` / `advanceFakeTime`** 🆕 | **Test fixture: in production every call collapses to `Date.now()`; in tests you freeze and step the clock. `clockSync` honors it transparently.** |
-| **`useFleetPersona` / `FleetAvatar` / `FleetIdentityPanel`** 🆕 | **Cross-app + cross-origin display identity. L0 (per-app local) > L1 (same-origin shared) > L2 (optional `https://fleet-persona.0exec.com`). Captures nickname + name + avatar; apps pick what to render. Service URL defaults to the canonical fleet endpoint — pass `serviceUrl={null}` to disable L2. Includes argon2id-gated write tokens, strict-ASCII allowlist, and QR-able handoff URLs for cross-origin transfer.** |
-| `scaffold/create-mesh-app.sh` | One-shot CLI that creates a new app from the template |
+| Module                                                            | Purpose                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `createMeshConfig`                                                | One-call config factory: app name, accent, version, commit, plus signaling / TURN / PayPal defaults                                                                                                                                                                                                                                                                                                                          |
+| `MeshShell`                                                       | Top-level chrome: ⚙ FAB → settings drawer, self-ref footer (source / tip / version)                                                                                                                                                                                                                                                                                                                                          |
+| `SettingsDrawer`                                                  | Room ID + signaling / TURN overrides → localStorage                                                                                                                                                                                                                                                                                                                                                                          |
+| `SelfRefBar`                                                      | Bottom-right footer with GitHub link, PayPal link, version + commit                                                                                                                                                                                                                                                                                                                                                          |
+| `useYRoom`                                                        | React hook → `{ doc, provider, peerId, peerCount }` for a given room ID                                                                                                                                                                                                                                                                                                                                                      |
+| `iceConfig`                                                       | Load/save signaling URL, TURN token URL, ICE servers; dead-server pruning                                                                                                                                                                                                                                                                                                                                                    |
+| `clockSync`                                                       | NTP-over-Yjs offset → mesh-median time, stable to ~10–30 ms                                                                                                                                                                                                                                                                                                                                                                  |
+| `commitReveal`                                                    | SHA-256 commit/reveal for anonymous votes / fair RNG / role assignment                                                                                                                                                                                                                                                                                                                                                       |
+| `PersonalQR` / `useQRScanner` / `QRExchange`                      | Inline-SVG QR (real-URL payload) + camera scanner + paste-fallback widget                                                                                                                                                                                                                                                                                                                                                    |
+| `useDirectedEdges` / `shortestPath` / `longestSimplePath`         | Append-only `Y.Array<Edge>` + graph helpers for the social-graph apps                                                                                                                                                                                                                                                                                                                                                        |
+| `useIncomingScanLink`                                             | One-shot consume of `#r=…&p=…&x=…` hash params after a QR-scan navigation (parsed shape: `IncomingScan`)                                                                                                                                                                                                                                                                                                                     |
+| **`identity`** ⭐                                                 | **Ed25519 keypair generation, persistence, sign/verify, `useIdentity` hook (~32 KB)**                                                                                                                                                                                                                                                                                                                                        |
+| **`tofuRegistry`** ⭐                                             | **`Y.Map<peerId, signed pubkey record>` with first-use trust pinning**                                                                                                                                                                                                                                                                                                                                                       |
+| **`moderator`** ⭐                                                | **Signed first-claim-wins role, 30-min auto-expire, partition-aware tiebreak**                                                                                                                                                                                                                                                                                                                                               |
+| **`ModeratorBadge`** ⭐                                           | **Drop-in UI: "alice is moderating · auto-clears in 28m · soft role, not enforcement"**                                                                                                                                                                                                                                                                                                                                      |
+| **`MeshErrorBoundary`** 🆕                                        | **Drop-in crash containment for the `<Feature>` subtree. Fallback card with `try again`, `copy diagnostics` (clipboard blob), and `reload page`. Accepts `fallback` render-prop and `onError` handler. `MeshErrorBoundaryProps`.**                                                                                                                                                                                           |
+| **`useMeshLink` / `makeMeshLinkFragment` / `parseMeshLink`** 🆕   | **Type-safe encoder + parser for the `#r=…&p=…&x=…` deep-link fragment. JSON-encodes object payloads; raw strings pass through. Wire-format versioned via `&v=`. `MeshLinkApi`, `MeshLinkPayload`, `ParsedMeshLink`.**                                                                                                                                                                                                       |
+| `@baditaflorin/mesh-common/eslint` 🆕                             | **Shared ESLint flat config preset.** One import + one spread in each app's `eslint.config.js`.                                                                                                                                                                                                                                                                                                                              |
+| `@baditaflorin/mesh-common/prettier` 🆕                           | **Shared Prettier preset.** `"prettier": "@baditaflorin/mesh-common/prettier"` in each app's `package.json`.                                                                                                                                                                                                                                                                                                                 |
+| `scripts/generate-privacy-section.mjs` 🆕                         | **Rewrites the auto-generated `Capabilities used` block in `docs/privacy.md` from `src/` imports.** Run with `--check` in pre-push to fail the build if drift is detected.                                                                                                                                                                                                                                                   |
+| `scripts/install-perf-checks.sh` 🆕                               | **Installs `tests/e2e/perf-budget.spec.ts` (LCP + INP + TBT budgets) and `tests/e2e/memory-leak.spec.ts` (heap growth detector) into an existing app.**                                                                                                                                                                                                                                                                      |
+| **`useAwareness`** 🆕                                             | **Typed wrapper around `y-protocols/awareness` — presence / cursors / typing indicators with one hook. Returns `AwarenessApi<T>`.**                                                                                                                                                                                                                                                                                          |
+| **`PeerAvatar`** 🆕                                               | **Deterministic inline-SVG avatar from a peerId (`beam` blob or `grid` identicon). Props on `PeerAvatarProps`; selectable via `AvatarVariant`. Zero network, zero PII.**                                                                                                                                                                                                                                                     |
+| **`useMultiRoom`** 🆕                                             | **Run several Yjs rooms in one tab — facilitator dashboards, embeds, side-by-side mesh apps. Shape: `MultiRoomApi` over `MultiRoomEntry[]`.**                                                                                                                                                                                                                                                                                |
+| **`useTypedMap` / `useTypedArray` / `defineFeatureContract`** 🆕  | **Zod-validated `Y.Map` / `Y.Array` — old/hostile peers' invalid writes get filtered at the edge. Returns `TypedMap` / `TypedArray`; configure via `ContractOptions`.**                                                                                                                                                                                                                                                      |
+| **`useRoomSeal` / `deriveRoomKey` / `sealerFromKey`** 🆕          | **Room-wide AES-GCM seal via PBKDF2(passphrase, roomId) — opt-in E2E with no key-exchange UX. Returns `RoomSeal`; configure via `RoomSealOptions`.**                                                                                                                                                                                                                                                                         |
+| **`usePresenceCursors`** 🆕                                       | **Figma-style live cursors built on `useAwareness`; throttled to ~30 Hz with auto-coloring per `peerId`. Drop in `<CursorLayer />` and call `setLocalCursor()` from `onPointerMove`.**                                                                                                                                                                                                                                       |
+| **`useTypingIndicator`** 🆕                                       | **"alice is typing…" with idle-expiry. Wire `bump()` into your input handlers; the hook returns `typing[]` + `names[]` for everyone else.**                                                                                                                                                                                                                                                                                  |
+| **`useNetworkQuality`** 🆕                                        | **Per-peer RTT over awareness pings; returns a `median` you can use to auto-degrade animations on slow links.**                                                                                                                                                                                                                                                                                                              |
+| **`useReadReceipts`** 🆕                                          | **Per-peer monotone "last seen at message N" over a `Y.Map`. `markSeen(n)` advances; `readersOf(n)` lists peers who reached `n`.**                                                                                                                                                                                                                                                                                           |
+| **`useThreadedMessages`** 🆕                                      | **`Y.Map<msgId, {parent, body, by, at, sig}>` with `post()` / `reply()` / pre-flattened `threads` for rendering.**                                                                                                                                                                                                                                                                                                           |
+| **`useNetworkOnline`** 🆕                                         | **Honest online detector: `navigator.onLine` + a periodic 204 probe. Distinguishes "online" from "captive portal hostage".**                                                                                                                                                                                                                                                                                                 |
+| **`useOfflineQueue`** 🆕                                          | **Buffer writes when isolated; replay through `flush()` when reconnected. Persisted in `localStorage`. At-least-once — make `flush` idempotent via the caller-supplied id.**                                                                                                                                                                                                                                                 |
+| **`useFileShare`** 🆕                                             | **Chunked file share through the existing Yjs transport (5 MB cap; tune `chunkBytes`). Receiver gets `download(fileId)` and `blobOf(fileId)`.**                                                                                                                                                                                                                                                                              |
+| **`useVoiceActivity`** 🆕                                         | **VAD by RMS energy + zero-crossing rate. Pure Web Audio, ~100 lines, no ML payload. Returns `{ active, rms, zcr }`.**                                                                                                                                                                                                                                                                                                       |
+| **`SafeMarkdown` / `renderMarkdownToSafeHtml`** 🆕                | **Markdown rendering via `marked` (single file, 0 deps) + an allow-list sanitizer. No raw HTML pass-through; safe schemes only.**                                                                                                                                                                                                                                                                                            |
+| **`useChangelogToast`** 🆕                                        | **One-shot "what's new in vX.Y" toast on the first session after a version bump. Per-peer state in `localStorage`.**                                                                                                                                                                                                                                                                                                         |
+| **`CrdtInspector`** 🆕                                            | **Dev-only overlay (`?inspect=1`) showing every shared type, sizes, updates/sec, peer count, your peerId. Don't ship default-on.**                                                                                                                                                                                                                                                                                           |
+| **`useFakeTime` / `time` / `setFakeTime` / `advanceFakeTime`** 🆕 | **Test fixture: in production every call collapses to `Date.now()`; in tests you freeze and step the clock. `clockSync` honors it transparently.**                                                                                                                                                                                                                                                                           |
+| **`useFleetPersona` / `FleetAvatar` / `FleetIdentityPanel`** 🆕   | **Cross-app + cross-origin display identity. L0 (per-app local) > L1 (same-origin shared) > L2 (optional `https://fleet-persona.0exec.com`). Captures nickname + name + avatar; apps pick what to render. Service URL defaults to the canonical fleet endpoint — pass `serviceUrl={null}` to disable L2. Includes argon2id-gated write tokens, strict-ASCII allowlist, and QR-able handoff URLs for cross-origin transfer.** |
+| **`useTone` / `createToneEngine`** 🆕                             | **WebAudio cue engine — short oscillator tones with a gain envelope, one lazily-created `AudioContext`, and `resume()` on first gesture (the autoplay footgun every hand-rolled copy skipped). `play()` / `sequence()` / `beep()`. Shapes: `ToneSpec`, `ToneApi`, `ToneEngine`, `ToneEngineOptions`. Replaces the duplicated oscillator code in doorbell / metronome / firefly-walk / pair-rotation.**                       |
+| **`useSharedStrokes`** 🆕                                         | **Collaborative freehand drawing over `Y.Array<Stroke>`. App owns the canvas + pointer handling; the hook owns replication, `add()` (commit on pointer-up), `clear()`, `undoLast(peerId?)`, and a `replay(ctx)` helper for the duplicated draw loop. Returns `SharedStrokesApi`. Used by pictionary / exquisite-corpse / brain-write / light-paint / retro.**                                                                |
+| **`useHotkeys`** 🆕                                               | **Normalized keyboard-shortcut binding: case- and modifier-order-independent combos (`"space"`, `"ctrl+enter"`, `"shift+?"`), skips form fields by default, reads the map live so object literals don't re-subscribe. Types: `HotkeyMap`, `HotkeyHandler`, `HotkeysOptions`.**                                                                                                                                               |
+| `scaffold/create-mesh-app.sh`                                     | One-shot CLI that creates a new app from the template                                                                                                                                                                                                                                                                                                                                                                        |
 
 Apps depend on this via `file:../mesh-common` (publish to npm later if/when useful — Vite bundles the package output into each app's `docs/` so live sites are self-contained).
 
@@ -95,11 +98,11 @@ gh api -X POST repos/baditaflorin/mesh-when2meet/pages \
 
 Build once (GPU), run many times (CPU). Three test layers, all in the scaffold so every new app inherits them.
 
-| Layer | Tool | What it covers | Cost per run |
-|---|---|---|---|
-| Unit / pure logic | Vitest | `commitReveal`, `clockSync`, `combineSalts`, component renders with `createMockRoom` | <1 s |
-| Smoke (e2e) | Playwright + Chromium | Page loads, settings drawer opens, source/tip/version visible, no console errors | ~3 s |
-| Multi-peer (e2e) | Playwright | Two pages in the same browser context sync via y-webrtc's BroadcastChannel fallback — **no signaling server, no network** | ~3 s |
+| Layer             | Tool                  | What it covers                                                                                                            | Cost per run |
+| ----------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| Unit / pure logic | Vitest                | `commitReveal`, `clockSync`, `combineSalts`, component renders with `createMockRoom`                                      | <1 s         |
+| Smoke (e2e)       | Playwright + Chromium | Page loads, settings drawer opens, source/tip/version visible, no console errors                                          | ~3 s         |
+| Multi-peer (e2e)  | Playwright            | Two pages in the same browser context sync via y-webrtc's BroadcastChannel fallback — **no signaling server, no network** | ~3 s         |
 
 ```bash
 npm install
@@ -139,7 +142,7 @@ The scaffold provides two generic tests that work without modification (`smoke.s
 
 ## Shared lint + format preset
 
-One bump fixes formatting and lint rules across every mesh-* app.
+One bump fixes formatting and lint rules across every mesh-\* app.
 
 ```js
 // eslint.config.js — in any mesh-* app
@@ -246,11 +249,11 @@ The build output in `docs/` is committed; Pages serves it directly.
 
 Every app defaults to these endpoints (overridable in the settings drawer):
 
-| Repo | Endpoint | Purpose |
-|---|---|---|
-| https://github.com/baditaflorin/signaling-server | `wss://turn.0docker.com/ws` | y-webrtc signaling |
-| https://github.com/baditaflorin/turn-token-server | `https://turn.0docker.com/credentials` | HMAC TURN creds |
-| https://github.com/baditaflorin/coturn-hetzner | `turn:turn.0docker.com:3479` | TURN relay |
+| Repo                                              | Endpoint                               | Purpose            |
+| ------------------------------------------------- | -------------------------------------- | ------------------ |
+| https://github.com/baditaflorin/signaling-server  | `wss://turn.0docker.com/ws`            | y-webrtc signaling |
+| https://github.com/baditaflorin/turn-token-server | `https://turn.0docker.com/credentials` | HMAC TURN creds    |
+| https://github.com/baditaflorin/coturn-hetzner    | `turn:turn.0docker.com:3479`           | TURN relay         |
 
 ## License
 
@@ -260,17 +263,21 @@ MIT.
 
 > One cryptographic foundation (layer 1), the moderator is the first feature it powers, and layers 2–4 stay opt-in and honest.
 
-| Layer | Status | What it gives you | Bundle cost |
-|---|---|---|---:|
-| **1. Default everywhere** | Lives in `mesh-common` — every app inherits | TOFU pubkey registry, Ed25519-signed sensitive writes, moderator role | ~35 KB |
-| **2. Per-app opt-in** | App imports a helper when needed | Commit-reveal RNG, E2E DMs (X25519 + AES-GCM via WebCrypto) | ~0 KB (native) |
-| **3. Specialty only** | Lazy-loaded for the one or two apps that need it | Shamir secret-sharing for vault-style, SNARKs for anon-attestation | 10 KB / 3 MB |
-| **4. Never claim** | Honesty contract in every README's privacy section | "End-to-end private" is not what we sell — peers in the room see the Yjs state | — |
+| Layer                     | Status                                             | What it gives you                                                              |    Bundle cost |
+| ------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------ | -------------: |
+| **1. Default everywhere** | Lives in `mesh-common` — every app inherits        | TOFU pubkey registry, Ed25519-signed sensitive writes, moderator role          |         ~35 KB |
+| **2. Per-app opt-in**     | App imports a helper when needed                   | Commit-reveal RNG, E2E DMs (X25519 + AES-GCM via WebCrypto)                    | ~0 KB (native) |
+| **3. Specialty only**     | Lazy-loaded for the one or two apps that need it   | Shamir secret-sharing for vault-style, SNARKs for anon-attestation             |   10 KB / 3 MB |
+| **4. Never claim**        | Honesty contract in every README's privacy section | "End-to-end private" is not what we sell — peers in the room see the Yjs state |              — |
 
 ### Using layer 1 in an app
 
 ```tsx
-import { useIdentity, useModerator, ModeratorBadge } from "@baditaflorin/mesh-common";
+import {
+  useIdentity,
+  useModerator,
+  ModeratorBadge,
+} from "@baditaflorin/mesh-common";
 
 function Body({ room, config }) {
   const identity = useIdentity(config.storagePrefix);
@@ -279,13 +286,23 @@ function Body({ room, config }) {
   return (
     <>
       <ModeratorBadge state={moderator} resolveName={(id) => names.get(id)} />
-      {moderator.isMe && <button onClick={() => triggerRound()}>start round</button>}
+      {moderator.isMe && (
+        <button onClick={() => triggerRound()}>start round</button>
+      )}
       {/* Sign any sensitive write so peers can verify provenance: */}
-      <button onClick={() => {
-        const payload = { vote: "yes", round: 3 };
-        const sig = identity.sign(payload);
-        ballots.set(room.peerId, { ...payload, sig, pubkey: identity.pubkey });
-      }}>vote</button>
+      <button
+        onClick={() => {
+          const payload = { vote: "yes", round: 3 };
+          const sig = identity.sign(payload);
+          ballots.set(room.peerId, {
+            ...payload,
+            sig,
+            pubkey: identity.pubkey,
+          });
+        }}
+      >
+        vote
+      </button>
     </>
   );
 }
@@ -299,9 +316,9 @@ function Body({ room, config }) {
 
 ### The honesty contract
 
-Three things never to claim in any mesh-* app's README:
+Three things never to claim in any mesh-\* app's README:
 
-1. **"End-to-end private"** — peers in the room see the Yjs state. We protect *integrity* (signed who-said-what), not *secrecy* (who-saw-what).
+1. **"End-to-end private"** — peers in the room see the Yjs state. We protect _integrity_ (signed who-said-what), not _secrecy_ (who-saw-what).
 2. **"Admin enforces rules"** — peers can ignore moderator commands. Display, don't deny.
 3. **"Data is deleted"** — CRDT history is monotone. Redaction marks bytes; the bytes still exist on every peer who synced.
 
