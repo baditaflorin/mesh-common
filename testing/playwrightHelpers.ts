@@ -40,8 +40,10 @@ export async function openTwoPeers(
   // `browser.newContext()` does NOT inherit baseURL from project config, so
   // callers must pass an absolute URL (typically the `baseURL` fixture).
   const context = await browser.newContext({ baseURL: url || undefined });
-  const roomId = options.roomId ?? `e2e-${Math.random().toString(36).slice(2, 8)}`;
-  const signalingUrl = options.signalingUrl ?? "ws://localhost:1/never-connects";
+  const roomId =
+    options.roomId ?? `e2e-${Math.random().toString(36).slice(2, 8)}`;
+  const signalingUrl =
+    options.signalingUrl ?? "ws://localhost:1/never-connects";
 
   await context.addInitScript(
     ({ prefix, room, sig }) => {
@@ -71,11 +73,82 @@ export async function openTwoPeers(
   };
 }
 
+export type MeshGroup = {
+  context: BrowserContext;
+  /** All `n` peer pages, in open order. */
+  peers: Page[];
+  cleanup: () => Promise<void>;
+};
+
+/**
+ * Like {@link openTwoPeers} but opens `n` pages in the SAME browser context, all
+ * joined to one room via y-webrtc's BroadcastChannel fallback. Use this for
+ * games that only make sense with 3+ peers — hidden-role assignment, quorum
+ * voting, rotating turns, leaderboards — where two peers can't exercise the
+ * advertised behavior.
+ *
+ *   const { peers, cleanup } = await openNPeers(browser, '/', { storagePrefix: 'mesh-mafia', count: 4 });
+ *   await peers[0].getByRole('button', { name: 'Start game' }).click();
+ *   // exactly one of the 4 peers should be assigned the hidden role:
+ *   const roles = await Promise.all(peers.map(p => p.getByTestId('my-role').textContent()));
+ *   expect(roles.filter(r => r === 'mafia')).toHaveLength(1);
+ *   await cleanup();
+ */
+export async function openNPeers(
+  browser: Browser,
+  url: string,
+  options: {
+    /** Storage prefix used by the app (matches MeshConfig.storagePrefix). */
+    storagePrefix: string;
+    /** How many peers to open. Must be >= 1. */
+    count: number;
+    /** Room ID all peers join. Default: `e2e-${random}`. */
+    roomId?: string;
+    /** Override the signaling URL. Default: unreachable port. */
+    signalingUrl?: string;
+  },
+): Promise<MeshGroup> {
+  const count = Math.max(1, Math.floor(options.count));
+  const context = await browser.newContext({ baseURL: url || undefined });
+  const roomId =
+    options.roomId ?? `e2e-${Math.random().toString(36).slice(2, 8)}`;
+  const signalingUrl =
+    options.signalingUrl ?? "ws://localhost:1/never-connects";
+
+  await context.addInitScript(
+    ({ prefix, room, sig }) => {
+      try {
+        localStorage.setItem(`${prefix}:room`, room);
+        localStorage.setItem(`${prefix}:signalingUrl`, sig);
+        localStorage.removeItem(`${prefix}:iceServers`);
+      } catch {
+        // ignore in environments without localStorage
+      }
+    },
+    { prefix: options.storagePrefix, room: roomId, sig: signalingUrl },
+  );
+
+  const peers: Page[] = [];
+  for (let i = 0; i < count; i++) peers.push(await context.newPage());
+  await Promise.all(peers.map((p) => p.goto(url)));
+
+  return {
+    context,
+    peers,
+    cleanup: async () => {
+      await context.close();
+    },
+  };
+}
+
 /**
  * Capture console errors on a page so tests can assert "no console errors".
  * Returns a `getErrors()` function and a `clear()` helper.
  */
-export function captureConsoleErrors(page: Page): { getErrors: () => string[]; clear: () => void } {
+export function captureConsoleErrors(page: Page): {
+  getErrors: () => string[];
+  clear: () => void;
+} {
   const errors: string[] = [];
   page.on("console", (msg) => {
     if (msg.type() === "error") errors.push(msg.text());

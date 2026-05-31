@@ -72,6 +72,41 @@ describe("useNamedPeer", () => {
     const { result } = renderHook(() => useNamedPeer(cfg("audit"), room));
     expect(result.current.myName).toBe("peer-abc123");
   });
+
+  it("remembers a name set in one app across sibling apps on the same origin", () => {
+    // App A: a fresh user types their name. This is the action that previously
+    // never reached the fleet store until an extra reload (the reported bug).
+    const roomA = createMockRoom({ peerId: "alice" });
+    const appA = renderHook(() => useNamedPeer(cfg("mesh-app-a"), roomA));
+    act(() => appA.result.current.setName("Alice"));
+    // It must have landed in the same-origin fleet persona immediately.
+    expect(localStorage.getItem("mesh-fleet:v1:fleet")).toContain("Alice");
+
+    // App B: a DIFFERENT app (different storagePrefix → different per-app key)
+    // opened for the first time. Its per-app name key is empty, so it must
+    // adopt the fleet name on first render — no reload, no manual re-entry.
+    const roomB = createMockRoom({ peerId: "bob" });
+    const appB = renderHook(() => useNamedPeer(cfg("mesh-app-b"), roomB));
+    expect(appB.result.current.name).toBe("Alice");
+    expect(appB.result.current.myName).toBe("Alice");
+  });
+
+  it("keeps non-ASCII names app-local and never clobbers an existing fleet name", () => {
+    // Establish a valid fleet name first.
+    const roomA = createMockRoom({ peerId: "alice" });
+    const appA = renderHook(() => useNamedPeer(cfg("mesh-app-a"), roomA));
+    act(() => appA.result.current.setName("Alice"));
+    expect(localStorage.getItem("mesh-fleet:v1:fleet")).toContain("Alice");
+
+    // A non-conforming name (emoji) stays under the per-app key but must NOT
+    // overwrite the fleet persona shared by every other app.
+    const roomB = createMockRoom({ peerId: "bob" });
+    const appB = renderHook(() => useNamedPeer(cfg("mesh-app-b"), roomB));
+    act(() => appB.result.current.setName("🎉party"));
+    expect(localStorage.getItem("mesh-app-b:displayName")).toBe("🎉party");
+    expect(localStorage.getItem("mesh-fleet:v1:fleet")).toContain("Alice");
+    expect(localStorage.getItem("mesh-fleet:v1:fleet")).not.toContain("🎉");
+  });
 });
 
 describe("useEventLog", () => {
@@ -84,7 +119,10 @@ describe("useEventLog", () => {
     act(() => result.current.push({ peerId: "alice", kind: "z", ts: 3 }));
     rerender();
     expect(result.current.size).toBe(3);
-    expect(result.current.byPeer("alice").map((e) => e.kind)).toEqual(["x", "z"]);
+    expect(result.current.byPeer("alice").map((e) => e.kind)).toEqual([
+      "x",
+      "z",
+    ]);
     expect(result.current.latest(2).map((e) => e.kind)).toEqual(["z", "y"]);
   });
 
@@ -127,7 +165,9 @@ describe("useVotes", () => {
 
   it("unvote removes my entry", () => {
     const room = createMockRoom({ peerId: "alice" });
-    const { result, rerender } = renderHook(() => useVotes<"a" | "b">(room, "v"));
+    const { result, rerender } = renderHook(() =>
+      useVotes<"a" | "b">(room, "v"),
+    );
     act(() => result.current.vote("a"));
     rerender();
     expect(result.current.totalVotes).toBe(1);
@@ -221,11 +261,15 @@ describe("useFairRng", () => {
     const roomA = createMockRoom({ peerId: "alice" });
     const roomB = createMockRoom({ peerId: "bob" });
     const unlink = linkMockRooms(roomA, roomB);
-    const a = renderHook(() => useFairRng(roomA, "round1", { minContributors: 2 }));
+    const a = renderHook(() =>
+      useFairRng(roomA, "round1", { minContributors: 2 }),
+    );
     a.rerender();
     expect(a.result.current.ready).toBe(false);
     // bob arrives
-    const b = renderHook(() => useFairRng(roomB, "round1", { minContributors: 2 }));
+    const b = renderHook(() =>
+      useFairRng(roomB, "round1", { minContributors: 2 }),
+    );
     b.rerender();
     a.rerender();
     expect(a.result.current.contributors).toBe(2);
@@ -235,7 +279,9 @@ describe("useFairRng", () => {
     expect(b.result.current.seed).toBe(a.result.current.seed);
     // Same shuffle on both peers
     const arr = [1, 2, 3, 4, 5];
-    expect(a.result.current.shuffle(arr)).toEqual(b.result.current.shuffle(arr));
+    expect(a.result.current.shuffle(arr)).toEqual(
+      b.result.current.shuffle(arr),
+    );
     unlink();
   });
 });
@@ -332,7 +378,9 @@ describe("useDeadline", () => {
   it("formats remaining time + flips isPast", () => {
     vi.useFakeTimers();
     const target = Date.now() + 90_000;
-    const { result, rerender } = renderHook(() => useDeadline(target, { tickMs: 100 }));
+    const { result, rerender } = renderHook(() =>
+      useDeadline(target, { tickMs: 100 }),
+    );
     expect(result.current.isPast).toBe(false);
     expect(result.current.fmt).toMatch(/1:30|1:29/);
     vi.advanceTimersByTime(100_000);
@@ -389,12 +437,20 @@ describe("useRoster", () => {
     const a = createMockRoom({ peerId: "alice" });
     const b = createMockRoom({ peerId: "bob" });
     const unlink = linkMockRooms(a, b);
-    const aH = renderHook(() => useRoster(a, { heartbeatMs: 100, freshnessMs: 5_000 }));
-    const bH = renderHook(() => useRoster(b, { heartbeatMs: 100, freshnessMs: 5_000 }));
+    const aH = renderHook(() =>
+      useRoster(a, { heartbeatMs: 100, freshnessMs: 5_000 }),
+    );
+    const bH = renderHook(() =>
+      useRoster(b, { heartbeatMs: 100, freshnessMs: 5_000 }),
+    );
     aH.rerender();
     bH.rerender();
-    expect(aH.result.current.present).toEqual(expect.arrayContaining(["alice", "bob"]));
-    expect(bH.result.current.present).toEqual(expect.arrayContaining(["alice", "bob"]));
+    expect(aH.result.current.present).toEqual(
+      expect.arrayContaining(["alice", "bob"]),
+    );
+    expect(bH.result.current.present).toEqual(
+      expect.arrayContaining(["alice", "bob"]),
+    );
     unlink();
   });
 });
@@ -513,27 +569,39 @@ describe("useShake", () => {
     // jsdom does not implement DeviceMotionEvent natively; we install a
     // minimal stub so the listener attaches, then dispatch a synthetic event.
     type DM = typeof DeviceMotionEvent;
-    const orig = (window as unknown as { DeviceMotionEvent?: DM }).DeviceMotionEvent;
+    const orig = (window as unknown as { DeviceMotionEvent?: DM })
+      .DeviceMotionEvent;
     class StubDM extends Event {
       accelerationIncludingGravity: { x: number; y: number; z: number } | null;
-      constructor(type: string, init: { accel: { x: number; y: number; z: number } }) {
+      constructor(
+        type: string,
+        init: { accel: { x: number; y: number; z: number } },
+      ) {
         super(type);
         this.accelerationIncludingGravity = init.accel;
       }
     }
-    (window as unknown as { DeviceMotionEvent: typeof StubDM }).DeviceMotionEvent = StubDM;
+    (
+      window as unknown as { DeviceMotionEvent: typeof StubDM }
+    ).DeviceMotionEvent = StubDM;
     try {
-      const { result } = renderHook(() => useShake({ armed: true, threshold: 5, cooldownMs: 0 }));
+      const { result } = renderHook(() =>
+        useShake({ armed: true, threshold: 5, cooldownMs: 0 }),
+      );
       act(() => {
         // Fire several samples above threshold (mag = sqrt(900+0+0) - 9.81 = 20.19)
         for (let i = 0; i < 3; i++) {
-          window.dispatchEvent(new StubDM("devicemotion", { accel: { x: 30, y: 0, z: 0 } }));
+          window.dispatchEvent(
+            new StubDM("devicemotion", { accel: { x: 30, y: 0, z: 0 } }),
+          );
         }
       });
       // Smoothing means we need to wait one tick; rerender to read state.
       expect(result.current.shakes).toBeGreaterThanOrEqual(0);
     } finally {
-      if (orig) (window as unknown as { DeviceMotionEvent: DM }).DeviceMotionEvent = orig;
+      if (orig)
+        (window as unknown as { DeviceMotionEvent: DM }).DeviceMotionEvent =
+          orig;
     }
   });
 });
@@ -619,12 +687,16 @@ describe("useWebShare", () => {
 
   it("falls back to clipboard when Web Share is unavailable", async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
-    (navigator as unknown as { clipboard: { writeText: typeof writeText } }).clipboard = {
+    (
+      navigator as unknown as { clipboard: { writeText: typeof writeText } }
+    ).clipboard = {
       writeText,
     };
     try {
       const { result } = renderHook(() => useWebShare());
-      const outcome = await result.current.share({ url: "https://example.test" });
+      const outcome = await result.current.share({
+        url: "https://example.test",
+      });
       expect(outcome).toBe("copied");
       expect(writeText).toHaveBeenCalledWith("https://example.test");
     } finally {
@@ -648,7 +720,9 @@ describe("useGesture", () => {
   it("fires longpress + onLongPress after holding past the threshold", async () => {
     vi.useFakeTimers();
     const onLongPress = vi.fn();
-    const { result } = renderHook(() => useGesture({ longPressMs: 100, onLongPress }));
+    const { result } = renderHook(() =>
+      useGesture({ longPressMs: 100, onLongPress }),
+    );
     const fakeEvent = {
       pointerId: 1,
       clientX: 100,
@@ -670,14 +744,20 @@ describe("useGesture", () => {
   it("does not fire longpress if the pointer moves before the threshold", () => {
     vi.useFakeTimers();
     const onLongPress = vi.fn();
-    const { result } = renderHook(() => useGesture({ longPressMs: 100, onLongPress }));
+    const { result } = renderHook(() =>
+      useGesture({ longPressMs: 100, onLongPress }),
+    );
     const down = {
       pointerId: 1,
       clientX: 100,
       clientY: 100,
       target: { setPointerCapture: () => undefined },
     } as unknown as React.PointerEvent;
-    const moveFar = { pointerId: 1, clientX: 200, clientY: 200 } as unknown as React.PointerEvent;
+    const moveFar = {
+      pointerId: 1,
+      clientX: 200,
+      clientY: 200,
+    } as unknown as React.PointerEvent;
     act(() => {
       result.current.handlers.onPointerDown(down);
     });

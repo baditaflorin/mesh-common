@@ -10,6 +10,37 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+## [0.10.4] — 2026-05-31 — useNamedPeer is fleet-wide; openNPeers test helper
+
+### Fixed
+
+- **Display name now carries across apps on first try.** A name typed in one
+  `baditaflorin.github.io/<app>` app was not remembered by sibling apps: it
+  was written only to the per-app `<prefix>:displayName` key, and the
+  `createMeshConfig` fleet bridge only publishes at module load — i.e. before
+  the user has typed anything. The name reached the shared fleet store only
+  after an extra reload of the first app, so opening a second app showed no
+  name. `useNamedPeer` now (a) adopts the same-origin fleet persona (L1, key
+  `mesh-fleet:v1:fleet`) when it has no per-app name on first render, and
+  (b) mirrors every name change back into that persona immediately. Names are
+  strict-ASCII gated (matching the persona allowlist) and the write is
+  merge-preserving, so a non-conforming name stays app-local and never
+  clobbers an existing fleet name/avatar.
+
+### Added
+
+- `openNPeers(browser, url, { storagePrefix, count })` in
+  `@baditaflorin/mesh-common/testing` — opens `n` pages in one browser context
+  joined to one room, for e2e tests of games that need 3+ peers (hidden-role
+  assignment, quorum voting, rotating turns). Companion to `openTwoPeers`;
+  returns `{ context, peers, cleanup }` (type `MeshGroup`).
+
+### Tested
+
+- Two new `useNamedPeer` cases: a name set in app A is read by a fresh app B on
+  first render (no reload); a non-ASCII name stays app-local and does not
+  overwrite an existing fleet name. Full suite green (407 tests).
+
 ## [0.10.3] — 2026-05-20 — bridge all three per-app name-key conventions
 
 ### Fixed
@@ -17,13 +48,13 @@ mention in `README.md`.
 - 0.10.2 only bridged `<prefix>:myName`, but the fleet uses three
   conventions across ~134 apps (surveyed 2026-05-20):
   - `<prefix>:displayName` — ~54 apps via `useNamedPeer` (canonical)
-  - `<prefix>:name`        — ~7 apps directly (e.g. mesh-mafia)
-  - `<prefix>:myName`      — ~2 apps (e.g. mesh-applause)
-  `createMeshConfig` now reads/writes all three. Hydrate writes the
-  fleet nickname into all three keys (harmless — apps read only their
-  own convention); publish takes the first non-empty value and also
-  mirrors it back into the other keys so same-tab consumers in the
-  same app stay consistent.
+  - `<prefix>:name` — ~7 apps directly (e.g. mesh-mafia)
+  - `<prefix>:myName` — ~2 apps (e.g. mesh-applause)
+    `createMeshConfig` now reads/writes all three. Hydrate writes the
+    fleet nickname into all three keys (harmless — apps read only their
+    own convention); publish takes the first non-empty value and also
+    mirrors it back into the other keys so same-tab consumers in the
+    same app stay consistent.
 
 ### Tested
 
@@ -40,14 +71,14 @@ mention in `README.md`.
   fleet persona shown in the settings drawer — so typing a name in
   one app and opening another in the same browser produced an empty
   field, not the cross-app suggestion. **Now `createMeshConfig`
-  bridges the two synchronously at module load**, *before*
+  bridges the two synchronously at module load**, _before_
   `App.tsx`'s `useState(() => localStorage.getItem(...))` runs:
   - If `<prefix>:myName` is empty and `mesh-fleet:v1:fleet` has a
     nickname → hydrate the app key from the fleet.
   - If `<prefix>:myName` is set and fleet is empty → publish the
     name into the fleet (strict-ASCII-allowlist gated; non-conforming
     names stay app-local).
-  No per-app code changes required — just rebuild.
+    No per-app code changes required — just rebuild.
 
 ### Tested
 
@@ -72,8 +103,8 @@ mention in `README.md`.
 
 - **`useFleetPersona({ appName, serviceUrl? })`** — per-app hook that returns
   `{ persona, source, label, avatarSeed, setNickname, setName, setAvatar,
-  setPersona, forgetLocal, forgetEverywhere, mode, setMode, buildHandoffUrl,
-  importHandoff, hasRemoteCredentials, suggestion, loading }`. Three-tier
+setPersona, forgetLocal, forgetEverywhere, mode, setMode, buildHandoffUrl,
+importHandoff, hasRemoteCredentials, suggestion, loading }`. Three-tier
   resolution — L0 (per-app local) > L1 (same-origin shared) > L2 (optional
   remote service). The L2 fetch is 2 s timeout, fire-and-forget, never blocks
   the UI. `FleetPersona` carries both **nickname** and **name** so apps pick
@@ -115,6 +146,7 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
 ## [0.9.0] — 2026-05-19 — consolidation batch 2 (13 primitives)
 
 ### Added — presence layer (built on `useAwareness`)
+
 - **`usePresenceCursors(room, opts)`** — Figma-style live cursors throttled
   to ~30 Hz. Returns `{ peers, setLocalCursor, CursorLayer }`. Deterministic
   per-peer color. Replaces ad-hoc per-app cursor implementations.
@@ -126,25 +158,28 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
   auto-degrade cursors / animations.
 
 ### Added — messaging
+
 - **`useReadReceipts(room, { mapName? })`** — per-peer monotone "last seen at
   message N" over a `Y.Map<peerId, number>`. `markSeen(n)` is monotone
   (backward writes are ignored); `readersOf(n)` returns peers ≥ `n`.
 - **`useThreadedMessages<T>(room, { mapName? })`** — `Y.Map<msgId, {parent,
-  body, by, at, sig}>` with `post()`, `reply()`, and a pre-flattened
+body, by, at, sig}>` with `post()`, `reply()`, and a pre-flattened
   `threads` array (parent-first, depth-first) ready for render. `remove(id)`
   drops a message; replies become orphans (callers can re-parent).
 
 ### Added — network + lifecycle
+
 - **`useNetworkOnline({ probeUrl?, probeIntervalMs?, retryIntervalMs? })`** —
   augments `navigator.onLine` with a periodic HEAD probe. Distinguishes
   "really online" from "interface-up-but-captive-portal". Default probe
   target is `https://www.gstatic.com/generate_204`.
 - **`useOfflineQueue<T>({ online, flush, storageKey?, retryMs?, maxAgeMs?,
-  maxItems? })`** — buffer writes when isolated, replay on reconnect.
+maxItems? })`** — buffer writes when isolated, replay on reconnect.
   Persisted to `localStorage` so writes survive a tab reload. At-least-once
   delivery; make `flush` idempotent via the caller-supplied id.
 
 ### Added — media
+
 - **`useFileShare(room, { mapName?, chunkBytes?, maxBytes? })`** — chunked
   file share through the existing Yjs transport. Default 16 KB chunks,
   5 MB cap. `send(blob)` returns the file id; receiver gets `download(id)`
@@ -156,19 +191,22 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
   "alice is speaking", not for speech-to-text gating.
 
 ### Added — rendering
+
 - **`SafeMarkdown` / `renderMarkdownToSafeHtml(source, gfm?, inline?)`** —
   markdown rendering via `marked` (single file, 0 deps) plus an allow-list
   HTML sanitizer. Permitted: paragraphs, emphasis, lists, headings, code,
   blockquote, `<a>` with `href` (scheme-validated, `javascript:` and
   `data:text/*` rejected), `<span class>`. Adds `rel="noopener noreferrer"
-  target="_blank"` to every anchor. No raw HTML pass-through.
+target="_blank"` to every anchor. No raw HTML pass-through.
 
 ### Added — lifecycle UX
+
 - **`useChangelogToast({ appName, version, onUpgrade, skipFirstInstall? })`** —
   one-shot "what's new in vX.Y" toast on the first session after a version
   bump. Per-app key in `localStorage`. First install is silent by default.
 
 ### Added — dev tooling
+
 - **`CrdtInspector`** — `?inspect=1`-gated overlay showing shared types,
   sizes, updates/sec, peer count, your peerId. Don't ship default-on
   (observing every doc update is non-zero overhead).
@@ -179,12 +217,14 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
   under Vitest / Playwright.
 
 ### Changed
+
 - `clockSync.ts` reads `now()` from `useFakeTime` instead of calling
   `Date.now()` directly. Default behavior is unchanged (no fake time set →
   `Date.now()` passthrough).
 - `package.json` adds `marked@^16` (one file, zero transitive deps).
 
 ### Not changed
+
 - Net new runtime payload (gzipped): `marked` (~14 KB) + the 13 hooks/
   components (~10 KB combined). The `CrdtInspector` (~2 KB) is dev-only and
   trivially tree-shakes if you don't import it.
@@ -194,10 +234,11 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
 ## [0.8.0] — 2026-05-19 — consolidation batch 1 (5 primitives + docs-sync gate)
 
 ### Added
+
 - **`useAwareness<T>(room)`** — typed wrapper around `y-protocols/awareness`
   for ephemeral per-peer state (cursors, "typing…", live reactions). Sister
   to `useRoster` (heartbeat-based, persistent) and `usePerPeerValue`
-  (CRDT-persisted) but explicitly *ephemeral* — disappears on disconnect,
+  (CRDT-persisted) but explicitly _ephemeral_ — disappears on disconnect,
   not part of CRDT history. Replaces ad-hoc `provider.awareness.on(...)`
   copies in apps.
 - **`PeerAvatar`** — deterministic inline-SVG avatar seeded from a peerId
@@ -229,9 +270,11 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
 - **`scripts/install-hooks.sh`** — installs the pre-commit gate.
 
 ### Changed
+
 - `GestureKind` widened to include `"longpress"`.
 
 ### Infrastructure
+
 - Vitest `environmentMatchGlobs` extended for the new jsdom-needing tests.
 - `package.json` adds `zod` to `dependencies`.
 
@@ -240,15 +283,17 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
 ### Added
 
 #### Components
+
 - **`<MeshErrorBoundary>`** — class component that scopes crashes to the
   Feature subtree. Renders a fallback card with `try again`, `copy
-  diagnostics` (clipboard-writes a structured blob with app/version/UA/
+diagnostics` (clipboard-writes a structured blob with app/version/UA/
   stack/component-stack), and `reload page`. Accepts a custom `fallback`
   render-prop and `onError` side-effect handler. Until this landed every
-  mesh-* app crashed the whole tab on any Yjs observer throw; one drop-in
+  mesh-\* app crashed the whole tab on any Yjs observer throw; one drop-in
   wrapper fixes the entire fleet.
 
 #### Hooks + helpers
+
 - **`useMeshLink(config)`** — canonical encoder + parser for the
   `#r=<roomId>&p=<peerId>&x=<extra>` deep-link fragment that every app
   needs for QR / share / paste flows. Pure-fn variants
@@ -258,6 +303,7 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
   future schema bumps stay parseable.
 
 #### Presets
+
 - **`@baditaflorin/mesh-common/eslint`** — shared ESLint flat config.
   Wraps `typescript-eslint`'s recommended set, adds `react-hooks/*`,
   enforces house style, disables rules that conflict with prettier.
@@ -269,6 +315,7 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
   `eslint typescript-eslint eslint-plugin-react-hooks eslint-config-prettier`.
 
 #### Scripts
+
 - **`scripts/generate-privacy-section.mjs`** (also `bin: mesh-privacy`) —
   walks `src/**` for `@baditaflorin/mesh-common` imports, maps each
   capability-bearing hook to a privacy implication, rewrites the
@@ -281,6 +328,7 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
   `test:leak` package.json script. Idempotent.
 
 #### Scaffold additions
+
 - **`scaffold/template/tests/e2e/perf-budget.spec.ts.tmpl`** — Playwright
   spec that measures LCP + TBT on cold load and INP after one interaction;
   fails over configurable thresholds (defaults: LCP ≤ 2500ms, TBT ≤ 600ms,
@@ -296,6 +344,7 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
   generator + a future `mesh-doctor` drift check have a stable anchor.
 
 ### Package
+
 - **`exports`**: new `./eslint` and `./prettier` subpath exports.
 - **`bin`**: `mesh-privacy` invokes the privacy generator.
 - **`files`**: now ships `presets/` alongside `src` / `testing` / etc.
@@ -304,6 +353,7 @@ fleet IaC chain (services-registry + fleet-runner + dockerhost compose).
   final published bump).
 
 ### Not changed
+
 - No new runtime dependencies — the eslint preset declares its
   dependencies as peer (consumer installs them once for their linter).
 - Existing primitives untouched; this batch is purely additive.
