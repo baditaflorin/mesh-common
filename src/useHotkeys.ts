@@ -71,9 +71,8 @@ function isEditable(target: EventTarget | null): boolean {
 }
 
 /**
- * Bind keyboard shortcuts with normalized combos. Replaces the ad-hoc
- * `addEventListener("keydown")` blocks in mesh-applause, mesh-debate-clock,
- * mesh-lunch-roulette, mesh-mind-meld and mesh-storyworm.
+ * Bind global (window-level) keyboard shortcuts with normalized combos, so an
+ * app doesn't hand-roll its own `addEventListener("keydown")` + combo parsing.
  *
  *   useHotkeys({
  *     space: () => buzz(),
@@ -83,7 +82,10 @@ function isEditable(target: EventTarget | null): boolean {
  *
  * The handler map is read live, so passing a fresh object literal each render
  * does not re-subscribe. By default it skips events originating in form fields
- * so a spacebar shortcut never eats a space the user is typing.
+ * so a spacebar shortcut never eats a space the user is typing — which is also
+ * why this is NOT a fit for input-scoped `onKeyDown` Enter-to-submit handlers;
+ * leave those on the element. No mesh-* app ships global shortcuts today, so
+ * this is currently a forward-looking primitive.
  */
 export function useHotkeys(map: HotkeyMap, options?: HotkeysOptions): void {
   const mapRef = useRef(map);

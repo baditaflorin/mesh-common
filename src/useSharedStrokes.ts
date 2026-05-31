@@ -3,8 +3,10 @@ import type { YRoom } from "./useYRoom";
 
 /**
  * One committed pen stroke. `points` is a flat `[x0, y0, x1, y1, …]` list in
- * canvas coordinates — the exact shape mesh-pictionary, mesh-exquisite-corpse,
- * mesh-brain-write, mesh-light-paint and mesh-retro each defined locally.
+ * canvas coordinates — the shape mesh-pictionary defined locally before this
+ * hook lifted it into mesh-common. (The other freehand-survey candidates —
+ * exquisite-corpse, brain-write, light-paint, retro — turned out to use Y.Map
+ * strips / text models / procedural canvases, not a shared stroke list.)
  */
 export type Stroke = {
   /** Peer who drew this stroke. */
