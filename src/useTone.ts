@@ -8,6 +8,8 @@ import { useEffect, useRef } from "react";
 export type ToneSpec = {
   /** Oscillator frequency in Hz. */
   freq: number;
+  /** If set, the pitch glides exponentially from `freq` to this over `duration` (a chirp). */
+  glideTo?: number;
   /** Wave shape. Default `"sine"`. */
   type?: OscillatorType;
   /** Note length in seconds. Default `0.15`. */
@@ -95,6 +97,12 @@ export function createToneEngine(opts?: ToneEngineOptions): ToneEngine {
     const gain = c.createGain();
     osc.type = spec.type ?? "sine";
     osc.frequency.setValueAtTime(Math.max(1, spec.freq), t0);
+    if (spec.glideTo != null) {
+      osc.frequency.exponentialRampToValueAtTime(
+        Math.max(1, spec.glideTo),
+        t0 + dur,
+      );
+    }
     gain.gain.setValueAtTime(0.0001, t0);
     gain.gain.exponentialRampToValueAtTime(peak, t0 + attack);
     gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);

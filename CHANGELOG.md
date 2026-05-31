@@ -10,6 +10,15 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+## [0.11.1] — 2026-05-31 — useTone pitch glide
+
+### Added
+
+- `ToneSpec.glideTo` — optional target frequency the pitch ramps to over the
+  note's `duration` (a chirp). Lets `useTone` faithfully reproduce the
+  frequency-glide cues in mesh-firefly-walk (880→440) and mesh-pair-rotation
+  (560→800), which the fixed-frequency API could not express.
+
 ## [0.11.0] — 2026-05-31 — three consolidation primitives: useTone, useSharedStrokes, useHotkeys
 
 A fleet survey found three patterns still hand-rolled across apps despite the

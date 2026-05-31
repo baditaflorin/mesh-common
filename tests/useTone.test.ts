@@ -3,7 +3,13 @@ import { describe, expect, it } from "vitest";
 import { act, renderHook } from "@testing-library/react";
 import { createToneEngine, useTone } from "../src/useTone";
 
-type OscRec = { type: string; freq: number; started: number; stopped: number };
+type OscRec = {
+  type: string;
+  freq: number;
+  glide: number;
+  started: number;
+  stopped: number;
+};
 
 function mockAudio() {
   const oscs: OscRec[] = [];
@@ -14,7 +20,13 @@ function mockAudio() {
     state: "suspended" as AudioContextState,
     destination: {},
     createOscillator() {
-      const rec: OscRec = { type: "sine", freq: 0, started: -1, stopped: -1 };
+      const rec: OscRec = {
+        type: "sine",
+        freq: 0,
+        glide: -1,
+        started: -1,
+        stopped: -1,
+      };
       const node = {
         get type() {
           return rec.type;
@@ -25,6 +37,9 @@ function mockAudio() {
         frequency: {
           setValueAtTime: (v: number) => {
             rec.freq = v;
+          },
+          exponentialRampToValueAtTime: (v: number) => {
+            rec.glide = v;
           },
         },
         connect: () => node,
@@ -89,6 +104,14 @@ describe("createToneEngine", () => {
     engine.beep();
     expect(m.oscs).toHaveLength(3);
     expect(m.oscs[2]!.type).toBe("square");
+  });
+
+  it("glideTo schedules a pitch ramp (chirp)", () => {
+    const m = mockAudio();
+    const engine = createToneEngine({ factory: m.factory });
+    engine.play({ freq: 880, glideTo: 440 });
+    expect(m.oscs[0]!.freq).toBe(880);
+    expect(m.oscs[0]!.glide).toBe(440);
   });
 
   it("is a no-op (never throws) when no AudioContext is available", () => {
