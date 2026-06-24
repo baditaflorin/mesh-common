@@ -10,6 +10,13 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+## [0.11.2] — 2026-06-24
+
+### Changed
+- Updated the demos dashboard to link directly to running GitHub Pages sites for Rootless Computing and `mesh-common`.
+- Integrated a styled info banner explaining the rootless computing paradigm on the demos page.
+- Made the demos build script search for `services-registry` dynamically across both sibling and parent directories.
+
 ## [0.11.1] — 2026-05-31 — useTone pitch glide
 
 ### Added

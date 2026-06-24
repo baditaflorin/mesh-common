@@ -15,7 +15,9 @@ import path from "node:path";
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const DEMOS_DIR = path.join(ROOT, "docs", "demos");
-const REGISTRY_PATH = path.resolve(ROOT, "..", "services-registry", "services.json");
+const REGISTRY_PATH_1 = path.resolve(ROOT, "..", "services-registry", "services.json");
+const REGISTRY_PATH_2 = path.resolve(ROOT, "..", "..", "services-registry", "services.json");
+const REGISTRY_PATH = existsSync(REGISTRY_PATH_1) ? REGISTRY_PATH_1 : REGISTRY_PATH_2;
 const OUT_PATH = path.join(DEMOS_DIR, "index.html");
 
 const escapeHtml = (s) =>
@@ -99,6 +101,9 @@ const html = `<!doctype html>
   <style>
     :root { color-scheme: dark; }
     html, body { margin: 0; padding: 0; background: #0e1117; color: #e6edf3; font: 14px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; }
+    a { color: #58a6ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .rootless-banner { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px 16px; margin-top: 16px; max-width: 800px; line-height: 1.6; }
     header.page { padding: 28px 24px 12px; max-width: 1400px; margin: 0 auto; }
     header.page h1 { margin: 0 0 6px; font-size: 22px; font-weight: 600; }
     header.page .sub { color: #8b949e; font-size: 13px; }
@@ -131,6 +136,10 @@ const html = `<!doctype html>
     <h1>Mesh fleet demos</h1>
     <div class="sub">
       ${entries.length} apps recorded · ${okCount} OK · ${failCount} failed · generated ${escapeHtml(generatedAt)}
+    </div>
+    <div class="rootless-banner">
+      💡 These applications are built using the <a href="https://baditaflorin.github.io/rootless-computing/" target="_blank" rel="noreferrer">Rootless Computing paradigm</a>. 
+      They have no origin server, run entirely in the browser, store data locally on your machine, and coordinate directly with peers using WebRTC/Yjs via the <a href="https://baditaflorin.github.io/mesh-common/" target="_blank" rel="noreferrer">mesh-common</a> framework.
     </div>
   </header>
   <main>
