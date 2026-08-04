@@ -9,6 +9,13 @@ export type YRoom = {
   doc: Y.Doc;
   provider: WebrtcProvider | null;
   peerId: string;
+  /**
+   * Stable id for this browser (persisted in localStorage, survives a
+   * reload), unlike `peerId` which is fresh every mount. Optional because
+   * hand-built `YRoom` mocks in tests may not set it — consumers should
+   * treat a missing value the same as "no device-scoped dedup available".
+   */
+  deviceId?: string;
   peerCount: number;
   roomId: string;
 };
@@ -58,6 +65,7 @@ export function useYRoom(config: MeshConfig, roomId: string): YRoom | null {
           doc: sync!.doc,
           provider: sync!.provider,
           peerId: sync!.peerId,
+          deviceId: sync!.deviceId,
           peerCount: count,
           roomId,
         });
