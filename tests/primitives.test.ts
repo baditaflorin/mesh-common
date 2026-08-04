@@ -257,21 +257,42 @@ describe("useMeshSlot", () => {
 });
 
 describe("useFairRng", () => {
-  it("derives a deterministic seed once contributors arrive", () => {
+  const settle = () => new Promise((r) => setTimeout(r, 20));
+
+  it("only reveals once every peer has committed, then derives a matching verified seed", async () => {
     const roomA = createMockRoom({ peerId: "alice" });
     const roomB = createMockRoom({ peerId: "bob" });
     const unlink = linkMockRooms(roomA, roomB);
+    const peerIds = ["alice", "bob"];
     const a = renderHook(() =>
-      useFairRng(roomA, "round1", { minContributors: 2 }),
+      useFairRng(roomA, "round1", { peerIds, minContributors: 2 }),
     );
+    await act(async () => {
+      await settle();
+    });
     a.rerender();
+    // Only alice has committed so far — not ready, and her raw salt must
+    // not be observable yet (still hashed, not revealed).
     expect(a.result.current.ready).toBe(false);
-    // bob arrives
+    expect(a.result.current.seed).toBeNull();
+    const rawReveals = roomA.doc.getMap<string>("round1:0:reveals");
+    expect(rawReveals.size).toBe(0);
+
+    // bob arrives and commits too
     const b = renderHook(() =>
-      useFairRng(roomB, "round1", { minContributors: 2 }),
+      useFairRng(roomB, "round1", { peerIds, minContributors: 2 }),
     );
+    await act(async () => {
+      await settle();
+    });
     b.rerender();
     a.rerender();
+    await act(async () => {
+      await settle();
+    });
+    a.rerender();
+    b.rerender();
+
     expect(a.result.current.contributors).toBe(2);
     expect(a.result.current.ready).toBe(true);
     expect(a.result.current.seed).toBeGreaterThanOrEqual(0);
@@ -282,6 +303,52 @@ describe("useFairRng", () => {
     expect(a.result.current.shuffle(arr)).toEqual(
       b.result.current.shuffle(arr),
     );
+    unlink();
+  });
+
+  it("rerollRound() resets both peers to a fresh blind round", async () => {
+    const roomA = createMockRoom({ peerId: "alice" });
+    const roomB = createMockRoom({ peerId: "bob" });
+    const unlink = linkMockRooms(roomA, roomB);
+    const peerIds = ["alice", "bob"];
+    const a = renderHook(() => useFairRng(roomA, "round2", { peerIds }));
+    const b = renderHook(() => useFairRng(roomB, "round2", { peerIds }));
+    await act(async () => {
+      await settle();
+    });
+    a.rerender();
+    b.rerender();
+    await act(async () => {
+      await settle();
+    });
+    a.rerender();
+    b.rerender();
+    const firstSeed = a.result.current.seed;
+    expect(firstSeed).toBeGreaterThanOrEqual(0);
+
+    act(() => {
+      a.result.current.rerollRound();
+    });
+    a.rerender();
+    b.rerender();
+    // Both peers immediately drop back to not-ready — nobody can see a
+    // result until both blind-commit again.
+    expect(a.result.current.ready).toBe(false);
+    expect(b.result.current.ready).toBe(false);
+
+    await act(async () => {
+      await settle();
+    });
+    a.rerender();
+    b.rerender();
+    await act(async () => {
+      await settle();
+    });
+    a.rerender();
+    b.rerender();
+
+    expect(a.result.current.ready).toBe(true);
+    expect(a.result.current.seed).toBe(b.result.current.seed);
     unlink();
   });
 });
