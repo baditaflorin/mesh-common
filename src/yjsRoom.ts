@@ -1,5 +1,6 @@
 import { WebrtcProvider } from "y-webrtc";
 import * as Y from "yjs";
+import { ensureDeviceId } from "./deviceId";
 import type { IceStorage } from "./iceConfig";
 import { loadIceServers, loadSignalingUrl } from "./iceConfig";
 
@@ -8,6 +9,8 @@ export type RoomSync = {
   provider: WebrtcProvider | null;
   signalingUrl: string;
   peerId: string;
+  /** Stable id for this browser, persisted across reloads. See `deviceId.ts`. */
+  deviceId: string;
 };
 
 export function createRoomSync(storagePrefix: string, roomId: string, s: IceStorage): RoomSync {
@@ -32,5 +35,7 @@ export function createRoomSync(storagePrefix: string, roomId: string, s: IceStor
       provider as unknown as { awareness?: { clientID: number } } | null
     )?.awareness?.clientID?.toString() ?? crypto.randomUUID();
 
-  return { doc, provider, signalingUrl, peerId };
+  const deviceId = ensureDeviceId(storagePrefix);
+
+  return { doc, provider, signalingUrl, peerId, deviceId };
 }

@@ -18,6 +18,8 @@ export {
 export type { RoomSync } from "./yjsRoom";
 export { createRoomSync } from "./yjsRoom";
 
+export { ensureDeviceId } from "./deviceId";
+
 export type { YRoom } from "./useYRoom";
 export { useYRoom } from "./useYRoom";
 
