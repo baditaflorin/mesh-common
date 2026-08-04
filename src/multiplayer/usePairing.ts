@@ -32,7 +32,7 @@ export function usePairing(
   opts: { roundMs: number },
 ): Pairing {
   const roster = useRoster(room);
-  const fair = useFairRng(room, "pairing", { minContributors: 1 });
+  const fair = useFairRng(room, "pairing", { peerIds: roster.present, minContributors: 1 });
   const slot = useMeshSlot(clock, opts.roundMs);
 
   const pairings = useMemo<Array<[string] | [string, string]>>(() => {
@@ -63,6 +63,6 @@ export function usePairing(
     pairings,
     round: slot.slotId,
     msToNextRound: slot.slotMsRemaining,
-    shuffle: () => fair.rerollMine(),
+    shuffle: () => fair.rerollRound(),
   };
 }

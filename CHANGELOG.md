@@ -10,6 +10,35 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+## [0.12.0] — 2026-08-04 — useFairRng: real commit-reveal
+
+### Fixed
+- **`useFairRng` (`src/useFairRng.ts`) — security fix.** It previously wrote
+  each peer's raw random salt straight into a shared `Y.Map` and never used
+  this repo's own `commit()`/`verifyReveal()` primitives, despite
+  `useCommitRevealHook` (added in the same original commit) already existing
+  to do exactly this. Because Yjs syncs live, any peer could watch every
+  other peer's salt land before contributing (or withholding) its own, and
+  `rerollMine()` let a peer republish unlimited fresh salts while watching
+  its own live-updating result — so a patient or rushing peer could steer
+  the "fair" outcome. `useFairRng` is now built on `useCommitRevealHook`:
+  peers publish a SHA-256 commitment first, reveal only once every peer in
+  a new required `peerIds` option has committed, and a reveal that doesn't
+  verify against its commitment is dropped before combining. `mesh-mafia`'s
+  independent role-dealing implementation already did this correctly and
+  was the reference for this fix.
+
+### Changed
+- **BREAKING:** `useFairRng(room, key, opts)` — `opts.peerIds` is now
+  required (pass your room's live roster, e.g. `useRoster().present`); it's
+  the quorum the hook waits on before allowing a reveal.
+- **BREAKING:** `rerollMine()` is replaced by `rerollRound()`. A reroll now
+  resets the *whole room* to a fresh blind commit-reveal round instead of
+  letting one peer swap out only their own already-revealed salt — the
+  in-place swap was itself part of the exploit (spam-reroll while watching
+  your own screen for a result you like).
+- `src/multiplayer/usePairing.ts` updated to the new `useFairRng` signature.
+
 ## [0.11.2] — 2026-06-24
 
 ### Changed
