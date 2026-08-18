@@ -64,6 +64,37 @@ describe("identity", () => {
     expect(h1).toMatch(/^[0-9a-f]{64}$/);
   });
 
+  it("hashPayload is canonical for nested objects too, at every depth", () => {
+    const h1 = hashPayload({ outer: { a: 1, b: 2 }, x: 1 });
+    const h2 = hashPayload({ x: 1, outer: { b: 2, a: 1 } });
+    expect(h1).toBe(h2);
+  });
+
+  it("hashPayload does not collapse a nested object into {} (regression: array-replacer JSON.stringify bug)", () => {
+    // A bare `JSON.stringify(payload, Object.keys(payload).sort())` applies
+    // that SAME top-level key allowlist recursively, so a nested object
+    // whose keys aren't also top-level names of `payload` — e.g. the
+    // `{ payload: {...}, peerId, ts }` shape `useSignedWrite` always uses —
+    // silently serializes as `{}`. Two payloads that only differ in nested
+    // content must hash differently.
+    const a = hashPayload({ payload: { amount: 100, item: "sword" }, peerId: "p1", ts: 1 });
+    const b = hashPayload({ payload: { amount: 999, item: "shield" }, peerId: "p1", ts: 1 });
+    expect(a).not.toBe(b);
+  });
+
+  it("sign + verify covers nested payload content — tampering with a nested field is rejected", () => {
+    const kp = generateKeypair();
+    const original = { payload: { amount: 100, item: "sword" }, peerId: "p1", ts: 1 };
+    const sig = signPayload(original, kp.privateKey);
+    expect(verifyPayload(original, sig, kp.publicKey)).toBe(true);
+
+    // Only the nested field changes — everything at the top level is
+    // identical. Before the fix, `payload` never actually reached the
+    // signed bytes, so this tampered version would still verify.
+    const tampered = { payload: { amount: 999999, item: "sword" }, peerId: "p1", ts: 1 };
+    expect(verifyPayload(tampered, sig, kp.publicKey)).toBe(false);
+  });
+
   describe("loadOrCreateIdentity + resetIdentity", () => {
     beforeEach(() => {
       localStorage.clear();

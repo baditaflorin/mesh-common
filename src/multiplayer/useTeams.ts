@@ -13,7 +13,12 @@ export type TeamsState = {
   sizeOf: (team: string) => number;
   /** Switch this peer to a different team (only when `allowManual`). */
   switchTo: (team: string) => void;
-  /** Re-shuffle every peer onto a balanced team (only "auto" mode). */
+  /**
+   * Re-shuffle every peer onto a balanced team (only "auto" mode).
+   *
+   * No-ops unless `opts.canBalance` was passed and returns true at call
+   * time — see the `canBalance` option below.
+   */
   balance: () => void;
 };
 
@@ -34,6 +39,14 @@ function hashTo(peerId: string, salt: string, mod: number): number {
  *
  *   const teams = useTeams(room, { teams: ["red", "blue"] });
  *   teams.myTeam === "red" ? <RedView/> : <BlueView/>
+ *
+ * `balance()` rewrites every present peer's team assignment in one
+ * transaction, so it's disabled by default — without a check, any single
+ * connected peer could call it mid-match to grief everyone's assignment.
+ * Pass `canBalance` to authorize it (e.g. gate on `useModerator(...).isMe`,
+ * or on "everyone clicked ready"):
+ *
+ *   const teams = useTeams(room, { teams: [...], canBalance: () => moderator.isMe });
  */
 export function useTeams(
   room: YRoom | null,
@@ -41,6 +54,9 @@ export function useTeams(
     teams: string[] | number;
     mode?: "auto" | "manual";
     allowManual?: boolean;
+    /** Called before every `balance()`; the re-shuffle is dropped unless
+     *  this returns true. Defaults to always-false. */
+    canBalance?: () => boolean;
   },
 ): TeamsState {
   const teams =
@@ -109,8 +125,10 @@ export function useTeams(
     [room, map, mode, opts.allowManual, teams],
   );
 
+  const canBalance = opts.canBalance ?? (() => false);
   const balance = useCallback(() => {
     if (!room) return;
+    if (!canBalance()) return;
     const meta = room.doc.getMap<string>(`${ROOT_KEY}_meta`);
     const m = room.doc.getMap<string>(ROOT_KEY);
     const newSalt = `v-${Date.now()}`;
@@ -121,7 +139,7 @@ export function useTeams(
         m.set(pid, teams[idx]!);
       }
     });
-  }, [room, roster.present, teams]);
+  }, [room, roster.present, teams, canBalance]);
 
   return {
     myTeam,

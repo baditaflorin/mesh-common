@@ -47,9 +47,39 @@ export function generateKeypair(): Keypair {
   return { privateKey: toHex(sk), publicKey: toHex(pk) };
 }
 
-/** Stable canonical JSON encoding of any payload — sorted keys, no whitespace. */
+/**
+ * Recursively sort every object's keys (arrays keep their order) so the same
+ * logical payload always serializes identically, at every nesting depth.
+ */
+function sortKeysDeep(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(sortKeysDeep);
+  if (value !== null && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const key of Object.keys(value as Record<string, unknown>).sort()) {
+      out[key] = sortKeysDeep((value as Record<string, unknown>)[key]);
+    }
+    return out;
+  }
+  return value;
+}
+
+/**
+ * Stable canonical JSON encoding of any payload — sorted keys at every
+ * nesting depth, no whitespace.
+ *
+ * NB: a plain `JSON.stringify(payload, Object.keys(payload).sort())` looks
+ * equivalent but is not — `JSON.stringify`'s array-form replacer applies the
+ * SAME key allowlist at every nesting level, so any nested object whose keys
+ * aren't also top-level key names of `payload` silently serializes as `{}`.
+ * That previously meant `signPayload`/`hashPayload` on a wrapped payload like
+ * `{ payload: {amount, item}, peerId, ts }` (the shape `useSignedWrite`
+ * always uses) never actually covered `payload`'s contents — a peer could
+ * swap the real data without invalidating the signature. Building a fully
+ * sorted plain object first and stringifying it with no replacer avoids that
+ * trap entirely.
+ */
 function canonicalize(payload: unknown): string {
-  return JSON.stringify(payload, Object.keys(payload as object).sort());
+  return JSON.stringify(sortKeysDeep(payload));
 }
 
 /** Hash payload deterministically (sha256 of canonical JSON). */
