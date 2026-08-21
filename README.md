@@ -1,5 +1,12 @@
 # mesh-common
 
+## Sixth capability wave
+
+`useAvailabilityGrid`, `useRankedBallot`, and `useSharedForm` provide small,
+validated shared coordination surfaces. `useMediaRecorder` and
+`useScreenShare` wrap browser capture lifecycles without acquiring a stream or
+sending media anywhere on their own.
+
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 [![version](https://img.shields.io/badge/version-0.1.0-blue)](./package.json)
 
