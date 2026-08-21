@@ -10,6 +10,16 @@ mention in `README.md`.
 
 ## [Unreleased]
 
+### Added
+
+- **First primitive wave:** `useSharedCollection`, `useSharedQueue`, and
+  `useSharedTimer` provide validated list coordination, expiring FIFO claims,
+  and drift-free shared timing without app-specific CRDT copies.
+- **`useCrdtUndo` and `useClipboard`:** scoped Yjs history with explicit
+  capture boundaries, plus resilient copy/read capability state and feedback.
+- **`MeshDialog` and `MeshConnectionStatus`:** public, accessible shared
+  chrome for standard modals and consistent room/network health feedback.
+
 ## [0.12.0] — 2026-08-04 — useFairRng: real commit-reveal
 
 ### Fixed

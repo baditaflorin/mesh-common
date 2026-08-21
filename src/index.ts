@@ -40,6 +40,10 @@ export {
 export { MeshShell } from "./MeshShell";
 export { SelfRefBar } from "./SelfRefBar";
 export { SettingsDrawer } from "./SettingsDrawer";
+export {
+  MeshConnectionStatus,
+  type MeshConnectionStatusProps,
+} from "./MeshConnectionStatus";
 export { InviteShareButton } from "./InviteShareButton";
 export {
   useInviteChain,
@@ -384,3 +388,34 @@ export {
   type HotkeyHandler,
   type HotkeysOptions,
 } from "./useHotkeys";
+
+// ---- first-wave collection, coordination, and browser primitives (2026-08) ----
+export {
+  useSharedCollection,
+  type SharedCollection,
+  type SharedCollectionItem,
+  type SharedCollectionOptions,
+} from "./useSharedCollection";
+export {
+  useSharedQueue,
+  type SharedQueue,
+  type SharedQueueEntry,
+  type SharedQueueOptions,
+} from "./useSharedQueue";
+export {
+  useSharedTimer,
+  type SharedTimer,
+  type SharedTimerOptions,
+  type SharedTimerStatus,
+} from "./useSharedTimer";
+export {
+  useCrdtUndo,
+  type CrdtUndoApi,
+  type CrdtUndoOptions,
+  type CrdtUndoScope,
+} from "./useCrdtUndo";
+export {
+  useClipboard,
+  type ClipboardApi,
+  type ClipboardOptions,
+} from "./useClipboard";
