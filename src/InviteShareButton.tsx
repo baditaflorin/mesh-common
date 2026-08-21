@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { PersonalQR } from "./PersonalQR";
 import { useWebShare } from "./useWebShare";
+import { MeshSheet } from "./ui/MeshSheet";
 
 type Props = {
   /** App name shown in the modal title + native share sheet. */
@@ -67,41 +68,25 @@ export function InviteShareButton({ appName, roomId, peerId, extras }: Props) {
       >
         📡
       </button>
-      {open && (
-        <div
-          className="mesh-invite-overlay"
-          onClick={() => setOpen(false)}
-          role="presentation"
-        >
-          <div
-            className="mesh-invite-modal"
-            role="dialog"
-            aria-label="invite via QR"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <header className="mesh-invite-header">
-              <h2 className="mesh-invite-title">invite to {appName}</h2>
-              <button
-                type="button"
-                className="mesh-invite-close"
-                aria-label="close invite"
-                onClick={() => setOpen(false)}
-              >
-                ×
-              </button>
-            </header>
+      <MeshSheet
+        open={open}
+        onOpenChange={setOpen}
+        title={`invite to ${appName}`}
+        description="Scan the QR code or copy the room link to join."
+        className="mesh-invite-sheet"
+      >
+        <div className="mesh-invite-content">
             <div className="mesh-invite-qr">
               <PersonalQR payload={url} size={240} ariaLabel="room invite QR" />
             </div>
-            <div
+            <button
+              type="button"
               className="mesh-invite-url"
               onClick={onCopy}
-              title="tap to copy"
-              role="button"
-              tabIndex={0}
+              title="Copy invite link"
             >
               {url}
-            </div>
+            </button>
             <div className="mesh-invite-actions">
               <button
                 type="button"
@@ -122,9 +107,8 @@ export function InviteShareButton({ appName, roomId, peerId, extras }: Props) {
                 </>
               )}
             </p>
-          </div>
         </div>
-      )}
+      </MeshSheet>
     </>
   );
 }

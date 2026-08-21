@@ -60,58 +60,6 @@
   opacity: 0.85;
 }
 
-.mesh-invite-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  z-index: 55;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-  padding: 1rem;
-}
-
-.mesh-invite-modal {
-  background: var(--mesh-surface);
-  color: var(--mesh-fg);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.8rem;
-  width: min(360px, 100%);
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-}
-
-.mesh-invite-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mesh-invite-title {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--mesh-accent);
-  letter-spacing: 0.02em;
-}
-
-.mesh-invite-close {
-  background: transparent;
-  color: var(--mesh-fg);
-  border: none;
-  font-size: 1.5rem;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0 0.4rem;
-}
-
-.mesh-invite-close:hover {
-  opacity: 0.7;
-}
-
 .mesh-invite-qr {
   display: flex;
   justify-content: center;
@@ -221,56 +169,31 @@
   opacity: 0.7;
 }
 
-.mesh-settings-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 50;
-  display: flex;
-  justify-content: flex-end;
-  backdrop-filter: blur(4px);
+/* SettingsDrawer now composes the Radix-backed MeshSheet. Keep the settings
+ * rules scoped to its body so host apps cannot accidentally style the shell. */
+.mesh-settings-sheet {
+  width: min(420px, 100%);
+  margin-left: auto;
+  border-radius: 0.8rem 0 0 0.8rem;
 }
 
-.mesh-settings-drawer {
-  background: var(--mesh-surface);
-  width: min(420px, 100%);
-  height: 100%;
-  padding: 1.5rem 1.5rem 3rem;
-  overflow-y: auto;
+.mesh-settings-sheet .mesh-sheet-body {
+  min-height: 0;
+}
+
+.mesh-settings-content {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  color: var(--mesh-fg);
 }
 
-.mesh-settings-drawer header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mesh-settings-drawer h2 {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.mesh-settings-drawer h3 {
+.mesh-settings-content h3 {
   margin: 0;
   font-size: 0.95rem;
   color: var(--mesh-muted);
 }
 
-.mesh-settings-drawer header button {
-  font-size: 1.6rem;
-  background: none;
-  border: none;
-  color: var(--mesh-fg);
-  cursor: pointer;
-  line-height: 1;
-  padding: 0 0.4rem;
-}
-
-.mesh-settings-drawer label {
+.mesh-settings-content label {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -278,16 +201,16 @@
   color: var(--mesh-muted);
 }
 
-.mesh-settings-drawer label.mesh-settings-check {
+.mesh-settings-content label.mesh-settings-check {
   flex-direction: row;
   align-items: center;
   gap: 0.6rem;
   color: var(--mesh-fg);
 }
 
-.mesh-settings-drawer input,
-.mesh-settings-drawer textarea,
-.mesh-settings-drawer select {
+.mesh-settings-content input,
+.mesh-settings-content textarea,
+.mesh-settings-content select {
   background: #0b0a06;
   color: var(--mesh-fg);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -297,11 +220,11 @@
   font-family: inherit;
 }
 
-.mesh-settings-drawer input[type="range"] {
+.mesh-settings-content input[type="range"] {
   padding: 0;
 }
 
-.mesh-settings-drawer hr {
+.mesh-settings-content hr {
   border: none;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   margin: 0.5rem 0;
@@ -355,6 +278,39 @@
 .mesh-settings-footer a {
   color: var(--mesh-accent);
   text-decoration: none;
+}
+
+/* InviteShareButton also uses MeshSheet so it inherits focus management and
+ * Escape/outside-click handling everywhere it is mounted. */
+.mesh-invite-sheet {
+  width: min(360px, calc(100vw - 2rem));
+  border-radius: 0.8rem;
+}
+
+.mesh-invite-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.mesh-invite-url {
+  width: 100%;
+  text-align: left;
+  color: var(--mesh-fg);
+}
+
+@media (max-width: 32rem) {
+  .mesh-settings-sheet {
+    width: 100%;
+    border-radius: 1rem 1rem 0 0;
+  }
+}
+
+/* Keyboard focus needs to be visible on every app, including app-specific
+ * buttons that do not opt into a component class. */
+.mesh-app-root :focus-visible {
+  outline: 3px solid var(--mesh-accent);
+  outline-offset: 3px;
 }
 
 /* ------------------------------------------------------------------------- */

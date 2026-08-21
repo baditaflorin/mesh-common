@@ -10,6 +10,15 @@
     a { color: #58a6ff; text-decoration: none; }
     a:hover { text-decoration: underline; }
     .rootless-banner { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px 16px; margin-top: 16px; max-width: 800px; line-height: 1.6; }
+    .catalog-controls { display: grid; grid-template-columns: minmax(16rem, 26rem) 1fr; gap: 12px 16px; align-items: end; margin-top: 20px; max-width: 800px; }
+    .catalog-search { display: grid; gap: 5px; color: #8b949e; font-size: 12px; }
+    .catalog-search input { box-sizing: border-box; width: 100%; background: #0d1117; color: #e6edf3; border: 1px solid #30363d; border-radius: 7px; padding: 9px 10px; font: inherit; font-size: 14px; }
+    .catalog-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter { appearance: none; cursor: pointer; color: #c9d1d9; background: #21262d; border: 1px solid #30363d; border-radius: 999px; padding: 7px 10px; font: 12px/1.2 system-ui, -apple-system, Segoe UI, sans-serif; }
+    .filter span { color: #8b949e; font-variant-numeric: tabular-nums; }
+    .filter.is-active { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+    .filter.is-active span { color: #dbeafe; }
+    .catalog-results { grid-column: 1 / -1; margin: 0; color: #8b949e; font-size: 12px; }
     header.page { padding: 28px 24px 12px; max-width: 1400px; margin: 0 auto; }
     header.page h1 { margin: 0 0 6px; font-size: 22px; font-weight: 600; }
     header.page .sub { color: #8b949e; font-size: 13px; }
@@ -35,26 +44,46 @@
     .errhint summary { cursor: pointer; color: #ff7b72; font-size: 12px; }
     .errhint pre { background: #0e1117; padding: 8px; border-radius: 4px; font-size: 11px; max-height: 120px; overflow: auto; white-space: pre-wrap; margin: 6px 0 0; }
     footer.page { max-width: 1400px; margin: 0 auto; padding: 12px 24px 32px; color: #6e7681; font-size: 12px; }
+    :focus-visible { outline: 3px solid #58a6ff; outline-offset: 3px; }
+    @media (max-width: 560px) { .catalog-controls { grid-template-columns: 1fr; } main { grid-template-columns: 1fr; padding: 16px; } header.page { padding: 20px 16px 12px; } }
   </style>
 </head>
 <body>
   <header class="page">
     <h1>Mesh fleet demos</h1>
     <div class="sub">
-      134 apps recorded · 134 OK · 0 failed · generated 2026-06-24T08:45:07.050Z
+      134 apps recorded · 134 OK · 0 failed · generated 2026-08-21T17:28:31.617Z
     </div>
     <div class="rootless-banner">
       💡 These applications are built using the <a href="https://baditaflorin.github.io/rootless-computing/" target="_blank" rel="noreferrer">Rootless Computing paradigm</a>. 
       They have no origin server, run entirely in the browser, store data locally on your machine, and coordinate directly with peers using WebRTC/Yjs via the <a href="https://baditaflorin.github.io/mesh-common/" target="_blank" rel="noreferrer">mesh-common</a> framework.
     </div>
+    <div class="catalog-controls" role="search">
+      <label class="catalog-search">
+        <span>Find a demo</span>
+        <input id="demo-search" type="search" placeholder="Search by app name or slug" autocomplete="off" />
+      </label>
+      <div class="catalog-filters" aria-label="Recording filter">
+        <button type="button" class="filter is-active" data-filter="all" aria-pressed="true">All <span>134</span></button>
+        <button type="button" class="filter" data-filter="ok" aria-pressed="false">Working <span>134</span></button>
+        <button type="button" class="filter" data-filter="fail" aria-pressed="false">Needs attention <span>0</span></button>
+      </div>
+      <p id="demo-results" class="catalog-results" role="status" aria-live="polite">Showing all 134 demos</p>
+    </div>
   </header>
   <main>
     
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-2-truths-1-lie"
+      data-slug="mesh-2-truths-1-lie"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-2-truths-1-lie/" target="_blank" rel="noreferrer">mesh-2-truths-1-lie</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-2-truths-1-lie/" target="_blank" rel="noreferrer" aria-label="Open mesh-2-truths-1-lie demo">mesh-2-truths-1-lie</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-2-truths-1-lie/demo.gif" alt="mesh-2-truths-1-lie demo" loading="lazy" />
@@ -66,11 +95,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-2fa-bridge"
+      data-slug="mesh-2fa-bridge"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-2fa-bridge/" target="_blank" rel="noreferrer">mesh-2fa-bridge</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-2fa-bridge/" target="_blank" rel="noreferrer" aria-label="Open mesh-2fa-bridge demo">mesh-2fa-bridge</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-2fa-bridge/demo.gif" alt="mesh-2fa-bridge demo" loading="lazy" />
@@ -82,11 +117,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-allowance"
+      data-slug="mesh-allowance"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-allowance/" target="_blank" rel="noreferrer">mesh-allowance</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-allowance/" target="_blank" rel="noreferrer" aria-label="Open mesh-allowance demo">mesh-allowance</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-allowance/demo.gif" alt="mesh-allowance demo" loading="lazy" />
@@ -98,11 +139,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-anonymous-qa"
+      data-slug="mesh-anonymous-qa"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-anonymous-qa/" target="_blank" rel="noreferrer">mesh-anonymous-qa</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-anonymous-qa/" target="_blank" rel="noreferrer" aria-label="Open mesh-anonymous-qa demo">mesh-anonymous-qa</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-anonymous-qa/demo.gif" alt="mesh-anonymous-qa demo" loading="lazy" />
@@ -114,11 +161,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-applause"
+      data-slug="mesh-applause"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-applause/" target="_blank" rel="noreferrer">mesh-applause</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-applause/" target="_blank" rel="noreferrer" aria-label="Open mesh-applause demo">mesh-applause</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-applause/demo.gif" alt="mesh-applause demo" loading="lazy" />
@@ -130,11 +183,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-applause-bracket"
+      data-slug="mesh-applause-bracket"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-applause-bracket/" target="_blank" rel="noreferrer">mesh-applause-bracket</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-applause-bracket/" target="_blank" rel="noreferrer" aria-label="Open mesh-applause-bracket demo">mesh-applause-bracket</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-applause-bracket/demo.gif" alt="mesh-applause-bracket demo" loading="lazy" />
@@ -146,11 +205,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-attendance"
+      data-slug="mesh-attendance"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-attendance/" target="_blank" rel="noreferrer">mesh-attendance</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-attendance/" target="_blank" rel="noreferrer" aria-label="Open mesh-attendance demo">mesh-attendance</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-attendance/demo.gif" alt="mesh-attendance demo" loading="lazy" />
@@ -162,11 +227,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-attendance-stamp"
+      data-slug="mesh-attendance-stamp"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-attendance-stamp/" target="_blank" rel="noreferrer">mesh-attendance-stamp</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-attendance-stamp/" target="_blank" rel="noreferrer" aria-label="Open mesh-attendance-stamp demo">mesh-attendance-stamp</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-attendance-stamp/demo.gif" alt="mesh-attendance-stamp demo" loading="lazy" />
@@ -178,11 +249,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh bench archive"
+      data-slug="mesh-bench-archive"
+      data-status="ok"
+      data-trl="5"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-bench-archive/" target="_blank" rel="noreferrer">Mesh Bench Archive</a>
-        <span class="trl trl-4">TRL 4</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-bench-archive/" target="_blank" rel="noreferrer" aria-label="Open Mesh Bench Archive demo">Mesh Bench Archive</a>
+        <span class="trl trl-5">TRL 5</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-bench-archive/demo.gif" alt="Mesh Bench Archive demo" loading="lazy" />
@@ -194,11 +271,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-blind-date"
+      data-slug="mesh-blind-date"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-blind-date/" target="_blank" rel="noreferrer">mesh-blind-date</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-blind-date/" target="_blank" rel="noreferrer" aria-label="Open mesh-blind-date demo">mesh-blind-date</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-blind-date/demo.gif" alt="mesh-blind-date demo" loading="lazy" />
@@ -210,11 +293,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-bracket"
+      data-slug="mesh-bracket"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-bracket/" target="_blank" rel="noreferrer">mesh-bracket</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-bracket/" target="_blank" rel="noreferrer" aria-label="Open mesh-bracket demo">mesh-bracket</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-bracket/demo.gif" alt="mesh-bracket demo" loading="lazy" />
@@ -226,11 +315,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-brain-write"
+      data-slug="mesh-brain-write"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-brain-write/" target="_blank" rel="noreferrer">mesh-brain-write</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-brain-write/" target="_blank" rel="noreferrer" aria-label="Open mesh-brain-write demo">mesh-brain-write</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-brain-write/demo.gif" alt="mesh-brain-write demo" loading="lazy" />
@@ -242,11 +337,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-bus-factor"
+      data-slug="mesh-bus-factor"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-bus-factor/" target="_blank" rel="noreferrer">mesh-bus-factor</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-bus-factor/" target="_blank" rel="noreferrer" aria-label="Open mesh-bus-factor demo">mesh-bus-factor</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-bus-factor/demo.gif" alt="mesh-bus-factor demo" loading="lazy" />
@@ -258,11 +359,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-business-card"
+      data-slug="mesh-business-card"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-business-card/" target="_blank" rel="noreferrer">mesh-business-card</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-business-card/" target="_blank" rel="noreferrer" aria-label="Open mesh-business-card demo">mesh-business-card</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-business-card/demo.gif" alt="mesh-business-card demo" loading="lazy" />
@@ -274,11 +381,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-buzzer"
+      data-slug="mesh-buzzer"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-buzzer/" target="_blank" rel="noreferrer">mesh-buzzer</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-buzzer/" target="_blank" rel="noreferrer" aria-label="Open mesh-buzzer demo">mesh-buzzer</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-buzzer/demo.gif" alt="mesh-buzzer demo" loading="lazy" />
@@ -290,11 +403,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh carpool bingo"
+      data-slug="mesh-carpool-bingo"
+      data-status="ok"
+      data-trl="4"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-carpool-bingo/" target="_blank" rel="noreferrer">Mesh Carpool Bingo</a>
-        <span class="trl trl-3">TRL 3</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-carpool-bingo/" target="_blank" rel="noreferrer" aria-label="Open Mesh Carpool Bingo demo">Mesh Carpool Bingo</a>
+        <span class="trl trl-4">TRL 4</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-carpool-bingo/demo.gif" alt="Mesh Carpool Bingo demo" loading="lazy" />
@@ -306,11 +425,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-chore-rotation"
+      data-slug="mesh-chore-rotation"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-chore-rotation/" target="_blank" rel="noreferrer">mesh-chore-rotation</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-chore-rotation/" target="_blank" rel="noreferrer" aria-label="Open mesh-chore-rotation demo">mesh-chore-rotation</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-chore-rotation/demo.gif" alt="mesh-chore-rotation demo" loading="lazy" />
@@ -322,11 +447,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-clap-track"
+      data-slug="mesh-clap-track"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-clap-track/" target="_blank" rel="noreferrer">mesh-clap-track</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-clap-track/" target="_blank" rel="noreferrer" aria-label="Open mesh-clap-track demo">mesh-clap-track</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-clap-track/demo.gif" alt="mesh-clap-track demo" loading="lazy" />
@@ -338,11 +469,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-class-checkin"
+      data-slug="mesh-class-checkin"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-class-checkin/" target="_blank" rel="noreferrer">mesh-class-checkin</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-class-checkin/" target="_blank" rel="noreferrer" aria-label="Open mesh-class-checkin demo">mesh-class-checkin</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-class-checkin/demo.gif" alt="mesh-class-checkin demo" loading="lazy" />
@@ -354,11 +491,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-clipboard-bridge"
+      data-slug="mesh-clipboard-bridge"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-clipboard-bridge/" target="_blank" rel="noreferrer">mesh-clipboard-bridge</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-clipboard-bridge/" target="_blank" rel="noreferrer" aria-label="Open mesh-clipboard-bridge demo">mesh-clipboard-bridge</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-clipboard-bridge/demo.gif" alt="mesh-clipboard-bridge demo" loading="lazy" />
@@ -370,11 +513,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-compliment-roulette"
+      data-slug="mesh-compliment-roulette"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-compliment-roulette/" target="_blank" rel="noreferrer">mesh-compliment-roulette</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-compliment-roulette/" target="_blank" rel="noreferrer" aria-label="Open mesh-compliment-roulette demo">mesh-compliment-roulette</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-compliment-roulette/demo.gif" alt="mesh-compliment-roulette demo" loading="lazy" />
@@ -386,11 +535,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-conversation-cards"
+      data-slug="mesh-conversation-cards"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-conversation-cards/" target="_blank" rel="noreferrer">mesh-conversation-cards</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-conversation-cards/" target="_blank" rel="noreferrer" aria-label="Open mesh-conversation-cards demo">mesh-conversation-cards</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-conversation-cards/demo.gif" alt="mesh-conversation-cards demo" loading="lazy" />
@@ -402,11 +557,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-dare-wheel"
+      data-slug="mesh-dare-wheel"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-dare-wheel/" target="_blank" rel="noreferrer">mesh-dare-wheel</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-dare-wheel/" target="_blank" rel="noreferrer" aria-label="Open mesh-dare-wheel demo">mesh-dare-wheel</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-dare-wheel/demo.gif" alt="mesh-dare-wheel demo" loading="lazy" />
@@ -418,11 +579,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-debate-clock"
+      data-slug="mesh-debate-clock"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-debate-clock/" target="_blank" rel="noreferrer">mesh-debate-clock</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-debate-clock/" target="_blank" rel="noreferrer" aria-label="Open mesh-debate-clock demo">mesh-debate-clock</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-debate-clock/demo.gif" alt="mesh-debate-clock demo" loading="lazy" />
@@ -434,11 +601,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-direction-finder"
+      data-slug="mesh-direction-finder"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-direction-finder/" target="_blank" rel="noreferrer">mesh-direction-finder</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-direction-finder/" target="_blank" rel="noreferrer" aria-label="Open mesh-direction-finder demo">mesh-direction-finder</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-direction-finder/demo.gif" alt="mesh-direction-finder demo" loading="lazy" />
@@ -450,11 +623,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-dj-deck"
+      data-slug="mesh-dj-deck"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-dj-deck/" target="_blank" rel="noreferrer">mesh-dj-deck</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-dj-deck/" target="_blank" rel="noreferrer" aria-label="Open mesh-dj-deck demo">mesh-dj-deck</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-dj-deck/demo.gif" alt="mesh-dj-deck demo" loading="lazy" />
@@ -466,11 +645,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-doorbell"
+      data-slug="mesh-doorbell"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-doorbell/" target="_blank" rel="noreferrer">mesh-doorbell</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-doorbell/" target="_blank" rel="noreferrer" aria-label="Open mesh-doorbell demo">mesh-doorbell</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-doorbell/demo.gif" alt="mesh-doorbell demo" loading="lazy" />
@@ -482,11 +667,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-emoji-rain"
+      data-slug="mesh-emoji-rain"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-emoji-rain/" target="_blank" rel="noreferrer">mesh-emoji-rain</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-emoji-rain/" target="_blank" rel="noreferrer" aria-label="Open mesh-emoji-rain demo">mesh-emoji-rain</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-emoji-rain/demo.gif" alt="mesh-emoji-rain demo" loading="lazy" />
@@ -498,11 +689,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-energy-curve"
+      data-slug="mesh-energy-curve"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-energy-curve/" target="_blank" rel="noreferrer">mesh-energy-curve</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-energy-curve/" target="_blank" rel="noreferrer" aria-label="Open mesh-energy-curve demo">mesh-energy-curve</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-energy-curve/demo.gif" alt="mesh-energy-curve demo" loading="lazy" />
@@ -514,11 +711,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-exquisite-corpse"
+      data-slug="mesh-exquisite-corpse"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-exquisite-corpse/" target="_blank" rel="noreferrer">mesh-exquisite-corpse</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-exquisite-corpse/" target="_blank" rel="noreferrer" aria-label="Open mesh-exquisite-corpse demo">mesh-exquisite-corpse</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-exquisite-corpse/demo.gif" alt="mesh-exquisite-corpse demo" loading="lazy" />
@@ -530,11 +733,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-eye-contact"
+      data-slug="mesh-eye-contact"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-eye-contact/" target="_blank" rel="noreferrer">mesh-eye-contact</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-eye-contact/" target="_blank" rel="noreferrer" aria-label="Open mesh-eye-contact demo">mesh-eye-contact</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-eye-contact/demo.gif" alt="mesh-eye-contact demo" loading="lazy" />
@@ -546,11 +755,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-face-grid"
+      data-slug="mesh-face-grid"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-face-grid/" target="_blank" rel="noreferrer">mesh-face-grid</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-face-grid/" target="_blank" rel="noreferrer" aria-label="Open mesh-face-grid demo">mesh-face-grid</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-face-grid/demo.gif" alt="mesh-face-grid demo" loading="lazy" />
@@ -562,11 +777,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-favor-bank"
+      data-slug="mesh-favor-bank"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-favor-bank/" target="_blank" rel="noreferrer">mesh-favor-bank</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-favor-bank/" target="_blank" rel="noreferrer" aria-label="Open mesh-favor-bank demo">mesh-favor-bank</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-favor-bank/demo.gif" alt="mesh-favor-bank demo" loading="lazy" />
@@ -578,11 +799,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-find-my-family"
+      data-slug="mesh-find-my-family"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-find-my-family/" target="_blank" rel="noreferrer">mesh-find-my-family</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-find-my-family/" target="_blank" rel="noreferrer" aria-label="Open mesh-find-my-family demo">mesh-find-my-family</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-find-my-family/demo.gif" alt="mesh-find-my-family demo" loading="lazy" />
@@ -594,11 +821,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-finger-relay"
+      data-slug="mesh-finger-relay"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-finger-relay/" target="_blank" rel="noreferrer">mesh-finger-relay</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-finger-relay/" target="_blank" rel="noreferrer" aria-label="Open mesh-finger-relay demo">mesh-finger-relay</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-finger-relay/demo.gif" alt="mesh-finger-relay demo" loading="lazy" />
@@ -610,11 +843,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh firefly walk"
+      data-slug="mesh-firefly-walk"
+      data-status="ok"
+      data-trl="4"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-firefly-walk/" target="_blank" rel="noreferrer">Mesh Firefly Walk</a>
-        <span class="trl trl-3">TRL 3</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-firefly-walk/" target="_blank" rel="noreferrer" aria-label="Open Mesh Firefly Walk demo">Mesh Firefly Walk</a>
+        <span class="trl trl-4">TRL 4</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-firefly-walk/demo.gif" alt="Mesh Firefly Walk demo" loading="lazy" />
@@ -626,11 +865,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-fist-of-five"
+      data-slug="mesh-fist-of-five"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-fist-of-five/" target="_blank" rel="noreferrer">mesh-fist-of-five</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-fist-of-five/" target="_blank" rel="noreferrer" aria-label="Open mesh-fist-of-five demo">mesh-fist-of-five</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-fist-of-five/demo.gif" alt="mesh-fist-of-five demo" loading="lazy" />
@@ -642,11 +887,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-flash-mob"
+      data-slug="mesh-flash-mob"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-flash-mob/" target="_blank" rel="noreferrer">mesh-flash-mob</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-flash-mob/" target="_blank" rel="noreferrer" aria-label="Open mesh-flash-mob demo">mesh-flash-mob</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-flash-mob/demo.gif" alt="mesh-flash-mob demo" loading="lazy" />
@@ -658,11 +909,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-fortune-cookie"
+      data-slug="mesh-fortune-cookie"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-fortune-cookie/" target="_blank" rel="noreferrer">mesh-fortune-cookie</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-fortune-cookie/" target="_blank" rel="noreferrer" aria-label="Open mesh-fortune-cookie demo">mesh-fortune-cookie</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-fortune-cookie/demo.gif" alt="mesh-fortune-cookie demo" loading="lazy" />
@@ -674,11 +931,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-fundraiser-bar"
+      data-slug="mesh-fundraiser-bar"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-fundraiser-bar/" target="_blank" rel="noreferrer">mesh-fundraiser-bar</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-fundraiser-bar/" target="_blank" rel="noreferrer" aria-label="Open mesh-fundraiser-bar demo">mesh-fundraiser-bar</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-fundraiser-bar/demo.gif" alt="mesh-fundraiser-bar demo" loading="lazy" />
@@ -690,11 +953,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-handshake-chain"
+      data-slug="mesh-handshake-chain"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-handshake-chain/" target="_blank" rel="noreferrer">mesh-handshake-chain</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-handshake-chain/" target="_blank" rel="noreferrer" aria-label="Open mesh-handshake-chain demo">mesh-handshake-chain</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-handshake-chain/demo.gif" alt="mesh-handshake-chain demo" loading="lazy" />
@@ -706,11 +975,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-hot-potato"
+      data-slug="mesh-hot-potato"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-hot-potato/" target="_blank" rel="noreferrer">mesh-hot-potato</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-hot-potato/" target="_blank" rel="noreferrer" aria-label="Open mesh-hot-potato demo">mesh-hot-potato</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-hot-potato/demo.gif" alt="mesh-hot-potato demo" loading="lazy" />
@@ -722,11 +997,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-icebreaker"
+      data-slug="mesh-icebreaker"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-icebreaker/" target="_blank" rel="noreferrer">mesh-icebreaker</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-icebreaker/" target="_blank" rel="noreferrer" aria-label="Open mesh-icebreaker demo">mesh-icebreaker</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-icebreaker/demo.gif" alt="mesh-icebreaker demo" loading="lazy" />
@@ -738,11 +1019,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-icebreaker-bingo"
+      data-slug="mesh-icebreaker-bingo"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-icebreaker-bingo/" target="_blank" rel="noreferrer">mesh-icebreaker-bingo</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-icebreaker-bingo/" target="_blank" rel="noreferrer" aria-label="Open mesh-icebreaker-bingo demo">mesh-icebreaker-bingo</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-icebreaker-bingo/demo.gif" alt="mesh-icebreaker-bingo demo" loading="lazy" />
@@ -754,11 +1041,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-jellybean"
+      data-slug="mesh-jellybean"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-jellybean/" target="_blank" rel="noreferrer">mesh-jellybean</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-jellybean/" target="_blank" rel="noreferrer" aria-label="Open mesh-jellybean demo">mesh-jellybean</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-jellybean/demo.gif" alt="mesh-jellybean demo" loading="lazy" />
@@ -770,11 +1063,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-kiosk-wall"
+      data-slug="mesh-kiosk-wall"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-kiosk-wall/" target="_blank" rel="noreferrer">mesh-kiosk-wall</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-kiosk-wall/" target="_blank" rel="noreferrer" aria-label="Open mesh-kiosk-wall demo">mesh-kiosk-wall</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-kiosk-wall/demo.gif" alt="mesh-kiosk-wall demo" loading="lazy" />
@@ -786,11 +1085,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-laser-tag"
+      data-slug="mesh-laser-tag"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-laser-tag/" target="_blank" rel="noreferrer">mesh-laser-tag</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-laser-tag/" target="_blank" rel="noreferrer" aria-label="Open mesh-laser-tag demo">mesh-laser-tag</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-laser-tag/demo.gif" alt="mesh-laser-tag demo" loading="lazy" />
@@ -802,11 +1107,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-light-paint"
+      data-slug="mesh-light-paint"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-light-paint/" target="_blank" rel="noreferrer">mesh-light-paint</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-light-paint/" target="_blank" rel="noreferrer" aria-label="Open mesh-light-paint demo">mesh-light-paint</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-light-paint/demo.gif" alt="mesh-light-paint demo" loading="lazy" />
@@ -818,11 +1129,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh lightning flash"
+      data-slug="mesh-lightning-flash"
+      data-status="ok"
+      data-trl="4"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-lightning-flash/" target="_blank" rel="noreferrer">Mesh Lightning Flash</a>
-        <span class="trl trl-3">TRL 3</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-lightning-flash/" target="_blank" rel="noreferrer" aria-label="Open Mesh Lightning Flash demo">Mesh Lightning Flash</a>
+        <span class="trl trl-4">TRL 4</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-lightning-flash/demo.gif" alt="Mesh Lightning Flash demo" loading="lazy" />
@@ -834,11 +1151,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-link-share"
+      data-slug="mesh-link-share"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-link-share/" target="_blank" rel="noreferrer">mesh-link-share</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-link-share/" target="_blank" rel="noreferrer" aria-label="Open mesh-link-share demo">mesh-link-share</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-link-share/demo.gif" alt="mesh-link-share demo" loading="lazy" />
@@ -850,11 +1173,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-live-poll"
+      data-slug="mesh-live-poll"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-live-poll/" target="_blank" rel="noreferrer">mesh-live-poll</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-live-poll/" target="_blank" rel="noreferrer" aria-label="Open mesh-live-poll demo">mesh-live-poll</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-live-poll/demo.gif" alt="mesh-live-poll demo" loading="lazy" />
@@ -866,11 +1195,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-lunch-roulette"
+      data-slug="mesh-lunch-roulette"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-lunch-roulette/" target="_blank" rel="noreferrer">mesh-lunch-roulette</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-lunch-roulette/" target="_blank" rel="noreferrer" aria-label="Open mesh-lunch-roulette demo">mesh-lunch-roulette</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-lunch-roulette/demo.gif" alt="mesh-lunch-roulette demo" loading="lazy" />
@@ -882,11 +1217,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-mad-libs"
+      data-slug="mesh-mad-libs"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-mad-libs/" target="_blank" rel="noreferrer">mesh-mad-libs</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-mad-libs/" target="_blank" rel="noreferrer" aria-label="Open mesh-mad-libs demo">mesh-mad-libs</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-mad-libs/demo.gif" alt="mesh-mad-libs demo" loading="lazy" />
@@ -898,11 +1239,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh mafia"
+      data-slug="mesh-mafia"
+      data-status="ok"
+      data-trl="5"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-mafia/" target="_blank" rel="noreferrer">Mesh Mafia</a>
-        <span class="trl trl-3">TRL 3</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-mafia/" target="_blank" rel="noreferrer" aria-label="Open Mesh Mafia demo">Mesh Mafia</a>
+        <span class="trl trl-5">TRL 5</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-mafia/demo.gif" alt="Mesh Mafia demo" loading="lazy" />
@@ -914,11 +1261,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-meeting-cost"
+      data-slug="mesh-meeting-cost"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-meeting-cost/" target="_blank" rel="noreferrer">mesh-meeting-cost</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-meeting-cost/" target="_blank" rel="noreferrer" aria-label="Open mesh-meeting-cost demo">mesh-meeting-cost</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-meeting-cost/demo.gif" alt="mesh-meeting-cost demo" loading="lazy" />
@@ -930,11 +1283,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-meme-quote"
+      data-slug="mesh-meme-quote"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-meme-quote/" target="_blank" rel="noreferrer">mesh-meme-quote</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-meme-quote/" target="_blank" rel="noreferrer" aria-label="Open mesh-meme-quote demo">mesh-meme-quote</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-meme-quote/demo.gif" alt="mesh-meme-quote demo" loading="lazy" />
@@ -946,11 +1305,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh metronome"
+      data-slug="mesh-metronome"
+      data-status="ok"
+      data-trl="5"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-metronome/" target="_blank" rel="noreferrer">Mesh Metronome</a>
-        <span class="trl trl-4">TRL 4</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-metronome/" target="_blank" rel="noreferrer" aria-label="Open Mesh Metronome demo">Mesh Metronome</a>
+        <span class="trl trl-5">TRL 5</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-metronome/demo.gif" alt="Mesh Metronome demo" loading="lazy" />
@@ -962,11 +1327,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-mic-drop-quiz"
+      data-slug="mesh-mic-drop-quiz"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-mic-drop-quiz/" target="_blank" rel="noreferrer">mesh-mic-drop-quiz</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-mic-drop-quiz/" target="_blank" rel="noreferrer" aria-label="Open mesh-mic-drop-quiz demo">mesh-mic-drop-quiz</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-mic-drop-quiz/demo.gif" alt="mesh-mic-drop-quiz demo" loading="lazy" />
@@ -978,11 +1349,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-mind-meld"
+      data-slug="mesh-mind-meld"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-mind-meld/" target="_blank" rel="noreferrer">mesh-mind-meld</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-mind-meld/" target="_blank" rel="noreferrer" aria-label="Open mesh-mind-meld demo">mesh-mind-meld</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-mind-meld/demo.gif" alt="mesh-mind-meld demo" loading="lazy" />
@@ -994,11 +1371,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh mirror"
+      data-slug="mesh-mirror"
+      data-status="ok"
+      data-trl="5"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-mirror/" target="_blank" rel="noreferrer">Mesh Mirror</a>
-        <span class="trl trl-4">TRL 4</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-mirror/" target="_blank" rel="noreferrer" aria-label="Open Mesh Mirror demo">Mesh Mirror</a>
+        <span class="trl trl-5">TRL 5</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-mirror/demo.gif" alt="Mesh Mirror demo" loading="lazy" />
@@ -1010,11 +1393,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-mood-check"
+      data-slug="mesh-mood-check"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-mood-check/" target="_blank" rel="noreferrer">mesh-mood-check</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-mood-check/" target="_blank" rel="noreferrer" aria-label="Open mesh-mood-check demo">mesh-mood-check</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-mood-check/demo.gif" alt="mesh-mood-check demo" loading="lazy" />
@@ -1026,11 +1415,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-mood-ring"
+      data-slug="mesh-mood-ring"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-mood-ring/" target="_blank" rel="noreferrer">mesh-mood-ring</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-mood-ring/" target="_blank" rel="noreferrer" aria-label="Open mesh-mood-ring demo">mesh-mood-ring</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-mood-ring/demo.gif" alt="mesh-mood-ring demo" loading="lazy" />
@@ -1042,11 +1437,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-name-game"
+      data-slug="mesh-name-game"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-name-game/" target="_blank" rel="noreferrer">mesh-name-game</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-name-game/" target="_blank" rel="noreferrer" aria-label="Open mesh-name-game demo">mesh-name-game</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-name-game/demo.gif" alt="mesh-name-game demo" loading="lazy" />
@@ -1058,11 +1459,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-network-builder"
+      data-slug="mesh-network-builder"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-network-builder/" target="_blank" rel="noreferrer">mesh-network-builder</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-network-builder/" target="_blank" rel="noreferrer" aria-label="Open mesh-network-builder demo">mesh-network-builder</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-network-builder/demo.gif" alt="mesh-network-builder demo" loading="lazy" />
@@ -1074,11 +1481,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-never-have-i"
+      data-slug="mesh-never-have-i"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-never-have-i/" target="_blank" rel="noreferrer">mesh-never-have-i</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-never-have-i/" target="_blank" rel="noreferrer" aria-label="Open mesh-never-have-i demo">mesh-never-have-i</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-never-have-i/demo.gif" alt="mesh-never-have-i demo" loading="lazy" />
@@ -1090,11 +1503,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-new-year"
+      data-slug="mesh-new-year"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-new-year/" target="_blank" rel="noreferrer">mesh-new-year</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-new-year/" target="_blank" rel="noreferrer" aria-label="Open mesh-new-year demo">mesh-new-year</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-new-year/demo.gif" alt="mesh-new-year demo" loading="lazy" />
@@ -1106,11 +1525,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-orientation-mosaic"
+      data-slug="mesh-orientation-mosaic"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-orientation-mosaic/" target="_blank" rel="noreferrer">mesh-orientation-mosaic</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-orientation-mosaic/" target="_blank" rel="noreferrer" aria-label="Open mesh-orientation-mosaic demo">mesh-orientation-mosaic</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-orientation-mosaic/demo.gif" alt="mesh-orientation-mosaic demo" loading="lazy" />
@@ -1122,11 +1547,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-overrated-underrated"
+      data-slug="mesh-overrated-underrated"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-overrated-underrated/" target="_blank" rel="noreferrer">mesh-overrated-underrated</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-overrated-underrated/" target="_blank" rel="noreferrer" aria-label="Open mesh-overrated-underrated demo">mesh-overrated-underrated</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-overrated-underrated/demo.gif" alt="mesh-overrated-underrated demo" loading="lazy" />
@@ -1138,11 +1569,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-pair-rotation"
+      data-slug="mesh-pair-rotation"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-pair-rotation/" target="_blank" rel="noreferrer">mesh-pair-rotation</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-pair-rotation/" target="_blank" rel="noreferrer" aria-label="Open mesh-pair-rotation demo">mesh-pair-rotation</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-pair-rotation/demo.gif" alt="mesh-pair-rotation demo" loading="lazy" />
@@ -1154,11 +1591,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-passport"
+      data-slug="mesh-passport"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-passport/" target="_blank" rel="noreferrer">mesh-passport</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-passport/" target="_blank" rel="noreferrer" aria-label="Open mesh-passport demo">mesh-passport</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-passport/demo.gif" alt="mesh-passport demo" loading="lazy" />
@@ -1170,11 +1613,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-petition"
+      data-slug="mesh-petition"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-petition/" target="_blank" rel="noreferrer">mesh-petition</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-petition/" target="_blank" rel="noreferrer" aria-label="Open mesh-petition demo">mesh-petition</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-petition/demo.gif" alt="mesh-petition demo" loading="lazy" />
@@ -1186,11 +1635,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-pictionary"
+      data-slug="mesh-pictionary"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-pictionary/" target="_blank" rel="noreferrer">mesh-pictionary</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-pictionary/" target="_blank" rel="noreferrer" aria-label="Open mesh-pictionary demo">mesh-pictionary</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-pictionary/demo.gif" alt="mesh-pictionary demo" loading="lazy" />
@@ -1202,11 +1657,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-pitch-pong"
+      data-slug="mesh-pitch-pong"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-pitch-pong/" target="_blank" rel="noreferrer">mesh-pitch-pong</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-pitch-pong/" target="_blank" rel="noreferrer" aria-label="Open mesh-pitch-pong demo">mesh-pitch-pong</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-pitch-pong/demo.gif" alt="mesh-pitch-pong demo" loading="lazy" />
@@ -1218,11 +1679,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-pomodoro-room"
+      data-slug="mesh-pomodoro-room"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-pomodoro-room/" target="_blank" rel="noreferrer">mesh-pomodoro-room</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-pomodoro-room/" target="_blank" rel="noreferrer" aria-label="Open mesh-pomodoro-room demo">mesh-pomodoro-room</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-pomodoro-room/demo.gif" alt="mesh-pomodoro-room demo" loading="lazy" />
@@ -1234,11 +1701,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-potluck"
+      data-slug="mesh-potluck"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-potluck/" target="_blank" rel="noreferrer">mesh-potluck</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-potluck/" target="_blank" rel="noreferrer" aria-label="Open mesh-potluck demo">mesh-potluck</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-potluck/demo.gif" alt="mesh-potluck demo" loading="lazy" />
@@ -1250,11 +1723,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-prediction-pool"
+      data-slug="mesh-prediction-pool"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-prediction-pool/" target="_blank" rel="noreferrer">mesh-prediction-pool</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-prediction-pool/" target="_blank" rel="noreferrer" aria-label="Open mesh-prediction-pool demo">mesh-prediction-pool</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-prediction-pool/demo.gif" alt="mesh-prediction-pool demo" loading="lazy" />
@@ -1266,11 +1745,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-pulse-photo"
+      data-slug="mesh-pulse-photo"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-pulse-photo/" target="_blank" rel="noreferrer">mesh-pulse-photo</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-pulse-photo/" target="_blank" rel="noreferrer" aria-label="Open mesh-pulse-photo demo">mesh-pulse-photo</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-pulse-photo/demo.gif" alt="mesh-pulse-photo demo" loading="lazy" />
@@ -1282,11 +1767,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-pyramid"
+      data-slug="mesh-pyramid"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-pyramid/" target="_blank" rel="noreferrer">mesh-pyramid</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-pyramid/" target="_blank" rel="noreferrer" aria-label="Open mesh-pyramid demo">mesh-pyramid</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-pyramid/demo.gif" alt="mesh-pyramid demo" loading="lazy" />
@@ -1298,11 +1789,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-qr-snake"
+      data-slug="mesh-qr-snake"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-qr-snake/" target="_blank" rel="noreferrer">mesh-qr-snake</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-qr-snake/" target="_blank" rel="noreferrer" aria-label="Open mesh-qr-snake demo">mesh-qr-snake</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-qr-snake/demo.gif" alt="mesh-qr-snake demo" loading="lazy" />
@@ -1314,11 +1811,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-questions-only"
+      data-slug="mesh-questions-only"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-questions-only/" target="_blank" rel="noreferrer">mesh-questions-only</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-questions-only/" target="_blank" rel="noreferrer" aria-label="Open mesh-questions-only demo">mesh-questions-only</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-questions-only/demo.gif" alt="mesh-questions-only demo" loading="lazy" />
@@ -1330,11 +1833,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-quiet-cheer"
+      data-slug="mesh-quiet-cheer"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-quiet-cheer/" target="_blank" rel="noreferrer">mesh-quiet-cheer</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-quiet-cheer/" target="_blank" rel="noreferrer" aria-label="Open mesh-quiet-cheer demo">mesh-quiet-cheer</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-quiet-cheer/demo.gif" alt="mesh-quiet-cheer demo" loading="lazy" />
@@ -1346,11 +1855,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-quiet-quest"
+      data-slug="mesh-quiet-quest"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-quiet-quest/" target="_blank" rel="noreferrer">mesh-quiet-quest</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-quiet-quest/" target="_blank" rel="noreferrer" aria-label="Open mesh-quiet-quest demo">mesh-quiet-quest</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-quiet-quest/demo.gif" alt="mesh-quiet-quest demo" loading="lazy" />
@@ -1362,11 +1877,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-ranked-vote"
+      data-slug="mesh-ranked-vote"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-ranked-vote/" target="_blank" rel="noreferrer">mesh-ranked-vote</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-ranked-vote/" target="_blank" rel="noreferrer" aria-label="Open mesh-ranked-vote demo">mesh-ranked-vote</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-ranked-vote/demo.gif" alt="mesh-ranked-vote demo" loading="lazy" />
@@ -1378,11 +1899,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-retro"
+      data-slug="mesh-retro"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-retro/" target="_blank" rel="noreferrer">mesh-retro</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-retro/" target="_blank" rel="noreferrer" aria-label="Open mesh-retro demo">mesh-retro</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-retro/demo.gif" alt="mesh-retro demo" loading="lazy" />
@@ -1394,11 +1921,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-roast-or-toast"
+      data-slug="mesh-roast-or-toast"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-roast-or-toast/" target="_blank" rel="noreferrer">mesh-roast-or-toast</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-roast-or-toast/" target="_blank" rel="noreferrer" aria-label="Open mesh-roast-or-toast demo">mesh-roast-or-toast</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-roast-or-toast/demo.gif" alt="mesh-roast-or-toast demo" loading="lazy" />
@@ -1410,11 +1943,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-room-soundtrack"
+      data-slug="mesh-room-soundtrack"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-room-soundtrack/" target="_blank" rel="noreferrer">mesh-room-soundtrack</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-room-soundtrack/" target="_blank" rel="noreferrer" aria-label="Open mesh-room-soundtrack demo">mesh-room-soundtrack</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-room-soundtrack/demo.gif" alt="mesh-room-soundtrack demo" loading="lazy" />
@@ -1426,11 +1965,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-route-share"
+      data-slug="mesh-route-share"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-route-share/" target="_blank" rel="noreferrer">mesh-route-share</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-route-share/" target="_blank" rel="noreferrer" aria-label="Open mesh-route-share demo">mesh-route-share</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-route-share/demo.gif" alt="mesh-route-share demo" loading="lazy" />
@@ -1442,11 +1987,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-rps-arena"
+      data-slug="mesh-rps-arena"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-rps-arena/" target="_blank" rel="noreferrer">mesh-rps-arena</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-rps-arena/" target="_blank" rel="noreferrer" aria-label="Open mesh-rps-arena demo">mesh-rps-arena</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-rps-arena/demo.gif" alt="mesh-rps-arena demo" loading="lazy" />
@@ -1458,11 +2009,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-rsvp"
+      data-slug="mesh-rsvp"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-rsvp/" target="_blank" rel="noreferrer">mesh-rsvp</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-rsvp/" target="_blank" rel="noreferrer" aria-label="Open mesh-rsvp demo">mesh-rsvp</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-rsvp/demo.gif" alt="mesh-rsvp demo" loading="lazy" />
@@ -1474,11 +2031,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-secret-ballot"
+      data-slug="mesh-secret-ballot"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-secret-ballot/" target="_blank" rel="noreferrer">mesh-secret-ballot</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-secret-ballot/" target="_blank" rel="noreferrer" aria-label="Open mesh-secret-ballot demo">mesh-secret-ballot</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-secret-ballot/demo.gif" alt="mesh-secret-ballot demo" loading="lazy" />
@@ -1490,11 +2053,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-shadow-paint"
+      data-slug="mesh-shadow-paint"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-shadow-paint/" target="_blank" rel="noreferrer">mesh-shadow-paint</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-shadow-paint/" target="_blank" rel="noreferrer" aria-label="Open mesh-shadow-paint demo">mesh-shadow-paint</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-shadow-paint/demo.gif" alt="mesh-shadow-paint demo" loading="lazy" />
@@ -1506,11 +2075,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-shake-dice"
+      data-slug="mesh-shake-dice"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-shake-dice/" target="_blank" rel="noreferrer">mesh-shake-dice</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-shake-dice/" target="_blank" rel="noreferrer" aria-label="Open mesh-shake-dice demo">mesh-shake-dice</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-shake-dice/demo.gif" alt="mesh-shake-dice demo" loading="lazy" />
@@ -1522,11 +2097,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-shared-timer"
+      data-slug="mesh-shared-timer"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-shared-timer/" target="_blank" rel="noreferrer">mesh-shared-timer</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-shared-timer/" target="_blank" rel="noreferrer" aria-label="Open mesh-shared-timer demo">mesh-shared-timer</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-shared-timer/demo.gif" alt="mesh-shared-timer demo" loading="lazy" />
@@ -1538,11 +2119,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh shared window"
+      data-slug="mesh-shared-window"
+      data-status="ok"
+      data-trl="5"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-shared-window/" target="_blank" rel="noreferrer">Mesh Shared Window</a>
-        <span class="trl trl-4">TRL 4</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-shared-window/" target="_blank" rel="noreferrer" aria-label="Open Mesh Shared Window demo">Mesh Shared Window</a>
+        <span class="trl trl-5">TRL 5</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-shared-window/demo.gif" alt="Mesh Shared Window demo" loading="lazy" />
@@ -1554,11 +2141,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-shhh-meter"
+      data-slug="mesh-shhh-meter"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-shhh-meter/" target="_blank" rel="noreferrer">mesh-shhh-meter</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-shhh-meter/" target="_blank" rel="noreferrer" aria-label="Open mesh-shhh-meter demo">mesh-shhh-meter</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-shhh-meter/demo.gif" alt="mesh-shhh-meter demo" loading="lazy" />
@@ -1570,11 +2163,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-show-of-hands"
+      data-slug="mesh-show-of-hands"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-show-of-hands/" target="_blank" rel="noreferrer">mesh-show-of-hands</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-show-of-hands/" target="_blank" rel="noreferrer" aria-label="Open mesh-show-of-hands demo">mesh-show-of-hands</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-show-of-hands/demo.gif" alt="mesh-show-of-hands demo" loading="lazy" />
@@ -1586,11 +2185,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-shower-thoughts"
+      data-slug="mesh-shower-thoughts"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-shower-thoughts/" target="_blank" rel="noreferrer">mesh-shower-thoughts</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-shower-thoughts/" target="_blank" rel="noreferrer" aria-label="Open mesh-shower-thoughts demo">mesh-shower-thoughts</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-shower-thoughts/demo.gif" alt="mesh-shower-thoughts demo" loading="lazy" />
@@ -1602,11 +2207,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh silence counter"
+      data-slug="mesh-silence-counter"
+      data-status="ok"
+      data-trl="4"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-silence-counter/" target="_blank" rel="noreferrer">Mesh Silence Counter</a>
-        <span class="trl trl-2">TRL 2</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-silence-counter/" target="_blank" rel="noreferrer" aria-label="Open Mesh Silence Counter demo">Mesh Silence Counter</a>
+        <span class="trl trl-4">TRL 4</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-silence-counter/demo.gif" alt="Mesh Silence Counter demo" loading="lazy" />
@@ -1618,11 +2229,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-silent-vote"
+      data-slug="mesh-silent-vote"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-silent-vote/" target="_blank" rel="noreferrer">mesh-silent-vote</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-silent-vote/" target="_blank" rel="noreferrer" aria-label="Open mesh-silent-vote demo">mesh-silent-vote</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-silent-vote/demo.gif" alt="mesh-silent-vote demo" loading="lazy" />
@@ -1634,11 +2251,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-six-degrees"
+      data-slug="mesh-six-degrees"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-six-degrees/" target="_blank" rel="noreferrer">mesh-six-degrees</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-six-degrees/" target="_blank" rel="noreferrer" aria-label="Open mesh-six-degrees demo">mesh-six-degrees</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-six-degrees/demo.gif" alt="mesh-six-degrees demo" loading="lazy" />
@@ -1650,11 +2273,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-skill-swap"
+      data-slug="mesh-skill-swap"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-skill-swap/" target="_blank" rel="noreferrer">mesh-skill-swap</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-skill-swap/" target="_blank" rel="noreferrer" aria-label="Open mesh-skill-swap demo">mesh-skill-swap</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-skill-swap/demo.gif" alt="mesh-skill-swap demo" loading="lazy" />
@@ -1666,11 +2295,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-skill-tree"
+      data-slug="mesh-skill-tree"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-skill-tree/" target="_blank" rel="noreferrer">mesh-skill-tree</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-skill-tree/" target="_blank" rel="noreferrer" aria-label="Open mesh-skill-tree demo">mesh-skill-tree</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-skill-tree/demo.gif" alt="mesh-skill-tree demo" loading="lazy" />
@@ -1682,11 +2317,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-snap"
+      data-slug="mesh-snap"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-snap/" target="_blank" rel="noreferrer">mesh-snap</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-snap/" target="_blank" rel="noreferrer" aria-label="Open mesh-snap demo">mesh-snap</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-snap/demo.gif" alt="mesh-snap demo" loading="lazy" />
@@ -1698,11 +2339,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-snowball"
+      data-slug="mesh-snowball"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-snowball/" target="_blank" rel="noreferrer">mesh-snowball</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-snowball/" target="_blank" rel="noreferrer" aria-label="Open mesh-snowball demo">mesh-snowball</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-snowball/demo.gif" alt="mesh-snowball demo" loading="lazy" />
@@ -1714,11 +2361,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-split-the-bill"
+      data-slug="mesh-split-the-bill"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-split-the-bill/" target="_blank" rel="noreferrer">mesh-split-the-bill</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-split-the-bill/" target="_blank" rel="noreferrer" aria-label="Open mesh-split-the-bill demo">mesh-split-the-bill</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-split-the-bill/demo.gif" alt="mesh-split-the-bill demo" loading="lazy" />
@@ -1730,11 +2383,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-spotlight"
+      data-slug="mesh-spotlight"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-spotlight/" target="_blank" rel="noreferrer">mesh-spotlight</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-spotlight/" target="_blank" rel="noreferrer" aria-label="Open mesh-spotlight demo">mesh-spotlight</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-spotlight/demo.gif" alt="mesh-spotlight demo" loading="lazy" />
@@ -1746,11 +2405,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-spyfall"
+      data-slug="mesh-spyfall"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-spyfall/" target="_blank" rel="noreferrer">mesh-spyfall</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-spyfall/" target="_blank" rel="noreferrer" aria-label="Open mesh-spyfall demo">mesh-spyfall</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-spyfall/demo.gif" alt="mesh-spyfall demo" loading="lazy" />
@@ -1762,11 +2427,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-standup"
+      data-slug="mesh-standup"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-standup/" target="_blank" rel="noreferrer">mesh-standup</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-standup/" target="_blank" rel="noreferrer" aria-label="Open mesh-standup demo">mesh-standup</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-standup/demo.gif" alt="mesh-standup demo" loading="lazy" />
@@ -1778,11 +2449,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-step-circle"
+      data-slug="mesh-step-circle"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-step-circle/" target="_blank" rel="noreferrer">mesh-step-circle</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-step-circle/" target="_blank" rel="noreferrer" aria-label="Open mesh-step-circle demo">mesh-step-circle</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-step-circle/demo.gif" alt="mesh-step-circle demo" loading="lazy" />
@@ -1794,11 +2471,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-step-relay"
+      data-slug="mesh-step-relay"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-step-relay/" target="_blank" rel="noreferrer">mesh-step-relay</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-step-relay/" target="_blank" rel="noreferrer" aria-label="Open mesh-step-relay demo">mesh-step-relay</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-step-relay/demo.gif" alt="mesh-step-relay demo" loading="lazy" />
@@ -1810,11 +2493,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-storyworm"
+      data-slug="mesh-storyworm"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-storyworm/" target="_blank" rel="noreferrer">mesh-storyworm</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-storyworm/" target="_blank" rel="noreferrer" aria-label="Open mesh-storyworm demo">mesh-storyworm</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-storyworm/demo.gif" alt="mesh-storyworm demo" loading="lazy" />
@@ -1826,11 +2515,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-stretch-class"
+      data-slug="mesh-stretch-class"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-stretch-class/" target="_blank" rel="noreferrer">mesh-stretch-class</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-stretch-class/" target="_blank" rel="noreferrer" aria-label="Open mesh-stretch-class demo">mesh-stretch-class</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-stretch-class/demo.gif" alt="mesh-stretch-class demo" loading="lazy" />
@@ -1842,11 +2537,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-tag"
+      data-slug="mesh-tag"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-tag/" target="_blank" rel="noreferrer">mesh-tag</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-tag/" target="_blank" rel="noreferrer" aria-label="Open mesh-tag demo">mesh-tag</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-tag/demo.gif" alt="mesh-tag demo" loading="lazy" />
@@ -1858,11 +2559,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-takes-blitz"
+      data-slug="mesh-takes-blitz"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-takes-blitz/" target="_blank" rel="noreferrer">mesh-takes-blitz</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-takes-blitz/" target="_blank" rel="noreferrer" aria-label="Open mesh-takes-blitz demo">mesh-takes-blitz</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-takes-blitz/demo.gif" alt="mesh-takes-blitz demo" loading="lazy" />
@@ -1874,11 +2581,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh tap symphony"
+      data-slug="mesh-tap-symphony"
+      data-status="ok"
+      data-trl="4"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-tap-symphony/" target="_blank" rel="noreferrer">Mesh Tap Symphony</a>
-        <span class="trl trl-3">TRL 3</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-tap-symphony/" target="_blank" rel="noreferrer" aria-label="Open Mesh Tap Symphony demo">Mesh Tap Symphony</a>
+        <span class="trl trl-4">TRL 4</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-tap-symphony/demo.gif" alt="Mesh Tap Symphony demo" loading="lazy" />
@@ -1890,11 +2603,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-thank-you-token"
+      data-slug="mesh-thank-you-token"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-thank-you-token/" target="_blank" rel="noreferrer">mesh-thank-you-token</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-thank-you-token/" target="_blank" rel="noreferrer" aria-label="Open mesh-thank-you-token demo">mesh-thank-you-token</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-thank-you-token/demo.gif" alt="mesh-thank-you-token demo" loading="lazy" />
@@ -1906,11 +2625,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-tic-tac-toe"
+      data-slug="mesh-tic-tac-toe"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-tic-tac-toe/" target="_blank" rel="noreferrer">mesh-tic-tac-toe</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-tic-tac-toe/" target="_blank" rel="noreferrer" aria-label="Open mesh-tic-tac-toe demo">mesh-tic-tac-toe</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-tic-tac-toe/demo.gif" alt="mesh-tic-tac-toe demo" loading="lazy" />
@@ -1922,11 +2647,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-tide-pool"
+      data-slug="mesh-tide-pool"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-tide-pool/" target="_blank" rel="noreferrer">mesh-tide-pool</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-tide-pool/" target="_blank" rel="noreferrer" aria-label="Open mesh-tide-pool demo">mesh-tide-pool</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-tide-pool/demo.gif" alt="mesh-tide-pool demo" loading="lazy" />
@@ -1938,11 +2669,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-tilt-marble"
+      data-slug="mesh-tilt-marble"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-tilt-marble/" target="_blank" rel="noreferrer">mesh-tilt-marble</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-tilt-marble/" target="_blank" rel="noreferrer" aria-label="Open mesh-tilt-marble demo">mesh-tilt-marble</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-tilt-marble/demo.gif" alt="mesh-tilt-marble demo" loading="lazy" />
@@ -1954,11 +2691,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-time-capsule"
+      data-slug="mesh-time-capsule"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-time-capsule/" target="_blank" rel="noreferrer">mesh-time-capsule</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-time-capsule/" target="_blank" rel="noreferrer" aria-label="Open mesh-time-capsule demo">mesh-time-capsule</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-time-capsule/demo.gif" alt="mesh-time-capsule demo" loading="lazy" />
@@ -1970,11 +2713,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-toast-stack"
+      data-slug="mesh-toast-stack"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-toast-stack/" target="_blank" rel="noreferrer">mesh-toast-stack</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-toast-stack/" target="_blank" rel="noreferrer" aria-label="Open mesh-toast-stack demo">mesh-toast-stack</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-toast-stack/demo.gif" alt="mesh-toast-stack demo" loading="lazy" />
@@ -1986,11 +2735,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-trade-cards"
+      data-slug="mesh-trade-cards"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-trade-cards/" target="_blank" rel="noreferrer">mesh-trade-cards</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-trade-cards/" target="_blank" rel="noreferrer" aria-label="Open mesh-trade-cards demo">mesh-trade-cards</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-trade-cards/demo.gif" alt="mesh-trade-cards demo" loading="lazy" />
@@ -2002,11 +2757,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-treasure-hunt"
+      data-slug="mesh-treasure-hunt"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-treasure-hunt/" target="_blank" rel="noreferrer">mesh-treasure-hunt</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-treasure-hunt/" target="_blank" rel="noreferrer" aria-label="Open mesh-treasure-hunt demo">mesh-treasure-hunt</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-treasure-hunt/demo.gif" alt="mesh-treasure-hunt demo" loading="lazy" />
@@ -2018,11 +2779,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-tremor-map"
+      data-slug="mesh-tremor-map"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-tremor-map/" target="_blank" rel="noreferrer">mesh-tremor-map</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-tremor-map/" target="_blank" rel="noreferrer" aria-label="Open mesh-tremor-map demo">mesh-tremor-map</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-tremor-map/demo.gif" alt="mesh-tremor-map demo" loading="lazy" />
@@ -2034,11 +2801,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-trivia"
+      data-slug="mesh-trivia"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-trivia/" target="_blank" rel="noreferrer">mesh-trivia</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-trivia/" target="_blank" rel="noreferrer" aria-label="Open mesh-trivia demo">mesh-trivia</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-trivia/demo.gif" alt="mesh-trivia demo" loading="lazy" />
@@ -2050,11 +2823,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-truth-bomb"
+      data-slug="mesh-truth-bomb"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-truth-bomb/" target="_blank" rel="noreferrer">mesh-truth-bomb</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-truth-bomb/" target="_blank" rel="noreferrer" aria-label="Open mesh-truth-bomb demo">mesh-truth-bomb</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-truth-bomb/demo.gif" alt="mesh-truth-bomb demo" loading="lazy" />
@@ -2066,11 +2845,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh tug of war"
+      data-slug="mesh-tug-of-war"
+      data-status="ok"
+      data-trl="5"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-tug-of-war/" target="_blank" rel="noreferrer">Mesh Tug Of War</a>
-        
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-tug-of-war/" target="_blank" rel="noreferrer" aria-label="Open Mesh Tug Of War demo">Mesh Tug Of War</a>
+        <span class="trl trl-5">TRL 5</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-tug-of-war/demo.gif" alt="Mesh Tug Of War demo" loading="lazy" />
@@ -2082,11 +2867,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-vibe-check"
+      data-slug="mesh-vibe-check"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-vibe-check/" target="_blank" rel="noreferrer">mesh-vibe-check</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-vibe-check/" target="_blank" rel="noreferrer" aria-label="Open mesh-vibe-check demo">mesh-vibe-check</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-vibe-check/demo.gif" alt="mesh-vibe-check demo" loading="lazy" />
@@ -2098,11 +2889,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-volunteer-shift"
+      data-slug="mesh-volunteer-shift"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-volunteer-shift/" target="_blank" rel="noreferrer">mesh-volunteer-shift</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-volunteer-shift/" target="_blank" rel="noreferrer" aria-label="Open mesh-volunteer-shift demo">mesh-volunteer-shift</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-volunteer-shift/demo.gif" alt="mesh-volunteer-shift demo" loading="lazy" />
@@ -2114,11 +2911,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-watch-party-sync"
+      data-slug="mesh-watch-party-sync"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-watch-party-sync/" target="_blank" rel="noreferrer">mesh-watch-party-sync</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-watch-party-sync/" target="_blank" rel="noreferrer" aria-label="Open mesh-watch-party-sync demo">mesh-watch-party-sync</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-watch-party-sync/demo.gif" alt="mesh-watch-party-sync demo" loading="lazy" />
@@ -2130,11 +2933,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh wave canvas"
+      data-slug="mesh-wave-canvas"
+      data-status="ok"
+      data-trl="5"
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-wave-canvas/" target="_blank" rel="noreferrer">Mesh Wave Canvas</a>
-        <span class="trl trl-3">TRL 3</span>
-        <span class="status status-ok">OK</span>
+        <a class="title" href="https://baditaflorin.github.io/mesh-wave-canvas/" target="_blank" rel="noreferrer" aria-label="Open Mesh Wave Canvas demo">Mesh Wave Canvas</a>
+        <span class="trl trl-5">TRL 5</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-wave-canvas/demo.gif" alt="Mesh Wave Canvas demo" loading="lazy" />
@@ -2146,11 +2955,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-werewolf-roles"
+      data-slug="mesh-werewolf-roles"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-werewolf-roles/" target="_blank" rel="noreferrer">mesh-werewolf-roles</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-werewolf-roles/" target="_blank" rel="noreferrer" aria-label="Open mesh-werewolf-roles demo">mesh-werewolf-roles</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-werewolf-roles/demo.gif" alt="mesh-werewolf-roles demo" loading="lazy" />
@@ -2162,11 +2977,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-when2meet"
+      data-slug="mesh-when2meet"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-when2meet/" target="_blank" rel="noreferrer">mesh-when2meet</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-when2meet/" target="_blank" rel="noreferrer" aria-label="Open mesh-when2meet demo">mesh-when2meet</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-when2meet/demo.gif" alt="mesh-when2meet demo" loading="lazy" />
@@ -2178,11 +2999,17 @@
     </article>
   
 
-    <article class="card ok">
+    <article
+      class="card ok"
+      data-name="mesh-would-rather"
+      data-slug="mesh-would-rather"
+      data-status="ok"
+      data-trl=""
+    >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-would-rather/" target="_blank" rel="noreferrer">mesh-would-rather</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-would-rather/" target="_blank" rel="noreferrer" aria-label="Open mesh-would-rather demo">mesh-would-rather</a>
         
-        <span class="status status-ok">OK</span>
+        <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
         <img class="gif" src="mesh-would-rather/demo.gif" alt="mesh-would-rather demo" loading="lazy" />
@@ -2197,5 +3024,44 @@
   <footer class="page">
     Each card shows a ~15s side-by-side recording of two BroadcastChannel-meshed peers. Source: mesh-common/scripts/record-demo.sh.
   </footer>
+  <script>
+    (() => {
+      const search = document.querySelector("#demo-search");
+      const buttons = [...document.querySelectorAll(".filter")];
+      const cards = [...document.querySelectorAll(".card")];
+      const results = document.querySelector("#demo-results");
+      let filter = "all";
+
+      const apply = () => {
+        const query = search.value.trim().toLowerCase();
+        let shown = 0;
+        for (const card of cards) {
+          const matchesFilter = filter === "all" || card.dataset.status === filter;
+          const haystack = card.dataset.name + " " + card.dataset.slug;
+          const visible = matchesFilter && haystack.includes(query);
+          card.hidden = !visible;
+          if (visible) shown++;
+        }
+        results.textContent = shown === 1 ? "Showing 1 demo" : "Showing " + shown + " demos";
+      };
+
+      search.addEventListener("input", apply);
+      buttons.forEach((button) => button.addEventListener("click", () => {
+        filter = button.dataset.filter;
+        buttons.forEach((candidate) => {
+          const active = candidate === button;
+          candidate.classList.toggle("is-active", active);
+          candidate.setAttribute("aria-pressed", String(active));
+        });
+        apply();
+      }));
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && document.activeElement === search && search.value) {
+          search.value = "";
+          apply();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
