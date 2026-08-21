@@ -40,6 +40,7 @@ export {
 export { MeshShell } from "./MeshShell";
 export { SelfRefBar } from "./SelfRefBar";
 export { SettingsDrawer } from "./SettingsDrawer";
+export { MeshPermissionGate, type MeshPermissionGateProps } from "./MeshPermissionGate";
 export {
   MeshConnectionStatus,
   type MeshConnectionStatusProps,
@@ -388,6 +389,11 @@ export {
   type HotkeyHandler,
   type HotkeysOptions,
 } from "./useHotkeys";
+
+export { useSharedReservation, type SharedReservation } from "./useSharedReservation";
+export { useTurnLock } from "./useTurnLock";
+export { useQuorum, type QuorumState } from "./useQuorum";
+export { usePeerCapabilities, type PeerCapabilities } from "./usePeerCapabilities";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {

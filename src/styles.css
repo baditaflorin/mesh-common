@@ -278,6 +278,19 @@
   color: #fb7185;
 }
 
+.mesh-permission-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mesh-permission-gate p { margin: 0; }
+
 .mesh-settings-actions {
   display: flex;
   gap: 0.5rem;
