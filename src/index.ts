@@ -399,6 +399,11 @@ export { usePeerCapabilities, type PeerCapabilities } from "./usePeerCapabilitie
 export { useConsensusAction } from "./useConsensusAction";
 export { useCrdtSnapshot } from "./useCrdtSnapshot";
 export { useNetworkRetry } from "./useNetworkRetry";
+export { useSharedSet, type SharedSet, type SharedSetOptions } from "./useSharedSet";
+export { useSharedCounter, type SharedCounter, type SharedCounterOptions } from "./useSharedCounter";
+export { useCrdtMigrations, type CrdtMigration, type CrdtMigrations } from "./useCrdtMigrations";
+export { useSharedSearchIndex, type SharedSearchIndex, type SharedSearchIndexOptions } from "./useSharedSearchIndex";
+export { useSharedTagIndex, type SharedTagIndex, type SharedTagIndexOptions } from "./useSharedTagIndex";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
