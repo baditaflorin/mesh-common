@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { MeshConfig } from "./MeshConfig";
 import {
   iceStorage,
+  isValidSignalingUrl,
+  isValidTurnTokenUrl,
   loadSignalingUrl,
   loadTurnTokenUrl,
   resetIceServers,
@@ -55,6 +57,13 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
   );
   const [signaling, setSignaling] = useState(() => loadSignalingUrl(s));
   const [tokenUrl, setTokenUrl] = useState(() => loadTurnTokenUrl(s));
+  const signalingError = signaling.trim() && !isValidSignalingUrl(signaling)
+    ? "Use a ws:// or wss:// URL."
+    : "";
+  const tokenUrlError = tokenUrl.trim() && !isValidTurnTokenUrl(tokenUrl)
+    ? "Use an http:// or https:// URL."
+    : "";
+  const hasEndpointError = Boolean(signalingError || tokenUrlError);
 
   useEffect(() => {
     if (open) {
@@ -115,7 +124,10 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
             inputMode="url"
             autoComplete="url"
             spellCheck={false}
+            aria-invalid={Boolean(signalingError)}
+            aria-describedby={signalingError ? "mesh-signaling-error" : undefined}
           />
+          {signalingError && <span id="mesh-signaling-error" role="alert" className="mesh-settings-error">{signalingError}</span>}
         </label>
 
         <label>
@@ -128,15 +140,22 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
             inputMode="url"
             autoComplete="url"
             spellCheck={false}
+            aria-invalid={Boolean(tokenUrlError)}
+            aria-describedby={tokenUrlError ? "mesh-turn-token-error" : undefined}
           />
+          {tokenUrlError && <span id="mesh-turn-token-error" role="alert" className="mesh-settings-error">{tokenUrlError}</span>}
         </label>
 
         <div className="mesh-settings-actions">
           <button
             type="button"
+            disabled={hasEndpointError}
             onClick={() => {
               saveSignalingUrl(s, signaling);
               saveTurnTokenUrl(s, tokenUrl);
+              // TURN credentials are short-lived and tied to this endpoint.
+              // Do not carry a cached credential set across an endpoint change.
+              resetIceServers(s);
               onClose();
               location.reload();
             }}

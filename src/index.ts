@@ -12,6 +12,8 @@ export {
   saveSignalingUrl,
   loadTurnTokenUrl,
   saveTurnTokenUrl,
+  isValidSignalingUrl,
+  isValidTurnTokenUrl,
   maybeFetchTurnCredentials,
 } from "./iceConfig";
 
