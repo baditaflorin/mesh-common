@@ -70,11 +70,17 @@ for (const app of entries) {
   }
 
   cards.push(`
-    <article class="card ${ok ? "ok" : "fail"}">
+    <article
+      class="card ${ok ? "ok" : "fail"}"
+      data-name="${escapeHtml(name).toLowerCase()}"
+      data-slug="${escapeHtml(app).toLowerCase()}"
+      data-status="${ok ? "ok" : "fail"}"
+      data-trl="${escapeHtml(trl)}"
+    >
       <header>
-        <a class="title" href="${escapeHtml(pagesUrl)}" target="_blank" rel="noreferrer">${escapeHtml(name)}</a>
+        <a class="title" href="${escapeHtml(pagesUrl)}" target="_blank" rel="noreferrer" aria-label="Open ${escapeHtml(name)} demo">${escapeHtml(name)}</a>
         ${trl !== "" ? `<span class="trl trl-${trl}">TRL ${escapeHtml(trl)}</span>` : ""}
-        <span class="status status-${ok ? "ok" : "fail"}">${escapeHtml(status)}</span>
+        <span class="status status-${ok ? "ok" : "fail"}" aria-label="Recording status: ${escapeHtml(status)}">${escapeHtml(status)}</span>
       </header>
       <div class="media">
         ${hasGif
@@ -104,6 +110,15 @@ const html = `<!doctype html>
     a { color: #58a6ff; text-decoration: none; }
     a:hover { text-decoration: underline; }
     .rootless-banner { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px 16px; margin-top: 16px; max-width: 800px; line-height: 1.6; }
+    .catalog-controls { display: grid; grid-template-columns: minmax(16rem, 26rem) 1fr; gap: 12px 16px; align-items: end; margin-top: 20px; max-width: 800px; }
+    .catalog-search { display: grid; gap: 5px; color: #8b949e; font-size: 12px; }
+    .catalog-search input { box-sizing: border-box; width: 100%; background: #0d1117; color: #e6edf3; border: 1px solid #30363d; border-radius: 7px; padding: 9px 10px; font: inherit; font-size: 14px; }
+    .catalog-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter { appearance: none; cursor: pointer; color: #c9d1d9; background: #21262d; border: 1px solid #30363d; border-radius: 999px; padding: 7px 10px; font: 12px/1.2 system-ui, -apple-system, Segoe UI, sans-serif; }
+    .filter span { color: #8b949e; font-variant-numeric: tabular-nums; }
+    .filter.is-active { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+    .filter.is-active span { color: #dbeafe; }
+    .catalog-results { grid-column: 1 / -1; margin: 0; color: #8b949e; font-size: 12px; }
     header.page { padding: 28px 24px 12px; max-width: 1400px; margin: 0 auto; }
     header.page h1 { margin: 0 0 6px; font-size: 22px; font-weight: 600; }
     header.page .sub { color: #8b949e; font-size: 13px; }
@@ -129,6 +144,8 @@ const html = `<!doctype html>
     .errhint summary { cursor: pointer; color: #ff7b72; font-size: 12px; }
     .errhint pre { background: #0e1117; padding: 8px; border-radius: 4px; font-size: 11px; max-height: 120px; overflow: auto; white-space: pre-wrap; margin: 6px 0 0; }
     footer.page { max-width: 1400px; margin: 0 auto; padding: 12px 24px 32px; color: #6e7681; font-size: 12px; }
+    :focus-visible { outline: 3px solid #58a6ff; outline-offset: 3px; }
+    @media (max-width: 560px) { .catalog-controls { grid-template-columns: 1fr; } main { grid-template-columns: 1fr; padding: 16px; } header.page { padding: 20px 16px 12px; } }
   </style>
 </head>
 <body>
@@ -141,6 +158,18 @@ const html = `<!doctype html>
       💡 These applications are built using the <a href="https://baditaflorin.github.io/rootless-computing/" target="_blank" rel="noreferrer">Rootless Computing paradigm</a>. 
       They have no origin server, run entirely in the browser, store data locally on your machine, and coordinate directly with peers using WebRTC/Yjs via the <a href="https://baditaflorin.github.io/mesh-common/" target="_blank" rel="noreferrer">mesh-common</a> framework.
     </div>
+    <div class="catalog-controls" role="search">
+      <label class="catalog-search">
+        <span>Find a demo</span>
+        <input id="demo-search" type="search" placeholder="Search by app name or slug" autocomplete="off" />
+      </label>
+      <div class="catalog-filters" aria-label="Recording filter">
+        <button type="button" class="filter is-active" data-filter="all" aria-pressed="true">All <span>${entries.length}</span></button>
+        <button type="button" class="filter" data-filter="ok" aria-pressed="false">Working <span>${okCount}</span></button>
+        <button type="button" class="filter" data-filter="fail" aria-pressed="false">Needs attention <span>${failCount}</span></button>
+      </div>
+      <p id="demo-results" class="catalog-results" role="status" aria-live="polite">Showing all ${entries.length} demos</p>
+    </div>
   </header>
   <main>
     ${cards.join("\n")}
@@ -148,6 +177,45 @@ const html = `<!doctype html>
   <footer class="page">
     Each card shows a ~15s side-by-side recording of two BroadcastChannel-meshed peers. Source: mesh-common/scripts/record-demo.sh.
   </footer>
+  <script>
+    (() => {
+      const search = document.querySelector("#demo-search");
+      const buttons = [...document.querySelectorAll(".filter")];
+      const cards = [...document.querySelectorAll(".card")];
+      const results = document.querySelector("#demo-results");
+      let filter = "all";
+
+      const apply = () => {
+        const query = search.value.trim().toLowerCase();
+        let shown = 0;
+        for (const card of cards) {
+          const matchesFilter = filter === "all" || card.dataset.status === filter;
+          const haystack = card.dataset.name + " " + card.dataset.slug;
+          const visible = matchesFilter && haystack.includes(query);
+          card.hidden = !visible;
+          if (visible) shown++;
+        }
+        results.textContent = shown === 1 ? "Showing 1 demo" : "Showing " + shown + " demos";
+      };
+
+      search.addEventListener("input", apply);
+      buttons.forEach((button) => button.addEventListener("click", () => {
+        filter = button.dataset.filter;
+        buttons.forEach((candidate) => {
+          const active = candidate === button;
+          candidate.classList.toggle("is-active", active);
+          candidate.setAttribute("aria-pressed", String(active));
+        });
+        apply();
+      }));
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && document.activeElement === search && search.value) {
+          search.value = "";
+          apply();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
 `;

@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { MeshConfig } from "./MeshConfig";
 import {
   iceStorage,
@@ -9,6 +9,7 @@ import {
   saveTurnTokenUrl,
 } from "./iceConfig";
 import { beaconOptedOut, setBeaconOptOut } from "./useMeshBeacon";
+import { MeshSheet } from "./ui/MeshSheet";
 
 function BeaconOptOutToggle() {
   const [out, setOut] = useState<boolean>(() => beaconOptedOut());
@@ -44,10 +45,14 @@ type Props = {
 };
 
 export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, children }: Props) {
-  const s = iceStorage(config.storagePrefix, {
-    signalingUrl: config.signalingUrl,
-    turnTokenUrl: config.turnTokenUrl,
-  });
+  const s = useMemo(
+    () =>
+      iceStorage(config.storagePrefix, {
+        signalingUrl: config.signalingUrl,
+        turnTokenUrl: config.turnTokenUrl,
+      }),
+    [config.storagePrefix, config.signalingUrl, config.turnTokenUrl],
+  );
   const [signaling, setSignaling] = useState(() => loadSignalingUrl(s));
   const [tokenUrl, setTokenUrl] = useState(() => loadTurnTokenUrl(s));
 
@@ -58,21 +63,36 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
     }
   }, [open, s]);
 
-  if (!open) return null;
-
   return (
-    <div className="mesh-settings-overlay" onClick={onClose}>
-      <div className="mesh-settings-drawer" onClick={(e) => e.stopPropagation()}>
-        <header>
-          <h2>Settings</h2>
-          <button type="button" onClick={onClose} aria-label="Close">
-            ×
-          </button>
-        </header>
-
+    <MeshSheet
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!nextOpen) onClose();
+      }}
+      title="Settings"
+      description="Room, identity, and connection preferences for this device."
+      variant="bottom"
+      className="mesh-settings-sheet"
+      footer={
+        <footer className="mesh-settings-footer">
+          <a href={config.repositoryUrl} target="_blank" rel="noreferrer">
+            source on github
+          </a>
+          <span>
+            v{config.version} · {config.commit}
+          </span>
+        </footer>
+      }
+    >
+      <div className="mesh-settings-content">
         <label>
           <span>Room ID</span>
-          <input value={roomId} onChange={(e) => onRoomChange(e.target.value)} />
+          <input
+            value={roomId}
+            onChange={(e) => onRoomChange(e.target.value)}
+            autoComplete="off"
+            spellCheck={false}
+          />
         </label>
 
         {children}
@@ -91,6 +111,10 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
             value={signaling}
             onChange={(e) => setSignaling(e.target.value)}
             placeholder={config.signalingUrl}
+            type="url"
+            inputMode="url"
+            autoComplete="url"
+            spellCheck={false}
           />
         </label>
 
@@ -100,6 +124,10 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
             value={tokenUrl}
             onChange={(e) => setTokenUrl(e.target.value)}
             placeholder={config.turnTokenUrl}
+            type="url"
+            inputMode="url"
+            autoComplete="url"
+            spellCheck={false}
           />
         </label>
 
@@ -135,15 +163,7 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
 
         <hr />
 
-        <footer className="mesh-settings-footer">
-          <a href={config.repositoryUrl} target="_blank" rel="noreferrer">
-            source on github
-          </a>
-          <span>
-            v{config.version} · {config.commit}
-          </span>
-        </footer>
       </div>
-    </div>
+    </MeshSheet>
   );
 }
