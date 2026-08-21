@@ -38,6 +38,27 @@ describe("shared app chrome", () => {
     expect(onClose).toHaveBeenCalledOnce();
   });
 
+  it("explains and blocks an invalid infrastructure endpoint before reload", () => {
+    render(
+      <SettingsDrawer
+        config={config}
+        open
+        onClose={() => {}}
+        roomId="test-room"
+        onRoomChange={() => {}}
+      />,
+    );
+
+    fireEvent.change(screen.getByRole("textbox", { name: "Signaling URL" }), {
+      target: { value: "https://not-a-websocket.example" },
+    });
+    expect(screen.getByRole("alert").textContent).toContain("ws:// or wss://");
+    expect(screen.getByRole("button", { name: "Save and reload" })).toHaveProperty(
+      "disabled",
+      true,
+    );
+  });
+
   it("uses a real keyboard-operable button for the invite link", () => {
     render(<InviteShareButton appName="mesh-test" roomId="room-1" />);
     fireEvent.click(screen.getByRole("button", { name: /invite via qr/i }));

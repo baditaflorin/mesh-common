@@ -29,6 +29,30 @@ export const DEFAULT_ICE_SERVERS: IceServer[] = [...STUN_SERVERS];
 
 const DEAD_SIGNALING_SERVERS = ["wss://signaling.yjs.dev", "ws://signaling.yjs.dev"];
 
+function hasProtocol(value: string, protocols: readonly string[]): boolean {
+  try {
+    const parsed = new URL(value);
+    return (
+      protocols.includes(parsed.protocol) &&
+      Boolean(parsed.hostname) &&
+      !parsed.username &&
+      !parsed.password
+    );
+  } catch {
+    return false;
+  }
+}
+
+/** A signaling endpoint must be an absolute WebSocket URL. */
+export function isValidSignalingUrl(value: string): boolean {
+  return hasProtocol(value.trim(), ["ws:", "wss:"]);
+}
+
+/** TURN credential issuers are fetched over HTTP(S), including local development. */
+export function isValidTurnTokenUrl(value: string): boolean {
+  return hasProtocol(value.trim(), ["http:", "https:"]);
+}
+
 export type IceStorage = {
   iceKey: string;
   signalingKey: string;
@@ -70,27 +94,44 @@ export function resetIceServers(s: IceStorage): void {
 
 export function loadSignalingUrl(s: IceStorage): string {
   const stored = localStorage.getItem(s.signalingKey) ?? "";
-  if (stored && DEAD_SIGNALING_SERVERS.includes(stored)) {
+  if (stored && (!isValidSignalingUrl(stored) || DEAD_SIGNALING_SERVERS.includes(stored))) {
     localStorage.removeItem(s.signalingKey);
     return s.defaultSignaling;
   }
   return stored || s.defaultSignaling;
 }
 
-export function saveSignalingUrl(s: IceStorage, url: string): void {
+/** Saves a valid endpoint and returns false without changing storage for invalid input. */
+export function saveSignalingUrl(s: IceStorage, url: string): boolean {
   const trimmed = url.trim();
-  if (trimmed) localStorage.setItem(s.signalingKey, trimmed);
-  else localStorage.removeItem(s.signalingKey);
+  if (!trimmed) {
+    localStorage.removeItem(s.signalingKey);
+    return true;
+  }
+  if (!isValidSignalingUrl(trimmed)) return false;
+  localStorage.setItem(s.signalingKey, trimmed);
+  return true;
 }
 
 export function loadTurnTokenUrl(s: IceStorage): string {
-  return localStorage.getItem(s.tokenUrlKey) ?? s.defaultTokenUrl;
+  const stored = localStorage.getItem(s.tokenUrlKey) ?? "";
+  if (stored && !isValidTurnTokenUrl(stored)) {
+    localStorage.removeItem(s.tokenUrlKey);
+    return s.defaultTokenUrl;
+  }
+  return stored || s.defaultTokenUrl;
 }
 
-export function saveTurnTokenUrl(s: IceStorage, url: string): void {
+/** Saves a valid credential issuer and returns false without changing storage for invalid input. */
+export function saveTurnTokenUrl(s: IceStorage, url: string): boolean {
   const trimmed = url.trim();
-  if (trimmed) localStorage.setItem(s.tokenUrlKey, trimmed);
-  else localStorage.removeItem(s.tokenUrlKey);
+  if (!trimmed) {
+    localStorage.removeItem(s.tokenUrlKey);
+    return true;
+  }
+  if (!isValidTurnTokenUrl(trimmed)) return false;
+  localStorage.setItem(s.tokenUrlKey, trimmed);
+  return true;
 }
 
 export async function maybeFetchTurnCredentials(s: IceStorage): Promise<void> {

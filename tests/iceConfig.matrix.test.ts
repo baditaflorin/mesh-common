@@ -9,6 +9,8 @@ import { beforeEach, describe, expect, it } from "vitest";
 import {
   DEFAULT_ICE_SERVERS,
   iceStorage,
+  isValidSignalingUrl,
+  isValidTurnTokenUrl,
   loadIceServers,
   loadSignalingUrl,
   loadTurnTokenUrl,
@@ -79,6 +81,16 @@ describe("saveSignalingUrl", () => {
     saveSignalingUrl(s, input);
     expect(localStorage.getItem(s.signalingKey)).toBeNull();
   });
+
+  it.each(["https://not-a-websocket.example", "relative/path", "wss://", "wss://user:pass@signal.example"])(
+    "rejects an invalid signaling endpoint: %s",
+    (input) => {
+      const s = makeStorage();
+      localStorage.setItem(s.signalingKey, "wss://previous.example/ws");
+      expect(saveSignalingUrl(s, input)).toBe(false);
+      expect(localStorage.getItem(s.signalingKey)).toBe("wss://previous.example/ws");
+    },
+  );
 });
 
 describe("loadTurnTokenUrl / saveTurnTokenUrl mirror signaling behavior", () => {
@@ -97,6 +109,38 @@ describe("loadTurnTokenUrl / saveTurnTokenUrl mirror signaling behavior", () => 
     saveTurnTokenUrl(s, "https://x");
     saveTurnTokenUrl(s, "");
     expect(loadTurnTokenUrl(s)).toBe(DEFAULTS.turnTokenUrl);
+  });
+
+  it.each(["wss://not-http.example", "ftp://not-http.example", "relative/path", "https://user:pass@turn.example"])(
+    "rejects an invalid TURN credential endpoint: %s",
+    (input) => {
+      const s = makeStorage();
+      localStorage.setItem(s.tokenUrlKey, "https://previous.example/credentials");
+      expect(saveTurnTokenUrl(s, input)).toBe(false);
+      expect(localStorage.getItem(s.tokenUrlKey)).toBe("https://previous.example/credentials");
+    },
+  );
+});
+
+describe("endpoint validation", () => {
+  it.each(["ws://localhost:4444", "wss://signal.example/ws"])(
+    "accepts valid signaling URL: %s",
+    (value) => expect(isValidSignalingUrl(value)).toBe(true),
+  );
+
+  it.each(["http://localhost:8787/credentials", "https://turn.example/credentials"])(
+    "accepts valid TURN credentials URL: %s",
+    (value) => expect(isValidTurnTokenUrl(value)).toBe(true),
+  );
+
+  it("prunes invalid legacy endpoints on load", () => {
+    const s = makeStorage();
+    localStorage.setItem(s.signalingKey, "https://not-a-websocket.example");
+    localStorage.setItem(s.tokenUrlKey, "wss://not-an-http-endpoint.example");
+    expect(loadSignalingUrl(s)).toBe(DEFAULTS.signalingUrl);
+    expect(loadTurnTokenUrl(s)).toBe(DEFAULTS.turnTokenUrl);
+    expect(localStorage.getItem(s.signalingKey)).toBeNull();
+    expect(localStorage.getItem(s.tokenUrlKey)).toBeNull();
   });
 });
 
