@@ -12,6 +12,9 @@ mention in `README.md`.
 
 ### Added
 
+- **Third primitive wave:** consensus actions, CRDT snapshots, resilient retry
+  state, a QR sharing dialog, and rate-limited live announcements.
+
 - **Second primitive wave:** capacity reservations, soft turn locks, quorum
   state, peer capability negotiation, and an accessible permission gate.
 

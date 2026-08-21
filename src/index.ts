@@ -41,6 +41,8 @@ export { MeshShell } from "./MeshShell";
 export { SelfRefBar } from "./SelfRefBar";
 export { SettingsDrawer } from "./SettingsDrawer";
 export { MeshPermissionGate, type MeshPermissionGateProps } from "./MeshPermissionGate";
+export { MeshQrDialog } from "./MeshQrDialog";
+export { MeshLiveRegion } from "./MeshLiveRegion";
 export {
   MeshConnectionStatus,
   type MeshConnectionStatusProps,
@@ -394,6 +396,9 @@ export { useSharedReservation, type SharedReservation } from "./useSharedReserva
 export { useTurnLock } from "./useTurnLock";
 export { useQuorum, type QuorumState } from "./useQuorum";
 export { usePeerCapabilities, type PeerCapabilities } from "./usePeerCapabilities";
+export { useConsensusAction } from "./useConsensusAction";
+export { useCrdtSnapshot } from "./useCrdtSnapshot";
+export { useNetworkRetry } from "./useNetworkRetry";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {

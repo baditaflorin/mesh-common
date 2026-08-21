@@ -290,6 +290,9 @@
 }
 
 .mesh-permission-gate p { margin: 0; }
+.mesh-live-region { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.mesh-qr-dialog { display: grid; justify-items: center; gap: 0.75rem; }
+.mesh-qr-dialog code { max-width: 100%; overflow-wrap: anywhere; font-size: 0.72rem; }
 
 .mesh-settings-actions {
   display: flex;
