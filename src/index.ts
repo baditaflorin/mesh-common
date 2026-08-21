@@ -404,6 +404,11 @@ export { useSharedCounter, type SharedCounter, type SharedCounterOptions } from 
 export { useCrdtMigrations, type CrdtMigration, type CrdtMigrations } from "./useCrdtMigrations";
 export { useSharedSearchIndex, type SharedSearchIndex, type SharedSearchIndexOptions } from "./useSharedSearchIndex";
 export { useSharedTagIndex, type SharedTagIndex, type SharedTagIndexOptions } from "./useSharedTagIndex";
+export { useRoomLifecycle, type RoomLifecycle, type RoomLifecycleStatus } from "./useRoomLifecycle";
+export { useMediaSession, type MediaSessionApi, type MediaSessionHandlers } from "./useMediaSession";
+export { useHapticPattern, type HapticPattern, type HapticPatternApi } from "./useHapticPattern";
+export { useOrientationLock, type OrientationLockApi, type OrientationLockTarget } from "./useOrientationLock";
+export { useIdleDetector, type IdleDetectorOptions, type IdleDetectorState } from "./useIdleDetector";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {

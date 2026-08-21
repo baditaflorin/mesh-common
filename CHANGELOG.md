@@ -7,6 +7,9 @@
 - `useSharedSet`, `useSharedCounter`, `useCrdtMigrations`,
   `useSharedSearchIndex`, and `useSharedTagIndex` for validated shared data
   membership, attributed counts, schema evolution, and local collection views.
+- `useRoomLifecycle`, `useMediaSession`, `useHapticPattern`,
+  `useOrientationLock`, and `useIdleDetector` for room status, browser media
+  integration, device feedback/orientation, and privacy-safe idle state.
 
 All notable changes to `@baditaflorin/mesh-common` are recorded here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
