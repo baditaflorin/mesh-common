@@ -1,4 +1,5 @@
 export { MeshSheet, type MeshSheetProps } from "./MeshSheet";
+export { MeshDialog, type MeshDialogProps } from "./MeshDialog";
 export { MeshConfirm, type MeshConfirmProps } from "./MeshConfirm";
 export { MeshTabs, type MeshTabsProps, type MeshTab } from "./MeshTabs";
 export { MeshSlider, type MeshSliderProps } from "./MeshSlider";
