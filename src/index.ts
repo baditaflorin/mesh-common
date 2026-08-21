@@ -40,7 +40,10 @@ export {
 export { MeshShell } from "./MeshShell";
 export { SelfRefBar } from "./SelfRefBar";
 export { SettingsDrawer } from "./SettingsDrawer";
-export { MeshPermissionGate, type MeshPermissionGateProps } from "./MeshPermissionGate";
+export {
+  MeshPermissionGate,
+  type MeshPermissionGateProps,
+} from "./MeshPermissionGate";
 export { MeshQrDialog } from "./MeshQrDialog";
 export { MeshLiveRegion } from "./MeshLiveRegion";
 export {
@@ -392,23 +395,81 @@ export {
   type HotkeysOptions,
 } from "./useHotkeys";
 
-export { useSharedReservation, type SharedReservation } from "./useSharedReservation";
+export {
+  useSharedReservation,
+  type SharedReservation,
+} from "./useSharedReservation";
 export { useTurnLock } from "./useTurnLock";
 export { useQuorum, type QuorumState } from "./useQuorum";
-export { usePeerCapabilities, type PeerCapabilities } from "./usePeerCapabilities";
+export {
+  usePeerCapabilities,
+  type PeerCapabilities,
+} from "./usePeerCapabilities";
 export { useConsensusAction } from "./useConsensusAction";
 export { useCrdtSnapshot } from "./useCrdtSnapshot";
 export { useNetworkRetry } from "./useNetworkRetry";
-export { useSharedSet, type SharedSet, type SharedSetOptions } from "./useSharedSet";
-export { useSharedCounter, type SharedCounter, type SharedCounterOptions } from "./useSharedCounter";
-export { useCrdtMigrations, type CrdtMigration, type CrdtMigrations } from "./useCrdtMigrations";
-export { useSharedSearchIndex, type SharedSearchIndex, type SharedSearchIndexOptions } from "./useSharedSearchIndex";
-export { useSharedTagIndex, type SharedTagIndex, type SharedTagIndexOptions } from "./useSharedTagIndex";
-export { useRoomLifecycle, type RoomLifecycle, type RoomLifecycleStatus } from "./useRoomLifecycle";
-export { useMediaSession, type MediaSessionApi, type MediaSessionHandlers } from "./useMediaSession";
-export { useHapticPattern, type HapticPattern, type HapticPatternApi } from "./useHapticPattern";
-export { useOrientationLock, type OrientationLockApi, type OrientationLockTarget } from "./useOrientationLock";
-export { useIdleDetector, type IdleDetectorOptions, type IdleDetectorState } from "./useIdleDetector";
+export {
+  useSharedSet,
+  type SharedSet,
+  type SharedSetOptions,
+} from "./useSharedSet";
+export {
+  useSharedCounter,
+  type SharedCounter,
+  type SharedCounterOptions,
+} from "./useSharedCounter";
+export {
+  useCrdtMigrations,
+  type CrdtMigration,
+  type CrdtMigrations,
+} from "./useCrdtMigrations";
+export {
+  useSharedSearchIndex,
+  type SharedSearchIndex,
+  type SharedSearchIndexOptions,
+} from "./useSharedSearchIndex";
+export {
+  useSharedTagIndex,
+  type SharedTagIndex,
+  type SharedTagIndexOptions,
+} from "./useSharedTagIndex";
+export {
+  useRoomLifecycle,
+  type RoomLifecycle,
+  type RoomLifecycleStatus,
+} from "./useRoomLifecycle";
+export {
+  useMediaSession,
+  type MediaSessionApi,
+  type MediaSessionHandlers,
+} from "./useMediaSession";
+export {
+  useHapticPattern,
+  type HapticPattern,
+  type HapticPatternApi,
+} from "./useHapticPattern";
+export {
+  useOrientationLock,
+  type OrientationLockApi,
+  type OrientationLockTarget,
+} from "./useOrientationLock";
+export {
+  useIdleDetector,
+  type IdleDetectorOptions,
+  type IdleDetectorState,
+} from "./useIdleDetector";
+export {
+  useAvailabilityGrid,
+  type AvailabilityGrid,
+} from "./useAvailabilityGrid";
+export {
+  useRankedBallot,
+  type RankedBallot,
+  type RankedBallotResult,
+} from "./useRankedBallot";
+export { useSharedForm, type SharedForm } from "./useSharedForm";
+export { useMediaRecorder, type MediaRecorderState } from "./useMediaRecorder";
+export { useScreenShare, type ScreenShareState } from "./useScreenShare";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
