@@ -12,6 +12,9 @@ mention in `README.md`.
 
 ### Added
 
+- **Second primitive wave:** capacity reservations, soft turn locks, quorum
+  state, peer capability negotiation, and an accessible permission gate.
+
 - **First primitive wave:** `useSharedCollection`, `useSharedQueue`, and
   `useSharedTimer` provide validated list coordination, expiring FIFO claims,
   and drift-free shared timing without app-specific CRDT copies.
