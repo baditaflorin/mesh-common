@@ -47,9 +47,13 @@ export type BidState = {
  * `useRateLimit` to prevent spam-bids.
  */
 export function useBid(room: YRoom | null, key: string): BidState {
-  const [, rerender] = useState(0);
+  const [tick, rerender] = useState(0);
   const [localSalt, setLocalSalt] = useState<string | null>(null);
   const [localAmount, setLocalAmount] = useState<number | null>(null);
+  // Keys (`${round}:${peerId}`) whose reveal has been verified to actually
+  // match its earlier commitment. A bid is only ever counted in `revealed`/
+  // `winner` once it lands here — see the verify effect below.
+  const [verifiedKeys, setVerifiedKeys] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (!room) return;
@@ -95,36 +99,65 @@ export function useBid(room: YRoom | null, key: string): BidState {
     reveals.set(`${round}:${myPeer}`, rev);
   }, [room, commits, reveals, myCommit, localSalt, localAmount, round, myPeer]);
 
+  // Verify every reveal against its earlier commitment before it can count.
+  // Without this, a peer could reveal an amount that doesn't match what they
+  // committed to (having watched others' reveals land first) and still win —
+  // the whole point of commit-reveal is to prevent exactly that.
+  useEffect(() => {
+    if (!commits || !reveals) return;
+    let cancelled = false;
+    const toVerify: Array<[string, Reveal, string]> = [];
+    reveals.forEach((rev, k) => {
+      if (!k.startsWith(`${round}:`)) return;
+      const c = commits.get(k);
+      if (!c) return;
+      toVerify.push([k, rev, c.hash]);
+    });
+    Promise.all(
+      toVerify.map(([k, rev, hash]) => verifyReveal(hash, rev).then((ok) => [k, ok] as const)),
+    ).then((results) => {
+      if (cancelled) return;
+      setVerifiedKeys((prev) => {
+        const next = new Set(prev);
+        let changed = false;
+        for (const [k, ok] of results) {
+          if (ok && !next.has(k)) {
+            next.add(k);
+            changed = true;
+          } else if (!ok && next.has(k)) {
+            next.delete(k);
+            changed = true;
+          }
+        }
+        return changed ? next : prev;
+      });
+    });
+    return () => {
+      cancelled = true;
+    };
+    // `tick` forces a re-check whenever the underlying Y.Maps change content
+    // (their references stay stable across renders, so they can't be deps).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [commits, reveals, round, tick]);
+
   const revealed: BidEntry[] = useMemo(() => {
     if (!commits || !reveals) return [];
     const out: BidEntry[] = [];
-    const verifyPromises: Array<Promise<void>> = [];
     reveals.forEach((rev, k) => {
       if (!k.startsWith(`${round}:`)) return;
+      if (!verifiedKeys.has(k)) return; // not (yet) verified against its commitment
       const peerId = k.slice(round.length + 1);
-      const c = commits.get(k);
-      if (!c) return;
-      // verifyReveal is async; we can't await inside the synchronous map.
-      // For render-time we do a best-effort sync check: parse the payload
-      // and require non-empty. Caller can re-verify async if needed.
       try {
         const parsed = JSON.parse(rev.payload) as { amount?: number };
         if (typeof parsed.amount !== "number") return;
         out.push({ peerId, amount: parsed.amount });
-        // Fire-and-forget verify; surface failure via a console warning.
-        verifyPromises.push(
-          verifyReveal(c.hash, rev).then((ok) => {
-            if (!ok) console.warn(`[useBid] reveal failed verify for ${peerId}`);
-          }),
-        );
       } catch {
         /* skip malformed */
       }
     });
     out.sort((a, b) => b.amount - a.amount || a.peerId.localeCompare(b.peerId));
     return out;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reveals, commits, round]);
+  }, [reveals, commits, round, verifiedKeys]);
 
   let pendingCount = 0;
   if (commits) {
@@ -140,6 +173,7 @@ export function useBid(room: YRoom | null, key: string): BidState {
     room.doc.getMap<string>(`${key}_round`).set("current", nextRound);
     setLocalSalt(null);
     setLocalAmount(null);
+    setVerifiedKeys(new Set());
   }, [room, key]);
 
   return {

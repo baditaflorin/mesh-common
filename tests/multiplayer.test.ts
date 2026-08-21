@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it, vi } from "vitest";
-import { act, renderHook } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
 
 import { useDirectMessage } from "../src/multiplayer/useDirectMessage";
 import { useChallenge } from "../src/multiplayer/useChallenge";
@@ -10,6 +10,7 @@ import { useMatchHistory } from "../src/multiplayer/useMatchHistory";
 import { useElo } from "../src/multiplayer/useElo";
 import { useSpectatorMode } from "../src/multiplayer/useSpectatorMode";
 import { useTeams } from "../src/multiplayer/useTeams";
+import { useBid } from "../src/multiplayer/useBid";
 import { createMockRoom, linkMockRooms } from "../testing/createMockRoom";
 
 const mem = new Map<string, string>();
@@ -184,5 +185,150 @@ describe("useTeams", () => {
       aH.result.current.sizeOf("red") + aH.result.current.sizeOf("blue");
     expect(totalMembers).toBeGreaterThanOrEqual(1);
     unlink();
+  });
+});
+
+describe("useTeams — balance() authorization", () => {
+  it("balance() is a no-op unless canBalance authorizes it", () => {
+    const room = createMockRoom({ peerId: "alice" });
+    const { result, rerender } = renderHook(() =>
+      useTeams(room, { teams: ["red", "blue"] }),
+    );
+    rerender();
+    act(() => result.current.balance());
+    rerender();
+    // balance() writes a fresh salt into __mesh_teams_meta as its first
+    // step; if it never ran (unauthorized), no salt was ever written.
+    expect(room.doc.getMap<string>("__mesh_teams_meta").get("salt")).toBeUndefined();
+  });
+
+  it("balance() re-shuffles once canBalance returns true", () => {
+    const room = createMockRoom({ peerId: "alice" });
+    const { result, rerender } = renderHook(() =>
+      useTeams(room, { teams: ["red", "blue"], canBalance: () => true }),
+    );
+    rerender();
+    act(() => result.current.balance());
+    rerender();
+    expect(room.doc.getMap<string>("__mesh_teams_meta").get("salt")).toBeDefined();
+    expect(["red", "blue"]).toContain(result.current.myTeam);
+  });
+});
+
+describe("useXP — awardTo authorization", () => {
+  it("awardTo is a no-op by default (any peer could otherwise grant themselves arbitrary XP)", () => {
+    const room = createMockRoom({ peerId: "alice" });
+    const { result, rerender } = renderHook(() => useXP(room, "xp-guarded"));
+    act(() => result.current.awardTo("bob", 500));
+    rerender();
+    expect(result.current.xpOf("bob")).toBe(0);
+  });
+
+  it("awardTo succeeds once canAwardTo authorizes that specific target", () => {
+    const room = createMockRoom({ peerId: "alice" });
+    const { result, rerender } = renderHook(() =>
+      useXP(room, "xp-guarded-2", { canAwardTo: (peerId) => peerId === "bob" }),
+    );
+    act(() => result.current.awardTo("bob", 500));
+    rerender();
+    expect(result.current.xpOf("bob")).toBe(500);
+
+    // Authorization is per-target — carol wasn't approved.
+    act(() => result.current.awardTo("carol", 500));
+    rerender();
+    expect(result.current.xpOf("carol")).toBe(0);
+  });
+});
+
+describe("useChallenge — ownership checks", () => {
+  it("only the addressee can accept/decline, only the sender can cancel", () => {
+    const a = createMockRoom({ peerId: "alice" });
+    const b = createMockRoom({ peerId: "bob" });
+    const c = createMockRoom({ peerId: "carol" });
+    const unlinkAB = linkMockRooms(a, b);
+    const unlinkAC = linkMockRooms(a, c);
+    const unlinkBC = linkMockRooms(b, c);
+
+    const aH = renderHook(() => useChallenge(a, "duel"));
+    const bH = renderHook(() => useChallenge(b, "duel"));
+    const cH = renderHook(() => useChallenge(c, "duel"));
+
+    let id = "";
+    act(() => {
+      id = aH.result.current.challenge("bob", "rps");
+    });
+    aH.rerender();
+    bH.rerender();
+    cH.rerender();
+    expect(bH.result.current.incomingPending.length).toBe(1);
+
+    // Carol is a bystander — neither the sender nor the addressee. Her
+    // accept/cancel calls on alice→bob's challenge must be dropped.
+    act(() => cH.result.current.accept(id));
+    aH.rerender();
+    bH.rerender();
+    expect(aH.result.current.myPending.length).toBe(1);
+    expect(bH.result.current.incomingPending.length).toBe(1);
+
+    act(() => cH.result.current.cancel(id));
+    aH.rerender();
+    expect(aH.result.current.myPending.length).toBe(1);
+
+    // Bob, the real addressee, can accept it.
+    act(() => bH.result.current.accept(id));
+    aH.rerender();
+    bH.rerender();
+    expect(aH.result.current.myActive.length).toBe(1);
+    expect(bH.result.current.myActive.length).toBe(1);
+
+    unlinkAB();
+    unlinkAC();
+    unlinkBC();
+  });
+});
+
+describe("useBid — reveal verification", () => {
+  it("a reveal that doesn't match its own commitment is excluded from revealed/winner", async () => {
+    const room = createMockRoom({ peerId: "alice" });
+    const { result, rerender } = renderHook(() => useBid(room, "auction"));
+
+    await act(async () => {
+      await result.current.submitBid(50);
+    });
+    rerender();
+    const round = result.current.round;
+
+    // Simulate a peer whose revealed (amount, salt) doesn't hash back to
+    // their own earlier commitment — written directly to the shared map,
+    // bypassing `revealMine` (which always keeps the pair consistent).
+    room.doc.getMap<{ payload: string; salt: string }>("auction_reveals").set(`${round}:alice`, {
+      payload: JSON.stringify({ amount: 999999 }),
+      salt: "not-the-committed-salt",
+    });
+    rerender();
+
+    await waitFor(() => {
+      expect(result.current.revealed).toHaveLength(0);
+    });
+    expect(result.current.winner).toBeNull();
+  });
+
+  it("a reveal that matches its commitment is accepted and wins", async () => {
+    const room = createMockRoom({ peerId: "alice" });
+    const { result, rerender } = renderHook(() => useBid(room, "auction2"));
+
+    await act(async () => {
+      await result.current.submitBid(75);
+    });
+    rerender();
+    await act(async () => {
+      await result.current.revealMine();
+    });
+    rerender();
+
+    await waitFor(() => {
+      expect(result.current.winner?.amount).toBe(75);
+    });
+    expect(result.current.revealed).toHaveLength(1);
   });
 });

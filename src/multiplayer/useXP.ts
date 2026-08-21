@@ -21,7 +21,12 @@ export type XPState = {
   levelOf: (xp: number) => number;
   /** Award XP to this peer (positive number). */
   awardXP: (amount: number) => void;
-  /** Award XP to a specific peer (use for moderator-issued rewards). */
+  /**
+   * Award XP to a specific peer (moderator-issued rewards).
+   *
+   * No-ops unless `opts.canAwardTo` was passed and returns true for this
+   * peerId at call time — see the `canAwardTo` option below.
+   */
   awardTo: (peerId: string, amount: number) => void;
   /** Top-N leaderboard. */
   leaderboard: (limit?: number) => LeaderboardEntry[];
@@ -40,13 +45,28 @@ const DEFAULT_CURVE = (xp: number) => Math.floor(Math.sqrt(Math.max(0, xp) / 10)
  *
  * `levelCurve` defaults to `floor(sqrt(xp/10))` — i.e. 0→0, 10→1, 40→2,
  * 90→3, 160→4 ... Provide a custom curve for steeper / shallower ladders.
+ *
+ * `awardTo` (granting XP to a peer *other than yourself*) is disabled by
+ * default — the underlying `Y.Map` is writable by every connected peer, so
+ * without a check anyone could call `awardTo(victim, -amount-worth-of-abuse)`
+ * or farm XP onto themselves via someone else's key. Pass `canAwardTo` to
+ * authorize it (e.g. gate on `useModerator(...).isMe`):
+ *
+ *   const xp = useXP(room, "xp", { canAwardTo: () => moderator.isMe });
  */
 export function useXP(
   room: YRoom | null,
   key: string,
-  opts?: { levelCurve?: (xp: number) => number },
+  opts?: {
+    levelCurve?: (xp: number) => number;
+    /** Called as `canAwardTo(targetPeerId)` before every `awardTo`; the
+     *  award is dropped unless this returns true. Defaults to always-false
+     *  (i.e. `awardTo` is a no-op until an app explicitly authorizes it). */
+    canAwardTo?: (peerId: string) => boolean;
+  },
 ): XPState {
   const levelOf = opts?.levelCurve ?? DEFAULT_CURVE;
+  const canAwardTo = opts?.canAwardTo ?? (() => false);
   const [, rerender] = useState(0);
 
   useEffect(() => {
@@ -78,7 +98,13 @@ export function useXP(
     xpOf: (pid) => all[pid] ?? 0,
     levelOf,
     awardXP: useCallback((amount: number) => award(myPeer, amount), [myPeer, map]),
-    awardTo: useCallback((peerId: string, amount: number) => award(peerId, amount), [map]),
+    awardTo: useCallback(
+      (peerId: string, amount: number) => {
+        if (!canAwardTo(peerId)) return;
+        award(peerId, amount);
+      },
+      [map, canAwardTo],
+    ),
     leaderboard: useCallback(
       (limit?: number): LeaderboardEntry[] => {
         const entries = Object.entries(all)

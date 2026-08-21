@@ -96,14 +96,19 @@ export function useChallenge(room: YRoom | null, key: string): ChallengeState {
     [room, map],
   );
 
+  // `owner` picks which side of the record is allowed to make this
+  // transition — only the addressee can accept/decline, only the sender can
+  // cancel. Without this, any bystander peer could reach into the shared
+  // Y.Map and force someone else's challenge into any state.
   const update = useCallback(
-    (id: string, status: ChallengeRecord["status"]) => {
-      if (!map) return;
+    (id: string, status: ChallengeRecord["status"], owner: (rec: ChallengeRecord) => string) => {
+      if (!map || !room) return;
       const rec = map.get(id);
       if (!rec) return;
+      if (owner(rec) !== room.peerId) return;
       map.set(id, { ...rec, status });
     },
-    [map],
+    [map, room],
   );
 
   return {
@@ -111,8 +116,8 @@ export function useChallenge(room: YRoom | null, key: string): ChallengeState {
     incomingPending,
     myActive,
     challenge,
-    accept: (id) => update(id, "accepted"),
-    decline: (id) => update(id, "declined"),
-    cancel: (id) => update(id, "declined"),
+    accept: (id) => update(id, "accepted", (rec) => rec.to),
+    decline: (id) => update(id, "declined", (rec) => rec.to),
+    cancel: (id) => update(id, "declined", (rec) => rec.from),
   };
 }

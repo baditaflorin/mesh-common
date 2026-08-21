@@ -36,6 +36,51 @@ mention in `README.md`.
   capture boundaries, plus resilient copy/read capability state and feedback.
 - **`MeshDialog` and `MeshConnectionStatus`:** public, accessible shared
   chrome for standard modals and consistent room/network health feedback.
+## [0.13.0] — 2026-08-18 — TRL audit: signing, sealed bids, unauthorized writes
+
+Five fixes from a broader source-vs-claims audit of the library (the same
+kind of audit that found the `useFairRng` gap fixed in 0.12.0).
+
+### Fixed
+- **`identity.ts` (`canonicalize`) — security fix.** `signPayload` /
+  `verifyPayload` / `hashPayload` canonicalized a payload via
+  `JSON.stringify(payload, Object.keys(payload).sort())`. That looks like a
+  sorted-keys canonicalizer but isn't one: `JSON.stringify`'s array-form
+  replacer applies the *same* top-level key allowlist recursively, so any
+  nested object whose keys aren't also top-level names of `payload`
+  serialized as `{}`. `useSignedWrite`'s `SignedRecord` always wraps writes
+  as `{ payload: T, peerId, ts }` — for any object-shaped `T` (the common
+  case), the actual payload content was never part of what got signed, so a
+  peer could swap it in a "signed" record without invalidating the
+  signature. Replaced with a real deep canonicalizer that sorts keys at
+  every nesting level. **Signatures/hashes over nested payloads now differ
+  from before** — anything persisted with the old (broken) signing no longer
+  verifies; this only affects payloads that contain nested objects.
+- **`useBid` (`src/multiplayer/useBid.ts`) — security fix.** Revealed bids
+  were included in `revealed`/`winner` synchronously, before their async
+  `verifyReveal()` check resolved; a failed verification only logged a
+  `console.warn` and never excluded the bid. A peer could reveal an amount
+  that didn't match their commitment and still win. Reveals are now
+  verified before being counted, mirroring `useFairRng`'s async-gated
+  pattern.
+- **`useChallenge` (`src/multiplayer/useChallenge.ts`) — security fix.**
+  `accept`/`decline`/`cancel` had no ownership check — any connected peer
+  could resolve or cancel a challenge between two other peers. `accept`/
+  `decline` now require `room.peerId === challenge.to`; `cancel` requires
+  `room.peerId === challenge.from`.
+
+### Changed
+- **BREAKING: `useXP`'s `awardTo` now no-ops unless authorized.** It was
+  documented as "moderator-issued" but had no check at all — any peer could
+  grant arbitrary XP to anyone. Added an opts.`canAwardTo(peerId)` predicate,
+  checked before every `awardTo`; it defaults to always-false, so `awardTo`
+  is disabled until an app explicitly wires an authorization check (e.g.
+  `canAwardTo: () => moderator.isMe`). `awardXP` (self-award) is unaffected.
+- **BREAKING: `useTeams`'s `balance()` now no-ops unless authorized.** Any
+  single connected peer could call `balance()` at any time to unilaterally
+  reassign everyone's team, including mid-match. Added an
+  `opts.canBalance()` predicate, checked before every `balance()`; it
+  defaults to always-false. `switchTo` (self-assignment) is unaffected.
 
 ## [0.12.0] — 2026-08-04 — useFairRng: real commit-reveal
 
