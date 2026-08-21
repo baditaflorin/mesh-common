@@ -4,6 +4,9 @@
 
 ### Added
 
+- `useAvailabilityGrid`, `useRankedBallot`, `useSharedForm`,
+  `useMediaRecorder`, and `useScreenShare` for shared scheduling/voting/form
+  state and safe browser capture lifecycles.
 - `useSharedSet`, `useSharedCounter`, `useCrdtMigrations`,
   `useSharedSearchIndex`, and `useSharedTagIndex` for validated shared data
   membership, attributed counts, schema evolution, and local collection views.
