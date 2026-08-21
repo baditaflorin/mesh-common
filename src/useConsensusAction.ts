@@ -1,0 +1,2 @@
+import { useVotes } from "./useVotes"; import type { YRoom } from "./useYRoom";
+export function useConsensusAction(room: YRoom | null, key: string, required = 1) { const votes = useVotes<"approve" | "reject">(room, `consensus:${key}`); const approved = (votes.tally.get("approve") ?? 0) >= Math.max(1, required); return { ...votes, approve: () => votes.vote("approve"), reject: () => votes.vote("reject"), approved, required: Math.max(1, required) }; }
