@@ -4,6 +4,9 @@
 
 ### Added
 
+- Catalog recording gate: `npm run demo:check` verifies every app scenario
+  has an `OK` status plus non-empty `demo.gif` and `preview.png` before a
+  catalog build can proceed.
 - `useAvailabilityGrid`, `useRankedBallot`, `useSharedForm`,
   `useMediaRecorder`, and `useScreenShare` for shared scheduling/voting/form
   state and safe browser capture lifecycles.
