@@ -12,6 +12,10 @@ const rules = [
   [/(volunteer-desk)/, "Community", "Events & volunteering", ["events", "volunteers", "check-in"]],
   [/(decision-room)/, "Productivity", "Decision making", ["team decisions", "prioritization", "meetings"]],
   [/(exit-ticket)/, "Education", "Session feedback", ["workshops", "classes", "retrospectives"]],
+  [/(borrow|lost-found|crowd-map|carpool|potluck|favor-bank)/, "Community", "Neighbours & mutual aid", ["neighbourhoods", "sharing", "local groups"]],
+  [/(flashcard|skill-tree|skill-swap|skill-challenge)/, "Education", "Study & practice", ["study groups", "classes", "practice"]],
+  [/(icebreaker|conversation-cards|compliment-roulette|blind-date|name-game|six-degrees|mind-meld|questions-only)/, "Social", "Conversation & connection", ["friends", "icebreakers", "small groups"]],
+  [/(new-year|thank-you-token|toast-stack|fundraiser-bar|applause-bracket)/, "Social", "Celebration & support", ["celebrations", "communities", "small groups"]],
   // Devices & spaces: keep physical capabilities discoverable independently.
   [/(camera|mirror|face-grid|pulse-photo|attendance-stamp|eye-contact)/, "Devices & spaces", "Camera & vision", ["mobile devices", "co-located groups", "capture"]],
   [/(orientation|tilt|step|shake|direction|wave|tremor)/, "Devices & spaces", "Motion & orientation", ["mobile devices", "movement", "sensors"]],
@@ -28,8 +32,8 @@ const rules = [
   [/(attendance|class-checkin|chore-rotation|volunteer-desk|volunteer-shift)/, "Coordination", "Check-in & assignments", ["events", "volunteers", "teams"]],
   [/(flashcard|skill-tree|skill-swap|focus-sprint|cohort-scheduler|standup|retro|brain-write|prompt-ladder|improv-director|recipe-relay|business-card|bus-factor|pitch-pong|exit-ticket)/, "Work & learning", "Collaboration & practice", ["workshops", "retrospectives", "study groups"]],
   [/(mind-meld|conversation-cards|room-norms|compliment|shower-thoughts)/, "Work & learning", "Facilitation & reflection", ["facilitation", "workshops", "teams"]],
-  [/(mood|vibe|energy|silence|shhh|stretch|pomodoro|habit|social-battery|quiet|tremor)/, "Wellbeing", "Mindfulness & focus", ["wellbeing", "facilitation", "self-reflection"]],
-  [/(eye-contact|thank-you|toast-stack|new-year)/, "Wellbeing", "Connection & appreciation", ["social connection", "teams", "celebrations"]],
+  [/(mood|vibe|energy|social-battery)/, "Wellbeing", "Social energy & check-ins", ["wellbeing", "teams", "self-reflection"]],
+  [/(silence|shhh|stretch|pomodoro|habit|quiet|tremor)/, "Wellbeing", "Mindfulness & focus", ["wellbeing", "facilitation", "self-reflection"]],
   [/(paint|canvas|light-paint|shadow-paint|exquisite|meme|wave-canvas|emoji-rain|pulse-photo)/, "Creative", "Visual making", ["creative sessions", "shared media", "performances"]],
   [/(mad-libs|storyworm|roast|toast|time-capsule)/, "Creative", "Writing & storytelling", ["creative sessions", "writing", "small groups"]],
   [/(flash-mob|firefly|room-soundtrack|dj-deck|tap-symphony|clap-track)/, "Creative", "Performance & sound", ["performances", "co-located groups", "shared media"]],
@@ -47,3 +51,18 @@ export function taxonomyFor(id) {
 export const taxonomyVocabulary = {
   categories: [...new Set(rules.map(([, category]) => category).concat("Social"))].sort(),
 };
+
+/** Reject a catalog taxonomy where a visible category has only one child. */
+export function assertCategoryDiversity(ids) {
+  const subcategories = new Map();
+  for (const id of ids) {
+    const { category, subcategory } = taxonomyFor(id);
+    const values = subcategories.get(category) ?? new Set();
+    values.add(subcategory);
+    subcategories.set(category, values);
+  }
+  const flat = [...subcategories.entries()]
+    .filter(([, values]) => values.size < 2)
+    .map(([category]) => category);
+  if (flat.length) throw new Error(`taxonomy categories need at least two subcategories: ${flat.join(", ")}`);
+}

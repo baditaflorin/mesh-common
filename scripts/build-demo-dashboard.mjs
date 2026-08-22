@@ -12,7 +12,7 @@
 import { readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { taxonomyFor } from "../scenarios/taxonomy.mjs";
+import { assertCategoryDiversity, taxonomyFor } from "../scenarios/taxonomy.mjs";
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const DEMOS_DIR = path.join(ROOT, "docs", "demos");
@@ -41,6 +41,8 @@ const entries = (await readdir(DEMOS_DIR, { withFileTypes: true }))
   .filter((d) => d.isDirectory())
   .map((d) => d.name)
   .sort();
+
+assertCategoryDiversity(entries);
 
 // A scenario advertises a service in the recorded fleet. Do not let a new
 // service silently reach the catalog with a fallback image or no proof that

@@ -45,12 +45,12 @@
     ]
   },
   "mesh-applause-bracket": {
-    "category": "Decisions",
-    "subcategory": "Voting & consensus",
+    "category": "Social",
+    "subcategory": "Celebration & support",
     "useCases": [
-      "team decisions",
-      "community input",
-      "prioritization"
+      "celebrations",
+      "communities",
+      "small groups"
     ]
   },
   "mesh-attendance": {
@@ -85,7 +85,7 @@
     "subcategory": "Conversation & connection",
     "useCases": [
       "friends",
-      "communities",
+      "icebreakers",
       "small groups"
     ]
   },
@@ -99,12 +99,12 @@
     ]
   },
   "mesh-borrow-board": {
-    "category": "Coordination",
-    "subcategory": "Planning & logistics",
+    "category": "Community",
+    "subcategory": "Neighbours & mutual aid",
     "useCases": [
-      "events",
-      "teams",
-      "neighbourhoods"
+      "neighbourhoods",
+      "sharing",
+      "local groups"
     ]
   },
   "mesh-bracket": {
@@ -162,12 +162,12 @@
     ]
   },
   "mesh-carpool-bingo": {
-    "category": "Games",
-    "subcategory": "Party & tabletop",
+    "category": "Community",
+    "subcategory": "Neighbours & mutual aid",
     "useCases": [
-      "icebreakers",
-      "game night",
-      "small groups"
+      "neighbourhoods",
+      "sharing",
+      "local groups"
     ]
   },
   "mesh-chore-rotation": {
@@ -216,30 +216,30 @@
     ]
   },
   "mesh-compliment-roulette": {
-    "category": "Work & learning",
-    "subcategory": "Facilitation & reflection",
+    "category": "Social",
+    "subcategory": "Conversation & connection",
     "useCases": [
-      "facilitation",
-      "workshops",
-      "teams"
+      "friends",
+      "icebreakers",
+      "small groups"
     ]
   },
   "mesh-conversation-cards": {
-    "category": "Work & learning",
-    "subcategory": "Facilitation & reflection",
+    "category": "Social",
+    "subcategory": "Conversation & connection",
     "useCases": [
-      "facilitation",
-      "workshops",
-      "teams"
+      "friends",
+      "icebreakers",
+      "small groups"
     ]
   },
   "mesh-crowd-map": {
-    "category": "Devices & spaces",
-    "subcategory": "Location & field tools",
+    "category": "Community",
+    "subcategory": "Neighbours & mutual aid",
     "useCases": [
-      "outdoors",
       "neighbourhoods",
-      "events"
+      "sharing",
+      "local groups"
     ]
   },
   "mesh-daily-question": {
@@ -325,10 +325,10 @@
   },
   "mesh-energy-curve": {
     "category": "Wellbeing",
-    "subcategory": "Mindfulness & focus",
+    "subcategory": "Social energy & check-ins",
     "useCases": [
       "wellbeing",
-      "facilitation",
+      "teams",
       "self-reflection"
     ]
   },
@@ -369,12 +369,12 @@
     ]
   },
   "mesh-favor-bank": {
-    "category": "Privacy & utilities",
-    "subcategory": "Identity & private exchange",
+    "category": "Community",
+    "subcategory": "Neighbours & mutual aid",
     "useCases": [
-      "private exchange",
-      "onboarding",
-      "personal tools"
+      "neighbourhoods",
+      "sharing",
+      "local groups"
     ]
   },
   "mesh-find-my-family": {
@@ -432,12 +432,12 @@
     ]
   },
   "mesh-flashcard-swarm": {
-    "category": "Work & learning",
-    "subcategory": "Collaboration & practice",
+    "category": "Education",
+    "subcategory": "Study & practice",
     "useCases": [
-      "workshops",
-      "retrospectives",
-      "study groups"
+      "study groups",
+      "classes",
+      "practice"
     ]
   },
   "mesh-focus-sprint": {
@@ -460,9 +460,9 @@
   },
   "mesh-fundraiser-bar": {
     "category": "Social",
-    "subcategory": "Conversation & connection",
+    "subcategory": "Celebration & support",
     "useCases": [
-      "friends",
+      "celebrations",
       "communities",
       "small groups"
     ]
@@ -517,16 +517,16 @@
     "subcategory": "Conversation & connection",
     "useCases": [
       "friends",
-      "communities",
+      "icebreakers",
       "small groups"
     ]
   },
   "mesh-icebreaker-bingo": {
-    "category": "Games",
-    "subcategory": "Party & tabletop",
+    "category": "Social",
+    "subcategory": "Conversation & connection",
     "useCases": [
+      "friends",
       "icebreakers",
-      "game night",
       "small groups"
     ]
   },
@@ -612,12 +612,12 @@
     ]
   },
   "mesh-lost-found": {
-    "category": "Coordination",
-    "subcategory": "Planning & logistics",
+    "category": "Community",
+    "subcategory": "Neighbours & mutual aid",
     "useCases": [
-      "events",
-      "teams",
-      "neighbourhoods"
+      "neighbourhoods",
+      "sharing",
+      "local groups"
     ]
   },
   "mesh-lunch-roulette": {
@@ -693,12 +693,12 @@
     ]
   },
   "mesh-mind-meld": {
-    "category": "Work & learning",
-    "subcategory": "Facilitation & reflection",
+    "category": "Social",
+    "subcategory": "Conversation & connection",
     "useCases": [
-      "facilitation",
-      "workshops",
-      "teams"
+      "friends",
+      "icebreakers",
+      "small groups"
     ]
   },
   "mesh-mirror": {
@@ -712,28 +712,28 @@
   },
   "mesh-mood-check": {
     "category": "Wellbeing",
-    "subcategory": "Mindfulness & focus",
+    "subcategory": "Social energy & check-ins",
     "useCases": [
       "wellbeing",
-      "facilitation",
+      "teams",
       "self-reflection"
     ]
   },
   "mesh-mood-ring": {
     "category": "Wellbeing",
-    "subcategory": "Mindfulness & focus",
+    "subcategory": "Social energy & check-ins",
     "useCases": [
       "wellbeing",
-      "facilitation",
+      "teams",
       "self-reflection"
     ]
   },
   "mesh-name-game": {
-    "category": "Games",
-    "subcategory": "Conversation & bluffing",
+    "category": "Social",
+    "subcategory": "Conversation & connection",
     "useCases": [
+      "friends",
       "icebreakers",
-      "game night",
       "small groups"
     ]
   },
@@ -756,12 +756,12 @@
     ]
   },
   "mesh-new-year": {
-    "category": "Wellbeing",
-    "subcategory": "Connection & appreciation",
+    "category": "Social",
+    "subcategory": "Celebration & support",
     "useCases": [
-      "social connection",
-      "teams",
-      "celebrations"
+      "celebrations",
+      "communities",
+      "small groups"
     ]
   },
   "mesh-orientation-mosaic": {
@@ -846,12 +846,12 @@
     ]
   },
   "mesh-potluck": {
-    "category": "Coordination",
-    "subcategory": "Planning & logistics",
+    "category": "Community",
+    "subcategory": "Neighbours & mutual aid",
     "useCases": [
-      "events",
-      "teams",
-      "neighbourhoods"
+      "neighbourhoods",
+      "sharing",
+      "local groups"
     ]
   },
   "mesh-prediction-pool": {
@@ -909,11 +909,11 @@
     ]
   },
   "mesh-questions-only": {
-    "category": "Games",
-    "subcategory": "Conversation & bluffing",
+    "category": "Social",
+    "subcategory": "Conversation & connection",
     "useCases": [
+      "friends",
       "icebreakers",
-      "game night",
       "small groups"
     ]
   },
@@ -1147,35 +1147,35 @@
     "subcategory": "Conversation & connection",
     "useCases": [
       "friends",
-      "communities",
+      "icebreakers",
       "small groups"
     ]
   },
   "mesh-skill-challenge": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Education",
+    "subcategory": "Study & practice",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "study groups",
+      "classes",
+      "practice"
     ]
   },
   "mesh-skill-swap": {
-    "category": "Work & learning",
-    "subcategory": "Collaboration & practice",
+    "category": "Education",
+    "subcategory": "Study & practice",
     "useCases": [
-      "workshops",
-      "retrospectives",
-      "study groups"
+      "study groups",
+      "classes",
+      "practice"
     ]
   },
   "mesh-skill-tree": {
-    "category": "Work & learning",
-    "subcategory": "Collaboration & practice",
+    "category": "Education",
+    "subcategory": "Study & practice",
     "useCases": [
-      "workshops",
-      "retrospectives",
-      "study groups"
+      "study groups",
+      "classes",
+      "practice"
     ]
   },
   "mesh-snap": {
@@ -1198,10 +1198,10 @@
   },
   "mesh-social-battery": {
     "category": "Wellbeing",
-    "subcategory": "Mindfulness & focus",
+    "subcategory": "Social energy & check-ins",
     "useCases": [
       "wellbeing",
-      "facilitation",
+      "teams",
       "self-reflection"
     ]
   },
@@ -1341,12 +1341,12 @@
     ]
   },
   "mesh-thank-you-token": {
-    "category": "Wellbeing",
-    "subcategory": "Connection & appreciation",
+    "category": "Social",
+    "subcategory": "Celebration & support",
     "useCases": [
-      "social connection",
-      "teams",
-      "celebrations"
+      "celebrations",
+      "communities",
+      "small groups"
     ]
   },
   "mesh-tic-tac-toe": {
@@ -1386,12 +1386,12 @@
     ]
   },
   "mesh-toast-stack": {
-    "category": "Wellbeing",
-    "subcategory": "Connection & appreciation",
+    "category": "Social",
+    "subcategory": "Celebration & support",
     "useCases": [
-      "social connection",
-      "teams",
-      "celebrations"
+      "celebrations",
+      "communities",
+      "small groups"
     ]
   },
   "mesh-trade-cards": {
@@ -1450,10 +1450,10 @@
   },
   "mesh-vibe-check": {
     "category": "Wellbeing",
-    "subcategory": "Mindfulness & focus",
+    "subcategory": "Social energy & check-ins",
     "useCases": [
       "wellbeing",
-      "facilitation",
+      "teams",
       "self-reflection"
     ]
   },
