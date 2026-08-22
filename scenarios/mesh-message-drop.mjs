@@ -1,0 +1,1 @@
+export default async function messageDropScenario(a, b) { await a.getByRole("textbox").fill("hello"); await a.getByRole("button", { name: /send/i }).click(); await b.getByText("hello", { exact: true }).waitFor({ timeout: 10000 }); }
