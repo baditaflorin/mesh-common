@@ -4,6 +4,9 @@
 
 ### Added
 
+- `useSharedStickyBoard`, `useSharedWordRelay`, `useSharedPixelGrid`,
+  `useSharedCaptionContest`, and `useSharedBingoBoard` for bounded,
+  peer-attributed creative play and facilitation without service-side state.
 - `useSharedBookmarks`, `useSharedMessages`, `useSharedCountdowns`,
   `useSharedInvites`, and `useSharedChoices` for browser-local shared sessions.
 - `useSharedRatings`, `useSharedWordCloud`, `useSharedLottery`,
