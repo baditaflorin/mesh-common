@@ -4,6 +4,8 @@
 
 ### Added
 
+- `useSharedRatings`, `useSharedWordCloud`, `useSharedLottery`,
+  `useSharedMilestones`, and `useSharedPlaylist` for group feedback and facilitation.
 - `useSharedPairings`, `useSharedTurnOrder`, `useSharedBudget`,
   `useSharedCardStack`, and `useSharedHost` for small group activities.
 - `useSharedPoll`, `useSharedRoles`, `useSharedNotes`, `useSharedRound`, and

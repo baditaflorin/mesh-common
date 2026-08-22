@@ -556,6 +556,16 @@ export {
   type SharedCard,
   type SharedHost,
 } from "./useSharedActivities";
+export {
+  useSharedRatings,
+  useSharedWordCloud,
+  useSharedLottery,
+  useSharedMilestones,
+  useSharedPlaylist,
+  type LotteryEntry,
+  type SharedMilestone,
+  type PlaylistEntry,
+} from "./useSharedFacilitation";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
