@@ -513,9 +513,27 @@ export { useNotification, type NotificationApi } from "./useNotification";
 export { useBeforeUnload } from "./useBeforeUnload";
 export { useFileDownload, type FileDownloadApi } from "./useFileDownload";
 export { usePointerLock, type PointerLockApi } from "./usePointerLock";
-export { useSpeechRecognition, type SpeechRecognitionApi } from "./useSpeechRecognition";
+export {
+  useSpeechRecognition,
+  type SpeechRecognitionApi,
+} from "./useSpeechRecognition";
 export { useGamepad, type GamepadState } from "./useGamepad";
-export { useLocalGeolocation, type LocalGeolocation } from "./useLocalGeolocation";
+export {
+  useLocalGeolocation,
+  type LocalGeolocation,
+} from "./useLocalGeolocation";
+export {
+  useSharedRsvp,
+  useSharedAgenda,
+  useSharedScoreboard,
+  useSharedPromptDeck,
+  useSharedResponses,
+  type RsvpStatus,
+  type SharedRsvpEntry,
+  type SharedAgendaItem,
+  type SharedPrompt,
+  type SharedResponse,
+} from "./useSharedCollaboration";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
