@@ -962,6 +962,15 @@
       "shared media"
     ]
   },
+  "mesh-room-norms": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
   "mesh-room-soundtrack": {
     "category": "Creative",
     "subcategory": "Making & performance",
@@ -1130,6 +1139,15 @@
     "useCases": [
       "friends",
       "communities",
+      "small groups"
+    ]
+  },
+  "mesh-sound-guess": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
       "small groups"
     ]
   },
