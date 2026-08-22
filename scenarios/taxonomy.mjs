@@ -7,6 +7,11 @@
  * so people can actually filter it.
  */
 const rules = [
+  [/rating-board/, "Decisions", "Voting & consensus", ["feedback", "workshops", "teams"]],
+  [/word-cloud/, "Creative", "Writing & storytelling", ["reflection", "workshops", "teams"]],
+  [/lucky-draw/, "Games", "Party & tabletop", ["icebreakers", "game night", "events"]],
+  [/milestone-map/, "Productivity", "Coordination & planning", ["roadmaps", "teams", "planning"]],
+  [/playlist-pass/, "Creative", "Performance & sound", ["music", "parties", "shared media"]],
   [
     /pair-mixer/,
     "Coordination",

@@ -1,0 +1,1 @@
+export default async function luckyDrawScenario(a, b) { await a.getByRole("button", { name: /join/i }).click(); await b.getByRole("button", { name: /join/i }).click(); await a.getByRole("button", { name: /draw/i }).click(); await b.waitForTimeout(1200); }

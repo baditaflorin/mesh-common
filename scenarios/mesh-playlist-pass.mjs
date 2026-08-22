@@ -1,0 +1,1 @@
+export default async function playlistPassScenario(a, b) { await a.getByLabel(/track/i).fill("First song"); await a.getByRole("button", { name: /add/i }).click(); await b.getByText("First song", { exact: true }).waitFor({ timeout: 10000 }); }

@@ -665,6 +665,15 @@
       "local groups"
     ]
   },
+  "mesh-lucky-draw": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "events"
+    ]
+  },
   "mesh-lunch-roulette": {
     "category": "Decisions",
     "subcategory": "Selection & ranking",
@@ -735,6 +744,15 @@
       "sound",
       "performances",
       "co-located groups"
+    ]
+  },
+  "mesh-milestone-map": {
+    "category": "Productivity",
+    "subcategory": "Coordination & planning",
+    "useCases": [
+      "roadmaps",
+      "teams",
+      "planning"
     ]
   },
   "mesh-mind-meld": {
@@ -917,6 +935,15 @@
       "study groups"
     ]
   },
+  "mesh-playlist-pass": {
+    "category": "Creative",
+    "subcategory": "Performance & sound",
+    "useCases": [
+      "music",
+      "parties",
+      "shared media"
+    ]
+  },
   "mesh-pomodoro-room": {
     "category": "Wellbeing",
     "subcategory": "Mindfulness & focus",
@@ -1050,6 +1077,15 @@
       "team decisions",
       "community input",
       "prioritization"
+    ]
+  },
+  "mesh-rating-board": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "feedback",
+      "workshops",
+      "teams"
     ]
   },
   "mesh-reaction-wall": {
@@ -1653,6 +1689,15 @@
       "icebreakers",
       "game night",
       "small groups"
+    ]
+  },
+  "mesh-word-cloud": {
+    "category": "Creative",
+    "subcategory": "Writing & storytelling",
+    "useCases": [
+      "reflection",
+      "workshops",
+      "teams"
     ]
   },
   "mesh-would-rather": {
