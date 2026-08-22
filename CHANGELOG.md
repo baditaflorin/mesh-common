@@ -4,6 +4,9 @@
 
 ### Added
 
+- `useSharedPoll`, `useSharedRoles`, `useSharedNotes`, `useSharedRound`, and
+  `useSharedReactions` for small browser-local sessions without app-specific
+  CRDT plumbing.
 - `useSharedRsvp`, `useSharedAgenda`, `useSharedScoreboard`,
   `useSharedPromptDeck`, and `useSharedResponses` for peer-attributed event,
   facilitation, game, and response state without a service-side database.
@@ -58,17 +61,19 @@ mention in `README.md`.
   capture boundaries, plus resilient copy/read capability state and feedback.
 - **`MeshDialog` and `MeshConnectionStatus`:** public, accessible shared
   chrome for standard modals and consistent room/network health feedback.
+
 ## [0.13.0] — 2026-08-18 — TRL audit: signing, sealed bids, unauthorized writes
 
 Five fixes from a broader source-vs-claims audit of the library (the same
 kind of audit that found the `useFairRng` gap fixed in 0.12.0).
 
 ### Fixed
+
 - **`identity.ts` (`canonicalize`) — security fix.** `signPayload` /
   `verifyPayload` / `hashPayload` canonicalized a payload via
   `JSON.stringify(payload, Object.keys(payload).sort())`. That looks like a
   sorted-keys canonicalizer but isn't one: `JSON.stringify`'s array-form
-  replacer applies the *same* top-level key allowlist recursively, so any
+  replacer applies the _same_ top-level key allowlist recursively, so any
   nested object whose keys aren't also top-level names of `payload`
   serialized as `{}`. `useSignedWrite`'s `SignedRecord` always wraps writes
   as `{ payload: T, peerId, ts }` — for any object-shaped `T` (the common
@@ -92,6 +97,7 @@ kind of audit that found the `useFairRng` gap fixed in 0.12.0).
   `room.peerId === challenge.from`.
 
 ### Changed
+
 - **BREAKING: `useXP`'s `awardTo` now no-ops unless authorized.** It was
   documented as "moderator-issued" but had no check at all — any peer could
   grant arbitrary XP to anyone. Added an opts.`canAwardTo(peerId)` predicate,
@@ -107,6 +113,7 @@ kind of audit that found the `useFairRng` gap fixed in 0.12.0).
 ## [0.12.0] — 2026-08-04 — useFairRng: real commit-reveal
 
 ### Fixed
+
 - **`useFairRng` (`src/useFairRng.ts`) — security fix.** It previously wrote
   each peer's raw random salt straight into a shared `Y.Map` and never used
   this repo's own `commit()`/`verifyReveal()` primitives, despite
@@ -123,11 +130,12 @@ kind of audit that found the `useFairRng` gap fixed in 0.12.0).
   was the reference for this fix.
 
 ### Changed
+
 - **BREAKING:** `useFairRng(room, key, opts)` — `opts.peerIds` is now
   required (pass your room's live roster, e.g. `useRoster().present`); it's
   the quorum the hook waits on before allowing a reveal.
 - **BREAKING:** `rerollMine()` is replaced by `rerollRound()`. A reroll now
-  resets the *whole room* to a fresh blind commit-reveal round instead of
+  resets the _whole room_ to a fresh blind commit-reveal round instead of
   letting one peer swap out only their own already-revealed salt — the
   in-place swap was itself part of the exploit (spam-reroll while watching
   your own screen for a result you like).
@@ -136,6 +144,7 @@ kind of audit that found the `useFairRng` gap fixed in 0.12.0).
 ## [0.11.2] — 2026-06-24
 
 ### Changed
+
 - Updated the demos dashboard to link directly to running GitHub Pages sites for Rootless Computing and `mesh-common`.
 - Integrated a styled info banner explaining the rootless computing paradigm on the demos page.
 - Made the demos build script search for `services-registry` dynamically across both sibling and parent directories.

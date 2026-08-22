@@ -534,6 +534,18 @@ export {
   type SharedPrompt,
   type SharedResponse,
 } from "./useSharedCollaboration";
+export {
+  useSharedPoll,
+  useSharedRoles,
+  useSharedNotes,
+  useSharedRound,
+  useSharedReactions,
+  type SharedPollOption,
+  type SharedRoleClaim,
+  type SharedNote,
+  type SharedRound,
+  type SharedReaction,
+} from "./useSharedSessions";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
