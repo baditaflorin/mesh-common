@@ -17,6 +17,15 @@
       "personal tools"
     ]
   },
+  "mesh-agenda-runner": {
+    "category": "Productivity",
+    "subcategory": "Coordination & planning",
+    "useCases": [
+      "meetings",
+      "facilitation",
+      "planning"
+    ]
+  },
   "mesh-allowance": {
     "category": "Privacy & utilities",
     "subcategory": "Identity & private exchange",
@@ -764,6 +773,24 @@
       "small groups"
     ]
   },
+  "mesh-one-word-wall": {
+    "category": "Wellbeing",
+    "subcategory": "Social energy & check-ins",
+    "useCases": [
+      "check-ins",
+      "reflection",
+      "teams"
+    ]
+  },
+  "mesh-open-house": {
+    "category": "Community",
+    "subcategory": "Events & volunteering",
+    "useCases": [
+      "events",
+      "rsvp",
+      "hosting"
+    ]
+  },
   "mesh-orientation-mosaic": {
     "category": "Devices & spaces",
     "subcategory": "Motion & orientation",
@@ -870,6 +897,15 @@
       "private exchange",
       "onboarding",
       "personal tools"
+    ]
+  },
+  "mesh-prompt-deck": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "icebreakers",
+      "facilitation"
     ]
   },
   "mesh-prompt-ladder": {
@@ -1041,6 +1077,15 @@
       "events",
       "teams",
       "neighbourhoods"
+    ]
+  },
+  "mesh-scoreboard": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "party games",
+      "challenges",
+      "score keeping"
     ]
   },
   "mesh-secret-ballot": {
