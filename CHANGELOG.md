@@ -4,6 +4,9 @@
 
 ### Added
 
+- `useFullscreen`, `usePageVisibility`, `useInstallPrompt`, `useNotification`,
+  and `useBeforeUnload` for explicit browser presentation, lifecycle,
+  installation, notification, and unsaved-work flows.
 - `useSharedChecklist`, `useRoomCapacity`, `useImageCapture`, `useFileDrop`,
   and `usePermission` for validated checklist/capacity state and explicit,
   browser-local capture, file selection, and permission flows.
