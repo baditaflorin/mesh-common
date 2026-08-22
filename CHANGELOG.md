@@ -4,6 +4,10 @@
 
 ### Added
 
+- Central demo taxonomy: every recorded app now resolves a category,
+  subcategory, and multi-use-case list into `docs/demos/taxonomy.json`; the
+  catalog provides corresponding searchable filters. New app scaffolds include
+  `mesh-service.json` as the repository-level declaration contract.
 - Catalog recording gate: `npm run demo:check` verifies every app scenario
   has an `OK` status plus non-empty `demo.gif` and `preview.png` before a
   catalog build can proceed.

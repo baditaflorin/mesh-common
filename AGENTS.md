@@ -31,6 +31,10 @@ and ship each change through a PR into `main`.
    branch. Do not reuse app state or credentials across services.
 3. Build locally, run the app's unit/smoke checks, commit explicit paths, push,
    and enable GitHub Pages from `main` `/docs`.
+   Keep the repository's `mesh-service.json` taxonomy accurate: one broad
+   category, one subcategory, and a small multi-value `useCases` list. Mirror
+   it in the central demo taxonomy so the published catalog can expose it for
+   discovery.
 4. Add a scenario and recorded `demo.gif`/`preview.png` to the catalog only
    after the deployed app works. The recording gate is mandatory: run
    `npm run demo:check` before regenerating the mesh-common catalog; it fails
