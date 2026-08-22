@@ -206,6 +206,15 @@
       "personal tools"
     ]
   },
+  "mesh-cohort-scheduler": {
+    "category": "Productivity",
+    "subcategory": "Coordination & planning",
+    "useCases": [
+      "study groups",
+      "meetings",
+      "planning"
+    ]
+  },
   "mesh-compliment-roulette": {
     "category": "Social",
     "subcategory": "Conversation & connection",
@@ -269,6 +278,15 @@
       "prioritization"
     ]
   },
+  "mesh-decision-room": {
+    "category": "Productivity",
+    "subcategory": "Decision making",
+    "useCases": [
+      "team decisions",
+      "prioritization",
+      "meetings"
+    ]
+  },
   "mesh-direction-finder": {
     "category": "Devices & spaces",
     "subcategory": "Sensors & shared displays",
@@ -312,6 +330,15 @@
       "wellbeing",
       "facilitation",
       "self-reflection"
+    ]
+  },
+  "mesh-exit-ticket": {
+    "category": "Education",
+    "subcategory": "Session feedback",
+    "useCases": [
+      "workshops",
+      "classes",
+      "retrospectives"
     ]
   },
   "mesh-exquisite-corpse": {
@@ -411,6 +438,15 @@
       "workshops",
       "retrospectives",
       "study groups"
+    ]
+  },
+  "mesh-focus-sprint": {
+    "category": "Productivity",
+    "subcategory": "Focus & routines",
+    "useCases": [
+      "study",
+      "coworking",
+      "pomodoro"
     ]
   },
   "mesh-fortune-cookie": {
@@ -1419,6 +1455,15 @@
       "wellbeing",
       "facilitation",
       "self-reflection"
+    ]
+  },
+  "mesh-volunteer-desk": {
+    "category": "Community",
+    "subcategory": "Events & volunteering",
+    "useCases": [
+      "events",
+      "volunteers",
+      "check-in"
     ]
   },
   "mesh-volunteer-shift": {
