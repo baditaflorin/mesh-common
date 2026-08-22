@@ -165,6 +165,8 @@ const html = `<!doctype html>
     header.page .sub { color: #8b949e; font-size: 13px; }
     main { max-width: 1400px; margin: 0 auto; padding: 16px 24px 48px; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; }
     .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+    /* Cards use flex, so explicitly restore the HTML hidden contract. */
+    .card[hidden] { display: none; }
     .card.fail { border-color: #5a2222; }
     .card header { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #21262d; }
     .card .title { color: #58a6ff; text-decoration: none; font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
