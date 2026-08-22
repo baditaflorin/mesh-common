@@ -40,6 +40,7 @@
     .media .gif { width: 100%; height: auto; display: block; }
     .media .empty { color: #6e7681; font-style: italic; padding: 24px; }
     .card footer { padding: 8px 12px; border-top: 1px solid #21262d; display: flex; align-items: center; gap: 8px; }
+    .taxonomy { color: #8b949e; font-size: 11px; text-align: right; }
     .slug { font-family: ui-monospace, SF Mono, Menlo, monospace; color: #8b949e; font-size: 12px; flex: 1; }
     .errhint summary { cursor: pointer; color: #ff7b72; font-size: 12px; }
     .errhint pre { background: #0e1117; padding: 8px; border-radius: 4px; font-size: 11px; max-height: 120px; overflow: auto; white-space: pre-wrap; margin: 6px 0 0; }
@@ -52,7 +53,7 @@
   <header class="page">
     <h1>Mesh fleet demos</h1>
     <div class="sub">
-      160 apps recorded · 160 OK · 0 failed · generated 2026-08-21T23:54:53.038Z
+      160 apps recorded · 160 OK · 0 failed · generated 2026-08-22T00:04:43.702Z
     </div>
     <div class="rootless-banner">
       💡 These applications are built using the <a href="https://baditaflorin.github.io/rootless-computing/" target="_blank" rel="noreferrer">Rootless Computing paradigm</a>. 
@@ -68,6 +69,9 @@
         <button type="button" class="filter" data-filter="ok" aria-pressed="false">Working <span>160</span></button>
         <button type="button" class="filter" data-filter="fail" aria-pressed="false">Needs attention <span>0</span></button>
       </div>
+      <label class="catalog-search"><span>Category</span><select id="demo-category"><option value="">All categories</option></select></label>
+      <label class="catalog-search"><span>Subcategory</span><select id="demo-subcategory"><option value="">All subcategories</option></select></label>
+      <label class="catalog-search"><span>Use cases (multiple)</span><select id="demo-usecases" multiple size="3" aria-label="Filter by one or more use cases"></select></label>
       <p id="demo-results" class="catalog-results" role="status" aria-live="polite">Showing all 160 demos</p>
     </div>
   </header>
@@ -79,6 +83,9 @@
       data-slug="mesh-2-truths-1-lie"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-2-truths-1-lie/" target="_blank" rel="noreferrer" aria-label="Open mesh-2-truths-1-lie demo">mesh-2-truths-1-lie</a>
@@ -90,6 +97,7 @@
       </div>
       <footer>
         <code class="slug">mesh-2-truths-1-lie</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -101,6 +109,9 @@
       data-slug="mesh-2fa-bridge"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-2fa-bridge/" target="_blank" rel="noreferrer" aria-label="Open mesh-2fa-bridge demo">mesh-2fa-bridge</a>
@@ -112,6 +123,7 @@
       </div>
       <footer>
         <code class="slug">mesh-2fa-bridge</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -123,6 +135,9 @@
       data-slug="mesh-allowance"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-allowance/" target="_blank" rel="noreferrer" aria-label="Open mesh-allowance demo">mesh-allowance</a>
@@ -134,6 +149,7 @@
       </div>
       <footer>
         <code class="slug">mesh-allowance</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -145,6 +161,9 @@
       data-slug="mesh-anonymous-qa"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-anonymous-qa/" target="_blank" rel="noreferrer" aria-label="Open mesh-anonymous-qa demo">mesh-anonymous-qa</a>
@@ -156,6 +175,7 @@
       </div>
       <footer>
         <code class="slug">mesh-anonymous-qa</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -167,6 +187,9 @@
       data-slug="mesh-applause"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-applause/" target="_blank" rel="noreferrer" aria-label="Open mesh-applause demo">mesh-applause</a>
@@ -178,6 +201,7 @@
       </div>
       <footer>
         <code class="slug">mesh-applause</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -189,6 +213,9 @@
       data-slug="mesh-applause-bracket"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-applause-bracket/" target="_blank" rel="noreferrer" aria-label="Open mesh-applause-bracket demo">mesh-applause-bracket</a>
@@ -200,6 +227,7 @@
       </div>
       <footer>
         <code class="slug">mesh-applause-bracket</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -211,6 +239,9 @@
       data-slug="mesh-attendance"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-attendance/" target="_blank" rel="noreferrer" aria-label="Open mesh-attendance demo">mesh-attendance</a>
@@ -222,6 +253,7 @@
       </div>
       <footer>
         <code class="slug">mesh-attendance</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -233,6 +265,9 @@
       data-slug="mesh-attendance-stamp"
       data-status="ok"
       data-trl=""
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-attendance-stamp/" target="_blank" rel="noreferrer" aria-label="Open mesh-attendance-stamp demo">mesh-attendance-stamp</a>
@@ -244,6 +279,7 @@
       </div>
       <footer>
         <code class="slug">mesh-attendance-stamp</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -255,6 +291,9 @@
       data-slug="mesh-bench-archive"
       data-status="ok"
       data-trl="5"
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-bench-archive/" target="_blank" rel="noreferrer" aria-label="Open Mesh Bench Archive demo">Mesh Bench Archive</a>
@@ -266,6 +305,7 @@
       </div>
       <footer>
         <code class="slug">mesh-bench-archive</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -277,6 +317,9 @@
       data-slug="mesh-blind-date"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-blind-date/" target="_blank" rel="noreferrer" aria-label="Open mesh-blind-date demo">mesh-blind-date</a>
@@ -288,6 +331,7 @@
       </div>
       <footer>
         <code class="slug">mesh-blind-date</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -295,21 +339,25 @@
 
     <article
       class="card ok"
-      data-name="mesh book club lottery"
+      data-name="mesh-book-club-lottery"
       data-slug="mesh-book-club-lottery"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-book-club-lottery/" target="_blank" rel="noreferrer" aria-label="Open Mesh Book Club Lottery demo">Mesh Book Club Lottery</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-book-club-lottery/" target="_blank" rel="noreferrer" aria-label="Open mesh-book-club-lottery demo">mesh-book-club-lottery</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-book-club-lottery/demo.gif" alt="Mesh Book Club Lottery demo" loading="lazy" />
+        <img class="gif" src="mesh-book-club-lottery/demo.gif" alt="mesh-book-club-lottery demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-book-club-lottery</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -317,21 +365,25 @@
 
     <article
       class="card ok"
-      data-name="mesh borrow board"
+      data-name="mesh-borrow-board"
       data-slug="mesh-borrow-board"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-borrow-board/" target="_blank" rel="noreferrer" aria-label="Open Mesh Borrow Board demo">Mesh Borrow Board</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-borrow-board/" target="_blank" rel="noreferrer" aria-label="Open mesh-borrow-board demo">mesh-borrow-board</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-borrow-board/demo.gif" alt="Mesh Borrow Board demo" loading="lazy" />
+        <img class="gif" src="mesh-borrow-board/demo.gif" alt="mesh-borrow-board demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-borrow-board</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -343,6 +395,9 @@
       data-slug="mesh-bracket"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-bracket/" target="_blank" rel="noreferrer" aria-label="Open mesh-bracket demo">mesh-bracket</a>
@@ -354,6 +409,7 @@
       </div>
       <footer>
         <code class="slug">mesh-bracket</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -365,6 +421,9 @@
       data-slug="mesh-brain-write"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-brain-write/" target="_blank" rel="noreferrer" aria-label="Open mesh-brain-write demo">mesh-brain-write</a>
@@ -376,6 +435,7 @@
       </div>
       <footer>
         <code class="slug">mesh-brain-write</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -383,21 +443,25 @@
 
     <article
       class="card ok"
-      data-name="mesh breakout pairs"
+      data-name="mesh-breakout-pairs"
       data-slug="mesh-breakout-pairs"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-breakout-pairs/" target="_blank" rel="noreferrer" aria-label="Open Mesh Breakout Pairs demo">Mesh Breakout Pairs</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-breakout-pairs/" target="_blank" rel="noreferrer" aria-label="Open mesh-breakout-pairs demo">mesh-breakout-pairs</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-breakout-pairs/demo.gif" alt="Mesh Breakout Pairs demo" loading="lazy" />
+        <img class="gif" src="mesh-breakout-pairs/demo.gif" alt="mesh-breakout-pairs demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-breakout-pairs</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -409,6 +473,9 @@
       data-slug="mesh-bus-factor"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-bus-factor/" target="_blank" rel="noreferrer" aria-label="Open mesh-bus-factor demo">mesh-bus-factor</a>
@@ -420,6 +487,7 @@
       </div>
       <footer>
         <code class="slug">mesh-bus-factor</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -431,6 +499,9 @@
       data-slug="mesh-business-card"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-business-card/" target="_blank" rel="noreferrer" aria-label="Open mesh-business-card demo">mesh-business-card</a>
@@ -442,6 +513,7 @@
       </div>
       <footer>
         <code class="slug">mesh-business-card</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -453,6 +525,9 @@
       data-slug="mesh-buzzer"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-buzzer/" target="_blank" rel="noreferrer" aria-label="Open mesh-buzzer demo">mesh-buzzer</a>
@@ -464,6 +539,7 @@
       </div>
       <footer>
         <code class="slug">mesh-buzzer</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -475,6 +551,9 @@
       data-slug="mesh-carpool-bingo"
       data-status="ok"
       data-trl="4"
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-carpool-bingo/" target="_blank" rel="noreferrer" aria-label="Open Mesh Carpool Bingo demo">Mesh Carpool Bingo</a>
@@ -486,6 +565,7 @@
       </div>
       <footer>
         <code class="slug">mesh-carpool-bingo</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -497,6 +577,9 @@
       data-slug="mesh-chore-rotation"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-chore-rotation/" target="_blank" rel="noreferrer" aria-label="Open mesh-chore-rotation demo">mesh-chore-rotation</a>
@@ -508,6 +591,7 @@
       </div>
       <footer>
         <code class="slug">mesh-chore-rotation</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -519,6 +603,9 @@
       data-slug="mesh-clap-track"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-clap-track/" target="_blank" rel="noreferrer" aria-label="Open mesh-clap-track demo">mesh-clap-track</a>
@@ -530,6 +617,7 @@
       </div>
       <footer>
         <code class="slug">mesh-clap-track</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -541,6 +629,9 @@
       data-slug="mesh-class-checkin"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-class-checkin/" target="_blank" rel="noreferrer" aria-label="Open mesh-class-checkin demo">mesh-class-checkin</a>
@@ -552,6 +643,7 @@
       </div>
       <footer>
         <code class="slug">mesh-class-checkin</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -563,6 +655,9 @@
       data-slug="mesh-clipboard-bridge"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-clipboard-bridge/" target="_blank" rel="noreferrer" aria-label="Open mesh-clipboard-bridge demo">mesh-clipboard-bridge</a>
@@ -574,6 +669,7 @@
       </div>
       <footer>
         <code class="slug">mesh-clipboard-bridge</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -585,6 +681,9 @@
       data-slug="mesh-compliment-roulette"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-compliment-roulette/" target="_blank" rel="noreferrer" aria-label="Open mesh-compliment-roulette demo">mesh-compliment-roulette</a>
@@ -596,6 +695,7 @@
       </div>
       <footer>
         <code class="slug">mesh-compliment-roulette</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -607,6 +707,9 @@
       data-slug="mesh-conversation-cards"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-conversation-cards/" target="_blank" rel="noreferrer" aria-label="Open mesh-conversation-cards demo">mesh-conversation-cards</a>
@@ -618,6 +721,7 @@
       </div>
       <footer>
         <code class="slug">mesh-conversation-cards</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -625,21 +729,25 @@
 
     <article
       class="card ok"
-      data-name="mesh crowd map"
+      data-name="mesh-crowd-map"
       data-slug="mesh-crowd-map"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-crowd-map/" target="_blank" rel="noreferrer" aria-label="Open Mesh Crowd Map demo">Mesh Crowd Map</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-crowd-map/" target="_blank" rel="noreferrer" aria-label="Open mesh-crowd-map demo">mesh-crowd-map</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-crowd-map/demo.gif" alt="Mesh Crowd Map demo" loading="lazy" />
+        <img class="gif" src="mesh-crowd-map/demo.gif" alt="mesh-crowd-map demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-crowd-map</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -647,21 +755,25 @@
 
     <article
       class="card ok"
-      data-name="mesh daily question"
+      data-name="mesh-daily-question"
       data-slug="mesh-daily-question"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-daily-question/" target="_blank" rel="noreferrer" aria-label="Open Mesh Daily Question demo">Mesh Daily Question</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-daily-question/" target="_blank" rel="noreferrer" aria-label="Open mesh-daily-question demo">mesh-daily-question</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-daily-question/demo.gif" alt="Mesh Daily Question demo" loading="lazy" />
+        <img class="gif" src="mesh-daily-question/demo.gif" alt="mesh-daily-question demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-daily-question</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -673,6 +785,9 @@
       data-slug="mesh-dare-wheel"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-dare-wheel/" target="_blank" rel="noreferrer" aria-label="Open mesh-dare-wheel demo">mesh-dare-wheel</a>
@@ -684,6 +799,7 @@
       </div>
       <footer>
         <code class="slug">mesh-dare-wheel</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -691,21 +807,25 @@
 
     <article
       class="card ok"
-      data-name="mesh deadline pact"
+      data-name="mesh-deadline-pact"
       data-slug="mesh-deadline-pact"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-deadline-pact/" target="_blank" rel="noreferrer" aria-label="Open Mesh Deadline Pact demo">Mesh Deadline Pact</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-deadline-pact/" target="_blank" rel="noreferrer" aria-label="Open mesh-deadline-pact demo">mesh-deadline-pact</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-deadline-pact/demo.gif" alt="Mesh Deadline Pact demo" loading="lazy" />
+        <img class="gif" src="mesh-deadline-pact/demo.gif" alt="mesh-deadline-pact demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-deadline-pact</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -717,6 +837,9 @@
       data-slug="mesh-debate-clock"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-debate-clock/" target="_blank" rel="noreferrer" aria-label="Open mesh-debate-clock demo">mesh-debate-clock</a>
@@ -728,6 +851,7 @@
       </div>
       <footer>
         <code class="slug">mesh-debate-clock</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -739,6 +863,9 @@
       data-slug="mesh-direction-finder"
       data-status="ok"
       data-trl=""
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-direction-finder/" target="_blank" rel="noreferrer" aria-label="Open mesh-direction-finder demo">mesh-direction-finder</a>
@@ -750,6 +877,7 @@
       </div>
       <footer>
         <code class="slug">mesh-direction-finder</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -761,6 +889,9 @@
       data-slug="mesh-dj-deck"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-dj-deck/" target="_blank" rel="noreferrer" aria-label="Open mesh-dj-deck demo">mesh-dj-deck</a>
@@ -772,6 +903,7 @@
       </div>
       <footer>
         <code class="slug">mesh-dj-deck</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -783,6 +915,9 @@
       data-slug="mesh-doorbell"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-doorbell/" target="_blank" rel="noreferrer" aria-label="Open mesh-doorbell demo">mesh-doorbell</a>
@@ -794,6 +929,7 @@
       </div>
       <footer>
         <code class="slug">mesh-doorbell</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -805,6 +941,9 @@
       data-slug="mesh-emoji-rain"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-emoji-rain/" target="_blank" rel="noreferrer" aria-label="Open mesh-emoji-rain demo">mesh-emoji-rain</a>
@@ -816,6 +955,7 @@
       </div>
       <footer>
         <code class="slug">mesh-emoji-rain</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -827,6 +967,9 @@
       data-slug="mesh-energy-curve"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-energy-curve/" target="_blank" rel="noreferrer" aria-label="Open mesh-energy-curve demo">mesh-energy-curve</a>
@@ -838,6 +981,7 @@
       </div>
       <footer>
         <code class="slug">mesh-energy-curve</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -849,6 +993,9 @@
       data-slug="mesh-exquisite-corpse"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-exquisite-corpse/" target="_blank" rel="noreferrer" aria-label="Open mesh-exquisite-corpse demo">mesh-exquisite-corpse</a>
@@ -860,6 +1007,7 @@
       </div>
       <footer>
         <code class="slug">mesh-exquisite-corpse</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -871,6 +1019,9 @@
       data-slug="mesh-eye-contact"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-eye-contact/" target="_blank" rel="noreferrer" aria-label="Open mesh-eye-contact demo">mesh-eye-contact</a>
@@ -882,6 +1033,7 @@
       </div>
       <footer>
         <code class="slug">mesh-eye-contact</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -893,6 +1045,9 @@
       data-slug="mesh-face-grid"
       data-status="ok"
       data-trl=""
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-face-grid/" target="_blank" rel="noreferrer" aria-label="Open mesh-face-grid demo">mesh-face-grid</a>
@@ -904,6 +1059,7 @@
       </div>
       <footer>
         <code class="slug">mesh-face-grid</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -915,6 +1071,9 @@
       data-slug="mesh-favor-bank"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-favor-bank/" target="_blank" rel="noreferrer" aria-label="Open mesh-favor-bank demo">mesh-favor-bank</a>
@@ -926,6 +1085,7 @@
       </div>
       <footer>
         <code class="slug">mesh-favor-bank</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -937,6 +1097,9 @@
       data-slug="mesh-find-my-family"
       data-status="ok"
       data-trl=""
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-find-my-family/" target="_blank" rel="noreferrer" aria-label="Open mesh-find-my-family demo">mesh-find-my-family</a>
@@ -948,6 +1111,7 @@
       </div>
       <footer>
         <code class="slug">mesh-find-my-family</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -959,6 +1123,9 @@
       data-slug="mesh-finger-relay"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-finger-relay/" target="_blank" rel="noreferrer" aria-label="Open mesh-finger-relay demo">mesh-finger-relay</a>
@@ -970,6 +1137,7 @@
       </div>
       <footer>
         <code class="slug">mesh-finger-relay</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -981,6 +1149,9 @@
       data-slug="mesh-firefly-walk"
       data-status="ok"
       data-trl="4"
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-firefly-walk/" target="_blank" rel="noreferrer" aria-label="Open Mesh Firefly Walk demo">Mesh Firefly Walk</a>
@@ -992,6 +1163,7 @@
       </div>
       <footer>
         <code class="slug">mesh-firefly-walk</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -1003,6 +1175,9 @@
       data-slug="mesh-fist-of-five"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-fist-of-five/" target="_blank" rel="noreferrer" aria-label="Open mesh-fist-of-five demo">mesh-fist-of-five</a>
@@ -1014,6 +1189,7 @@
       </div>
       <footer>
         <code class="slug">mesh-fist-of-five</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -1025,6 +1201,9 @@
       data-slug="mesh-five-second-rule"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-five-second-rule/" target="_blank" rel="noreferrer" aria-label="Open Mesh Five Second Rule demo">Mesh Five Second Rule</a>
@@ -1036,6 +1215,7 @@
       </div>
       <footer>
         <code class="slug">mesh-five-second-rule</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1047,6 +1227,9 @@
       data-slug="mesh-flash-mob"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-flash-mob/" target="_blank" rel="noreferrer" aria-label="Open mesh-flash-mob demo">mesh-flash-mob</a>
@@ -1058,6 +1241,7 @@
       </div>
       <footer>
         <code class="slug">mesh-flash-mob</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -1065,21 +1249,25 @@
 
     <article
       class="card ok"
-      data-name="mesh flashcard swarm"
+      data-name="mesh-flashcard-swarm"
       data-slug="mesh-flashcard-swarm"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-flashcard-swarm/" target="_blank" rel="noreferrer" aria-label="Open Mesh Flashcard Swarm demo">Mesh Flashcard Swarm</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-flashcard-swarm/" target="_blank" rel="noreferrer" aria-label="Open mesh-flashcard-swarm demo">mesh-flashcard-swarm</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-flashcard-swarm/demo.gif" alt="Mesh Flashcard Swarm demo" loading="lazy" />
+        <img class="gif" src="mesh-flashcard-swarm/demo.gif" alt="mesh-flashcard-swarm demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-flashcard-swarm</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -1091,6 +1279,9 @@
       data-slug="mesh-fortune-cookie"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-fortune-cookie/" target="_blank" rel="noreferrer" aria-label="Open mesh-fortune-cookie demo">mesh-fortune-cookie</a>
@@ -1102,6 +1293,7 @@
       </div>
       <footer>
         <code class="slug">mesh-fortune-cookie</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1113,6 +1305,9 @@
       data-slug="mesh-fundraiser-bar"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-fundraiser-bar/" target="_blank" rel="noreferrer" aria-label="Open mesh-fundraiser-bar demo">mesh-fundraiser-bar</a>
@@ -1124,6 +1319,7 @@
       </div>
       <footer>
         <code class="slug">mesh-fundraiser-bar</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -1131,21 +1327,25 @@
 
     <article
       class="card ok"
-      data-name="mesh gift exchange"
+      data-name="mesh-gift-exchange"
       data-slug="mesh-gift-exchange"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-gift-exchange/" target="_blank" rel="noreferrer" aria-label="Open Mesh Gift Exchange demo">Mesh Gift Exchange</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-gift-exchange/" target="_blank" rel="noreferrer" aria-label="Open mesh-gift-exchange demo">mesh-gift-exchange</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-gift-exchange/demo.gif" alt="Mesh Gift Exchange demo" loading="lazy" />
+        <img class="gif" src="mesh-gift-exchange/demo.gif" alt="mesh-gift-exchange demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-gift-exchange</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -1153,21 +1353,25 @@
 
     <article
       class="card ok"
-      data-name="mesh habit sprint"
+      data-name="mesh-habit-sprint"
       data-slug="mesh-habit-sprint"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-habit-sprint/" target="_blank" rel="noreferrer" aria-label="Open Mesh Habit Sprint demo">Mesh Habit Sprint</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-habit-sprint/" target="_blank" rel="noreferrer" aria-label="Open mesh-habit-sprint demo">mesh-habit-sprint</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-habit-sprint/demo.gif" alt="Mesh Habit Sprint demo" loading="lazy" />
+        <img class="gif" src="mesh-habit-sprint/demo.gif" alt="mesh-habit-sprint demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-habit-sprint</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -1179,6 +1383,9 @@
       data-slug="mesh-handshake-chain"
       data-status="ok"
       data-trl=""
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-handshake-chain/" target="_blank" rel="noreferrer" aria-label="Open mesh-handshake-chain demo">mesh-handshake-chain</a>
@@ -1190,6 +1397,7 @@
       </div>
       <footer>
         <code class="slug">mesh-handshake-chain</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -1197,21 +1405,25 @@
 
     <article
       class="card ok"
-      data-name="mesh heads up"
+      data-name="mesh-heads-up"
       data-slug="mesh-heads-up"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-heads-up/" target="_blank" rel="noreferrer" aria-label="Open Mesh Heads Up demo">Mesh Heads Up</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-heads-up/" target="_blank" rel="noreferrer" aria-label="Open mesh-heads-up demo">mesh-heads-up</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-heads-up/demo.gif" alt="Mesh Heads Up demo" loading="lazy" />
+        <img class="gif" src="mesh-heads-up/demo.gif" alt="mesh-heads-up demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-heads-up</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1223,6 +1435,9 @@
       data-slug="mesh-hot-potato"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-hot-potato/" target="_blank" rel="noreferrer" aria-label="Open mesh-hot-potato demo">mesh-hot-potato</a>
@@ -1234,6 +1449,7 @@
       </div>
       <footer>
         <code class="slug">mesh-hot-potato</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1245,6 +1461,9 @@
       data-slug="mesh-icebreaker"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-icebreaker/" target="_blank" rel="noreferrer" aria-label="Open mesh-icebreaker demo">mesh-icebreaker</a>
@@ -1256,6 +1475,7 @@
       </div>
       <footer>
         <code class="slug">mesh-icebreaker</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -1267,6 +1487,9 @@
       data-slug="mesh-icebreaker-bingo"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-icebreaker-bingo/" target="_blank" rel="noreferrer" aria-label="Open mesh-icebreaker-bingo demo">mesh-icebreaker-bingo</a>
@@ -1278,6 +1501,7 @@
       </div>
       <footer>
         <code class="slug">mesh-icebreaker-bingo</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1285,21 +1509,25 @@
 
     <article
       class="card ok"
-      data-name="mesh idea market"
+      data-name="mesh-idea-market"
       data-slug="mesh-idea-market"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-idea-market/" target="_blank" rel="noreferrer" aria-label="Open Mesh Idea Market demo">Mesh Idea Market</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-idea-market/" target="_blank" rel="noreferrer" aria-label="Open mesh-idea-market demo">mesh-idea-market</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-idea-market/demo.gif" alt="Mesh Idea Market demo" loading="lazy" />
+        <img class="gif" src="mesh-idea-market/demo.gif" alt="mesh-idea-market demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-idea-market</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -1307,21 +1535,25 @@
 
     <article
       class="card ok"
-      data-name="mesh improv director"
+      data-name="mesh-improv-director"
       data-slug="mesh-improv-director"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-improv-director/" target="_blank" rel="noreferrer" aria-label="Open Mesh Improv Director demo">Mesh Improv Director</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-improv-director/" target="_blank" rel="noreferrer" aria-label="Open mesh-improv-director demo">mesh-improv-director</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-improv-director/demo.gif" alt="Mesh Improv Director demo" loading="lazy" />
+        <img class="gif" src="mesh-improv-director/demo.gif" alt="mesh-improv-director demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-improv-director</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -1333,6 +1565,9 @@
       data-slug="mesh-jellybean"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-jellybean/" target="_blank" rel="noreferrer" aria-label="Open mesh-jellybean demo">mesh-jellybean</a>
@@ -1344,6 +1579,7 @@
       </div>
       <footer>
         <code class="slug">mesh-jellybean</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1355,6 +1591,9 @@
       data-slug="mesh-kiosk-wall"
       data-status="ok"
       data-trl=""
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-kiosk-wall/" target="_blank" rel="noreferrer" aria-label="Open mesh-kiosk-wall demo">mesh-kiosk-wall</a>
@@ -1366,6 +1605,7 @@
       </div>
       <footer>
         <code class="slug">mesh-kiosk-wall</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -1377,6 +1617,9 @@
       data-slug="mesh-laser-tag"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-laser-tag/" target="_blank" rel="noreferrer" aria-label="Open mesh-laser-tag demo">mesh-laser-tag</a>
@@ -1388,6 +1631,7 @@
       </div>
       <footer>
         <code class="slug">mesh-laser-tag</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1399,6 +1643,9 @@
       data-slug="mesh-light-paint"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-light-paint/" target="_blank" rel="noreferrer" aria-label="Open mesh-light-paint demo">mesh-light-paint</a>
@@ -1410,6 +1657,7 @@
       </div>
       <footer>
         <code class="slug">mesh-light-paint</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -1421,6 +1669,9 @@
       data-slug="mesh-lightning-flash"
       data-status="ok"
       data-trl="4"
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-lightning-flash/" target="_blank" rel="noreferrer" aria-label="Open Mesh Lightning Flash demo">Mesh Lightning Flash</a>
@@ -1432,6 +1683,7 @@
       </div>
       <footer>
         <code class="slug">mesh-lightning-flash</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -1443,6 +1695,9 @@
       data-slug="mesh-link-share"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-link-share/" target="_blank" rel="noreferrer" aria-label="Open mesh-link-share demo">mesh-link-share</a>
@@ -1454,6 +1709,7 @@
       </div>
       <footer>
         <code class="slug">mesh-link-share</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -1465,6 +1721,9 @@
       data-slug="mesh-live-poll"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-live-poll/" target="_blank" rel="noreferrer" aria-label="Open mesh-live-poll demo">mesh-live-poll</a>
@@ -1476,6 +1735,7 @@
       </div>
       <footer>
         <code class="slug">mesh-live-poll</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -1483,21 +1743,25 @@
 
     <article
       class="card ok"
-      data-name="mesh lost found"
+      data-name="mesh-lost-found"
       data-slug="mesh-lost-found"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-lost-found/" target="_blank" rel="noreferrer" aria-label="Open Mesh Lost Found demo">Mesh Lost Found</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-lost-found/" target="_blank" rel="noreferrer" aria-label="Open mesh-lost-found demo">mesh-lost-found</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-lost-found/demo.gif" alt="Mesh Lost Found demo" loading="lazy" />
+        <img class="gif" src="mesh-lost-found/demo.gif" alt="mesh-lost-found demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-lost-found</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -1509,6 +1773,9 @@
       data-slug="mesh-lunch-roulette"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-lunch-roulette/" target="_blank" rel="noreferrer" aria-label="Open mesh-lunch-roulette demo">mesh-lunch-roulette</a>
@@ -1520,6 +1787,7 @@
       </div>
       <footer>
         <code class="slug">mesh-lunch-roulette</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -1531,6 +1799,9 @@
       data-slug="mesh-mad-libs"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-mad-libs/" target="_blank" rel="noreferrer" aria-label="Open mesh-mad-libs demo">mesh-mad-libs</a>
@@ -1542,6 +1813,7 @@
       </div>
       <footer>
         <code class="slug">mesh-mad-libs</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -1553,6 +1825,9 @@
       data-slug="mesh-mafia"
       data-status="ok"
       data-trl="5"
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-mafia/" target="_blank" rel="noreferrer" aria-label="Open Mesh Mafia demo">Mesh Mafia</a>
@@ -1564,6 +1839,7 @@
       </div>
       <footer>
         <code class="slug">mesh-mafia</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1575,6 +1851,9 @@
       data-slug="mesh-meeting-cost"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-meeting-cost/" target="_blank" rel="noreferrer" aria-label="Open mesh-meeting-cost demo">mesh-meeting-cost</a>
@@ -1586,6 +1865,7 @@
       </div>
       <footer>
         <code class="slug">mesh-meeting-cost</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -1597,6 +1877,9 @@
       data-slug="mesh-meme-quote"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-meme-quote/" target="_blank" rel="noreferrer" aria-label="Open mesh-meme-quote demo">mesh-meme-quote</a>
@@ -1608,6 +1891,7 @@
       </div>
       <footer>
         <code class="slug">mesh-meme-quote</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -1615,21 +1899,25 @@
 
     <article
       class="card ok"
-      data-name="mesh memory match"
+      data-name="mesh-memory-match"
       data-slug="mesh-memory-match"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-memory-match/" target="_blank" rel="noreferrer" aria-label="Open Mesh Memory Match demo">Mesh Memory Match</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-memory-match/" target="_blank" rel="noreferrer" aria-label="Open mesh-memory-match demo">mesh-memory-match</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-memory-match/demo.gif" alt="Mesh Memory Match demo" loading="lazy" />
+        <img class="gif" src="mesh-memory-match/demo.gif" alt="mesh-memory-match demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-memory-match</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1641,6 +1929,9 @@
       data-slug="mesh-metronome"
       data-status="ok"
       data-trl="5"
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-metronome/" target="_blank" rel="noreferrer" aria-label="Open Mesh Metronome demo">Mesh Metronome</a>
@@ -1652,6 +1943,7 @@
       </div>
       <footer>
         <code class="slug">mesh-metronome</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -1663,6 +1955,9 @@
       data-slug="mesh-mic-drop-quiz"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-mic-drop-quiz/" target="_blank" rel="noreferrer" aria-label="Open mesh-mic-drop-quiz demo">mesh-mic-drop-quiz</a>
@@ -1674,6 +1969,7 @@
       </div>
       <footer>
         <code class="slug">mesh-mic-drop-quiz</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1685,6 +1981,9 @@
       data-slug="mesh-mind-meld"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-mind-meld/" target="_blank" rel="noreferrer" aria-label="Open mesh-mind-meld demo">mesh-mind-meld</a>
@@ -1696,6 +1995,7 @@
       </div>
       <footer>
         <code class="slug">mesh-mind-meld</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -1707,6 +2007,9 @@
       data-slug="mesh-mirror"
       data-status="ok"
       data-trl="5"
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-mirror/" target="_blank" rel="noreferrer" aria-label="Open Mesh Mirror demo">Mesh Mirror</a>
@@ -1718,6 +2021,7 @@
       </div>
       <footer>
         <code class="slug">mesh-mirror</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -1729,6 +2033,9 @@
       data-slug="mesh-mood-check"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-mood-check/" target="_blank" rel="noreferrer" aria-label="Open mesh-mood-check demo">mesh-mood-check</a>
@@ -1740,6 +2047,7 @@
       </div>
       <footer>
         <code class="slug">mesh-mood-check</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -1751,6 +2059,9 @@
       data-slug="mesh-mood-ring"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-mood-ring/" target="_blank" rel="noreferrer" aria-label="Open mesh-mood-ring demo">mesh-mood-ring</a>
@@ -1762,6 +2073,7 @@
       </div>
       <footer>
         <code class="slug">mesh-mood-ring</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -1773,6 +2085,9 @@
       data-slug="mesh-name-game"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-name-game/" target="_blank" rel="noreferrer" aria-label="Open mesh-name-game demo">mesh-name-game</a>
@@ -1784,6 +2099,7 @@
       </div>
       <footer>
         <code class="slug">mesh-name-game</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -1795,6 +2111,9 @@
       data-slug="mesh-network-builder"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-network-builder/" target="_blank" rel="noreferrer" aria-label="Open mesh-network-builder demo">mesh-network-builder</a>
@@ -1806,6 +2125,7 @@
       </div>
       <footer>
         <code class="slug">mesh-network-builder</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -1817,6 +2137,9 @@
       data-slug="mesh-never-have-i"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-never-have-i/" target="_blank" rel="noreferrer" aria-label="Open mesh-never-have-i demo">mesh-never-have-i</a>
@@ -1828,6 +2151,7 @@
       </div>
       <footer>
         <code class="slug">mesh-never-have-i</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1839,6 +2163,9 @@
       data-slug="mesh-new-year"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-new-year/" target="_blank" rel="noreferrer" aria-label="Open mesh-new-year demo">mesh-new-year</a>
@@ -1850,6 +2177,7 @@
       </div>
       <footer>
         <code class="slug">mesh-new-year</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -1861,6 +2189,9 @@
       data-slug="mesh-orientation-mosaic"
       data-status="ok"
       data-trl=""
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-orientation-mosaic/" target="_blank" rel="noreferrer" aria-label="Open mesh-orientation-mosaic demo">mesh-orientation-mosaic</a>
@@ -1872,6 +2203,7 @@
       </div>
       <footer>
         <code class="slug">mesh-orientation-mosaic</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -1883,6 +2215,9 @@
       data-slug="mesh-overrated-underrated"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-overrated-underrated/" target="_blank" rel="noreferrer" aria-label="Open mesh-overrated-underrated demo">mesh-overrated-underrated</a>
@@ -1894,6 +2229,7 @@
       </div>
       <footer>
         <code class="slug">mesh-overrated-underrated</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -1905,6 +2241,9 @@
       data-slug="mesh-pair-rotation"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-pair-rotation/" target="_blank" rel="noreferrer" aria-label="Open mesh-pair-rotation demo">mesh-pair-rotation</a>
@@ -1916,6 +2255,7 @@
       </div>
       <footer>
         <code class="slug">mesh-pair-rotation</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -1923,21 +2263,25 @@
 
     <article
       class="card ok"
-      data-name="mesh pass the phone"
+      data-name="mesh-pass-the-phone"
       data-slug="mesh-pass-the-phone"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-pass-the-phone/" target="_blank" rel="noreferrer" aria-label="Open Mesh Pass the Phone demo">Mesh Pass the Phone</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-pass-the-phone/" target="_blank" rel="noreferrer" aria-label="Open mesh-pass-the-phone demo">mesh-pass-the-phone</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-pass-the-phone/demo.gif" alt="Mesh Pass the Phone demo" loading="lazy" />
+        <img class="gif" src="mesh-pass-the-phone/demo.gif" alt="mesh-pass-the-phone demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-pass-the-phone</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -1949,6 +2293,9 @@
       data-slug="mesh-passport"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-passport/" target="_blank" rel="noreferrer" aria-label="Open mesh-passport demo">mesh-passport</a>
@@ -1960,6 +2307,7 @@
       </div>
       <footer>
         <code class="slug">mesh-passport</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -1971,6 +2319,9 @@
       data-slug="mesh-petition"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-petition/" target="_blank" rel="noreferrer" aria-label="Open mesh-petition demo">mesh-petition</a>
@@ -1982,6 +2333,7 @@
       </div>
       <footer>
         <code class="slug">mesh-petition</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -1993,6 +2345,9 @@
       data-slug="mesh-pictionary"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-pictionary/" target="_blank" rel="noreferrer" aria-label="Open mesh-pictionary demo">mesh-pictionary</a>
@@ -2004,6 +2359,7 @@
       </div>
       <footer>
         <code class="slug">mesh-pictionary</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -2015,6 +2371,9 @@
       data-slug="mesh-pitch-pong"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-pitch-pong/" target="_blank" rel="noreferrer" aria-label="Open mesh-pitch-pong demo">mesh-pitch-pong</a>
@@ -2026,6 +2385,7 @@
       </div>
       <footer>
         <code class="slug">mesh-pitch-pong</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -2037,6 +2397,9 @@
       data-slug="mesh-pomodoro-room"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-pomodoro-room/" target="_blank" rel="noreferrer" aria-label="Open mesh-pomodoro-room demo">mesh-pomodoro-room</a>
@@ -2048,6 +2411,7 @@
       </div>
       <footer>
         <code class="slug">mesh-pomodoro-room</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -2059,6 +2423,9 @@
       data-slug="mesh-potluck"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-potluck/" target="_blank" rel="noreferrer" aria-label="Open mesh-potluck demo">mesh-potluck</a>
@@ -2070,6 +2437,7 @@
       </div>
       <footer>
         <code class="slug">mesh-potluck</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -2081,6 +2449,9 @@
       data-slug="mesh-prediction-pool"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-prediction-pool/" target="_blank" rel="noreferrer" aria-label="Open mesh-prediction-pool demo">mesh-prediction-pool</a>
@@ -2092,6 +2463,7 @@
       </div>
       <footer>
         <code class="slug">mesh-prediction-pool</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -2099,21 +2471,25 @@
 
     <article
       class="card ok"
-      data-name="mesh privacy drop"
+      data-name="mesh-privacy-drop"
       data-slug="mesh-privacy-drop"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-privacy-drop/" target="_blank" rel="noreferrer" aria-label="Open Mesh Privacy Drop demo">Mesh Privacy Drop</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-privacy-drop/" target="_blank" rel="noreferrer" aria-label="Open mesh-privacy-drop demo">mesh-privacy-drop</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-privacy-drop/demo.gif" alt="Mesh Privacy Drop demo" loading="lazy" />
+        <img class="gif" src="mesh-privacy-drop/demo.gif" alt="mesh-privacy-drop demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-privacy-drop</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -2121,21 +2497,25 @@
 
     <article
       class="card ok"
-      data-name="mesh prompt ladder"
+      data-name="mesh-prompt-ladder"
       data-slug="mesh-prompt-ladder"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-prompt-ladder/" target="_blank" rel="noreferrer" aria-label="Open Mesh Prompt Ladder demo">Mesh Prompt Ladder</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-prompt-ladder/" target="_blank" rel="noreferrer" aria-label="Open mesh-prompt-ladder demo">mesh-prompt-ladder</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-prompt-ladder/demo.gif" alt="Mesh Prompt Ladder demo" loading="lazy" />
+        <img class="gif" src="mesh-prompt-ladder/demo.gif" alt="mesh-prompt-ladder demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-prompt-ladder</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -2147,6 +2527,9 @@
       data-slug="mesh-pulse-photo"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-pulse-photo/" target="_blank" rel="noreferrer" aria-label="Open mesh-pulse-photo demo">mesh-pulse-photo</a>
@@ -2158,6 +2541,7 @@
       </div>
       <footer>
         <code class="slug">mesh-pulse-photo</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -2169,6 +2553,9 @@
       data-slug="mesh-pyramid"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-pyramid/" target="_blank" rel="noreferrer" aria-label="Open mesh-pyramid demo">mesh-pyramid</a>
@@ -2180,6 +2567,7 @@
       </div>
       <footer>
         <code class="slug">mesh-pyramid</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -2191,6 +2579,9 @@
       data-slug="mesh-qr-snake"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-qr-snake/" target="_blank" rel="noreferrer" aria-label="Open mesh-qr-snake demo">mesh-qr-snake</a>
@@ -2202,6 +2593,7 @@
       </div>
       <footer>
         <code class="slug">mesh-qr-snake</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -2213,6 +2605,9 @@
       data-slug="mesh-questions-only"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-questions-only/" target="_blank" rel="noreferrer" aria-label="Open mesh-questions-only demo">mesh-questions-only</a>
@@ -2224,6 +2619,7 @@
       </div>
       <footer>
         <code class="slug">mesh-questions-only</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -2235,6 +2631,9 @@
       data-slug="mesh-queue"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-queue/" target="_blank" rel="noreferrer" aria-label="Open Mesh Queue demo">Mesh Queue</a>
@@ -2246,6 +2645,7 @@
       </div>
       <footer>
         <code class="slug">mesh-queue</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -2253,21 +2653,25 @@
 
     <article
       class="card ok"
-      data-name="mesh quick draw duel"
+      data-name="mesh-quick-draw-duel"
       data-slug="mesh-quick-draw-duel"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-quick-draw-duel/" target="_blank" rel="noreferrer" aria-label="Open Mesh Quick Draw Duel demo">Mesh Quick Draw Duel</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-quick-draw-duel/" target="_blank" rel="noreferrer" aria-label="Open mesh-quick-draw-duel demo">mesh-quick-draw-duel</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-quick-draw-duel/demo.gif" alt="Mesh Quick Draw Duel demo" loading="lazy" />
+        <img class="gif" src="mesh-quick-draw-duel/demo.gif" alt="mesh-quick-draw-duel demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-quick-draw-duel</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -2279,6 +2683,9 @@
       data-slug="mesh-quiet-cheer"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-quiet-cheer/" target="_blank" rel="noreferrer" aria-label="Open mesh-quiet-cheer demo">mesh-quiet-cheer</a>
@@ -2290,6 +2697,7 @@
       </div>
       <footer>
         <code class="slug">mesh-quiet-cheer</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -2301,6 +2709,9 @@
       data-slug="mesh-quiet-quest"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-quiet-quest/" target="_blank" rel="noreferrer" aria-label="Open mesh-quiet-quest demo">mesh-quiet-quest</a>
@@ -2312,6 +2723,7 @@
       </div>
       <footer>
         <code class="slug">mesh-quiet-quest</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -2323,6 +2735,9 @@
       data-slug="mesh-ranked-vote"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-ranked-vote/" target="_blank" rel="noreferrer" aria-label="Open mesh-ranked-vote demo">mesh-ranked-vote</a>
@@ -2334,6 +2749,7 @@
       </div>
       <footer>
         <code class="slug">mesh-ranked-vote</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -2341,21 +2757,25 @@
 
     <article
       class="card ok"
-      data-name="mesh recipe relay"
+      data-name="mesh-recipe-relay"
       data-slug="mesh-recipe-relay"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-recipe-relay/" target="_blank" rel="noreferrer" aria-label="Open Mesh Recipe Relay demo">Mesh Recipe Relay</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-recipe-relay/" target="_blank" rel="noreferrer" aria-label="Open mesh-recipe-relay demo">mesh-recipe-relay</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-recipe-relay/demo.gif" alt="Mesh Recipe Relay demo" loading="lazy" />
+        <img class="gif" src="mesh-recipe-relay/demo.gif" alt="mesh-recipe-relay demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-recipe-relay</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -2363,21 +2783,25 @@
 
     <article
       class="card ok"
-      data-name="mesh remote retro standup"
+      data-name="mesh-remote-retro-standup"
       data-slug="mesh-remote-retro-standup"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-remote-retro-standup/" target="_blank" rel="noreferrer" aria-label="Open Mesh Remote Retro Standup demo">Mesh Remote Retro Standup</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-remote-retro-standup/" target="_blank" rel="noreferrer" aria-label="Open mesh-remote-retro-standup demo">mesh-remote-retro-standup</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-remote-retro-standup/demo.gif" alt="Mesh Remote Retro Standup demo" loading="lazy" />
+        <img class="gif" src="mesh-remote-retro-standup/demo.gif" alt="mesh-remote-retro-standup demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-remote-retro-standup</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -2389,6 +2813,9 @@
       data-slug="mesh-retro"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-retro/" target="_blank" rel="noreferrer" aria-label="Open mesh-retro demo">mesh-retro</a>
@@ -2400,6 +2827,7 @@
       </div>
       <footer>
         <code class="slug">mesh-retro</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -2411,6 +2839,9 @@
       data-slug="mesh-roast-or-toast"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-roast-or-toast/" target="_blank" rel="noreferrer" aria-label="Open mesh-roast-or-toast demo">mesh-roast-or-toast</a>
@@ -2422,6 +2853,7 @@
       </div>
       <footer>
         <code class="slug">mesh-roast-or-toast</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -2433,6 +2865,9 @@
       data-slug="mesh-room-soundtrack"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-room-soundtrack/" target="_blank" rel="noreferrer" aria-label="Open mesh-room-soundtrack demo">mesh-room-soundtrack</a>
@@ -2444,6 +2879,7 @@
       </div>
       <footer>
         <code class="slug">mesh-room-soundtrack</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -2455,6 +2891,9 @@
       data-slug="mesh-route-share"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-route-share/" target="_blank" rel="noreferrer" aria-label="Open mesh-route-share demo">mesh-route-share</a>
@@ -2466,6 +2905,7 @@
       </div>
       <footer>
         <code class="slug">mesh-route-share</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -2477,6 +2917,9 @@
       data-slug="mesh-rps-arena"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-rps-arena/" target="_blank" rel="noreferrer" aria-label="Open mesh-rps-arena demo">mesh-rps-arena</a>
@@ -2488,6 +2931,7 @@
       </div>
       <footer>
         <code class="slug">mesh-rps-arena</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -2499,6 +2943,9 @@
       data-slug="mesh-rsvp"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-rsvp/" target="_blank" rel="noreferrer" aria-label="Open mesh-rsvp demo">mesh-rsvp</a>
@@ -2510,6 +2957,7 @@
       </div>
       <footer>
         <code class="slug">mesh-rsvp</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -2521,6 +2969,9 @@
       data-slug="mesh-secret-ballot"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-secret-ballot/" target="_blank" rel="noreferrer" aria-label="Open mesh-secret-ballot demo">mesh-secret-ballot</a>
@@ -2532,6 +2983,7 @@
       </div>
       <footer>
         <code class="slug">mesh-secret-ballot</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -2543,6 +2995,9 @@
       data-slug="mesh-shadow-paint"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-shadow-paint/" target="_blank" rel="noreferrer" aria-label="Open mesh-shadow-paint demo">mesh-shadow-paint</a>
@@ -2554,6 +3009,7 @@
       </div>
       <footer>
         <code class="slug">mesh-shadow-paint</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -2565,6 +3021,9 @@
       data-slug="mesh-shake-dice"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-shake-dice/" target="_blank" rel="noreferrer" aria-label="Open mesh-shake-dice demo">mesh-shake-dice</a>
@@ -2576,6 +3035,7 @@
       </div>
       <footer>
         <code class="slug">mesh-shake-dice</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -2587,6 +3047,9 @@
       data-slug="mesh-shared-timer"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-shared-timer/" target="_blank" rel="noreferrer" aria-label="Open mesh-shared-timer demo">mesh-shared-timer</a>
@@ -2598,6 +3061,7 @@
       </div>
       <footer>
         <code class="slug">mesh-shared-timer</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -2609,6 +3073,9 @@
       data-slug="mesh-shared-window"
       data-status="ok"
       data-trl="5"
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-shared-window/" target="_blank" rel="noreferrer" aria-label="Open Mesh Shared Window demo">Mesh Shared Window</a>
@@ -2620,6 +3087,7 @@
       </div>
       <footer>
         <code class="slug">mesh-shared-window</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -2631,6 +3099,9 @@
       data-slug="mesh-shhh-meter"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-shhh-meter/" target="_blank" rel="noreferrer" aria-label="Open mesh-shhh-meter demo">mesh-shhh-meter</a>
@@ -2642,6 +3113,7 @@
       </div>
       <footer>
         <code class="slug">mesh-shhh-meter</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -2653,6 +3125,9 @@
       data-slug="mesh-show-of-hands"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-show-of-hands/" target="_blank" rel="noreferrer" aria-label="Open mesh-show-of-hands demo">mesh-show-of-hands</a>
@@ -2664,6 +3139,7 @@
       </div>
       <footer>
         <code class="slug">mesh-show-of-hands</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -2675,6 +3151,9 @@
       data-slug="mesh-shower-thoughts"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-shower-thoughts/" target="_blank" rel="noreferrer" aria-label="Open mesh-shower-thoughts demo">mesh-shower-thoughts</a>
@@ -2686,6 +3165,7 @@
       </div>
       <footer>
         <code class="slug">mesh-shower-thoughts</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -2697,6 +3177,9 @@
       data-slug="mesh-silence-counter"
       data-status="ok"
       data-trl="4"
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-silence-counter/" target="_blank" rel="noreferrer" aria-label="Open Mesh Silence Counter demo">Mesh Silence Counter</a>
@@ -2708,6 +3191,7 @@
       </div>
       <footer>
         <code class="slug">mesh-silence-counter</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -2719,6 +3203,9 @@
       data-slug="mesh-silent-vote"
       data-status="ok"
       data-trl=""
+      data-category="Decisions"
+      data-subcategory="Voting &amp; consensus"
+      data-usecases="team decisions|community input|prioritization"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-silent-vote/" target="_blank" rel="noreferrer" aria-label="Open mesh-silent-vote demo">mesh-silent-vote</a>
@@ -2730,6 +3217,7 @@
       </div>
       <footer>
         <code class="slug">mesh-silent-vote</code>
+        <span class="taxonomy">Decisions · Voting &amp; consensus</span>
         
       </footer>
     </article>
@@ -2741,6 +3229,9 @@
       data-slug="mesh-six-degrees"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-six-degrees/" target="_blank" rel="noreferrer" aria-label="Open mesh-six-degrees demo">mesh-six-degrees</a>
@@ -2752,6 +3243,7 @@
       </div>
       <footer>
         <code class="slug">mesh-six-degrees</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -2763,6 +3255,9 @@
       data-slug="mesh-skill-swap"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-skill-swap/" target="_blank" rel="noreferrer" aria-label="Open mesh-skill-swap demo">mesh-skill-swap</a>
@@ -2774,6 +3269,7 @@
       </div>
       <footer>
         <code class="slug">mesh-skill-swap</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -2785,6 +3281,9 @@
       data-slug="mesh-skill-tree"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-skill-tree/" target="_blank" rel="noreferrer" aria-label="Open mesh-skill-tree demo">mesh-skill-tree</a>
@@ -2796,6 +3295,7 @@
       </div>
       <footer>
         <code class="slug">mesh-skill-tree</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -2807,6 +3307,9 @@
       data-slug="mesh-snap"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-snap/" target="_blank" rel="noreferrer" aria-label="Open mesh-snap demo">mesh-snap</a>
@@ -2818,6 +3321,7 @@
       </div>
       <footer>
         <code class="slug">mesh-snap</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -2829,6 +3333,9 @@
       data-slug="mesh-snowball"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-snowball/" target="_blank" rel="noreferrer" aria-label="Open mesh-snowball demo">mesh-snowball</a>
@@ -2840,6 +3347,7 @@
       </div>
       <footer>
         <code class="slug">mesh-snowball</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -2847,21 +3355,25 @@
 
     <article
       class="card ok"
-      data-name="mesh speed type"
+      data-name="mesh-speed-type"
       data-slug="mesh-speed-type"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-speed-type/" target="_blank" rel="noreferrer" aria-label="Open Mesh Speed Type demo">Mesh Speed Type</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-speed-type/" target="_blank" rel="noreferrer" aria-label="Open mesh-speed-type demo">mesh-speed-type</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-speed-type/demo.gif" alt="Mesh Speed Type demo" loading="lazy" />
+        <img class="gif" src="mesh-speed-type/demo.gif" alt="mesh-speed-type demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-speed-type</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -2873,6 +3385,9 @@
       data-slug="mesh-split-the-bill"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-split-the-bill/" target="_blank" rel="noreferrer" aria-label="Open mesh-split-the-bill demo">mesh-split-the-bill</a>
@@ -2884,6 +3399,7 @@
       </div>
       <footer>
         <code class="slug">mesh-split-the-bill</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -2891,21 +3407,25 @@
 
     <article
       class="card ok"
-      data-name="mesh spot it"
+      data-name="mesh-spot-it"
       data-slug="mesh-spot-it"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-spot-it/" target="_blank" rel="noreferrer" aria-label="Open Mesh Spot It demo">Mesh Spot It</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-spot-it/" target="_blank" rel="noreferrer" aria-label="Open mesh-spot-it demo">mesh-spot-it</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-spot-it/demo.gif" alt="Mesh Spot It demo" loading="lazy" />
+        <img class="gif" src="mesh-spot-it/demo.gif" alt="mesh-spot-it demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-spot-it</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -2917,6 +3437,9 @@
       data-slug="mesh-spotlight"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-spotlight/" target="_blank" rel="noreferrer" aria-label="Open mesh-spotlight demo">mesh-spotlight</a>
@@ -2928,6 +3451,7 @@
       </div>
       <footer>
         <code class="slug">mesh-spotlight</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -2939,6 +3463,9 @@
       data-slug="mesh-spyfall"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-spyfall/" target="_blank" rel="noreferrer" aria-label="Open mesh-spyfall demo">mesh-spyfall</a>
@@ -2950,6 +3477,7 @@
       </div>
       <footer>
         <code class="slug">mesh-spyfall</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -2961,6 +3489,9 @@
       data-slug="mesh-standup"
       data-status="ok"
       data-trl=""
+      data-category="Work &amp; learning"
+      data-subcategory="Collaboration &amp; practice"
+      data-usecases="workshops|retrospectives|study groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-standup/" target="_blank" rel="noreferrer" aria-label="Open mesh-standup demo">mesh-standup</a>
@@ -2972,6 +3503,7 @@
       </div>
       <footer>
         <code class="slug">mesh-standup</code>
+        <span class="taxonomy">Work &amp; learning · Collaboration &amp; practice</span>
         
       </footer>
     </article>
@@ -2983,6 +3515,9 @@
       data-slug="mesh-step-circle"
       data-status="ok"
       data-trl=""
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-step-circle/" target="_blank" rel="noreferrer" aria-label="Open mesh-step-circle demo">mesh-step-circle</a>
@@ -2994,6 +3529,7 @@
       </div>
       <footer>
         <code class="slug">mesh-step-circle</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -3005,6 +3541,9 @@
       data-slug="mesh-step-relay"
       data-status="ok"
       data-trl=""
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-step-relay/" target="_blank" rel="noreferrer" aria-label="Open mesh-step-relay demo">mesh-step-relay</a>
@@ -3016,6 +3555,7 @@
       </div>
       <footer>
         <code class="slug">mesh-step-relay</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -3027,6 +3567,9 @@
       data-slug="mesh-storyworm"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-storyworm/" target="_blank" rel="noreferrer" aria-label="Open mesh-storyworm demo">mesh-storyworm</a>
@@ -3038,6 +3581,7 @@
       </div>
       <footer>
         <code class="slug">mesh-storyworm</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -3049,6 +3593,9 @@
       data-slug="mesh-stretch-class"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-stretch-class/" target="_blank" rel="noreferrer" aria-label="Open mesh-stretch-class demo">mesh-stretch-class</a>
@@ -3060,6 +3607,7 @@
       </div>
       <footer>
         <code class="slug">mesh-stretch-class</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -3067,21 +3615,25 @@
 
     <article
       class="card ok"
-      data-name="mesh taboo clues"
+      data-name="mesh-taboo-clues"
       data-slug="mesh-taboo-clues"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-taboo-clues/" target="_blank" rel="noreferrer" aria-label="Open Mesh Taboo Clues demo">Mesh Taboo Clues</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-taboo-clues/" target="_blank" rel="noreferrer" aria-label="Open mesh-taboo-clues demo">mesh-taboo-clues</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-taboo-clues/demo.gif" alt="Mesh Taboo Clues demo" loading="lazy" />
+        <img class="gif" src="mesh-taboo-clues/demo.gif" alt="mesh-taboo-clues demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-taboo-clues</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -3093,6 +3645,9 @@
       data-slug="mesh-tag"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-tag/" target="_blank" rel="noreferrer" aria-label="Open mesh-tag demo">mesh-tag</a>
@@ -3104,6 +3659,7 @@
       </div>
       <footer>
         <code class="slug">mesh-tag</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -3115,6 +3671,9 @@
       data-slug="mesh-takes-blitz"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-takes-blitz/" target="_blank" rel="noreferrer" aria-label="Open mesh-takes-blitz demo">mesh-takes-blitz</a>
@@ -3126,6 +3685,7 @@
       </div>
       <footer>
         <code class="slug">mesh-takes-blitz</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -3137,6 +3697,9 @@
       data-slug="mesh-tap-symphony"
       data-status="ok"
       data-trl="4"
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-tap-symphony/" target="_blank" rel="noreferrer" aria-label="Open Mesh Tap Symphony demo">Mesh Tap Symphony</a>
@@ -3148,6 +3711,7 @@
       </div>
       <footer>
         <code class="slug">mesh-tap-symphony</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -3159,6 +3723,9 @@
       data-slug="mesh-thank-you-token"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-thank-you-token/" target="_blank" rel="noreferrer" aria-label="Open mesh-thank-you-token demo">mesh-thank-you-token</a>
@@ -3170,6 +3737,7 @@
       </div>
       <footer>
         <code class="slug">mesh-thank-you-token</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -3181,6 +3749,9 @@
       data-slug="mesh-tic-tac-toe"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-tic-tac-toe/" target="_blank" rel="noreferrer" aria-label="Open mesh-tic-tac-toe demo">mesh-tic-tac-toe</a>
@@ -3192,6 +3763,7 @@
       </div>
       <footer>
         <code class="slug">mesh-tic-tac-toe</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -3203,6 +3775,9 @@
       data-slug="mesh-tide-pool"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-tide-pool/" target="_blank" rel="noreferrer" aria-label="Open mesh-tide-pool demo">mesh-tide-pool</a>
@@ -3214,6 +3789,7 @@
       </div>
       <footer>
         <code class="slug">mesh-tide-pool</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -3225,6 +3801,9 @@
       data-slug="mesh-tilt-marble"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-tilt-marble/" target="_blank" rel="noreferrer" aria-label="Open mesh-tilt-marble demo">mesh-tilt-marble</a>
@@ -3236,6 +3815,7 @@
       </div>
       <footer>
         <code class="slug">mesh-tilt-marble</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -3247,6 +3827,9 @@
       data-slug="mesh-time-capsule"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-time-capsule/" target="_blank" rel="noreferrer" aria-label="Open mesh-time-capsule demo">mesh-time-capsule</a>
@@ -3258,6 +3841,7 @@
       </div>
       <footer>
         <code class="slug">mesh-time-capsule</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -3269,6 +3853,9 @@
       data-slug="mesh-toast-stack"
       data-status="ok"
       data-trl=""
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-toast-stack/" target="_blank" rel="noreferrer" aria-label="Open mesh-toast-stack demo">mesh-toast-stack</a>
@@ -3280,6 +3867,7 @@
       </div>
       <footer>
         <code class="slug">mesh-toast-stack</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -3291,6 +3879,9 @@
       data-slug="mesh-trade-cards"
       data-status="ok"
       data-trl=""
+      data-category="Privacy &amp; utilities"
+      data-subcategory="Secure sharing &amp; identity"
+      data-usecases="private exchange|onboarding|personal tools"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-trade-cards/" target="_blank" rel="noreferrer" aria-label="Open mesh-trade-cards demo">mesh-trade-cards</a>
@@ -3302,6 +3893,7 @@
       </div>
       <footer>
         <code class="slug">mesh-trade-cards</code>
+        <span class="taxonomy">Privacy &amp; utilities · Secure sharing &amp; identity</span>
         
       </footer>
     </article>
@@ -3313,6 +3905,9 @@
       data-slug="mesh-treasure-hunt"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-treasure-hunt/" target="_blank" rel="noreferrer" aria-label="Open mesh-treasure-hunt demo">mesh-treasure-hunt</a>
@@ -3324,6 +3919,7 @@
       </div>
       <footer>
         <code class="slug">mesh-treasure-hunt</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -3335,6 +3931,9 @@
       data-slug="mesh-tremor-map"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-tremor-map/" target="_blank" rel="noreferrer" aria-label="Open mesh-tremor-map demo">mesh-tremor-map</a>
@@ -3346,6 +3945,7 @@
       </div>
       <footer>
         <code class="slug">mesh-tremor-map</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -3357,6 +3957,9 @@
       data-slug="mesh-trivia"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-trivia/" target="_blank" rel="noreferrer" aria-label="Open mesh-trivia demo">mesh-trivia</a>
@@ -3368,6 +3971,7 @@
       </div>
       <footer>
         <code class="slug">mesh-trivia</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -3379,6 +3983,9 @@
       data-slug="mesh-truth-bomb"
       data-status="ok"
       data-trl=""
+      data-category="Social"
+      data-subcategory="Conversation &amp; connection"
+      data-usecases="friends|communities|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-truth-bomb/" target="_blank" rel="noreferrer" aria-label="Open mesh-truth-bomb demo">mesh-truth-bomb</a>
@@ -3390,6 +3997,7 @@
       </div>
       <footer>
         <code class="slug">mesh-truth-bomb</code>
+        <span class="taxonomy">Social · Conversation &amp; connection</span>
         
       </footer>
     </article>
@@ -3401,6 +4009,9 @@
       data-slug="mesh-tug-of-war"
       data-status="ok"
       data-trl="5"
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-tug-of-war/" target="_blank" rel="noreferrer" aria-label="Open Mesh Tug Of War demo">Mesh Tug Of War</a>
@@ -3412,6 +4023,7 @@
       </div>
       <footer>
         <code class="slug">mesh-tug-of-war</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -3423,6 +4035,9 @@
       data-slug="mesh-vibe-check"
       data-status="ok"
       data-trl=""
+      data-category="Wellbeing"
+      data-subcategory="Mindfulness &amp; focus"
+      data-usecases="wellbeing|facilitation|self-reflection"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-vibe-check/" target="_blank" rel="noreferrer" aria-label="Open mesh-vibe-check demo">mesh-vibe-check</a>
@@ -3434,6 +4049,7 @@
       </div>
       <footer>
         <code class="slug">mesh-vibe-check</code>
+        <span class="taxonomy">Wellbeing · Mindfulness &amp; focus</span>
         
       </footer>
     </article>
@@ -3445,6 +4061,9 @@
       data-slug="mesh-volunteer-shift"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-volunteer-shift/" target="_blank" rel="noreferrer" aria-label="Open mesh-volunteer-shift demo">mesh-volunteer-shift</a>
@@ -3456,6 +4075,7 @@
       </div>
       <footer>
         <code class="slug">mesh-volunteer-shift</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -3467,6 +4087,9 @@
       data-slug="mesh-watch-party-sync"
       data-status="ok"
       data-trl=""
+      data-category="Devices &amp; spaces"
+      data-subcategory="Sensors &amp; shared displays"
+      data-usecases="co-located groups|mobile devices|installations"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-watch-party-sync/" target="_blank" rel="noreferrer" aria-label="Open mesh-watch-party-sync demo">mesh-watch-party-sync</a>
@@ -3478,6 +4101,7 @@
       </div>
       <footer>
         <code class="slug">mesh-watch-party-sync</code>
+        <span class="taxonomy">Devices &amp; spaces · Sensors &amp; shared displays</span>
         
       </footer>
     </article>
@@ -3489,6 +4113,9 @@
       data-slug="mesh-wave-canvas"
       data-status="ok"
       data-trl="5"
+      data-category="Creative"
+      data-subcategory="Making &amp; performance"
+      data-usecases="creative sessions|performances|shared media"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-wave-canvas/" target="_blank" rel="noreferrer" aria-label="Open Mesh Wave Canvas demo">Mesh Wave Canvas</a>
@@ -3500,6 +4127,7 @@
       </div>
       <footer>
         <code class="slug">mesh-wave-canvas</code>
+        <span class="taxonomy">Creative · Making &amp; performance</span>
         
       </footer>
     </article>
@@ -3511,6 +4139,9 @@
       data-slug="mesh-werewolf-roles"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-werewolf-roles/" target="_blank" rel="noreferrer" aria-label="Open mesh-werewolf-roles demo">mesh-werewolf-roles</a>
@@ -3522,6 +4153,7 @@
       </div>
       <footer>
         <code class="slug">mesh-werewolf-roles</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -3533,6 +4165,9 @@
       data-slug="mesh-when2meet"
       data-status="ok"
       data-trl=""
+      data-category="Coordination"
+      data-subcategory="Planning &amp; logistics"
+      data-usecases="events|teams|neighbourhoods"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-when2meet/" target="_blank" rel="noreferrer" aria-label="Open mesh-when2meet demo">mesh-when2meet</a>
@@ -3544,6 +4179,7 @@
       </div>
       <footer>
         <code class="slug">mesh-when2meet</code>
+        <span class="taxonomy">Coordination · Planning &amp; logistics</span>
         
       </footer>
     </article>
@@ -3551,21 +4187,25 @@
 
     <article
       class="card ok"
-      data-name="mesh word chain"
+      data-name="mesh-word-chain"
       data-slug="mesh-word-chain"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
-        <a class="title" href="https://baditaflorin.github.io/mesh-word-chain/" target="_blank" rel="noreferrer" aria-label="Open Mesh Word Chain demo">Mesh Word Chain</a>
+        <a class="title" href="https://baditaflorin.github.io/mesh-word-chain/" target="_blank" rel="noreferrer" aria-label="Open mesh-word-chain demo">mesh-word-chain</a>
         
         <span class="status status-ok" aria-label="Recording status: OK">OK</span>
       </header>
       <div class="media">
-        <img class="gif" src="mesh-word-chain/demo.gif" alt="Mesh Word Chain demo" loading="lazy" />
+        <img class="gif" src="mesh-word-chain/demo.gif" alt="mesh-word-chain demo" loading="lazy" />
       </div>
       <footer>
         <code class="slug">mesh-word-chain</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -3577,6 +4217,9 @@
       data-slug="mesh-would-rather"
       data-status="ok"
       data-trl=""
+      data-category="Games"
+      data-subcategory="Party &amp; tabletop"
+      data-usecases="icebreakers|game night|small groups"
     >
       <header>
         <a class="title" href="https://baditaflorin.github.io/mesh-would-rather/" target="_blank" rel="noreferrer" aria-label="Open mesh-would-rather demo">mesh-would-rather</a>
@@ -3588,6 +4231,7 @@
       </div>
       <footer>
         <code class="slug">mesh-would-rather</code>
+        <span class="taxonomy">Games · Party &amp; tabletop</span>
         
       </footer>
     </article>
@@ -3602,15 +4246,26 @@
       const buttons = [...document.querySelectorAll(".filter")];
       const cards = [...document.querySelectorAll(".card")];
       const results = document.querySelector("#demo-results");
+      const category = document.querySelector("#demo-category");
+      const subcategory = document.querySelector("#demo-subcategory");
+      const usecases = document.querySelector("#demo-usecases");
       let filter = "all";
+
+      for (const value of [...new Set(cards.map((card) => card.dataset.category))].sort()) category.add(new Option(value, value));
+      for (const value of [...new Set(cards.map((card) => card.dataset.subcategory))].sort()) subcategory.add(new Option(value, value));
+      for (const value of [...new Set(cards.flatMap((card) => card.dataset.usecases.split("|")))].sort()) usecases.add(new Option(value, value));
 
       const apply = () => {
         const query = search.value.trim().toLowerCase();
+        const selectedUseCases = [...usecases.selectedOptions].map((option) => option.value);
         let shown = 0;
         for (const card of cards) {
           const matchesFilter = filter === "all" || card.dataset.status === filter;
           const haystack = card.dataset.name + " " + card.dataset.slug;
-          const visible = matchesFilter && haystack.includes(query);
+          const matchesTaxonomy = (!category.value || card.dataset.category === category.value)
+            && (!subcategory.value || card.dataset.subcategory === subcategory.value)
+            && (selectedUseCases.length === 0 || selectedUseCases.every((useCase) => card.dataset.usecases.split("|").includes(useCase)));
+          const visible = matchesFilter && matchesTaxonomy && haystack.includes(query);
           card.hidden = !visible;
           if (visible) shown++;
         }
@@ -3618,6 +4273,9 @@
       };
 
       search.addEventListener("input", apply);
+      category.addEventListener("change", apply);
+      subcategory.addEventListener("change", apply);
+      usecases.addEventListener("change", apply);
       buttons.forEach((button) => button.addEventListener("click", () => {
         filter = button.dataset.filter;
         buttons.forEach((candidate) => {

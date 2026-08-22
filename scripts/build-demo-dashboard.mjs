@@ -12,6 +12,7 @@
 import { readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { taxonomyFor } from "../scenarios/taxonomy.mjs";
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const DEMOS_DIR = path.join(ROOT, "docs", "demos");
@@ -19,6 +20,7 @@ const REGISTRY_PATH_1 = path.resolve(ROOT, "..", "services-registry", "services.
 const REGISTRY_PATH_2 = path.resolve(ROOT, "..", "..", "services-registry", "services.json");
 const REGISTRY_PATH = existsSync(REGISTRY_PATH_1) ? REGISTRY_PATH_1 : REGISTRY_PATH_2;
 const OUT_PATH = path.join(DEMOS_DIR, "index.html");
+const TAXONOMY_OUT_PATH = path.join(DEMOS_DIR, "taxonomy.json");
 const SCENARIOS_DIR = path.join(ROOT, "scenarios");
 const checkOnly = process.argv.includes("--check-recordings");
 
@@ -46,7 +48,7 @@ const entries = (await readdir(DEMOS_DIR, { withFileTypes: true }))
 // not a service scenario.
 const scenarioFiles = existsSync(SCENARIOS_DIR)
   ? (await readdir(SCENARIOS_DIR, { withFileTypes: true }))
-      .filter((entry) => entry.isFile() && entry.name.endsWith(".mjs") && !entry.name.startsWith("_"))
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".mjs") && !entry.name.startsWith("_") && entry.name !== "taxonomy.mjs")
       .map((entry) => entry.name.slice(0, -4))
       .sort()
   : [];
@@ -71,6 +73,7 @@ if (checkOnly) {
 }
 
 const cards = [];
+const taxonomy = {};
 let okCount = 0;
 let failCount = 0;
 
@@ -87,6 +90,8 @@ for (const app of entries) {
   const name = reg?.name || app;
   const trl = reg?.trl ?? "";
   const pagesUrl = reg?.url || `https://baditaflorin.github.io/${app}/`;
+  const classification = taxonomyFor(app);
+  taxonomy[app] = classification;
   const ok = status === "OK" && hasGif;
   if (ok) okCount++;
   else failCount++;
@@ -108,6 +113,9 @@ for (const app of entries) {
       data-slug="${escapeHtml(app).toLowerCase()}"
       data-status="${ok ? "ok" : "fail"}"
       data-trl="${escapeHtml(trl)}"
+      data-category="${escapeHtml(classification.category)}"
+      data-subcategory="${escapeHtml(classification.subcategory)}"
+      data-usecases="${escapeHtml(classification.useCases.join("|"))}"
     >
       <header>
         <a class="title" href="${escapeHtml(pagesUrl)}" target="_blank" rel="noreferrer" aria-label="Open ${escapeHtml(name)} demo">${escapeHtml(name)}</a>
@@ -123,6 +131,7 @@ for (const app of entries) {
       </div>
       <footer>
         <code class="slug">${escapeHtml(app)}</code>
+        <span class="taxonomy">${escapeHtml(classification.category)} · ${escapeHtml(classification.subcategory)}</span>
         ${errHint ? `<details class="errhint"><summary>log tail</summary><pre>${escapeHtml(errHint)}</pre></details>` : ""}
       </footer>
     </article>
@@ -172,6 +181,7 @@ const html = `<!doctype html>
     .media .gif { width: 100%; height: auto; display: block; }
     .media .empty { color: #6e7681; font-style: italic; padding: 24px; }
     .card footer { padding: 8px 12px; border-top: 1px solid #21262d; display: flex; align-items: center; gap: 8px; }
+    .taxonomy { color: #8b949e; font-size: 11px; text-align: right; }
     .slug { font-family: ui-monospace, SF Mono, Menlo, monospace; color: #8b949e; font-size: 12px; flex: 1; }
     .errhint summary { cursor: pointer; color: #ff7b72; font-size: 12px; }
     .errhint pre { background: #0e1117; padding: 8px; border-radius: 4px; font-size: 11px; max-height: 120px; overflow: auto; white-space: pre-wrap; margin: 6px 0 0; }
@@ -200,6 +210,9 @@ const html = `<!doctype html>
         <button type="button" class="filter" data-filter="ok" aria-pressed="false">Working <span>${okCount}</span></button>
         <button type="button" class="filter" data-filter="fail" aria-pressed="false">Needs attention <span>${failCount}</span></button>
       </div>
+      <label class="catalog-search"><span>Category</span><select id="demo-category"><option value="">All categories</option></select></label>
+      <label class="catalog-search"><span>Subcategory</span><select id="demo-subcategory"><option value="">All subcategories</option></select></label>
+      <label class="catalog-search"><span>Use cases (multiple)</span><select id="demo-usecases" multiple size="3" aria-label="Filter by one or more use cases"></select></label>
       <p id="demo-results" class="catalog-results" role="status" aria-live="polite">Showing all ${entries.length} demos</p>
     </div>
   </header>
@@ -215,15 +228,26 @@ const html = `<!doctype html>
       const buttons = [...document.querySelectorAll(".filter")];
       const cards = [...document.querySelectorAll(".card")];
       const results = document.querySelector("#demo-results");
+      const category = document.querySelector("#demo-category");
+      const subcategory = document.querySelector("#demo-subcategory");
+      const usecases = document.querySelector("#demo-usecases");
       let filter = "all";
+
+      for (const value of [...new Set(cards.map((card) => card.dataset.category))].sort()) category.add(new Option(value, value));
+      for (const value of [...new Set(cards.map((card) => card.dataset.subcategory))].sort()) subcategory.add(new Option(value, value));
+      for (const value of [...new Set(cards.flatMap((card) => card.dataset.usecases.split("|")))].sort()) usecases.add(new Option(value, value));
 
       const apply = () => {
         const query = search.value.trim().toLowerCase();
+        const selectedUseCases = [...usecases.selectedOptions].map((option) => option.value);
         let shown = 0;
         for (const card of cards) {
           const matchesFilter = filter === "all" || card.dataset.status === filter;
           const haystack = card.dataset.name + " " + card.dataset.slug;
-          const visible = matchesFilter && haystack.includes(query);
+          const matchesTaxonomy = (!category.value || card.dataset.category === category.value)
+            && (!subcategory.value || card.dataset.subcategory === subcategory.value)
+            && (selectedUseCases.length === 0 || selectedUseCases.every((useCase) => card.dataset.usecases.split("|").includes(useCase)));
+          const visible = matchesFilter && matchesTaxonomy && haystack.includes(query);
           card.hidden = !visible;
           if (visible) shown++;
         }
@@ -231,6 +255,9 @@ const html = `<!doctype html>
       };
 
       search.addEventListener("input", apply);
+      category.addEventListener("change", apply);
+      subcategory.addEventListener("change", apply);
+      usecases.addEventListener("change", apply);
       buttons.forEach((button) => button.addEventListener("click", () => {
         filter = button.dataset.filter;
         buttons.forEach((candidate) => {
@@ -253,6 +280,7 @@ const html = `<!doctype html>
 `;
 
 await writeFile(OUT_PATH, html);
+await writeFile(TAXONOMY_OUT_PATH, `${JSON.stringify(taxonomy, null, 2)}\n`);
 console.log(`wrote ${OUT_PATH}`);
 console.log(`  total apps: ${entries.length}`);
 console.log(`  OK:         ${okCount}`);

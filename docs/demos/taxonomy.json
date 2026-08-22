@@ -1,0 +1,1442 @@
+{
+  "mesh-2-truths-1-lie": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-2fa-bridge": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-allowance": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-anonymous-qa": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-applause": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-applause-bracket": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-attendance": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-attendance-stamp": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-bench-archive": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-blind-date": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-book-club-lottery": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-borrow-board": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-bracket": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-brain-write": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-breakout-pairs": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-bus-factor": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-business-card": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-buzzer": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-carpool-bingo": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-chore-rotation": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-clap-track": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-class-checkin": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-clipboard-bridge": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-compliment-roulette": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-conversation-cards": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-crowd-map": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-daily-question": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-dare-wheel": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-deadline-pact": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-debate-clock": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-direction-finder": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-dj-deck": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-doorbell": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-emoji-rain": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-energy-curve": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-exquisite-corpse": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-eye-contact": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-face-grid": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-favor-bank": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-find-my-family": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-finger-relay": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-firefly-walk": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-fist-of-five": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-five-second-rule": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-flash-mob": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-flashcard-swarm": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-fortune-cookie": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-fundraiser-bar": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-gift-exchange": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-habit-sprint": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-handshake-chain": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-heads-up": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-hot-potato": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-icebreaker": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-icebreaker-bingo": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-idea-market": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-improv-director": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-jellybean": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-kiosk-wall": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-laser-tag": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-light-paint": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-lightning-flash": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-link-share": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-live-poll": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-lost-found": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-lunch-roulette": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-mad-libs": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-mafia": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-meeting-cost": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-meme-quote": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-memory-match": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-metronome": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-mic-drop-quiz": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-mind-meld": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-mirror": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-mood-check": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-mood-ring": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-name-game": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-network-builder": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-never-have-i": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-new-year": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-orientation-mosaic": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-overrated-underrated": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-pair-rotation": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-pass-the-phone": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-passport": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-petition": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-pictionary": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-pitch-pong": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-pomodoro-room": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-potluck": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-prediction-pool": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-privacy-drop": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-prompt-ladder": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-pulse-photo": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-pyramid": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-qr-snake": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-questions-only": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-queue": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-quick-draw-duel": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-quiet-cheer": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-quiet-quest": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-ranked-vote": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-recipe-relay": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-remote-retro-standup": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-retro": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-roast-or-toast": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-room-soundtrack": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-route-share": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-rps-arena": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-rsvp": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-secret-ballot": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-shadow-paint": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-shake-dice": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-shared-timer": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-shared-window": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-shhh-meter": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-show-of-hands": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-shower-thoughts": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-silence-counter": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-silent-vote": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "team decisions",
+      "community input",
+      "prioritization"
+    ]
+  },
+  "mesh-six-degrees": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-skill-swap": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-skill-tree": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-snap": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-snowball": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-speed-type": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-split-the-bill": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-spot-it": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-spotlight": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-spyfall": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-standup": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
+  "mesh-step-circle": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-step-relay": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-storyworm": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-stretch-class": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-taboo-clues": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-tag": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-takes-blitz": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-tap-symphony": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-thank-you-token": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-tic-tac-toe": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-tide-pool": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-tilt-marble": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-time-capsule": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-toast-stack": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-trade-cards": {
+    "category": "Privacy & utilities",
+    "subcategory": "Secure sharing & identity",
+    "useCases": [
+      "private exchange",
+      "onboarding",
+      "personal tools"
+    ]
+  },
+  "mesh-treasure-hunt": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-tremor-map": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-trivia": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-truth-bomb": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "communities",
+      "small groups"
+    ]
+  },
+  "mesh-tug-of-war": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-vibe-check": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
+  "mesh-volunteer-shift": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-watch-party-sync": {
+    "category": "Devices & spaces",
+    "subcategory": "Sensors & shared displays",
+    "useCases": [
+      "co-located groups",
+      "mobile devices",
+      "installations"
+    ]
+  },
+  "mesh-wave-canvas": {
+    "category": "Creative",
+    "subcategory": "Making & performance",
+    "useCases": [
+      "creative sessions",
+      "performances",
+      "shared media"
+    ]
+  },
+  "mesh-werewolf-roles": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-when2meet": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
+  "mesh-word-chain": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  },
+  "mesh-would-rather": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
+    ]
+  }
+}
