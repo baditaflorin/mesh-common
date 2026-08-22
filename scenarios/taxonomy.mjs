@@ -8,6 +8,36 @@
  */
 const rules = [
   [
+    /pair-mixer/,
+    "Coordination",
+    "Check-in & assignments",
+    ["breakouts", "workshops", "teams"],
+  ],
+  [
+    /turn-taker/,
+    "Games",
+    "Party & tabletop",
+    ["turn taking", "game night", "facilitation"],
+  ],
+  [
+    /budget-pot/,
+    "Coordination",
+    "Planning & logistics",
+    ["shared costs", "events", "teams"],
+  ],
+  [
+    /card-sorter/,
+    "Decisions",
+    "Selection & ranking",
+    ["prioritization", "workshops", "team decisions"],
+  ],
+  [
+    /host-handoff/,
+    "Work & learning",
+    "Facilitation & reflection",
+    ["facilitation", "meetings", "teams"],
+  ],
+  [
     /lightning-poll/,
     "Decisions",
     "Voting & consensus",

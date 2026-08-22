@@ -143,6 +143,15 @@
       "neighbourhoods"
     ]
   },
+  "mesh-budget-pot": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "shared costs",
+      "events",
+      "teams"
+    ]
+  },
   "mesh-bus-factor": {
     "category": "Work & learning",
     "subcategory": "Collaboration & practice",
@@ -168,6 +177,15 @@
       "friends",
       "communities",
       "small groups"
+    ]
+  },
+  "mesh-card-sorter": {
+    "category": "Decisions",
+    "subcategory": "Selection & ranking",
+    "useCases": [
+      "prioritization",
+      "workshops",
+      "team decisions"
     ]
   },
   "mesh-carpool-bingo": {
@@ -512,6 +530,15 @@
       "small groups"
     ]
   },
+  "mesh-host-handoff": {
+    "category": "Work & learning",
+    "subcategory": "Facilitation & reflection",
+    "useCases": [
+      "facilitation",
+      "meetings",
+      "teams"
+    ]
+  },
   "mesh-hot-potato": {
     "category": "Games",
     "subcategory": "Party & tabletop",
@@ -825,6 +852,15 @@
       "team decisions",
       "community input",
       "prioritization"
+    ]
+  },
+  "mesh-pair-mixer": {
+    "category": "Coordination",
+    "subcategory": "Check-in & assignments",
+    "useCases": [
+      "breakouts",
+      "workshops",
+      "teams"
     ]
   },
   "mesh-pair-rotation": {
@@ -1536,6 +1572,15 @@
       "game night",
       "two players",
       "quick rounds"
+    ]
+  },
+  "mesh-turn-taker": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "turn taking",
+      "game night",
+      "facilitation"
     ]
   },
   "mesh-vibe-check": {
