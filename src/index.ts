@@ -575,6 +575,25 @@ export {
 export { useSharedInvites, type SharedInvite } from "./useSharedInvites";
 export { useSharedChoices, type SharedChoice } from "./useSharedChoices";
 
+// ---- sixteenth primitive wave: shared creative play (2026-08) ----
+export {
+  useSharedStickyBoard,
+  type SharedStickyNote,
+} from "./useSharedStickyBoard";
+export {
+  useSharedWordRelay,
+  type SharedWordRelayEntry,
+} from "./useSharedWordRelay";
+export { useSharedPixelGrid, type SharedPixel } from "./useSharedPixelGrid";
+export {
+  useSharedCaptionContest,
+  type SharedCaption,
+} from "./useSharedCaptionContest";
+export {
+  useSharedBingoBoard,
+  type SharedBingoCell,
+} from "./useSharedBingoBoard";
+
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
   useSharedCollection,
