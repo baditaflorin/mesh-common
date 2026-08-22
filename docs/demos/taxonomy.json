@@ -1,7 +1,7 @@
 {
   "mesh-2-truths-1-lie": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
       "icebreakers",
       "game night",
@@ -10,7 +10,7 @@
   },
   "mesh-2fa-bridge": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Identity & private exchange",
     "useCases": [
       "private exchange",
       "onboarding",
@@ -19,7 +19,7 @@
   },
   "mesh-allowance": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Identity & private exchange",
     "useCases": [
       "private exchange",
       "onboarding",
@@ -28,7 +28,7 @@
   },
   "mesh-anonymous-qa": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Identity & private exchange",
     "useCases": [
       "private exchange",
       "onboarding",
@@ -54,21 +54,21 @@
     ]
   },
   "mesh-attendance": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Coordination",
+    "subcategory": "Check-in & assignments",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "events",
+      "volunteers",
+      "teams"
     ]
   },
   "mesh-attendance-stamp": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Camera & vision",
     "useCases": [
-      "co-located groups",
       "mobile devices",
-      "installations"
+      "co-located groups",
+      "capture"
     ]
   },
   "mesh-bench-archive": {
@@ -90,11 +90,11 @@
     ]
   },
   "mesh-book-club-lottery": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Decisions",
+    "subcategory": "Selection & ranking",
     "useCases": [
-      "friends",
-      "communities",
+      "team decisions",
+      "choices",
       "small groups"
     ]
   },
@@ -171,37 +171,37 @@
     ]
   },
   "mesh-chore-rotation": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Coordination",
+    "subcategory": "Check-in & assignments",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "events",
+      "volunteers",
+      "teams"
     ]
   },
   "mesh-clap-track": {
-    "category": "Creative",
-    "subcategory": "Making & performance",
+    "category": "Devices & spaces",
+    "subcategory": "Audio & haptics",
     "useCases": [
-      "creative sessions",
+      "sound",
       "performances",
-      "shared media"
+      "co-located groups"
     ]
   },
   "mesh-class-checkin": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Coordination",
+    "subcategory": "Check-in & assignments",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "events",
+      "volunteers",
+      "teams"
     ]
   },
   "mesh-clipboard-bridge": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Links, QR & transfer",
     "useCases": [
-      "private exchange",
+      "sharing",
       "onboarding",
       "personal tools"
     ]
@@ -216,30 +216,30 @@
     ]
   },
   "mesh-compliment-roulette": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Work & learning",
+    "subcategory": "Facilitation & reflection",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "facilitation",
+      "workshops",
+      "teams"
     ]
   },
   "mesh-conversation-cards": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Work & learning",
+    "subcategory": "Facilitation & reflection",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "facilitation",
+      "workshops",
+      "teams"
     ]
   },
   "mesh-crowd-map": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Devices & spaces",
+    "subcategory": "Location & field tools",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "outdoors",
+      "neighbourhoods",
+      "events"
     ]
   },
   "mesh-daily-question": {
@@ -289,38 +289,38 @@
   },
   "mesh-direction-finder": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Motion & orientation",
     "useCases": [
-      "co-located groups",
       "mobile devices",
-      "installations"
+      "movement",
+      "sensors"
     ]
   },
   "mesh-dj-deck": {
-    "category": "Creative",
-    "subcategory": "Making & performance",
+    "category": "Devices & spaces",
+    "subcategory": "Audio & haptics",
     "useCases": [
-      "creative sessions",
+      "sound",
       "performances",
-      "shared media"
+      "co-located groups"
     ]
   },
   "mesh-doorbell": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Devices & spaces",
+    "subcategory": "Audio & haptics",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "sound",
+      "performances",
+      "co-located groups"
     ]
   },
   "mesh-emoji-rain": {
     "category": "Creative",
-    "subcategory": "Making & performance",
+    "subcategory": "Visual making",
     "useCases": [
       "creative sessions",
-      "performances",
-      "shared media"
+      "shared media",
+      "performances"
     ]
   },
   "mesh-energy-curve": {
@@ -343,34 +343,34 @@
   },
   "mesh-exquisite-corpse": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Arcade & reaction",
     "useCases": [
-      "icebreakers",
       "game night",
-      "small groups"
+      "two players",
+      "quick rounds"
     ]
   },
   "mesh-eye-contact": {
-    "category": "Wellbeing",
-    "subcategory": "Mindfulness & focus",
+    "category": "Devices & spaces",
+    "subcategory": "Camera & vision",
     "useCases": [
-      "wellbeing",
-      "facilitation",
-      "self-reflection"
+      "mobile devices",
+      "co-located groups",
+      "capture"
     ]
   },
   "mesh-face-grid": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Camera & vision",
     "useCases": [
-      "co-located groups",
       "mobile devices",
-      "installations"
+      "co-located groups",
+      "capture"
     ]
   },
   "mesh-favor-bank": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Identity & private exchange",
     "useCases": [
       "private exchange",
       "onboarding",
@@ -379,11 +379,11 @@
   },
   "mesh-find-my-family": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Location & field tools",
     "useCases": [
-      "co-located groups",
-      "mobile devices",
-      "installations"
+      "outdoors",
+      "neighbourhoods",
+      "events"
     ]
   },
   "mesh-finger-relay": {
@@ -396,12 +396,12 @@
     ]
   },
   "mesh-firefly-walk": {
-    "category": "Creative",
-    "subcategory": "Making & performance",
+    "category": "Devices & spaces",
+    "subcategory": "Shared displays & installations",
     "useCases": [
-      "creative sessions",
-      "performances",
-      "shared media"
+      "installations",
+      "shared screens",
+      "co-located groups"
     ]
   },
   "mesh-fist-of-five": {
@@ -424,10 +424,10 @@
   },
   "mesh-flash-mob": {
     "category": "Creative",
-    "subcategory": "Making & performance",
+    "subcategory": "Performance & sound",
     "useCases": [
-      "creative sessions",
       "performances",
+      "co-located groups",
       "shared media"
     ]
   },
@@ -451,7 +451,7 @@
   },
   "mesh-fortune-cookie": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
       "icebreakers",
       "game night",
@@ -469,7 +469,7 @@
   },
   "mesh-gift-exchange": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Identity & private exchange",
     "useCases": [
       "private exchange",
       "onboarding",
@@ -487,16 +487,16 @@
   },
   "mesh-handshake-chain": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Motion & orientation",
     "useCases": [
-      "co-located groups",
       "mobile devices",
-      "installations"
+      "movement",
+      "sensors"
     ]
   },
   "mesh-heads-up": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
       "icebreakers",
       "game night",
@@ -559,45 +559,45 @@
   },
   "mesh-kiosk-wall": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Shared displays & installations",
     "useCases": [
-      "co-located groups",
-      "mobile devices",
-      "installations"
+      "installations",
+      "shared screens",
+      "co-located groups"
     ]
   },
   "mesh-laser-tag": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Arcade & reaction",
     "useCases": [
-      "icebreakers",
       "game night",
-      "small groups"
+      "two players",
+      "quick rounds"
     ]
   },
   "mesh-light-paint": {
     "category": "Creative",
-    "subcategory": "Making & performance",
+    "subcategory": "Visual making",
     "useCases": [
       "creative sessions",
-      "performances",
-      "shared media"
+      "shared media",
+      "performances"
     ]
   },
   "mesh-lightning-flash": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Shared displays & installations",
     "useCases": [
-      "co-located groups",
-      "mobile devices",
-      "installations"
+      "installations",
+      "shared screens",
+      "co-located groups"
     ]
   },
   "mesh-link-share": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Links, QR & transfer",
     "useCases": [
-      "private exchange",
+      "sharing",
       "onboarding",
       "personal tools"
     ]
@@ -621,26 +621,26 @@
     ]
   },
   "mesh-lunch-roulette": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Decisions",
+    "subcategory": "Selection & ranking",
     "useCases": [
-      "friends",
-      "communities",
+      "team decisions",
+      "choices",
       "small groups"
     ]
   },
   "mesh-mad-libs": {
     "category": "Creative",
-    "subcategory": "Making & performance",
+    "subcategory": "Writing & storytelling",
     "useCases": [
       "creative sessions",
-      "performances",
-      "shared media"
+      "writing",
+      "small groups"
     ]
   },
   "mesh-mafia": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
       "icebreakers",
       "game night",
@@ -658,56 +658,56 @@
   },
   "mesh-meme-quote": {
     "category": "Creative",
-    "subcategory": "Making & performance",
+    "subcategory": "Visual making",
     "useCases": [
       "creative sessions",
-      "performances",
-      "shared media"
+      "shared media",
+      "performances"
     ]
   },
   "mesh-memory-match": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Arcade & reaction",
     "useCases": [
-      "icebreakers",
       "game night",
-      "small groups"
+      "two players",
+      "quick rounds"
     ]
   },
   "mesh-metronome": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Devices & spaces",
+    "subcategory": "Audio & haptics",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "sound",
+      "performances",
+      "co-located groups"
     ]
   },
   "mesh-mic-drop-quiz": {
-    "category": "Games",
-    "subcategory": "Party & tabletop",
+    "category": "Devices & spaces",
+    "subcategory": "Audio & haptics",
     "useCases": [
-      "icebreakers",
-      "game night",
-      "small groups"
+      "sound",
+      "performances",
+      "co-located groups"
     ]
   },
   "mesh-mind-meld": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Work & learning",
+    "subcategory": "Facilitation & reflection",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "facilitation",
+      "workshops",
+      "teams"
     ]
   },
   "mesh-mirror": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Camera & vision",
     "useCases": [
-      "co-located groups",
       "mobile devices",
-      "installations"
+      "co-located groups",
+      "capture"
     ]
   },
   "mesh-mood-check": {
@@ -729,26 +729,26 @@
     ]
   },
   "mesh-name-game": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Games",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
-      "friends",
-      "communities",
+      "icebreakers",
+      "game night",
       "small groups"
     ]
   },
   "mesh-network-builder": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Links, QR & transfer",
     "useCases": [
-      "private exchange",
+      "sharing",
       "onboarding",
       "personal tools"
     ]
   },
   "mesh-never-have-i": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
       "icebreakers",
       "game night",
@@ -756,21 +756,21 @@
     ]
   },
   "mesh-new-year": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Wellbeing",
+    "subcategory": "Connection & appreciation",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "social connection",
+      "teams",
+      "celebrations"
     ]
   },
   "mesh-orientation-mosaic": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Motion & orientation",
     "useCases": [
-      "co-located groups",
       "mobile devices",
-      "installations"
+      "movement",
+      "sensors"
     ]
   },
   "mesh-overrated-underrated": {
@@ -802,7 +802,7 @@
   },
   "mesh-passport": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Identity & private exchange",
     "useCases": [
       "private exchange",
       "onboarding",
@@ -865,7 +865,7 @@
   },
   "mesh-privacy-drop": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Identity & private exchange",
     "useCases": [
       "private exchange",
       "onboarding",
@@ -882,12 +882,12 @@
     ]
   },
   "mesh-pulse-photo": {
-    "category": "Creative",
-    "subcategory": "Making & performance",
+    "category": "Devices & spaces",
+    "subcategory": "Camera & vision",
     "useCases": [
-      "creative sessions",
-      "performances",
-      "shared media"
+      "mobile devices",
+      "co-located groups",
+      "capture"
     ]
   },
   "mesh-pyramid": {
@@ -901,19 +901,19 @@
   },
   "mesh-qr-snake": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Arcade & reaction",
     "useCases": [
-      "icebreakers",
       "game night",
-      "small groups"
+      "two players",
+      "quick rounds"
     ]
   },
   "mesh-questions-only": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Games",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
-      "friends",
-      "communities",
+      "icebreakers",
+      "game night",
       "small groups"
     ]
   },
@@ -928,11 +928,11 @@
   },
   "mesh-quick-draw-duel": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Arcade & reaction",
     "useCases": [
-      "icebreakers",
       "game night",
-      "small groups"
+      "two players",
+      "quick rounds"
     ]
   },
   "mesh-quiet-cheer": {
@@ -991,47 +991,47 @@
   },
   "mesh-roast-or-toast": {
     "category": "Creative",
-    "subcategory": "Making & performance",
+    "subcategory": "Writing & storytelling",
     "useCases": [
       "creative sessions",
-      "performances",
-      "shared media"
-    ]
-  },
-  "mesh-room-norms": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
-    "useCases": [
-      "friends",
-      "communities",
+      "writing",
       "small groups"
     ]
   },
-  "mesh-room-soundtrack": {
-    "category": "Creative",
-    "subcategory": "Making & performance",
+  "mesh-room-norms": {
+    "category": "Work & learning",
+    "subcategory": "Facilitation & reflection",
     "useCases": [
-      "creative sessions",
+      "facilitation",
+      "workshops",
+      "teams"
+    ]
+  },
+  "mesh-room-soundtrack": {
+    "category": "Devices & spaces",
+    "subcategory": "Audio & haptics",
+    "useCases": [
+      "sound",
       "performances",
-      "shared media"
+      "co-located groups"
     ]
   },
   "mesh-route-share": {
-    "category": "Coordination",
-    "subcategory": "Planning & logistics",
+    "category": "Devices & spaces",
+    "subcategory": "Location & field tools",
     "useCases": [
-      "events",
-      "teams",
-      "neighbourhoods"
+      "outdoors",
+      "neighbourhoods",
+      "events"
     ]
   },
   "mesh-rps-arena": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Arcade & reaction",
     "useCases": [
-      "icebreakers",
       "game night",
-      "small groups"
+      "two players",
+      "quick rounds"
     ]
   },
   "mesh-rsvp": {
@@ -1054,20 +1054,20 @@
   },
   "mesh-shadow-paint": {
     "category": "Creative",
-    "subcategory": "Making & performance",
+    "subcategory": "Visual making",
     "useCases": [
       "creative sessions",
-      "performances",
-      "shared media"
+      "shared media",
+      "performances"
     ]
   },
   "mesh-shake-dice": {
-    "category": "Games",
-    "subcategory": "Party & tabletop",
+    "category": "Devices & spaces",
+    "subcategory": "Motion & orientation",
     "useCases": [
-      "icebreakers",
-      "game night",
-      "small groups"
+      "mobile devices",
+      "movement",
+      "sensors"
     ]
   },
   "mesh-shared-checklist": {
@@ -1089,12 +1089,12 @@
     ]
   },
   "mesh-shared-window": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Devices & spaces",
+    "subcategory": "Shared displays & installations",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "installations",
+      "shared screens",
+      "co-located groups"
     ]
   },
   "mesh-shhh-meter": {
@@ -1116,12 +1116,12 @@
     ]
   },
   "mesh-shower-thoughts": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Work & learning",
+    "subcategory": "Facilitation & reflection",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "facilitation",
+      "workshops",
+      "teams"
     ]
   },
   "mesh-silence-counter": {
@@ -1215,12 +1215,12 @@
     ]
   },
   "mesh-speed-type": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Games",
+    "subcategory": "Arcade & reaction",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "game night",
+      "two players",
+      "quick rounds"
     ]
   },
   "mesh-split-the-bill": {
@@ -1234,11 +1234,11 @@
   },
   "mesh-spot-it": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Arcade & reaction",
     "useCases": [
-      "icebreakers",
       "game night",
-      "small groups"
+      "two players",
+      "quick rounds"
     ]
   },
   "mesh-spotlight": {
@@ -1252,7 +1252,7 @@
   },
   "mesh-spyfall": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
       "icebreakers",
       "game night",
@@ -1270,29 +1270,29 @@
   },
   "mesh-step-circle": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Motion & orientation",
     "useCases": [
-      "co-located groups",
       "mobile devices",
-      "installations"
+      "movement",
+      "sensors"
     ]
   },
   "mesh-step-relay": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Motion & orientation",
     "useCases": [
-      "co-located groups",
       "mobile devices",
-      "installations"
+      "movement",
+      "sensors"
     ]
   },
   "mesh-storyworm": {
     "category": "Creative",
-    "subcategory": "Making & performance",
+    "subcategory": "Writing & storytelling",
     "useCases": [
       "creative sessions",
-      "performances",
-      "shared media"
+      "writing",
+      "small groups"
     ]
   },
   "mesh-stretch-class": {
@@ -1306,7 +1306,7 @@
   },
   "mesh-taboo-clues": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
       "icebreakers",
       "game night",
@@ -1332,30 +1332,30 @@
     ]
   },
   "mesh-tap-symphony": {
-    "category": "Creative",
-    "subcategory": "Making & performance",
+    "category": "Devices & spaces",
+    "subcategory": "Audio & haptics",
     "useCases": [
-      "creative sessions",
+      "sound",
       "performances",
-      "shared media"
+      "co-located groups"
     ]
   },
   "mesh-thank-you-token": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Wellbeing",
+    "subcategory": "Connection & appreciation",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "social connection",
+      "teams",
+      "celebrations"
     ]
   },
   "mesh-tic-tac-toe": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Arcade & reaction",
     "useCases": [
-      "icebreakers",
       "game night",
-      "small groups"
+      "two players",
+      "quick rounds"
     ]
   },
   "mesh-tide-pool": {
@@ -1368,35 +1368,35 @@
     ]
   },
   "mesh-tilt-marble": {
-    "category": "Games",
-    "subcategory": "Party & tabletop",
+    "category": "Devices & spaces",
+    "subcategory": "Motion & orientation",
     "useCases": [
-      "icebreakers",
-      "game night",
-      "small groups"
+      "mobile devices",
+      "movement",
+      "sensors"
     ]
   },
   "mesh-time-capsule": {
     "category": "Creative",
-    "subcategory": "Making & performance",
+    "subcategory": "Writing & storytelling",
     "useCases": [
       "creative sessions",
-      "performances",
-      "shared media"
+      "writing",
+      "small groups"
     ]
   },
   "mesh-toast-stack": {
-    "category": "Creative",
-    "subcategory": "Making & performance",
+    "category": "Wellbeing",
+    "subcategory": "Connection & appreciation",
     "useCases": [
-      "creative sessions",
-      "performances",
-      "shared media"
+      "social connection",
+      "teams",
+      "celebrations"
     ]
   },
   "mesh-trade-cards": {
     "category": "Privacy & utilities",
-    "subcategory": "Secure sharing & identity",
+    "subcategory": "Identity & private exchange",
     "useCases": [
       "private exchange",
       "onboarding",
@@ -1404,21 +1404,21 @@
     ]
   },
   "mesh-treasure-hunt": {
-    "category": "Social",
-    "subcategory": "Conversation & connection",
+    "category": "Devices & spaces",
+    "subcategory": "Location & field tools",
     "useCases": [
-      "friends",
-      "communities",
-      "small groups"
+      "outdoors",
+      "neighbourhoods",
+      "events"
     ]
   },
   "mesh-tremor-map": {
-    "category": "Wellbeing",
-    "subcategory": "Mindfulness & focus",
+    "category": "Devices & spaces",
+    "subcategory": "Motion & orientation",
     "useCases": [
-      "wellbeing",
-      "facilitation",
-      "self-reflection"
+      "mobile devices",
+      "movement",
+      "sensors"
     ]
   },
   "mesh-trivia": {
@@ -1441,11 +1441,11 @@
   },
   "mesh-tug-of-war": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Arcade & reaction",
     "useCases": [
-      "icebreakers",
       "game night",
-      "small groups"
+      "two players",
+      "quick rounds"
     ]
   },
   "mesh-vibe-check": {
@@ -1477,25 +1477,25 @@
   },
   "mesh-watch-party-sync": {
     "category": "Devices & spaces",
-    "subcategory": "Sensors & shared displays",
+    "subcategory": "Shared displays & installations",
     "useCases": [
-      "co-located groups",
-      "mobile devices",
-      "installations"
+      "installations",
+      "shared screens",
+      "co-located groups"
     ]
   },
   "mesh-wave-canvas": {
-    "category": "Creative",
-    "subcategory": "Making & performance",
+    "category": "Devices & spaces",
+    "subcategory": "Motion & orientation",
     "useCases": [
-      "creative sessions",
-      "performances",
-      "shared media"
+      "mobile devices",
+      "movement",
+      "sensors"
     ]
   },
   "mesh-werewolf-roles": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
       "icebreakers",
       "game night",
@@ -1522,7 +1522,7 @@
   },
   "mesh-would-rather": {
     "category": "Games",
-    "subcategory": "Party & tabletop",
+    "subcategory": "Conversation & bluffing",
     "useCases": [
       "icebreakers",
       "game night",
