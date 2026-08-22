@@ -566,6 +566,14 @@ export {
   type SharedMilestone,
   type PlaylistEntry,
 } from "./useSharedFacilitation";
+export { useSharedBookmarks, type SharedBookmark } from "./useSharedBookmarks";
+export { useSharedMessages, type SharedMessage } from "./useSharedMessages";
+export {
+  useSharedCountdowns,
+  type SharedCountdown,
+} from "./useSharedCountdowns";
+export { useSharedInvites, type SharedInvite } from "./useSharedInvites";
+export { useSharedChoices, type SharedChoice } from "./useSharedChoices";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
