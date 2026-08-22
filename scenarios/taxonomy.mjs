@@ -7,6 +7,11 @@
  * so people can actually filter it.
  */
 const rules = [
+  [/(focus-sprint)/, "Productivity", "Focus & routines", ["study", "coworking", "pomodoro"]],
+  [/(cohort-scheduler)/, "Productivity", "Coordination & planning", ["study groups", "meetings", "planning"]],
+  [/(volunteer-desk)/, "Community", "Events & volunteering", ["events", "volunteers", "check-in"]],
+  [/(decision-room)/, "Productivity", "Decision making", ["team decisions", "prioritization", "meetings"]],
+  [/(exit-ticket)/, "Education", "Session feedback", ["workshops", "classes", "retrospectives"]],
   [/(mafia|werewolf|spyfall|codenames|rps|tic-tac|snake|bingo|trivia|quiz|pictionary|heads-up|taboo|spot-it|memory-match|hot-potato|five-second|word-chain|truths|would-rather|never-have|dare-wheel|jellybean|fortune-cookie|quick-draw|pass-the-phone|laser-tag|marble|dice|tug-of-war|sound-guess)/, "Games", "Party & tabletop", ["icebreakers", "game night", "small groups"]],
   [/(poll|vote|ballot|petition|fist-of-five|show-of-hands|idea-market|ranked-vote|prediction|overrated|debate|applause)/, "Decisions", "Voting & consensus", ["team decisions", "community input", "prioritization"]],
   [/(queue|rsvp|when2meet|availability|breakout|pair-rotation|volunteer|carpool|potluck|borrow|lost-found|route-share|split-the-bill|meeting-cost|deadline-pact|shared-checklist)/, "Coordination", "Planning & logistics", ["events", "teams", "neighbourhoods"]],
