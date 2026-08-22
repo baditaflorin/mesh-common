@@ -546,6 +546,16 @@ export {
   type SharedRound,
   type SharedReaction,
 } from "./useSharedSessions";
+export {
+  useSharedPairings,
+  useSharedTurnOrder,
+  useSharedBudget,
+  useSharedCardStack,
+  useSharedHost,
+  type SharedPairing,
+  type SharedCard,
+  type SharedHost,
+} from "./useSharedActivities";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
