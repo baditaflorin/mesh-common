@@ -602,6 +602,15 @@
       "co-located groups"
     ]
   },
+  "mesh-lightning-poll": {
+    "category": "Decisions",
+    "subcategory": "Voting & consensus",
+    "useCases": [
+      "quick decisions",
+      "meetings",
+      "community input"
+    ]
+  },
   "mesh-link-share": {
     "category": "Privacy & utilities",
     "subcategory": "Links, QR & transfer",
@@ -771,6 +780,15 @@
       "celebrations",
       "communities",
       "small groups"
+    ]
+  },
+  "mesh-note-pile": {
+    "category": "Work & learning",
+    "subcategory": "Facilitation & reflection",
+    "useCases": [
+      "retrospectives",
+      "workshops",
+      "brainstorming"
     ]
   },
   "mesh-one-word-wall": {
@@ -998,6 +1016,15 @@
       "prioritization"
     ]
   },
+  "mesh-reaction-wall": {
+    "category": "Social",
+    "subcategory": "Celebration & support",
+    "useCases": [
+      "community feedback",
+      "celebrations",
+      "teams"
+    ]
+  },
   "mesh-recipe-relay": {
     "category": "Work & learning",
     "subcategory": "Collaboration & practice",
@@ -1034,6 +1061,15 @@
       "small groups"
     ]
   },
+  "mesh-role-draw": {
+    "category": "Coordination",
+    "subcategory": "Check-in & assignments",
+    "useCases": [
+      "facilitation",
+      "teams",
+      "workshops"
+    ]
+  },
   "mesh-room-norms": {
     "category": "Work & learning",
     "subcategory": "Facilitation & reflection",
@@ -1050,6 +1086,15 @@
       "sound",
       "performances",
       "co-located groups"
+    ]
+  },
+  "mesh-round-counter": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "quick rounds",
+      "facilitation",
+      "game night"
     ]
   },
   "mesh-route-share": {
