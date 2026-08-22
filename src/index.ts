@@ -505,6 +505,13 @@ export {
   type PermissionRequest,
 } from "./usePermission";
 
+// ---- ninth primitive wave: local browser lifecycle (2026-08) ----
+export { useFullscreen, type FullscreenApi } from "./useFullscreen";
+export { usePageVisibility, type PageVisibility } from "./usePageVisibility";
+export { useInstallPrompt, type InstallPromptApi } from "./useInstallPrompt";
+export { useNotification, type NotificationApi } from "./useNotification";
+export { useBeforeUnload } from "./useBeforeUnload";
+
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
   useSharedCollection,
