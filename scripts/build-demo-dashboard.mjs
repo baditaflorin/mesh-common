@@ -235,8 +235,27 @@ const html = `<!doctype html>
       const usecases = document.querySelector("#demo-usecases");
       let filter = "all";
 
-      for (const value of [...new Set(cards.map((card) => card.dataset.category))].sort()) category.add(new Option(value, value));
-      for (const value of [...new Set(cards.map((card) => card.dataset.subcategory))].sort()) subcategory.add(new Option(value, value));
+      const subcategoriesByCategory = new Map();
+      for (const card of cards) {
+        const values = subcategoriesByCategory.get(card.dataset.category) ?? new Set();
+        values.add(card.dataset.subcategory);
+        subcategoriesByCategory.set(card.dataset.category, values);
+      }
+
+      for (const value of [...subcategoriesByCategory.keys()].sort()) category.add(new Option(value, value));
+
+      const populateSubcategories = () => {
+        const previouslySelected = subcategory.value;
+        const values = category.value
+          ? subcategoriesByCategory.get(category.value) ?? new Set()
+          : new Set(cards.map((card) => card.dataset.subcategory));
+
+        subcategory.replaceChildren(new Option("All subcategories", ""));
+        for (const value of [...values].sort()) subcategory.add(new Option(value, value));
+        if (values.has(previouslySelected)) subcategory.value = previouslySelected;
+      };
+
+      populateSubcategories();
       for (const value of [...new Set(cards.flatMap((card) => card.dataset.usecases.split("|")))].sort()) usecases.add(new Option(value, value));
 
       const apply = () => {
@@ -257,7 +276,10 @@ const html = `<!doctype html>
       };
 
       search.addEventListener("input", apply);
-      category.addEventListener("change", apply);
+      category.addEventListener("change", () => {
+        populateSubcategories();
+        apply();
+      });
       subcategory.addEventListener("change", apply);
       usecases.addEventListener("change", apply);
       buttons.forEach((button) => button.addEventListener("click", () => {
