@@ -4,6 +4,9 @@
 
 ### Added
 
+- `useSpeechRecognition`, `useGamepad`, `usePointerLock`,
+  `useLocalGeolocation`, and `useFileDownload` for explicit local input,
+  location, and export capabilities.
 - `useFullscreen`, `usePageVisibility`, `useInstallPrompt`, `useNotification`,
   and `useBeforeUnload` for explicit browser presentation, lifecycle,
   installation, notification, and unsaved-work flows.

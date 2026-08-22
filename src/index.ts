@@ -511,6 +511,11 @@ export { usePageVisibility, type PageVisibility } from "./usePageVisibility";
 export { useInstallPrompt, type InstallPromptApi } from "./useInstallPrompt";
 export { useNotification, type NotificationApi } from "./useNotification";
 export { useBeforeUnload } from "./useBeforeUnload";
+export { useFileDownload, type FileDownloadApi } from "./useFileDownload";
+export { usePointerLock, type PointerLockApi } from "./usePointerLock";
+export { useSpeechRecognition, type SpeechRecognitionApi } from "./useSpeechRecognition";
+export { useGamepad, type GamepadState } from "./useGamepad";
+export { useLocalGeolocation, type LocalGeolocation } from "./useLocalGeolocation";
 
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
