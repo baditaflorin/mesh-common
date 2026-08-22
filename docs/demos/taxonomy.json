@@ -1034,6 +1034,15 @@
       "small groups"
     ]
   },
+  "mesh-shared-checklist": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "events",
+      "teams",
+      "neighbourhoods"
+    ]
+  },
   "mesh-shared-timer": {
     "category": "Social",
     "subcategory": "Conversation & connection",
@@ -1106,16 +1115,16 @@
       "small groups"
     ]
   },
-  "mesh-skill-swap": {
-    "category": "Work & learning",
-    "subcategory": "Collaboration & practice",
+  "mesh-skill-challenge": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
     "useCases": [
-      "workshops",
-      "retrospectives",
-      "study groups"
+      "friends",
+      "communities",
+      "small groups"
     ]
   },
-  "mesh-skill-challenge": {
+  "mesh-skill-swap": {
     "category": "Work & learning",
     "subcategory": "Collaboration & practice",
     "useCases": [
