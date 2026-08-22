@@ -119,11 +119,6 @@ for (const app of entries) {
       data-subcategory="${escapeHtml(classification.subcategory)}"
       data-usecases="${escapeHtml(classification.useCases.join("|"))}"
     >
-      <header>
-        <a class="title" href="${escapeHtml(pagesUrl)}" target="_blank" rel="noreferrer" aria-label="Open ${escapeHtml(name)} demo">${escapeHtml(name)}</a>
-        ${trl !== "" ? `<span class="trl trl-${trl}">TRL ${escapeHtml(trl)}</span>` : ""}
-        <span class="status status-${ok ? "ok" : "fail"}" aria-label="Recording status: ${escapeHtml(status)}">${escapeHtml(status)}</span>
-      </header>
       <div class="media">
         ${hasGif
           ? `<img class="gif" src="${escapeHtml(app)}/demo.gif" alt="${escapeHtml(name)} demo" loading="lazy" />`
@@ -131,11 +126,13 @@ for (const app of entries) {
           ? `<img class="gif" src="${escapeHtml(app)}/preview.png" alt="${escapeHtml(name)} preview" loading="lazy" />`
           : `<div class="empty">no recording</div>`}
       </div>
-      <footer>
+      <div class="card-body">
+        <div class="card-meta"><span class="status status-${ok ? "ok" : "fail"}" aria-label="Recording status: ${escapeHtml(status)}">${escapeHtml(status)}</span>${trl !== "" ? `<span class="trl trl-${trl}">TRL ${escapeHtml(trl)}</span>` : ""}</div>
+        <a class="title" href="${escapeHtml(pagesUrl)}" target="_blank" rel="noreferrer" aria-label="Open ${escapeHtml(name)} demo">${escapeHtml(name)} <span aria-hidden="true">↗</span></a>
+        <p class="card-taxonomy">${escapeHtml(classification.category)} <span>·</span> ${escapeHtml(classification.subcategory)}</p>
+        <div class="usecase-list">${classification.useCases.map((useCase) => `<span>${escapeHtml(useCase)}</span>`).join("")}</div>${errHint ? `<details class="errhint"><summary>log tail</summary><pre>${escapeHtml(errHint)}</pre></details>` : ""}
         <code class="slug">${escapeHtml(app)}</code>
-        <span class="taxonomy">${escapeHtml(classification.category)} · ${escapeHtml(classification.subcategory)}</span>
-        ${errHint ? `<details class="errhint"><summary>log tail</summary><pre>${escapeHtml(errHint)}</pre></details>` : ""}
-      </footer>
+      </div>
     </article>
   `);
 }
@@ -148,77 +145,79 @@ const html = `<!doctype html>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mesh fleet demos — ${entries.length} apps</title>
   <style>
-    :root { color-scheme: dark; }
-    html, body { margin: 0; padding: 0; background: #0e1117; color: #e6edf3; font: 14px/1.5 system-ui, -apple-system, Segoe UI, sans-serif; }
-    a { color: #58a6ff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .rootless-banner { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 14px 16px; margin-top: 16px; max-width: 800px; line-height: 1.6; }
-    .catalog-controls { display: grid; grid-template-columns: minmax(16rem, 26rem) 1fr; gap: 12px 16px; align-items: end; margin-top: 20px; max-width: 800px; }
-    .catalog-search { display: grid; gap: 5px; color: #8b949e; font-size: 12px; }
-    .catalog-search input { box-sizing: border-box; width: 100%; background: #0d1117; color: #e6edf3; border: 1px solid #30363d; border-radius: 7px; padding: 9px 10px; font: inherit; font-size: 14px; }
-    .catalog-filters { display: flex; flex-wrap: wrap; gap: 8px; }
-    .filter { appearance: none; cursor: pointer; color: #c9d1d9; background: #21262d; border: 1px solid #30363d; border-radius: 999px; padding: 7px 10px; font: 12px/1.2 system-ui, -apple-system, Segoe UI, sans-serif; }
-    .filter span { color: #8b949e; font-variant-numeric: tabular-nums; }
-    .filter.is-active { background: #1f6feb; border-color: #58a6ff; color: #fff; }
-    .filter.is-active span { color: #dbeafe; }
-    .catalog-results { grid-column: 1 / -1; margin: 0; color: #8b949e; font-size: 12px; }
-    header.page { padding: 28px 24px 12px; max-width: 1400px; margin: 0 auto; }
-    header.page h1 { margin: 0 0 6px; font-size: 22px; font-weight: 600; }
-    header.page .sub { color: #8b949e; font-size: 13px; }
-    main { max-width: 1400px; margin: 0 auto; padding: 16px 24px 48px; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px; }
-    .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
-    /* Cards use flex, so explicitly restore the HTML hidden contract. */
+    :root { color-scheme: dark; --ink: #edf2ff; --muted: #9eabc4; --line: rgba(181, 194, 230, .16); --panel: rgba(20, 29, 50, .78); --panel-strong: #17203a; --violet: #a78bfa; --cyan: #67e8f9; --green: #6ee7b7; }
+    * { box-sizing: border-box; }
+    html { background: #090d1a; }
+    body { min-width: 320px; margin: 0; color: var(--ink); background: radial-gradient(circle at 15% -8%, #3d2e72 0, transparent 28rem), radial-gradient(circle at 92% 8%, #0d5364 0, transparent 30rem), #090d1a; font: 15px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    .page { width: min(1480px, calc(100% - 48px)); margin: 0 auto; }
+    header.page { padding: clamp(2.5rem, 6vw, 5rem) 0 1rem; }
+    .hero { max-width: 850px; }
+    .eyebrow { margin: 0 0 .7rem; color: var(--cyan); font-size: .76rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    header.page h1 { max-width: 12ch; margin: 0; font-size: clamp(2.65rem, 7vw, 5.75rem); line-height: .96; letter-spacing: -.07em; }
+    header.page .sub { max-width: 50rem; margin: 1.2rem 0 0; color: var(--muted); font-size: clamp(1rem, 2.2vw, 1.18rem); }
+    .rootless-banner { max-width: 900px; margin-top: 1.6rem; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: .85rem; color: #c7d2eb; background: rgba(9, 13, 26, .36); font-size: .88rem; line-height: 1.55; }
+    .rootless-banner a { color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
+    .discover { margin-top: clamp(1.6rem, 4vw, 3rem); padding: clamp(1rem, 3vw, 1.6rem); border: 1px solid var(--line); border-radius: 1.4rem; background: linear-gradient(145deg, rgba(26, 36, 65, .9), rgba(14, 20, 38, .9)); box-shadow: 0 24px 70px #02050e66; }
+    .discover-header { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; }
+    .discover h2 { margin: 0; font-size: 1.15rem; letter-spacing: -.02em; }
+    .discover-help { margin: 0; color: var(--muted); font-size: .86rem; }
+    .catalog-controls { display: grid; grid-template-columns: minmax(14rem, 1.25fr) repeat(2, minmax(10rem, .7fr)); gap: .85rem; }
+    .catalog-search { display: grid; gap: .4rem; color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .03em; }
+    .catalog-search input, .catalog-search select { width: 100%; min-height: 2.85rem; border: 1px solid var(--line); border-radius: .8rem; outline: none; color: var(--ink); background: rgba(7, 11, 24, .62); padding: .65rem .8rem; transition: border-color .2s ease, box-shadow .2s ease; }
+    .catalog-search input::placeholder { color: #77849f; }
+    .catalog-search input:focus, .catalog-search select:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px #67e8f925; }
+    .filter-row, .usecase-row { display: flex; grid-column: 1 / -1; flex-wrap: wrap; gap: .5rem; align-items: center; }
+    .filter-label { margin-right: .2rem; color: var(--muted); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .filter { appearance: none; cursor: pointer; border: 1px solid var(--line); border-radius: 999px; color: #cbd5ea; background: rgba(7, 11, 24, .5); padding: .45rem .7rem; font-size: .8rem; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+    .filter:hover { transform: translateY(-1px); border-color: #c4b5fd99; }
+    .filter span { margin-left: .2rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .filter.is-active { border-color: transparent; color: #130d2a; background: linear-gradient(100deg, var(--cyan), #c4b5fd); font-weight: 800; }
+    .filter.is-active span { color: #322256; }
+    .usecase-details { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: .9rem; }.usecase-details summary { display: flex; justify-content: space-between; cursor: pointer; color: #dbe6fb; font-size: .86rem; font-weight: 700; list-style: none; }.usecase-details summary::-webkit-details-marker { display: none; }.usecase-details summary::before { content: "+"; margin-right: .45rem; color: var(--cyan); }.usecase-details[open] summary::before { content: "–"; }.usecase-details summary span { color: var(--muted); font-size: .74rem; font-weight: 600; }.usecase-row { margin-top: .75rem; }.usecase-chip { padding: .38rem .65rem; font-size: .76rem; }
+    .catalog-results { grid-column: 1 / -1; margin: .3rem 0 0; color: #dbe6fb; font-size: .9rem; }
+    main { width: min(1480px, calc(100% - 48px)); margin: 0 auto; padding: 1.5rem 0 4.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.1rem; }
+    .card { overflow: hidden; border: 1px solid var(--line); border-radius: 1.15rem; background: linear-gradient(180deg, var(--panel-strong), #10182d); box-shadow: 0 12px 35px #02050e44; transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease; }
+    .card:hover { transform: translateY(-4px); border-color: #a78bfa8c; box-shadow: 0 20px 48px #02050e7a; }
     .card[hidden] { display: none; }
-    .card.fail { border-color: #5a2222; }
-    .card header { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #21262d; }
-    .card .title { color: #58a6ff; text-decoration: none; font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .card .title:hover { text-decoration: underline; }
-    .trl { padding: 2px 7px; border-radius: 999px; font-size: 11px; background: #2d333b; color: #e6edf3; }
-    .trl-1, .trl-2 { background: #4a1f1f; color: #ffb4b4; }
-    .trl-3, .trl-4 { background: #4a3f1f; color: #ffd9a4; }
-    .trl-5, .trl-6 { background: #1f3f4a; color: #a4d8ff; }
-    .trl-7, .trl-8, .trl-9 { background: #1f4a2f; color: #a4ffb4; }
-    .status { padding: 2px 7px; border-radius: 999px; font-size: 11px; font-weight: 600; }
-    .status-ok { background: #133929; color: #56d364; }
-    .status-fail { background: #3d1f1f; color: #ff7b72; }
-    .media { background: #0e1117; aspect-ratio: 1.17 / 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .media .gif { width: 100%; height: auto; display: block; }
-    .media .empty { color: #6e7681; font-style: italic; padding: 24px; }
-    .card footer { padding: 8px 12px; border-top: 1px solid #21262d; display: flex; align-items: center; gap: 8px; }
-    .taxonomy { color: #8b949e; font-size: 11px; text-align: right; }
-    .slug { font-family: ui-monospace, SF Mono, Menlo, monospace; color: #8b949e; font-size: 12px; flex: 1; }
-    .errhint summary { cursor: pointer; color: #ff7b72; font-size: 12px; }
-    .errhint pre { background: #0e1117; padding: 8px; border-radius: 4px; font-size: 11px; max-height: 120px; overflow: auto; white-space: pre-wrap; margin: 6px 0 0; }
-    footer.page { max-width: 1400px; margin: 0 auto; padding: 12px 24px 32px; color: #6e7681; font-size: 12px; }
-    :focus-visible { outline: 3px solid #58a6ff; outline-offset: 3px; }
-    @media (max-width: 560px) { .catalog-controls { grid-template-columns: 1fr; } main { grid-template-columns: 1fr; padding: 16px; } header.page { padding: 20px 16px 12px; } }
+    .card.fail { border-color: #f8717188; }
+    .media { aspect-ratio: 1.18 / 1; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #090d1a; }
+    .media .gif { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .media .empty { padding: 2rem; color: var(--muted); font-style: italic; }
+    .card-body { display: grid; gap: .65rem; padding: 1rem 1rem .95rem; }
+    .card-meta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+    .status, .trl { display: inline-flex; width: fit-content; align-items: center; border-radius: 999px; padding: .24rem .48rem; font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    .status-ok { color: #a7f3d0; background: #065f4655; }.status-fail { color: #fecaca; background: #7f1d1d88; }.trl { color: #d9e2f7; background: #33415588; }.trl-1, .trl-2 { color: #fecaca; background: #7f1d1d88; }.trl-3, .trl-4 { color: #fde68a; background: #78350f88; }.trl-5, .trl-6 { color: #bae6fd; background: #0c4a6e88; }.trl-7, .trl-8, .trl-9 { color: #bbf7d0; background: #14532d88; }
+    .card .title { font-size: 1.1rem; font-weight: 780; letter-spacing: -.025em; }.card .title span { color: var(--cyan); }.card .title:hover { color: var(--cyan); }.card-taxonomy { margin: 0; color: #b9c6dd; font-size: .82rem; }.card-taxonomy span { color: var(--violet); padding: 0 .18rem; }.usecase-list { display: flex; flex-wrap: wrap; gap: .35rem; }.usecase-list span { border-radius: .45rem; color: #aebbd2; background: #263552; padding: .18rem .4rem; font-size: .68rem; }.slug { margin-top: .15rem; color: #71809b; font-size: .7rem; }.errhint summary { cursor: pointer; color: #fecaca; font-size: .75rem; }.errhint pre { max-height: 120px; overflow: auto; border-radius: .5rem; background: #090d1a; padding: .6rem; white-space: pre-wrap; font-size: .7rem; }
+    footer.page { padding: 0 0 2.5rem; color: #70809d; font-size: .8rem; }
+    :focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+    @media (max-width: 760px) { .page, main { width: min(100% - 28px, 1480px); } .catalog-controls { grid-template-columns: 1fr 1fr; } .catalog-search:first-child { grid-column: 1 / -1; } main { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); } }
+    @media (max-width: 520px) { header.page { padding-top: 2.5rem; } .catalog-controls { grid-template-columns: 1fr; } .catalog-search:first-child { grid-column: auto; } .discover-header { align-items: flex-start; flex-direction: column; gap: .35rem; } .filter-row, .usecase-row { align-items: flex-start; } .filter-label { width: 100%; } main { grid-template-columns: 1fr; gap: .9rem; } .card:hover { transform: none; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
   </style>
 </head>
 <body>
   <header class="page">
-    <h1>Mesh fleet demos</h1>
-    <div class="sub">
-      ${entries.length} apps recorded · ${okCount} OK · ${failCount} failed · generated ${escapeHtml(generatedAt)}
+    <div class="hero">
+      <p class="eyebrow">Browser-local collaboration</p>
+      <h1>Find the right shared moment.</h1>
+      <p class="sub">${entries.length} recorded apps for games, facilitation, creative play, and real-world coordination. Every card is a real two-peer recording.</p>
     </div>
     <div class="rootless-banner">
-      💡 These applications are built using the <a href="https://baditaflorin.github.io/rootless-computing/" target="_blank" rel="noreferrer">Rootless Computing paradigm</a>. 
-      They have no origin server, run entirely in the browser, store data locally on your machine, and coordinate directly with peers using WebRTC/Yjs via the <a href="https://baditaflorin.github.io/mesh-common/" target="_blank" rel="noreferrer">mesh-common</a> framework.
+      Built with <a href="https://baditaflorin.github.io/rootless-computing/" target="_blank" rel="noreferrer">Rootless Computing</a>: no origin server, local-first data, and direct WebRTC/Yjs coordination through <a href="https://baditaflorin.github.io/mesh-common/" target="_blank" rel="noreferrer">mesh-common</a>.
     </div>
-    <div class="catalog-controls" role="search">
-      <label class="catalog-search">
-        <span>Find a demo</span>
-        <input id="demo-search" type="search" placeholder="Search by app name or slug" autocomplete="off" />
-      </label>
-      <div class="catalog-filters" aria-label="Recording filter">
-        <button type="button" class="filter is-active" data-filter="all" aria-pressed="true">All <span>${entries.length}</span></button>
-        <button type="button" class="filter" data-filter="ok" aria-pressed="false">Working <span>${okCount}</span></button>
-        <button type="button" class="filter" data-filter="fail" aria-pressed="false">Needs attention <span>${failCount}</span></button>
+    <section class="discover" aria-label="Browse the demo catalog">
+      <div class="discover-header"><h2>Explore the catalog</h2><p class="discover-help">Filter by purpose, then open a live app.</p></div>
+      <div class="catalog-controls" role="search">
+        <label class="catalog-search"><span>Search</span><input id="demo-search" type="search" placeholder="Search apps, e.g. ‘bingo’ or ‘retro’" autocomplete="off" /></label>
+        <label class="catalog-search"><span>Category</span><select id="demo-category"><option value="">All categories</option></select></label>
+        <label class="catalog-search"><span>Subcategory</span><select id="demo-subcategory"><option value="">All subcategories</option></select></label>
+        <div class="filter-row" aria-label="Recording state"><span class="filter-label">Recording</span><button type="button" class="filter is-active" data-filter="all" aria-pressed="true">All <span>${entries.length}</span></button><button type="button" class="filter" data-filter="ok" aria-pressed="false">Working <span>${okCount}</span></button><button type="button" class="filter" data-filter="fail" aria-pressed="false">Needs attention <span>${failCount}</span></button><button id="demo-reset" class="filter" type="button">Reset</button></div>
+        <details class="usecase-details"><summary>Filter by use case <span>Multi-select</span></summary><div id="demo-usecase-chips" class="usecase-row" aria-label="Filter by one or more use cases"></div></details>
+        <p id="demo-results" class="catalog-results" role="status" aria-live="polite">Showing all ${entries.length} demos</p>
       </div>
-      <label class="catalog-search"><span>Category</span><select id="demo-category"><option value="">All categories</option></select></label>
-      <label class="catalog-search"><span>Subcategory</span><select id="demo-subcategory"><option value="">All subcategories</option></select></label>
-      <label class="catalog-search"><span>Use cases (multiple)</span><select id="demo-usecases" multiple size="3" aria-label="Filter by one or more use cases"></select></label>
-      <p id="demo-results" class="catalog-results" role="status" aria-live="polite">Showing all ${entries.length} demos</p>
-    </div>
+    </section>
   </header>
   <main>
     ${cards.join("\n")}
@@ -229,13 +228,15 @@ const html = `<!doctype html>
   <script>
     (() => {
       const search = document.querySelector("#demo-search");
-      const buttons = [...document.querySelectorAll(".filter")];
+      const buttons = [...document.querySelectorAll(".filter[data-filter]")];
       const cards = [...document.querySelectorAll(".card")];
       const results = document.querySelector("#demo-results");
       const category = document.querySelector("#demo-category");
       const subcategory = document.querySelector("#demo-subcategory");
-      const usecases = document.querySelector("#demo-usecases");
+      const usecaseChips = document.querySelector("#demo-usecase-chips");
+      const reset = document.querySelector("#demo-reset");
       let filter = "all";
+      const selectedUseCases = new Set();
 
       const subcategoriesByCategory = new Map();
       for (const card of cards) {
@@ -258,18 +259,32 @@ const html = `<!doctype html>
       };
 
       populateSubcategories();
-      for (const value of [...new Set(cards.flatMap((card) => card.dataset.usecases.split("|")))].sort()) usecases.add(new Option(value, value));
+      for (const value of [...new Set(cards.flatMap((card) => card.dataset.usecases.split("|")))].sort()) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "filter usecase-chip";
+        button.dataset.usecase = value;
+        button.setAttribute("aria-pressed", "false");
+        button.textContent = value;
+        button.addEventListener("click", () => {
+          const active = selectedUseCases.has(value);
+          if (active) selectedUseCases.delete(value); else selectedUseCases.add(value);
+          button.classList.toggle("is-active", !active);
+          button.setAttribute("aria-pressed", String(!active));
+          apply();
+        });
+        usecaseChips.append(button);
+      }
 
       const apply = () => {
         const query = search.value.trim().toLowerCase();
-        const selectedUseCases = [...usecases.selectedOptions].map((option) => option.value);
         let shown = 0;
         for (const card of cards) {
           const matchesFilter = filter === "all" || card.dataset.status === filter;
           const haystack = card.dataset.name + " " + card.dataset.slug;
           const matchesTaxonomy = (!category.value || card.dataset.category === category.value)
             && (!subcategory.value || card.dataset.subcategory === subcategory.value)
-            && (selectedUseCases.length === 0 || selectedUseCases.every((useCase) => card.dataset.usecases.split("|").includes(useCase)));
+            && (selectedUseCases.size === 0 || [...selectedUseCases].every((useCase) => card.dataset.usecases.split("|").includes(useCase)));
           const visible = matchesFilter && matchesTaxonomy && haystack.includes(query);
           card.hidden = !visible;
           if (visible) shown++;
@@ -283,7 +298,6 @@ const html = `<!doctype html>
         apply();
       });
       subcategory.addEventListener("change", apply);
-      usecases.addEventListener("change", apply);
       buttons.forEach((button) => button.addEventListener("click", () => {
         filter = button.dataset.filter;
         buttons.forEach((candidate) => {
@@ -293,6 +307,24 @@ const html = `<!doctype html>
         });
         apply();
       }));
+      reset.addEventListener("click", () => {
+        search.value = "";
+        category.value = "";
+        populateSubcategories();
+        subcategory.value = "";
+        filter = "all";
+        selectedUseCases.clear();
+        document.querySelectorAll(".usecase-chip").forEach((button) => {
+          button.classList.remove("is-active");
+          button.setAttribute("aria-pressed", "false");
+        });
+        buttons.forEach((button) => {
+          const active = button.dataset.filter === "all";
+          button.classList.toggle("is-active", active);
+          button.setAttribute("aria-pressed", String(active));
+        });
+        apply();
+      });
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && document.activeElement === search && search.value) {
           search.value = "";
