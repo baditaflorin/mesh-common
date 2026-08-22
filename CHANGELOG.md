@@ -4,6 +4,8 @@
 
 ### Added
 
+- `useSharedBookmarks`, `useSharedMessages`, `useSharedCountdowns`,
+  `useSharedInvites`, and `useSharedChoices` for browser-local shared sessions.
 - `useSharedRatings`, `useSharedWordCloud`, `useSharedLottery`,
   `useSharedMilestones`, and `useSharedPlaylist` for group feedback and facilitation.
 - `useSharedPairings`, `useSharedTurnOrder`, `useSharedBudget`,
