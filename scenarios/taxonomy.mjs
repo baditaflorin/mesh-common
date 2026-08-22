@@ -7,6 +7,36 @@
  * so people can actually filter it.
  */
 const rules = [
+  [
+    /sticky-board/,
+    "Work & learning",
+    "Collaboration & practice",
+    ["workshops", "retrospectives", "study groups"],
+  ],
+  [
+    /word-relay/,
+    "Games",
+    "Conversation & bluffing",
+    ["icebreakers", "game night", "small groups"],
+  ],
+  [
+    /pixel-party/,
+    "Creative",
+    "Visual making",
+    ["creative sessions", "workshops", "small groups"],
+  ],
+  [
+    /caption-clash/,
+    "Games",
+    "Conversation & bluffing",
+    ["icebreakers", "game night", "friends"],
+  ],
+  [
+    /bingo-blitz/,
+    "Games",
+    "Party & tabletop",
+    ["icebreakers", "events", "small groups"],
+  ],
   [/bookmark-board/, "Productivity", "Coordination & planning", ["research", "workshops", "small groups"]],
   [/message-drop/, "Social", "Conversation & connection", ["friends", "events", "small groups"]],
   [/countdown-wall/, "Coordination", "Planning & logistics", ["workshops", "meetings", "sprints"]],
