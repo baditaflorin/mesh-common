@@ -19,6 +19,8 @@ const REGISTRY_PATH_1 = path.resolve(ROOT, "..", "services-registry", "services.
 const REGISTRY_PATH_2 = path.resolve(ROOT, "..", "..", "services-registry", "services.json");
 const REGISTRY_PATH = existsSync(REGISTRY_PATH_1) ? REGISTRY_PATH_1 : REGISTRY_PATH_2;
 const OUT_PATH = path.join(DEMOS_DIR, "index.html");
+const SCENARIOS_DIR = path.join(ROOT, "scenarios");
+const checkOnly = process.argv.includes("--check-recordings");
 
 const escapeHtml = (s) =>
   String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[c]));
@@ -37,6 +39,36 @@ const entries = (await readdir(DEMOS_DIR, { withFileTypes: true }))
   .filter((d) => d.isDirectory())
   .map((d) => d.name)
   .sort();
+
+// A scenario advertises a service in the recorded fleet. Do not let a new
+// service silently reach the catalog with a fallback image or no proof that
+// the two-peer flow ran. `_helpers.mjs` is intentionally shared support code,
+// not a service scenario.
+const scenarioFiles = existsSync(SCENARIOS_DIR)
+  ? (await readdir(SCENARIOS_DIR, { withFileTypes: true }))
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".mjs") && !entry.name.startsWith("_"))
+      .map((entry) => entry.name.slice(0, -4))
+      .sort()
+  : [];
+const missingRecordings = [];
+for (const app of scenarioFiles) {
+  const appDir = path.join(DEMOS_DIR, app);
+  const status = existsSync(path.join(appDir, "status"))
+    ? (await readFile(path.join(appDir, "status"), "utf8")).trim()
+    : "MISSING";
+  const hasGif = existsSync(path.join(appDir, "demo.gif")) && (await stat(path.join(appDir, "demo.gif"))).size > 0;
+  const hasPng = existsSync(path.join(appDir, "preview.png")) && (await stat(path.join(appDir, "preview.png"))).size > 0;
+  if (status !== "OK" || !hasGif || !hasPng) {
+    missingRecordings.push(`${app} (status=${status}, gif=${hasGif}, preview=${hasPng})`);
+  }
+}
+if (missingRecordings.length > 0) {
+  throw new Error(`recording gate failed:\n${missingRecordings.join("\n")}`);
+}
+if (checkOnly) {
+  console.log(`recording gate passed: ${scenarioFiles.length} app scenarios have OK status, GIF, and preview`);
+  process.exit(0);
+}
 
 const cards = [];
 let okCount = 0;

@@ -32,7 +32,9 @@ and ship each change through a PR into `main`.
 3. Build locally, run the app's unit/smoke checks, commit explicit paths, push,
    and enable GitHub Pages from `main` `/docs`.
 4. Add a scenario and recorded `demo.gif`/`preview.png` to the catalog only
-   after the deployed app works. Regenerate the mesh-common catalog.
+   after the deployed app works. The recording gate is mandatory: run
+   `npm run demo:check` before regenerating the mesh-common catalog; it fails
+   unless every app scenario has `status=OK` plus non-empty GIF and preview.
 5. Open a non-draft PR for mesh-common changes, verify tests and any configured
    Woodpecker pipeline, merge, then verify the merge commit on `origin/main`.
    Work is not complete until it is merged and the relevant deployment is live.
@@ -69,8 +71,9 @@ and ship each change through a PR into `main`.
 
 ## Verification and publishing
 
-- Baseline for this repo: `npm test`, `npx tsc --noEmit`, and any relevant
-  generator command (for example `node scripts/build-demo-dashboard.mjs`).
+- Baseline for this repo: `npm test`, `npx tsc --noEmit`, `npm run demo:check`,
+  and any relevant generator command (for example
+  `node scripts/build-demo-dashboard.mjs`).
 - Use root `.woodpecker.yml` for repository CI. Do not add GitHub Actions.
   If a repository has no Woodpecker configuration, report that explicitly;
   do not claim a server-side CI pass.
