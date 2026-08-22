@@ -107,6 +107,15 @@
       "small groups"
     ]
   },
+  "mesh-bookmark-board": {
+    "category": "Productivity",
+    "subcategory": "Coordination & planning",
+    "useCases": [
+      "research",
+      "workshops",
+      "small groups"
+    ]
+  },
   "mesh-borrow-board": {
     "category": "Community",
     "subcategory": "Neighbours & mutual aid",
@@ -197,6 +206,15 @@
       "local groups"
     ]
   },
+  "mesh-choice-board": {
+    "category": "Decisions",
+    "subcategory": "Selection & ranking",
+    "useCases": [
+      "prioritization",
+      "workshops",
+      "teams"
+    ]
+  },
   "mesh-chore-rotation": {
     "category": "Coordination",
     "subcategory": "Check-in & assignments",
@@ -258,6 +276,15 @@
       "friends",
       "icebreakers",
       "small groups"
+    ]
+  },
+  "mesh-countdown-wall": {
+    "category": "Coordination",
+    "subcategory": "Planning & logistics",
+    "useCases": [
+      "workshops",
+      "meetings",
+      "sprints"
     ]
   },
   "mesh-crowd-map": {
@@ -584,6 +611,15 @@
       "study groups"
     ]
   },
+  "mesh-invite-pocket": {
+    "category": "Privacy & utilities",
+    "subcategory": "Identity & private exchange",
+    "useCases": [
+      "events",
+      "clubs",
+      "small groups"
+    ]
+  },
   "mesh-jellybean": {
     "category": "Games",
     "subcategory": "Party & tabletop",
@@ -726,6 +762,15 @@
       "game night",
       "two players",
       "quick rounds"
+    ]
+  },
+  "mesh-message-drop": {
+    "category": "Social",
+    "subcategory": "Conversation & connection",
+    "useCases": [
+      "friends",
+      "events",
+      "small groups"
     ]
   },
   "mesh-metronome": {

@@ -7,6 +7,11 @@
  * so people can actually filter it.
  */
 const rules = [
+  [/bookmark-board/, "Productivity", "Coordination & planning", ["research", "workshops", "small groups"]],
+  [/message-drop/, "Social", "Conversation & connection", ["friends", "events", "small groups"]],
+  [/countdown-wall/, "Coordination", "Planning & logistics", ["workshops", "meetings", "sprints"]],
+  [/invite-pocket/, "Privacy & utilities", "Identity & private exchange", ["events", "clubs", "small groups"]],
+  [/choice-board/, "Decisions", "Selection & ranking", ["prioritization", "workshops", "teams"]],
   [/rating-board/, "Decisions", "Voting & consensus", ["feedback", "workshops", "teams"]],
   [/word-cloud/, "Creative", "Writing & storytelling", ["reflection", "workshops", "teams"]],
   [/lucky-draw/, "Games", "Party & tabletop", ["icebreakers", "game night", "events"]],
