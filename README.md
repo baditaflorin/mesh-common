@@ -1,11 +1,12 @@
 # mesh-common
 
-## Sixth capability wave
+## Eighth capability wave
 
-`useAvailabilityGrid`, `useRankedBallot`, and `useSharedForm` provide small,
-validated shared coordination surfaces. `useMediaRecorder` and
-`useScreenShare` wrap browser capture lifecycles without acquiring a stream or
-sending media anywhere on their own.
+`useAvailabilityGrid`, `useRankedBallot`, `useSharedForm`, and
+`useSharedChecklist` provide small, validated shared coordination surfaces.
+`useImageCapture`, `useMediaRecorder`, and `useScreenShare` wrap browser
+capture lifecycles without acquiring a stream or sending media anywhere on
+their own.
 
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 [![version](https://img.shields.io/badge/version-0.1.0-blue)](./package.json)
@@ -49,6 +50,11 @@ Shared scaffolding + runtime for the `baditaflorin/mesh-*` family of rootless pe
 | **`useThreadedMessages`** 🆕                                      | **`Y.Map<msgId, {parent, body, by, at, sig}>` with `post()` / `reply()` / pre-flattened `threads` for rendering.**                                                                                                                                                                                                                                                                                                           |
 | **`useNetworkOnline`** 🆕                                         | **Honest online detector: `navigator.onLine` + a periodic 204 probe. Distinguishes "online" from "captive portal hostage".**                                                                                                                                                                                                                                                                                                 |
 | **`useSharedCollection`** 🆕                                      | **Validated ordered CRDT collection with stable IDs, CRUD, and reordering. Use for app-owned shared lists without rebuilding Y.Array lifecycle code.**                                                                                                                                                                                                                                                                          |
+| **`useSharedChecklist`** 🆕 | **Validated attributed shared checklist built on `useSharedCollection`: bounded plain-text tasks, deterministic item identity, and completion/reopen state.** |
+| **`useRoomCapacity`** 🆕 | **Room-admission vocabulary over expiring deterministic CRDT leases: `join`, `leave`, admitted/waitlisted state, position, and remaining capacity.** |
+| **`useImageCapture`** 🆕 | **Explicit local still-image capture built on `useCamera`; returns a JPEG data URL only after an armed camera frame is ready and never uploads it.** |
+| **`useFileDrop`** 🆕 | **Accessible local drop/input state with MIME/extension, size, count, and custom validation. It does not upload or share selected files.** |
+| **`usePermission`** 🆕 | **Permission-state observer plus an app-owned, gesture-bound request callback. Never prompts on mount or invents a browser grant.** |
 | **`useSharedQueue`** 🆕                                           | **FIFO CRDT queue with expiring soft claims, acknowledgement, release, and deterministic oldest-available claiming.**                                                                                                                                                                                                                                                                                                          |
 | **`useSharedTimer`** 🆕                                           | **Drift-free shared countdown/stopwatch: peers store lifecycle timestamps and derive display time from the mesh clock—no per-tick writes.**                                                                                                                                                                                                                                                                                     |
 | **`useCrdtUndo`** 🆕                                              | **Scoped local Yjs undo/redo wrapper with capture boundaries, stack state, and safe listener cleanup.**                                                                                                                                                                                                                                                                                                                       |

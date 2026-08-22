@@ -4,6 +4,9 @@
 
 ### Added
 
+- `useSharedChecklist`, `useRoomCapacity`, `useImageCapture`, `useFileDrop`,
+  and `usePermission` for validated checklist/capacity state and explicit,
+  browser-local capture, file selection, and permission flows.
 - Central demo taxonomy: every recorded app now resolves a category,
   subcategory, and multi-use-case list into `docs/demos/taxonomy.json`; the
   catalog provides corresponding searchable filters. New app scaffolds include

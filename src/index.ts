@@ -471,6 +471,40 @@ export { useSharedForm, type SharedForm } from "./useSharedForm";
 export { useMediaRecorder, type MediaRecorderState } from "./useMediaRecorder";
 export { useScreenShare, type ScreenShareState } from "./useScreenShare";
 
+// ---- eighth primitive wave: group coordination + local capture (2026-08) ----
+export {
+  useSharedChecklist,
+  type SharedChecklist,
+  type SharedChecklistItem,
+  type SharedChecklistOptions,
+} from "./useSharedChecklist";
+export {
+  useRoomCapacity,
+  type RoomCapacity,
+  type RoomCapacityMember,
+  type RoomCapacityOptions,
+} from "./useRoomCapacity";
+export {
+  useImageCapture,
+  type CapturedImage,
+  type ImageCaptureOptions,
+  type ImageCaptureState,
+} from "./useImageCapture";
+export {
+  useFileDrop,
+  type FileDrop,
+  type FileDropOptions,
+  type FileDropRejectReason,
+  type FileDropResult,
+  type RejectedFile,
+} from "./useFileDrop";
+export {
+  usePermission,
+  type MeshPermissionState,
+  type PermissionApi,
+  type PermissionRequest,
+} from "./usePermission";
+
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
   useSharedCollection,
