@@ -7,6 +7,11 @@
  * so people can actually filter it.
  */
 const rules = [
+  [/open-house/, "Community", "Events & volunteering", ["events", "rsvp", "hosting"]],
+  [/agenda-runner/, "Productivity", "Coordination & planning", ["meetings", "facilitation", "planning"]],
+  [/scoreboard/, "Games", "Party & tabletop", ["party games", "challenges", "score keeping"]],
+  [/prompt-deck/, "Social", "Conversation & connection", ["friends", "icebreakers", "facilitation"]],
+  [/one-word-wall/, "Wellbeing", "Social energy & check-ins", ["check-ins", "reflection", "teams"]],
   [/(focus-sprint)/, "Productivity", "Focus & routines", ["study", "coworking", "pomodoro"]],
   [/(cohort-scheduler)/, "Productivity", "Coordination & planning", ["study groups", "meetings", "planning"]],
   [/(volunteer-desk)/, "Community", "Events & volunteering", ["events", "volunteers", "check-in"]],
