@@ -4,6 +4,9 @@
 
 ### Added
 
+- `useSharedRsvp`, `useSharedAgenda`, `useSharedScoreboard`,
+  `useSharedPromptDeck`, and `useSharedResponses` for peer-attributed event,
+  facilitation, game, and response state without a service-side database.
 - `useSpeechRecognition`, `useGamepad`, `usePointerLock`,
   `useLocalGeolocation`, and `useFileDownload` for explicit local input,
   location, and export capabilities.
