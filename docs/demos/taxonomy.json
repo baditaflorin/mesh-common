@@ -89,6 +89,15 @@
       "small groups"
     ]
   },
+  "mesh-bingo-blitz": {
+    "category": "Games",
+    "subcategory": "Party & tabletop",
+    "useCases": [
+      "icebreakers",
+      "events",
+      "small groups"
+    ]
+  },
   "mesh-blind-date": {
     "category": "Social",
     "subcategory": "Conversation & connection",
@@ -186,6 +195,15 @@
       "friends",
       "communities",
       "small groups"
+    ]
+  },
+  "mesh-caption-clash": {
+    "category": "Games",
+    "subcategory": "Conversation & bluffing",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "friends"
     ]
   },
   "mesh-card-sorter": {
@@ -980,6 +998,15 @@
       "study groups"
     ]
   },
+  "mesh-pixel-party": {
+    "category": "Creative",
+    "subcategory": "Visual making",
+    "useCases": [
+      "creative sessions",
+      "workshops",
+      "small groups"
+    ]
+  },
   "mesh-playlist-pass": {
     "category": "Creative",
     "subcategory": "Performance & sound",
@@ -1493,6 +1520,15 @@
       "sensors"
     ]
   },
+  "mesh-sticky-board": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
   "mesh-storyworm": {
     "category": "Creative",
     "subcategory": "Writing & storytelling",
@@ -1743,6 +1779,15 @@
       "reflection",
       "workshops",
       "teams"
+    ]
+  },
+  "mesh-word-relay": {
+    "category": "Games",
+    "subcategory": "Conversation & bluffing",
+    "useCases": [
+      "icebreakers",
+      "game night",
+      "small groups"
     ]
   },
   "mesh-would-rather": {
