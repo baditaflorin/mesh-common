@@ -1,0 +1,1 @@
+export default async function wordCloudScenario(a, b) { await a.getByLabel(/word/i).fill("hope"); await a.getByRole("button", { name: /share/i }).click(); await b.getByText("hope", { exact: true }).waitFor({ timeout: 10000 }); }

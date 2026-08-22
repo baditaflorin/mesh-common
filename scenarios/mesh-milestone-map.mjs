@@ -1,0 +1,1 @@
+export default async function milestoneMapScenario(a, b) { await a.getByLabel(/milestone/i).fill("Launch"); await a.getByRole("button", { name: /add/i }).click(); await b.getByText("Launch", { exact: true }).waitFor({ timeout: 10000 }); }
