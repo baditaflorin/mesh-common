@@ -4,6 +4,8 @@
 
 ### Added
 
+- `useSharedPairings`, `useSharedTurnOrder`, `useSharedBudget`,
+  `useSharedCardStack`, and `useSharedHost` for small group activities.
 - `useSharedPoll`, `useSharedRoles`, `useSharedNotes`, `useSharedRound`, and
   `useSharedReactions` for small browser-local sessions without app-specific
   CRDT plumbing.
