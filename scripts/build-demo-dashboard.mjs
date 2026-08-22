@@ -175,7 +175,7 @@ const html = `<!doctype html>
     .filter span { margin-left: .2rem; color: var(--muted); font-variant-numeric: tabular-nums; }
     .filter.is-active { border-color: transparent; color: #130d2a; background: linear-gradient(100deg, var(--cyan), #c4b5fd); font-weight: 800; }
     .filter.is-active span { color: #322256; }
-    .usecase-details { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: .9rem; }.usecase-details summary { display: flex; justify-content: space-between; cursor: pointer; color: #dbe6fb; font-size: .86rem; font-weight: 700; list-style: none; }.usecase-details summary::-webkit-details-marker { display: none; }.usecase-details summary::before { content: "+"; margin-right: .45rem; color: var(--cyan); }.usecase-details[open] summary::before { content: "–"; }.usecase-details summary span { color: var(--muted); font-size: .74rem; font-weight: 600; }.usecase-row { margin-top: .75rem; }.usecase-chip { padding: .38rem .65rem; font-size: .76rem; }
+    .usecase-details { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: .9rem; }.usecase-details summary { display: flex; justify-content: space-between; cursor: pointer; color: #dbe6fb; font-size: .86rem; font-weight: 700; list-style: none; }.usecase-details summary::-webkit-details-marker { display: none; }.usecase-details summary::before { content: "+"; margin-right: .45rem; color: var(--cyan); }.usecase-details[open] summary::before { content: "–"; }.usecase-details summary span { color: var(--muted); font-size: .74rem; font-weight: 600; }.usecase-tools { display: flex; align-items: center; gap: .55rem; margin-top: .75rem; }.usecase-search { flex: 1; min-width: 13rem; }.usecase-search input { width: 100%; min-height: 2.45rem; border: 1px solid var(--line); border-radius: .7rem; outline: none; color: var(--ink); background: rgba(7, 11, 24, .62); padding: .55rem .7rem; }.usecase-search input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px #67e8f925; }.usecase-search input::placeholder { color: #77849f; }.usecase-expand { flex: 0 0 auto; }.usecase-row { margin-top: .75rem; }.usecase-chip { padding: .38rem .65rem; font-size: .76rem; }.usecase-empty { margin: .2rem 0; color: var(--muted); font-size: .8rem; }.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
     .catalog-results { grid-column: 1 / -1; margin: .3rem 0 0; color: #dbe6fb; font-size: .9rem; }
     main { width: min(1480px, calc(100% - 48px)); margin: 0 auto; padding: 1.5rem 0 4.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.1rem; }
     .card { overflow: hidden; border: 1px solid var(--line); border-radius: 1.15rem; background: linear-gradient(180deg, var(--panel-strong), #10182d); box-shadow: 0 12px 35px #02050e44; transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease; }
@@ -193,7 +193,7 @@ const html = `<!doctype html>
     footer.page { padding: 0 0 2.5rem; color: #70809d; font-size: .8rem; }
     :focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
     @media (max-width: 760px) { .page, main { width: min(100% - 28px, 1480px); } .catalog-controls { grid-template-columns: 1fr 1fr; } .catalog-search:first-child { grid-column: 1 / -1; } main { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); } }
-    @media (max-width: 520px) { header.page { padding-top: 2.5rem; } .catalog-controls { grid-template-columns: 1fr; } .catalog-search:first-child { grid-column: auto; } .discover-header { align-items: flex-start; flex-direction: column; gap: .35rem; } .filter-row, .usecase-row { align-items: flex-start; } .filter-label { width: 100%; } main { grid-template-columns: 1fr; gap: .9rem; } .card:hover { transform: none; } }
+    @media (max-width: 520px) { header.page { padding-top: 2.5rem; } .catalog-controls { grid-template-columns: 1fr; } .catalog-search:first-child { grid-column: auto; } .discover-header { align-items: flex-start; flex-direction: column; gap: .35rem; } .filter-row, .usecase-row { align-items: flex-start; } .filter-label { width: 100%; } .usecase-tools { align-items: stretch; flex-direction: column; } .usecase-search { min-width: 0; } .usecase-expand { width: 100%; } main { grid-template-columns: 1fr; gap: .9rem; } .card:hover { transform: none; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
   </style>
 </head>
@@ -214,7 +214,7 @@ const html = `<!doctype html>
         <label class="catalog-search"><span>Category</span><select id="demo-category"><option value="">All categories</option></select></label>
         <label class="catalog-search"><span>Subcategory</span><select id="demo-subcategory"><option value="">All subcategories</option></select></label>
         <div class="filter-row" aria-label="Recording state"><span class="filter-label">Recording</span><button type="button" class="filter is-active" data-filter="all" aria-pressed="true">All <span>${entries.length}</span></button><button type="button" class="filter" data-filter="ok" aria-pressed="false">Working <span>${okCount}</span></button><button type="button" class="filter" data-filter="fail" aria-pressed="false">Needs attention <span>${failCount}</span></button><button id="demo-reset" class="filter" type="button">Reset</button></div>
-        <details class="usecase-details"><summary>Filter by use case <span>Multi-select</span></summary><div id="demo-usecase-chips" class="usecase-row" aria-label="Filter by one or more use cases"></div></details>
+        <details class="usecase-details"><summary>Filter by use case <span id="demo-usecase-summary">Optional · multi-select</span></summary><div class="usecase-tools"><label class="usecase-search"><span class="sr-only">Search use cases</span><input id="demo-usecase-search" type="search" placeholder="Search use cases" autocomplete="off" /></label><button id="demo-usecase-expand" class="filter usecase-expand" type="button" hidden></button></div><div id="demo-usecase-chips" class="usecase-row" aria-label="Filter by one or more use cases"></div></details>
         <p id="demo-results" class="catalog-results" role="status" aria-live="polite">Showing all ${entries.length} demos</p>
       </div>
     </section>
@@ -234,9 +234,14 @@ const html = `<!doctype html>
       const category = document.querySelector("#demo-category");
       const subcategory = document.querySelector("#demo-subcategory");
       const usecaseChips = document.querySelector("#demo-usecase-chips");
+      const usecaseSearch = document.querySelector("#demo-usecase-search");
+      const usecaseExpand = document.querySelector("#demo-usecase-expand");
+      const usecaseSummary = document.querySelector("#demo-usecase-summary");
       const reset = document.querySelector("#demo-reset");
       let filter = "all";
+      let showAllUseCases = false;
       const selectedUseCases = new Set();
+      const USE_CASE_SUGGESTION_LIMIT = 8;
 
       const subcategoriesByCategory = new Map();
       for (const card of cards) {
@@ -245,7 +250,10 @@ const html = `<!doctype html>
         subcategoriesByCategory.set(card.dataset.category, values);
       }
 
-      for (const value of [...subcategoriesByCategory.keys()].sort()) category.add(new Option(value, value));
+      for (const value of [...subcategoriesByCategory.keys()].sort()) {
+        const count = cards.filter((card) => card.dataset.category === value).length;
+        category.add(new Option(value + " · " + count, value));
+      }
 
       const populateSubcategories = () => {
         const previouslySelected = subcategory.value;
@@ -254,27 +262,69 @@ const html = `<!doctype html>
           : new Set(cards.map((card) => card.dataset.subcategory));
 
         subcategory.replaceChildren(new Option("All subcategories", ""));
-        for (const value of [...values].sort()) subcategory.add(new Option(value, value));
+        for (const value of [...values].sort()) {
+          const count = cards.filter((card) => (!category.value || card.dataset.category === category.value) && card.dataset.subcategory === value).length;
+          subcategory.add(new Option(value + " · " + count, value));
+        }
         if (values.has(previouslySelected)) subcategory.value = previouslySelected;
       };
 
-      populateSubcategories();
-      for (const value of [...new Set(cards.flatMap((card) => card.dataset.usecases.split("|")))].sort()) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "filter usecase-chip";
-        button.dataset.usecase = value;
-        button.setAttribute("aria-pressed", "false");
-        button.textContent = value;
-        button.addEventListener("click", () => {
+      const taxonomyCards = () => cards.filter((card) =>
+        (!category.value || card.dataset.category === category.value)
+        && (!subcategory.value || card.dataset.subcategory === subcategory.value),
+      );
+
+      const rankedUseCases = () => {
+        const counts = new Map();
+        for (const card of taxonomyCards()) {
+          for (const value of card.dataset.usecases.split("|")) counts.set(value, (counts.get(value) ?? 0) + 1);
+        }
+        return [...counts.entries()]
+          .sort(([leftValue, leftCount], [rightValue, rightCount]) => rightCount - leftCount || leftValue.localeCompare(rightValue))
+          .map(([value]) => value);
+      };
+
+      const renderUseCases = () => {
+        const values = rankedUseCases();
+        const query = usecaseSearch.value.trim().toLowerCase();
+        const matching = query ? values.filter((value) => value.toLowerCase().includes(query)) : values;
+        const selected = values.filter((value) => selectedUseCases.has(value));
+        const suggested = showAllUseCases || query ? matching : matching.slice(0, USE_CASE_SUGGESTION_LIMIT);
+        const visible = [...new Set([...selected, ...suggested])];
+        usecaseChips.replaceChildren();
+
+        if (visible.length === 0) {
+          const empty = document.createElement("p");
+          empty.className = "usecase-empty";
+          empty.textContent = query ? "No use cases match that search." : "No use cases are available for this selection.";
+          usecaseChips.append(empty);
+        }
+
+        for (const value of visible) {
+          const button = document.createElement("button");
           const active = selectedUseCases.has(value);
-          if (active) selectedUseCases.delete(value); else selectedUseCases.add(value);
-          button.classList.toggle("is-active", !active);
-          button.setAttribute("aria-pressed", String(!active));
-          apply();
-        });
-        usecaseChips.append(button);
-      }
+          button.type = "button";
+          button.className = "filter usecase-chip";
+          button.dataset.usecase = value;
+          button.classList.toggle("is-active", active);
+          button.setAttribute("aria-pressed", String(active));
+          button.textContent = value;
+          button.addEventListener("click", () => {
+            if (active) selectedUseCases.delete(value); else selectedUseCases.add(value);
+            renderUseCases();
+            apply();
+          });
+          usecaseChips.append(button);
+        }
+
+        usecaseExpand.hidden = Boolean(query) || matching.length <= USE_CASE_SUGGESTION_LIMIT;
+        usecaseExpand.textContent = showAllUseCases ? "Show fewer" : "Show all " + matching.length;
+        const selection = selectedUseCases.size ? selectedUseCases.size + " selected" : Math.min(matching.length, USE_CASE_SUGGESTION_LIMIT) + " suggestions";
+        usecaseSummary.textContent = selection + " · " + values.length + " available";
+      };
+
+      populateSubcategories();
+      renderUseCases();
 
       const apply = () => {
         const query = search.value.trim().toLowerCase();
@@ -294,10 +344,28 @@ const html = `<!doctype html>
 
       search.addEventListener("input", apply);
       category.addEventListener("change", () => {
+        selectedUseCases.clear();
+        usecaseSearch.value = "";
+        showAllUseCases = false;
         populateSubcategories();
+        renderUseCases();
         apply();
       });
-      subcategory.addEventListener("change", apply);
+      subcategory.addEventListener("change", () => {
+        selectedUseCases.clear();
+        usecaseSearch.value = "";
+        showAllUseCases = false;
+        renderUseCases();
+        apply();
+      });
+      usecaseSearch.addEventListener("input", () => {
+        showAllUseCases = false;
+        renderUseCases();
+      });
+      usecaseExpand.addEventListener("click", () => {
+        showAllUseCases = !showAllUseCases;
+        renderUseCases();
+      });
       buttons.forEach((button) => button.addEventListener("click", () => {
         filter = button.dataset.filter;
         buttons.forEach((candidate) => {
@@ -314,10 +382,9 @@ const html = `<!doctype html>
         subcategory.value = "";
         filter = "all";
         selectedUseCases.clear();
-        document.querySelectorAll(".usecase-chip").forEach((button) => {
-          button.classList.remove("is-active");
-          button.setAttribute("aria-pressed", "false");
-        });
+        usecaseSearch.value = "";
+        showAllUseCases = false;
+        renderUseCases();
         buttons.forEach((button) => {
           const active = button.dataset.filter === "all";
           button.classList.toggle("is-active", active);
