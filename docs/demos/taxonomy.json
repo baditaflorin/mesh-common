@@ -1160,6 +1160,15 @@
       "small groups"
     ]
   },
+  "mesh-social-battery": {
+    "category": "Wellbeing",
+    "subcategory": "Mindfulness & focus",
+    "useCases": [
+      "wellbeing",
+      "facilitation",
+      "self-reflection"
+    ]
+  },
   "mesh-sound-guess": {
     "category": "Games",
     "subcategory": "Party & tabletop",
