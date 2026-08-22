@@ -1115,6 +1115,15 @@
       "study groups"
     ]
   },
+  "mesh-skill-challenge": {
+    "category": "Work & learning",
+    "subcategory": "Collaboration & practice",
+    "useCases": [
+      "workshops",
+      "retrospectives",
+      "study groups"
+    ]
+  },
   "mesh-skill-tree": {
     "category": "Work & learning",
     "subcategory": "Collaboration & practice",
