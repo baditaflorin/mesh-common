@@ -487,6 +487,7 @@ export {
 export {
   useImageCapture,
   type CapturedImage,
+  type CapturedImageBlob,
   type ImageCaptureOptions,
   type ImageCaptureState,
 } from "./useImageCapture";

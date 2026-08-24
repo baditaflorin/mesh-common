@@ -51,7 +51,10 @@ export type SharedFile = {
 
 export type FileShareApi = {
   files: SharedFile[];
-  send(blob: File | Blob, opts?: { name?: string; id?: string }): Promise<string>;
+  send(
+    blob: File | Blob,
+    opts?: { name?: string; id?: string },
+  ): Promise<string>;
   /** Triggers a browser download of an assembled file (must be `complete`). */
   download(fileId: string): Promise<void>;
   /** Get the assembled Blob (returns null if not yet complete). */
@@ -67,6 +70,11 @@ export type FileShareOptions = {
   chunkBytes?: number;
   /** Maximum file size in bytes. Default 5 MB. */
   maxBytes?: number;
+  /**
+   * Yield to the browser after this many CRDT chunk writes. Default: 8.
+   * This prevents a large local image from monopolizing Safari's main thread.
+   */
+  yieldEveryChunks?: number;
 };
 
 function names(prefix: string): { manifests: string; chunks: string } {
@@ -82,20 +90,29 @@ function newId(): string {
 function bytesToBase64(bytes: Uint8Array): string {
   let bin = "";
   for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]!);
-  return typeof btoa === "function" ? btoa(bin) : Buffer.from(bin, "binary").toString("base64");
+  return typeof btoa === "function"
+    ? btoa(bin)
+    : Buffer.from(bin, "binary").toString("base64");
 }
 
 function base64ToBytes(b64: string): Uint8Array {
-  const bin = typeof atob === "function" ? atob(b64) : Buffer.from(b64, "base64").toString("binary");
+  const bin =
+    typeof atob === "function"
+      ? atob(b64)
+      : Buffer.from(b64, "base64").toString("binary");
   const out = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
   return out;
 }
 
-export function useFileShare(room: YRoom | null, opts?: FileShareOptions): FileShareApi {
+export function useFileShare(
+  room: YRoom | null,
+  opts?: FileShareOptions,
+): FileShareApi {
   const mapName = opts?.mapName ?? "mesh:files";
   const chunkBytes = opts?.chunkBytes ?? 16 * 1024;
   const maxBytes = opts?.maxBytes ?? 5 * 1024 * 1024;
+  const yieldEveryChunks = Math.max(1, Math.floor(opts?.yieldEveryChunks ?? 8));
 
   const [files, setFiles] = useState<SharedFile[]>([]);
 
@@ -116,7 +133,9 @@ export function useFileShare(room: YRoom | null, opts?: FileShareOptions): FileS
         const have = arr instanceof Y.Array ? arr.length : 0;
         const received =
           arr instanceof Y.Array
-            ? arr.toArray().reduce((acc, c) => acc + Math.floor((c.length * 3) / 4), 0)
+            ? arr
+                .toArray()
+                .reduce((acc, c) => acc + Math.floor((c.length * 3) / 4), 0)
             : 0;
         out.push({
           id,
@@ -141,9 +160,13 @@ export function useFileShare(room: YRoom | null, opts?: FileShareOptions): FileS
   const send = useCallback<FileShareApi["send"]>(
     async (blob, sendOpts) => {
       if (!room) throw new Error("useFileShare: room is null");
-      if (blob.size > maxBytes) throw new Error(`useFileShare: file too large (${blob.size} > ${maxBytes})`);
+      if (blob.size > maxBytes)
+        throw new Error(
+          `useFileShare: file too large (${blob.size} > ${maxBytes})`,
+        );
       const id = sendOpts?.id ?? newId();
-      const name = sendOpts?.name ?? (blob instanceof File ? blob.name : "file");
+      const name =
+        sendOpts?.name ?? (blob instanceof File ? blob.name : "file");
       const buf = new Uint8Array(await blob.arrayBuffer());
       const total = Math.ceil(buf.length / chunkBytes) || 1;
 
@@ -168,16 +191,22 @@ export function useFileShare(room: YRoom | null, opts?: FileShareOptions): FileS
       });
 
       for (let i = 0; i < total; i++) {
-        const slice = buf.subarray(i * chunkBytes, Math.min((i + 1) * chunkBytes, buf.length));
+        const slice = buf.subarray(
+          i * chunkBytes,
+          Math.min((i + 1) * chunkBytes, buf.length),
+        );
         const b64 = bytesToBase64(slice);
         room.doc.transact(() => {
           chunksArr.push([b64]);
         });
+        if ((i + 1) % yieldEveryChunks === 0 && i + 1 < total) {
+          await new Promise<void>((resolve) => window.setTimeout(resolve, 0));
+        }
       }
 
       return id;
     },
-    [room, mapName, chunkBytes, maxBytes],
+    [room, mapName, chunkBytes, maxBytes, yieldEveryChunks],
   );
 
   const blobOf = useCallback<FileShareApi["blobOf"]>(
@@ -192,7 +221,10 @@ export function useFileShare(room: YRoom | null, opts?: FileShareOptions): FileS
       for (const b64 of arr.toArray()) {
         const bytes = base64ToBytes(b64);
         // Copy into a fresh ArrayBuffer so the TS lib's strict BlobPart type matches.
-        const ab = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+        const ab = bytes.buffer.slice(
+          bytes.byteOffset,
+          bytes.byteOffset + bytes.byteLength,
+        );
         parts.push(new Uint8Array(ab as ArrayBuffer));
       }
       return new Blob(parts, { type: manifest.mimeType });
@@ -231,5 +263,8 @@ export function useFileShare(room: YRoom | null, opts?: FileShareOptions): FileS
     [room, mapName],
   );
 
-  return useMemo(() => ({ files, send, download, blobOf, remove }), [files, send, download, blobOf, remove]);
+  return useMemo(
+    () => ({ files, send, download, blobOf, remove }),
+    [files, send, download, blobOf, remove],
+  );
 }
