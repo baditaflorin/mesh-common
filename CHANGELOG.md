@@ -4,6 +4,9 @@
 
 ### Added
 
+- `useImageCapture` now provides `captureBlob()` for an explicit, local JPEG
+  Blob capture path; `useFileShare` yields between bounded chunk batches so a
+  camera image cannot monopolize the mobile browser main thread while sharing.
 - `useScheduledCue`: a validated, timestamped one-shot cue for shared-clock rehearsal flows, with bounded lead time, cancellation, expiry, and lateness diagnostics. It is transport-agnostic by design so an installation can retain the app API while moving beyond a small WebRTC room.
 
 - `useSharedStickyBoard`, `useSharedWordRelay`, `useSharedPixelGrid`,
@@ -54,8 +57,6 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 The `scripts/check-docs-updated.sh` pre-commit hook fails any commit that
 adds a new `src/index.ts` export without a corresponding entry here and a
 mention in `README.md`.
-
-## [Unreleased]
 
 ### Added
 
