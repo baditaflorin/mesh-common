@@ -4,6 +4,8 @@
 
 ### Added
 
+- `useScheduledCue`: a validated, timestamped one-shot cue for shared-clock rehearsal flows, with bounded lead time, cancellation, expiry, and lateness diagnostics. It is transport-agnostic by design so an installation can retain the app API while moving beyond a small WebRTC room.
+
 - `useSharedStickyBoard`, `useSharedWordRelay`, `useSharedPixelGrid`,
   `useSharedCaptionContest`, and `useSharedBingoBoard` for bounded,
   peer-attributed creative play and facilitation without service-side state.
