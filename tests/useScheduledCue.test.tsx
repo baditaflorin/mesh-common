@@ -48,6 +48,22 @@ describe("useScheduledCue", () => {
     expect(result.current).toMatchObject({ state: "idle", cue: null });
   });
 
+  it("accepts an exact minimum delay even when a shared clock advances per read", () => {
+    let tick = 10_000;
+    const clock = {
+      meshNow: () => tick++,
+      destroy: () => undefined,
+      peerCount: () => 0,
+    };
+    const room = createMockRoom({ peerId: "alice" });
+    const { result } = renderHook(() =>
+      useScheduledCue(room, "light", { clock, minLeadMs: 1_000, isPayload: isLightCue }),
+    );
+
+    act(() => expect(result.current.scheduleIn({ mode: "screen" }, 1_000)).toBe(true));
+    expect(result.current.cue?.fireAt).toBe(11_001);
+  });
+
   it("replicates cancellation and never clears an actionable cue", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(10_000));

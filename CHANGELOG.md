@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Fixed `useScheduledCue.scheduleIn()` rejecting a delay exactly equal to `minLeadMs` when a shared clock advanced between internal reads. A one-second cue can now be scheduled reliably at its configured one-second minimum.
+
 ### Added
 
 - `useImageCapture` now provides `captureBlob()` for an explicit, local JPEG

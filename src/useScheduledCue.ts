@@ -133,9 +133,10 @@ export function useScheduledCue<T>(
 
   const scheduleAt = (payload: T, fireAt: number) => {
     if (!room || !map || !isPayload(payload) || !Number.isFinite(fireAt)) return false;
-    const delayMs = fireAt - now();
+    const scheduledNow = now();
+    const delayMs = fireAt - scheduledNow;
     if (delayMs < minLeadMs || delayMs > maxLeadMs) return false;
-    return write({ state: "scheduled", id: cueId(room, now()), fireAt, payload });
+    return write({ state: "scheduled", id: cueId(room, scheduledNow), fireAt, payload });
   };
 
   return {
@@ -145,8 +146,18 @@ export function useScheduledCue<T>(
     latenessMs,
     scheduleAt,
     scheduleIn: (payload, delayMs) => {
-      if (!Number.isFinite(delayMs)) return false;
-      return scheduleAt(payload, now() + delayMs);
+      if (!room || !map || !isPayload(payload) || !Number.isFinite(delayMs)) return false;
+      if (delayMs < minLeadMs || delayMs > maxLeadMs) return false;
+      // Validate the supplied delay, then take exactly one clock reading for
+      // the deadline. Calling `scheduleAt(now() + delay)` reads the clock a
+      // second time and can reject an exact-minimum (for example 1.0 s) cue.
+      const scheduledNow = now();
+      return write({
+        state: "scheduled",
+        id: cueId(room, scheduledNow),
+        fireAt: scheduledNow + delayMs,
+        payload,
+      });
     },
     cancel: () => {
       if (!record || record.state !== "scheduled") return false;
