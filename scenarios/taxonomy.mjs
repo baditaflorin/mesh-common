@@ -217,6 +217,12 @@ const rules = [
     ["outdoors", "neighbourhoods", "events"],
   ],
   [
+    /particles/,
+    "Devices & spaces",
+    "Shared displays & installations",
+    ["art installations", "festivals", "photo moments"],
+  ],
+  [
     /(kiosk|watch-party|shared-window|lightning|firefly)/,
     "Devices & spaces",
     "Shared displays & installations",

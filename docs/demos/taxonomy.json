@@ -953,6 +953,15 @@
       "neighbourhoods"
     ]
   },
+  "mesh-particles": {
+    "category": "Devices & spaces",
+    "subcategory": "Shared displays & installations",
+    "useCases": [
+      "art installations",
+      "festivals",
+      "photo moments"
+    ]
+  },
   "mesh-pass-the-phone": {
     "category": "Games",
     "subcategory": "Party & tabletop",
