@@ -134,7 +134,7 @@ for (const app of entries) {
         <code class="slug">${escapeHtml(app)}</code>
       </div>
     </article>
-  `);
+`);
 }
 
 const generatedAt = new Date().toISOString();
