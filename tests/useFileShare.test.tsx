@@ -5,8 +5,19 @@ import * as Y from "yjs";
 import type { YRoom } from "../src/useYRoom";
 import { useFileShare } from "../src/useFileShare";
 
-function makeRoom(peerId: string, doc: Y.Doc = new Y.Doc()): YRoom {
-  return { doc, provider: null, peerId, peerCount: 0, roomId: "test" };
+function makeRoom(
+  peerId: string,
+  doc: Y.Doc = new Y.Doc(),
+  deviceId?: string,
+): YRoom {
+  return {
+    doc,
+    provider: null,
+    peerId,
+    deviceId,
+    peerCount: 0,
+    roomId: "test",
+  };
 }
 
 function bytesBlob(bytes: number[], mime = "application/octet-stream"): Blob {
@@ -20,16 +31,19 @@ describe("useFileShare", () => {
   });
 
   it("sends a small file and reports complete", async () => {
-    const room = makeRoom("alice");
+    const room = makeRoom("alice", undefined, "device-alice");
     const { result } = renderHook(() => useFileShare(room));
     let id = "";
     await act(async () => {
-      id = await result.current.send(bytesBlob([1, 2, 3, 4, 5], "text/plain"), { name: "hi.txt" });
+      id = await result.current.send(bytesBlob([1, 2, 3, 4, 5], "text/plain"), {
+        name: "hi.txt",
+      });
     });
     await waitFor(() => expect(result.current.files.length).toBe(1));
     const f = result.current.files[0]!;
     expect(f.id).toBe(id);
     expect(f.manifest.name).toBe("hi.txt");
+    expect(f.manifest.deviceId).toBe("device-alice");
     expect(f.manifest.size).toBe(5);
     expect(f.complete).toBe(true);
   });
