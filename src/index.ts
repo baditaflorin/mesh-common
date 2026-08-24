@@ -614,6 +614,13 @@ export {
   type SharedTimerStatus,
 } from "./useSharedTimer";
 export {
+  useScheduledCue,
+  type ScheduledCue,
+  type ScheduledCueController,
+  type ScheduledCueOptions,
+  type ScheduledCueState,
+} from "./useScheduledCue";
+export {
   useCrdtUndo,
   type CrdtUndoApi,
   type CrdtUndoOptions,
