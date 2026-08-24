@@ -7,6 +7,9 @@
 - `useImageCapture` now provides `captureBlob()` for an explicit, local JPEG
   Blob capture path; `useFileShare` yields between bounded chunk batches so a
   camera image cannot monopolize the mobile browser main thread while sharing.
+- `useFileShare` writes the room's stable per-app `deviceId` into each manifest
+  when available, so gallery UIs can attribute shared items across a browser
+  reload without exposing a fleet-wide identifier.
 - `useScheduledCue`: a validated, timestamped one-shot cue for shared-clock rehearsal flows, with bounded lead time, cancellation, expiry, and lateness diagnostics. It is transport-agnostic by design so an installation can retain the app API while moving beyond a small WebRTC room.
 
 - `useSharedStickyBoard`, `useSharedWordRelay`, `useSharedPixelGrid`,

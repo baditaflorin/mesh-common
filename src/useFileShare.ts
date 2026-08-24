@@ -36,6 +36,9 @@ export type FileManifest = {
   mimeType: string;
   size: number;
   chunks: number;
+  /** Stable, per-app browser id when the room provides one. */
+  deviceId?: string;
+  /** Ephemeral room-session author id. Prefer `deviceId` for UI attribution. */
   by: string;
   at: number;
 };
@@ -179,6 +182,7 @@ export function useFileShare(
         mimeType: blob.type || "application/octet-stream",
         size: buf.length,
         chunks: total,
+        deviceId: room.deviceId,
         by: room.peerId,
         at: Date.now(),
       };
