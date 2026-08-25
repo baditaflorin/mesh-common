@@ -1,4 +1,5 @@
 import { toast, Toaster } from "sonner";
+import { useOptionalMeshTheme } from "./MeshThemeProvider";
 
 export type MeshUiToasterProps = {
   position?:
@@ -30,12 +31,13 @@ export function MeshUiToaster({
   visibleToasts = 3,
   closeButton = false,
 }: MeshUiToasterProps = {}) {
+  const meshTheme = useOptionalMeshTheme();
   return (
     <Toaster
       position={position}
       visibleToasts={visibleToasts}
       closeButton={closeButton}
-      theme="dark"
+      theme={meshTheme?.resolvedTheme ?? "dark"}
       richColors
       toastOptions={{
         className: "mesh-ui-toast",
@@ -50,7 +52,8 @@ export function MeshUiToaster({
  */
 export const pushUiToast = {
   /** Plain neutral toast. */
-  show: (message: string, opts?: Parameters<typeof toast>[1]) => toast(message, opts),
+  show: (message: string, opts?: Parameters<typeof toast>[1]) =>
+    toast(message, opts),
   /** Green success toast. */
   success: (message: string, opts?: Parameters<typeof toast.success>[1]) =>
     toast.success(message, opts),

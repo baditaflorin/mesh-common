@@ -50,6 +50,110 @@ export {
   MeshConnectionStatus,
   type MeshConnectionStatusProps,
 } from "./MeshConnectionStatus";
+export {
+  MeshAppProvider,
+  useMeshApp,
+  useOptionalMeshApp,
+  type MeshToastController,
+  type MeshAppCapabilityState,
+  type MeshAppContextValue,
+  type MeshAppProviderProps,
+} from "./MeshAppProvider";
+export {
+  MeshAppFrame,
+  type MeshAppFrameProps,
+  type MeshAppFrameShellOptions,
+} from "./MeshAppFrame";
+export {
+  useRoomDiagnostics,
+  type RoomDiagnosticStatus,
+  type RoomDiagnostics,
+  type RoomDiagnosticsOptions,
+} from "./useRoomDiagnostics";
+export {
+  MeshRoomGate,
+  type MeshRoomGateProps,
+  type MeshRoomGateRenderState,
+  type MeshRoomGateFallback,
+} from "./MeshRoomGate";
+export {
+  MeshConnectionPanel,
+  type MeshConnectionPanelProps,
+} from "./MeshConnectionPanel";
+export {
+  MeshCapabilityGate,
+  type MeshCapabilityStatus,
+  type MeshCapabilitySnapshot,
+  type MeshCapabilityDefinition,
+  type MeshCapabilityGateProps,
+} from "./MeshCapabilityGate";
+export {
+  MeshReadinessPanel,
+  type MeshPeerReadiness,
+  type MeshReadinessPanelProps,
+} from "./MeshReadinessPanel";
+export {
+  MeshRoster,
+  useMeshRoster,
+  meshSessionLabel,
+  type MeshRosterPeerState,
+  type MeshRosterPeer,
+  type MeshRosterState,
+  type MeshRosterOptions,
+  type MeshRosterProps,
+} from "./MeshRoster";
+export {
+  MeshSessionProvider,
+  useMeshSession,
+  useMeshSessionContext,
+  sharesKnownBrowserDevice,
+  type MeshSessionActivity,
+  type MeshSessionIdentity,
+  type MeshSessionOptions,
+  type MeshSessionProviderProps,
+} from "./meshSession";
+export {
+  useMeshMediaFlow,
+  type MeshMediaFlowState,
+  type MeshMediaFlowOptions,
+  type MeshMediaFlow,
+} from "./useMeshMediaFlow";
+export {
+  MeshCountdown,
+  MeshCueBanner,
+  formatMeshDuration,
+  meshCueMessage,
+  type MeshCountdownProps,
+  type MeshCueBannerProps,
+} from "./MeshCountdown";
+export {
+  defineSharedEntity,
+  type SharedEntityAction,
+  type SharedEntityContext,
+  type SharedEntityDefinition,
+  type DefinedSharedEntityCollection,
+  type DefinedSharedEntity,
+} from "./defineSharedEntity";
+export {
+  MeshOnboarding,
+  useMeshOnboarding,
+  MESH_ONBOARDING_STEPS,
+  type MeshOnboardingStep,
+  type MeshOnboardingStepDefinition,
+  type MeshOnboardingController,
+  type UseMeshOnboardingOptions,
+  type MeshOnboardingProps,
+} from "./MeshOnboarding";
+export {
+  evaluateMeshUxContract,
+  assertMeshUxContract,
+  MeshUxContractError,
+  type MeshAppLifecycleState,
+  type MeshUxViolationCode,
+  type MeshUxViolation,
+  type MeshUxContractOptions,
+  type MeshUxContractResult,
+} from "./fleetUxContract";
 export { InviteShareButton } from "./InviteShareButton";
 export {
   useInviteChain,

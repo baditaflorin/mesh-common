@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { MeshShell, useYRoom } from "@baditaflorin/mesh-common";
+import {
+  MeshAppFrame,
+  MeshAppProvider,
+  MeshThemeProvider,
+  useNetworkOnline,
+  useRoomLifecycle,
+  useYRoom,
+} from "@baditaflorin/mesh-common";
 import { config } from "./config";
 import { Feature } from "./Feature";
 
@@ -13,10 +20,20 @@ export function App() {
   }, [roomId]);
 
   const room = useYRoom(config, roomId);
+  const lifecycle = useRoomLifecycle(room);
+  const network = useNetworkOnline();
 
   return (
-    <MeshShell config={config} roomId={roomId} onRoomChange={setRoomId} room={room}>
-      <Feature room={room} config={config} />
-    </MeshShell>
+    <MeshThemeProvider tokens={{ accent: config.accentHex }}>
+      <MeshAppProvider config={config} room={room} lifecycle={lifecycle} network={network}>
+        <MeshAppFrame
+          title={config.appName}
+          connection={false}
+          shell={{ roomId, onRoomChange: setRoomId }}
+        >
+          <Feature room={room} config={config} />
+        </MeshAppFrame>
+      </MeshAppProvider>
+    </MeshThemeProvider>
   );
 }

@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import type { YRoom } from "./useYRoom";
 
-export type RoomLifecycleStatus = "idle" | "joining" | "connected" | "disconnected";
+export type RoomLifecycleStatus =
+  "idle" | "joining" | "connected" | "disconnected";
 export type RoomLifecycle = {
   status: RoomLifecycleStatus;
   joinedAt: number | null;
@@ -11,8 +12,14 @@ export type RoomLifecycle = {
 
 type ProviderEvents = {
   connected?: boolean;
-  on?: (event: "status", callback: (event: { status?: string }) => void) => void;
-  off?: (event: "status", callback: (event: { status?: string }) => void) => void;
+  on?: (
+    event: "status",
+    callback: (event: { status?: string }) => void,
+  ) => void;
+  off?: (
+    event: "status",
+    callback: (event: { status?: string }) => void,
+  ) => void;
   connect?: () => void;
   disconnect?: () => void;
 };
@@ -20,23 +27,35 @@ type ProviderEvents = {
 /** Normalizes the y-webrtc provider status event into UI-ready room lifecycle state. */
 export function useRoomLifecycle(room: YRoom | null): RoomLifecycle {
   const provider = room?.provider as unknown as ProviderEvents | null;
-  const [status, setStatus] = useState<RoomLifecycleStatus>(() => room ? (provider?.connected ? "connected" : "joining") : "idle");
-  const [joinedAt, setJoinedAt] = useState<number | null>(() => provider?.connected ? Date.now() : null);
+  const [status, setStatus] = useState<RoomLifecycleStatus>(() =>
+    room ? (provider?.connected ? "connected" : "joining") : "idle",
+  );
+  const [joinedAt, setJoinedAt] = useState<number | null>(() =>
+    provider?.connected ? Date.now() : null,
+  );
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     if (!room) {
       setStatus("idle");
       setJoinedAt(null);
+      setError(null);
       return;
     }
     const update = (event: { status?: string }) => {
-      const next: RoomLifecycleStatus = event.status === "connected" ? "connected" : "disconnected";
+      const next: RoomLifecycleStatus =
+        event.status === "connected" ? "connected" : "disconnected";
       setStatus(next);
-      if (next === "connected") setJoinedAt((current) => current ?? Date.now());
+      if (next === "connected") {
+        setJoinedAt((current) => current ?? Date.now());
+        setError(null);
+      }
     };
     setStatus(provider?.connected ? "connected" : "joining");
-    if (provider?.connected) setJoinedAt(Date.now());
+    if (provider?.connected) {
+      setJoinedAt(Date.now());
+      setError(null);
+    }
     provider?.on?.("status", update);
     return () => provider?.off?.("status", update);
   }, [room, provider]);

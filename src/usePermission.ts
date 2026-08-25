@@ -31,9 +31,14 @@ export function usePermission(
   name: PermissionName,
   requestPermission?: PermissionRequest,
 ): PermissionApi {
-  const supported =
+  const querySupported =
     typeof navigator !== "undefined" &&
     typeof navigator.permissions?.query === "function";
+  const canRequest = Boolean(requestPermission);
+  // Safari and many embedded browsers deliberately omit `navigator.permissions`
+  // for motion/camera, while the gesture-bound capability request still works.
+  // Reporting that as unsupported would hide the only useful Enable button.
+  const supported = querySupported || canRequest;
   const [state, setState] = useState<MeshPermissionState>(
     supported ? "unknown" : "unsupported",
   );
@@ -42,7 +47,13 @@ export function usePermission(
   const mounted = useRef(true);
 
   const refresh = useCallback(async (): Promise<MeshPermissionState> => {
-    if (!supported) {
+    if (!querySupported) {
+      // A capability-specific request callback is still a supported fallback
+      // even though this browser cannot report its permission state.
+      if (canRequest) {
+        if (mounted.current) setState("unknown");
+        return "unknown";
+      }
       if (mounted.current) setState("unsupported");
       return "unsupported";
     }
@@ -66,7 +77,7 @@ export function usePermission(
       }
       return "unknown";
     }
-  }, [name, supported]);
+  }, [canRequest, name, querySupported]);
 
   useEffect(() => {
     mounted.current = true;
@@ -89,8 +100,16 @@ export function usePermission(
       const result = await requestPermission();
       const observed = await refresh();
       if (result === "denied" || observed === "denied") return false;
-      if (result === "granted" || result === true || observed === "granted")
+      if (result === "granted" || result === true || observed === "granted") {
+        // A browser may expose Permissions API yet reject this particular
+        // descriptor (notably Safari camera/motion). A successful explicit
+        // request is then the strongest truthful signal we have.
+        if (mounted.current) {
+          if (observed !== "granted") setState("granted");
+          setError(null);
+        }
         return true;
+      }
       return false;
     } catch (reason) {
       if (mounted.current)

@@ -5,9 +5,32 @@
 ### Fixed
 
 - Fixed `useScheduledCue.scheduleIn()` rejecting a delay exactly equal to `minLeadMs` when a shared clock advanced between internal reads. A one-second cue can now be scheduled reliably at its configured one-second minimum.
+- Permission gates now retain an explicit Enable path on Safari and embedded
+  browsers when `navigator.permissions` is absent or rejects a particular
+  descriptor; a successful gesture-bound request becomes the truthful ready
+  signal. Camera errors clear for a later gesture retry, and persisted media
+  consent never opens a camera on mount.
+- Room diagnostics keep retry/stale state through peer-awareness wrapper
+  updates, recovered lifecycle connections clear old errors, and session
+  rosters no longer collapse simultaneously connected tabs by browser id.
+- Countdown/cue visuals no longer announce every tick to assistive technology;
+  optional announcements occur only on meaningful lifecycle transitions.
 
 ### Added
 
+- **Fleet UX foundation (20 composable improvements):** `MeshAppProvider`,
+  `MeshAppFrame`, `useRoomDiagnostics`, `MeshRoomGate`,
+  `MeshConnectionPanel`, `MeshCapabilityGate`, `MeshReadinessPanel`,
+  `MeshAsyncAction`, `MeshThemeProvider`, responsive layout primitives,
+  accessible form/listbox primitives, `MeshRoster`, `MeshSessionProvider`,
+  `useMeshMediaFlow`, `MeshCountdown` / `MeshCueBanner`,
+  `defineSharedEntity`, `MeshOnboarding`, and `evaluateMeshUxContract`.
+  New apps can now share capability/readiness gates, connection diagnostics,
+  accessible feedback, mobile-safe layout, explicit media flows, and a
+  deterministic fleet UX release check rather than rebuilding them per app.
+- The application scaffold now composes `MeshThemeProvider`,
+  `MeshAppProvider`, and `MeshAppFrame`, and `MeshUiToaster` follows the
+  active mesh theme instead of always rendering dark.
 - `useImageCapture` now provides `captureBlob()` for an explicit, local JPEG
   Blob capture path; `useFileShare` yields between bounded chunk batches so a
   camera image cannot monopolize the mobile browser main thread while sharing.
