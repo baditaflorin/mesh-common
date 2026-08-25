@@ -15,8 +15,13 @@ afterEach(() => {
 
 describe("useNetworkOnline", () => {
   it("starts with navigator.onLine", () => {
-    Object.defineProperty(window.navigator, "onLine", { configurable: true, value: true });
-    globalThis.fetch = vi.fn().mockResolvedValue(new Response(null, { status: 204 }));
+    Object.defineProperty(window.navigator, "onLine", {
+      configurable: true,
+      value: true,
+    });
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response(null, { status: 204 }));
     const { result } = renderHook(() =>
       useNetworkOnline({ probeIntervalMs: 60_000, retryIntervalMs: 60_000 }),
     );
@@ -24,8 +29,13 @@ describe("useNetworkOnline", () => {
   });
 
   it("flips false when navigator.onLine is false", () => {
-    Object.defineProperty(window.navigator, "onLine", { configurable: true, value: false });
-    globalThis.fetch = vi.fn().mockResolvedValue(new Response(null, { status: 204 }));
+    Object.defineProperty(window.navigator, "onLine", {
+      configurable: true,
+      value: false,
+    });
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response(null, { status: 204 }));
     const { result } = renderHook(() =>
       useNetworkOnline({ probeIntervalMs: 60_000, retryIntervalMs: 60_000 }),
     );
@@ -33,8 +43,25 @@ describe("useNetworkOnline", () => {
     expect(result.current.online).toBe(false);
   });
 
+  it("supports a passive browser-only signal without making a probe request", () => {
+    Object.defineProperty(window.navigator, "onLine", {
+      configurable: true,
+      value: true,
+    });
+    const fetch = vi.fn();
+    globalThis.fetch = fetch;
+    const { result } = renderHook(() => useNetworkOnline({ probeUrl: false }));
+
+    expect(result.current.online).toBe(true);
+    expect(result.current.why).toBe("initial");
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
   it("flips false when probe rejects (probe-failed)", async () => {
-    Object.defineProperty(window.navigator, "onLine", { configurable: true, value: true });
+    Object.defineProperty(window.navigator, "onLine", {
+      configurable: true,
+      value: true,
+    });
     globalThis.fetch = vi.fn().mockRejectedValue(new Error("DNS"));
     const { result } = renderHook(() =>
       useNetworkOnline({
@@ -50,8 +77,13 @@ describe("useNetworkOnline", () => {
   });
 
   it("flips back true on successful probe", async () => {
-    Object.defineProperty(window.navigator, "onLine", { configurable: true, value: true });
-    globalThis.fetch = vi.fn().mockResolvedValue(new Response(null, { status: 204 }));
+    Object.defineProperty(window.navigator, "onLine", {
+      configurable: true,
+      value: true,
+    });
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response(null, { status: 204 }));
     const { result } = renderHook(() =>
       useNetworkOnline({
         probeIntervalMs: 60_000,

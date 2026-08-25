@@ -60,6 +60,16 @@ export {
   type MeshAppProviderProps,
 } from "./MeshAppProvider";
 export {
+  MeshShellConnectionBridgeProvider,
+  MeshShellConnectionBridge,
+  useMeshShellConnectionBridge,
+  useOptionalMeshShellConnectionBridge,
+  type MeshShellConnection,
+  type MeshShellConnectionBridgeValue,
+  type MeshShellConnectionBridgeProviderProps,
+  type MeshShellConnectionBridgeProps,
+} from "./MeshShellConnectionBridge";
+export {
   MeshAppFrame,
   type MeshAppFrameProps,
   type MeshAppFrameShellOptions,

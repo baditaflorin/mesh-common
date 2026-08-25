@@ -30,8 +30,14 @@ export type NetworkOnlineState = {
 };
 
 export type NetworkOnlineOptions = {
-  /** URL to HEAD. Default: gstatic 204 canary. Must allow CORS. */
-  probeUrl?: string;
+  /**
+   * URL to HEAD. Default: gstatic 204 canary. Must allow CORS.
+   *
+   * Pass `false` for a passive, privacy-preserving browser-online signal.
+   * This is useful for shared shell chrome: it should reflect offline events
+   * without adding a third-party request to every application visit.
+   */
+  probeUrl?: string | false;
   /** ms between probes when online. Default 30_000. */
   probeIntervalMs?: number;
   /** ms between probes when offline (faster — to catch recovery). Default 5_000. */
@@ -42,8 +48,11 @@ export type NetworkOnlineOptions = {
 
 const DEFAULT_PROBE = "https://www.gstatic.com/generate_204";
 
-export function useNetworkOnline(opts?: NetworkOnlineOptions): NetworkOnlineState {
-  const probeUrl = opts?.probeUrl ?? DEFAULT_PROBE;
+export function useNetworkOnline(
+  opts?: NetworkOnlineOptions,
+): NetworkOnlineState {
+  const probeUrl =
+    opts?.probeUrl === false ? undefined : (opts?.probeUrl ?? DEFAULT_PROBE);
   const onlineInterval = opts?.probeIntervalMs ?? 30_000;
   const offlineInterval = opts?.retryIntervalMs ?? 5_000;
   const timeoutMs = opts?.probeTimeoutMs ?? 4_000;
@@ -69,6 +78,7 @@ export function useNetworkOnline(opts?: NetworkOnlineOptions): NetworkOnlineStat
 
     const probe = async () => {
       if (cancelled.current) return;
+      if (!probeUrl) return;
       // Cheap check first.
       if (typeof navigator !== "undefined" && !navigator.onLine) {
         transition(false, "navigator");
@@ -78,7 +88,12 @@ export function useNetworkOnline(opts?: NetworkOnlineOptions): NetworkOnlineStat
       try {
         const ctrl = new AbortController();
         const to = setTimeout(() => ctrl.abort(), timeoutMs);
-        await fetch(probeUrl, { method: "HEAD", mode: "no-cors", cache: "no-store", signal: ctrl.signal });
+        await fetch(probeUrl, {
+          method: "HEAD",
+          mode: "no-cors",
+          cache: "no-store",
+          signal: ctrl.signal,
+        });
         clearTimeout(to);
         if (cancelled.current) return;
         transition(true, "probe-ok");
@@ -103,7 +118,9 @@ export function useNetworkOnline(opts?: NetworkOnlineOptions): NetworkOnlineStat
       window.addEventListener("online", onOnline);
       window.addEventListener("offline", onOffline);
     }
-    void probe();
+    // Shell-level connection context only needs browser online/offline events;
+    // callers that need a reachability probe continue to get the default.
+    if (probeUrl) void probe();
 
     return () => {
       cancelled.current = true;

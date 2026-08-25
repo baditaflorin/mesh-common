@@ -93,9 +93,12 @@ export function useRoomDiagnostics(
   // Keep effect dependencies stable even when a caller provides an inline
   // clock callback. The current callback is still read on every invocation.
   const now = useCallback(() => nowRef.current(), []);
-  // Keep both hooks unconditional. Supplying an app-owned value only selects
-  // which result is displayed; it never changes hook order.
-  const detectedNetwork = useNetworkOnline(options?.networkOptions);
+  // Keep both hooks unconditional. When an app already owns the network
+  // signal, diagnostics must not start a redundant external reachability
+  // probe merely to discard its result; use the passive hook path instead.
+  const detectedNetwork = useNetworkOnline(
+    options?.network ? { probeUrl: false } : options?.networkOptions,
+  );
   const detectedLifecycle = useRoomLifecycle(room);
   const network = options?.network ?? detectedNetwork;
   const lifecycle = options?.lifecycle ?? detectedLifecycle;
