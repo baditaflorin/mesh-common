@@ -758,6 +758,37 @@
   }
 }
 
+/* Desktop windows can be short even when they are wide. Keep an app's first
+ * launch action in the initial viewport instead of treating height as an
+ * afterthought. Apps with a deliberately large preview may add their own
+ * compact rule, but this is a safe, useful default for every MeshLaunch. */
+@media (min-width: 36.0625rem) and (max-height: 44rem) {
+  .mesh-launch {
+    min-height: 0;
+    padding: clamp(1.5rem, 5vh, 2.75rem) clamp(1rem, 5vw, 3rem) 1.25rem;
+  }
+
+  .mesh-launch-content {
+    gap: 0.85rem;
+  }
+
+  .mesh-launch h1,
+  .mesh-launch h2,
+  .mesh-launch h3 {
+    font-size: clamp(2.1rem, 5.4vw, 3.75rem);
+  }
+
+  .mesh-launch-promise {
+    font-size: 0.96rem;
+    line-height: 1.42;
+  }
+
+  .mesh-launch-action {
+    min-height: 2.75rem;
+    padding: 0.65rem 0.9rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .mesh-button {
     transition: none;
