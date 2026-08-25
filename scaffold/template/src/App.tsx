@@ -3,6 +3,8 @@ import {
   MeshAppFrame,
   MeshAppProvider,
   MeshThemeProvider,
+  getMeshVisualProfileTokens,
+  meshAccentText,
   useNetworkOnline,
   useRoomLifecycle,
   useYRoom,
@@ -27,10 +29,17 @@ export function App() {
   const network = useNetworkOnline({ probeUrl: false });
 
   return (
-    <MeshThemeProvider tokens={{ accent: config.accentHex }}>
+    <MeshThemeProvider
+      defaultMode="dark"
+      tokens={{
+        ...getMeshVisualProfileTokens(config.visualProfile ?? "utility"),
+        accent: config.accentHex,
+        accentText: meshAccentText(config.accentHex),
+      }}
+    >
       <MeshAppProvider config={config} room={room} lifecycle={lifecycle} network={network}>
         <MeshAppFrame
-          title={config.appName}
+          title={config.displayName}
           connection={false}
           shell={{ roomId, onRoomChange: setRoomId }}
         >

@@ -9,7 +9,11 @@ import {
 } from "@testing-library/react";
 import { Awareness } from "y-protocols/awareness.js";
 import * as Y from "yjs";
-import { createMeshConfig } from "../src/MeshConfig";
+import {
+  createMeshConfig,
+  meshAccentText,
+  type MeshConfig,
+} from "../src/MeshConfig";
 import { MeshShell } from "../src/MeshShell";
 import { MeshShellConnectionBridge } from "../src/MeshShellConnectionBridge";
 import {
@@ -18,7 +22,8 @@ import {
   useOptionalMeshApp,
 } from "../src/MeshAppProvider";
 import { useMeshSessionContext } from "../src/meshSession";
-import { useMeshTheme } from "../src/ui/MeshThemeProvider";
+import { MeshThemeProvider, useMeshTheme } from "../src/ui/MeshThemeProvider";
+import { getMeshVisualProfileTokens } from "../src/ui/MeshVisualProfile";
 import type { NetworkOnlineState } from "../src/useNetworkOnline";
 import type { RoomLifecycle } from "../src/useRoomLifecycle";
 import type { YRoom } from "../src/useYRoom";
@@ -72,6 +77,145 @@ function lifecycle(
 }
 
 describe("MeshShell foundation bridge", () => {
+  it("keeps hand-authored legacy config literals usable", () => {
+    const literalConfig: MeshConfig = {
+      appName: "mesh-literal-config",
+      storagePrefix: "mesh-literal-config",
+      description: "A compatibility test",
+      accentHex: "#3aa8a1",
+      version: "1.0.0",
+      commit: "literal",
+      repositoryUrl: "https://github.com/baditaflorin/mesh-literal-config",
+      pagesUrl: "https://baditaflorin.github.io/mesh-literal-config/",
+      signalingUrl: "wss://turn.0docker.com/ws",
+      turnTokenUrl: "https://turn.0docker.com/credentials",
+      paypalUrl: "https://www.paypal.com/paypalme/florinbadita",
+    };
+    localStorage.setItem("__mesh_beacon_optout", "1");
+    render(
+      <MeshShell
+        config={literalConfig}
+        roomId="shared-room"
+        onRoomChange={() => {}}
+        fleetIdentityServiceUrl={null}
+      >
+        <p>Feature</p>
+      </MeshShell>,
+    );
+
+    expect(screen.queryByText("Literal Config")).toBeNull();
+    expect(
+      document
+        .querySelector("[data-mesh-app-shell]")
+        ?.getAttribute("data-mesh-visual-profile"),
+    ).toBe("utility");
+    expect(
+      document
+        .querySelector("[data-mesh-app-shell]")
+        ?.getAttribute("data-mesh-shell-layout"),
+    ).toBe("legacy");
+    expect(document.querySelector(".mesh-app-bar")).toBeNull();
+    expect(document.querySelector(".mesh-self-ref")).toBeTruthy();
+    expect(document.querySelector(".mesh-legacy-invite")).toBeTruthy();
+  });
+
+  it("chooses a readable foreground for arbitrary app accent colors", () => {
+    const darkAccent = createMeshConfig({
+      appName: "mesh-dark-accent",
+      description: "test",
+      accentHex: "#8046a5",
+      version: "1.0.0",
+      commit: "test",
+    });
+    localStorage.setItem("__mesh_beacon_optout", "1");
+    render(
+      <MeshShell
+        config={darkAccent}
+        roomId="shared-room"
+        onRoomChange={() => {}}
+        fleetIdentityServiceUrl={null}
+      >
+        <p>Feature</p>
+      </MeshShell>,
+    );
+
+    expect(
+      document.documentElement.style.getPropertyValue("--mesh-accent-text"),
+    ).toBe("#ffffff");
+  });
+
+  it("keeps the readable accent foreground when an app owns the outer theme", () => {
+    const darkAccent = createMeshConfig({
+      appName: "mesh-owned-theme",
+      description: "test",
+      accentHex: "#8046a5",
+      version: "1.0.0",
+      commit: "test",
+    });
+    const room = createMockRoom({ peerId: "owned-theme" });
+    localStorage.setItem("__mesh_beacon_optout", "1");
+    render(
+      <MeshThemeProvider
+        tokens={{
+          ...getMeshVisualProfileTokens("utility"),
+          accent: darkAccent.accentHex,
+          accentText: meshAccentText(darkAccent.accentHex),
+        }}
+      >
+        <MeshAppProvider
+          config={darkAccent}
+          room={room}
+          lifecycle={lifecycle("connected")}
+          network={browserOnline}
+        >
+          <MeshShell
+            config={darkAccent}
+            roomId="shared-room"
+            room={room}
+            onRoomChange={() => {}}
+            fleetIdentityServiceUrl={null}
+          >
+            <p>Feature</p>
+          </MeshShell>
+        </MeshAppProvider>
+      </MeshThemeProvider>,
+    );
+
+    expect(
+      document.documentElement.style.getPropertyValue("--mesh-accent-text"),
+    ).toBe("#ffffff");
+  });
+
+  it("uses human-facing product chrome and moves developer metadata into Settings", () => {
+    localStorage.setItem("__mesh_beacon_optout", "1");
+    render(
+      <MeshShell
+        config={{ ...config, shellLayout: "inset" }}
+        roomId="shared-room"
+        room={createMockRoom({ peerId: "visual-shell" })}
+        onRoomChange={() => {}}
+        fleetIdentityServiceUrl={null}
+      >
+        <p>Feature</p>
+      </MeshShell>,
+    );
+
+    expect(screen.getByText("Shell Foundation Test")).toBeTruthy();
+    expect(
+      screen.getByRole("button", {
+        name: "Invite people to Shell Foundation Test",
+      }),
+    ).toBeTruthy();
+    expect(document.querySelector(".mesh-self-ref")).toBeNull();
+    const shell = document.querySelector("[data-mesh-app-shell]");
+    expect(shell?.getAttribute("data-mesh-visual-profile")).toBe("utility");
+    expect(document.querySelector(".mesh-app-content")).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: "Open settings" }));
+    expect(screen.getByRole("link", { name: "source" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "support" })).toBeTruthy();
+  });
+
   it("gives legacy shells the app, theme, and session foundations without a network probe", () => {
     const fetch = vi.fn();
     vi.stubGlobal("fetch", fetch);
@@ -139,10 +283,11 @@ describe("MeshShell foundation bridge", () => {
       </MeshShell>,
     );
 
-    expect(screen.getAllByRole("button", { name: "Open settings" })).toHaveLength(2);
-    const shellFab = document.querySelector<HTMLButtonElement>(
-      ".mesh-settings-fab",
-    );
+    expect(
+      screen.getAllByRole("button", { name: "Open settings" }),
+    ).toHaveLength(2);
+    const shellFab =
+      document.querySelector<HTMLButtonElement>(".mesh-settings-fab");
     expect(shellFab).not.toBeNull();
     expect(shellFab?.disabled).toBe(false);
     fireEvent.click(shellFab!);

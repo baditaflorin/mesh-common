@@ -1,5 +1,14 @@
-export type { MeshConfig, MeshConfigInput } from "./MeshConfig";
-export { createMeshConfig } from "./MeshConfig";
+export type {
+  MeshConfig,
+  MeshConfigInput,
+  MeshShellLayout,
+  MeshVisualProfileName,
+} from "./MeshConfig";
+export {
+  createMeshConfig,
+  humanizeMeshAppName,
+  meshAccentText,
+} from "./MeshConfig";
 
 export type { IceServer, TurnCredential, IceStorage } from "./iceConfig";
 export {

@@ -1,4 +1,4 @@
-/* App-local styles. Mesh chrome (settings drawer, self-ref bar) is provided by
+/* App-local styles. Shared shell and presentation primitives are provided by
  * @baditaflorin/mesh-common/styles.css imported in main.tsx. */
 
 :root {
@@ -22,30 +22,59 @@ body,
   -webkit-tap-highlight-color: transparent;
 }
 
-.feature-placeholder {
-  padding: 6rem 1.5rem 2rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.feature-starter {
+  display: grid;
+  width: min(100%, 42rem);
+  min-height: 20rem;
   gap: 1rem;
+  margin: clamp(1.5rem, 7vw, 5rem) auto;
+  background:
+    radial-gradient(circle at 85% 12%, var(--mesh-ambient, rgb(79 120 198 / 15%)), transparent 32%),
+    var(--mesh-surface-raised, var(--mesh-surface));
 }
 
-.feature-placeholder h1 {
-  font-size: 1.6rem;
+.feature-starter-eyebrow {
   margin: 0;
   color: var(--mesh-accent);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-.feature-placeholder p {
-  max-width: 32rem;
+.feature-starter h2 {
+  max-width: 12ch;
   margin: 0;
-  opacity: 0.85;
-  line-height: 1.5;
+  color: var(--mesh-fg);
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  letter-spacing: -0.05em;
+  line-height: 0.98;
 }
 
-.feature-status {
-  font-size: 0.85rem;
-  opacity: 0.6;
-  font-variant-numeric: tabular-nums;
+.feature-starter > p:not(.feature-starter-eyebrow, .feature-starter-note) {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--mesh-muted);
+  line-height: 1.55;
+}
+
+.feature-starter-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.feature-starter-note {
+  margin: auto 0 0;
+  color: var(--mesh-muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 40rem) {
+  .feature-starter {
+    min-height: 18rem;
+    margin-inline: 0;
+  }
 }
