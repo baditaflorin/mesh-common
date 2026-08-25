@@ -40,6 +40,10 @@
   overflow-x: clip;
   box-sizing: border-box;
   isolation: isolate;
+  /* Inset content uses a top margin for the app bar clearance. Establish a
+   * block formatting context so that margin stays inside the shell rather
+   * than collapsing through the root and leaving a dead strip above it. */
+  display: flow-root;
 }
 
 /* Shell controls are intentionally in the normal page geometry. This avoids
