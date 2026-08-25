@@ -49,22 +49,48 @@ function pageDevice(page: FakePage): { key: string; id: string } {
   return page.initScripts[0]?.arg as { key: string; id: string };
 }
 
+function connectionConfig(context: FakeContext): {
+  prefix: string;
+  room: string;
+  sig: string;
+  turn: string;
+} {
+  return context.initScripts[0]?.arg as {
+    prefix: string;
+    room: string;
+    sig: string;
+    turn: string;
+  };
+}
+
 describe("Playwright peer helpers", () => {
   it("gives same-context pair pages distinct simulated device identities", async () => {
     const fake = new FakeBrowser();
-    const pair = await openTwoPeers(fake as unknown as Browser, "http://app.test", {
-      storagePrefix: "mesh-test",
-      roomId: "room-a",
-    });
+    const pair = await openTwoPeers(
+      fake as unknown as Browser,
+      "http://app.test",
+      {
+        storagePrefix: "mesh-test",
+        roomId: "room-a",
+      },
+    );
 
     expect(fake.context.pages).toHaveLength(2);
     const [first, second] = fake.context.pages.map(pageDevice);
     expect(first.key).toBe("mesh-test:deviceId:v1");
     expect(second.key).toBe("mesh-test:deviceId:v1");
     expect(first.id).not.toBe(second.id);
-    expect(fake.context.pages.every((page) => page.navigations[0] === "http://app.test")).toBe(
-      true,
-    );
+    expect(
+      fake.context.pages.every(
+        (page) => page.navigations[0] === "http://app.test",
+      ),
+    ).toBe(true);
+    expect(connectionConfig(fake.context)).toMatchObject({
+      prefix: "mesh-test",
+      room: "room-a",
+      sig: "ws://localhost:1/never-connects",
+      turn: "http://127.0.0.1:1/never-connects",
+    });
 
     await pair.cleanup();
     expect(fake.context.closed).toBe(true);
@@ -83,5 +109,20 @@ describe("Playwright peer helpers", () => {
       { key: "mesh-test:deviceId:v1", id: "phone-a" },
       { key: "mesh-test:deviceId:v1", id: "phone-b" },
     ]);
+    expect(connectionConfig(fake.context).turn).toBe(
+      "http://127.0.0.1:1/never-connects",
+    );
+  });
+
+  it("uses an explicit local TURN-token override when a test supplies one", async () => {
+    const fake = new FakeBrowser();
+    await openTwoPeers(fake as unknown as Browser, "http://app.test", {
+      storagePrefix: "mesh-test",
+      turnTokenUrl: "http://127.0.0.1:9876/test-token",
+    });
+
+    expect(connectionConfig(fake.context).turn).toBe(
+      "http://127.0.0.1:9876/test-token",
+    );
   });
 });
