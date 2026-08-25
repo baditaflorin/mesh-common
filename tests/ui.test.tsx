@@ -208,7 +208,9 @@ describe("MeshNameInput", () => {
     render(<Harness />);
     expect(screen.getByText("name")).toBeTruthy();
     expect(screen.getByText("5/48")).toBeTruthy();
-    expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe("alice");
+    expect((screen.getByRole("textbox", { name: "name" }) as HTMLInputElement).value).toBe(
+      "alice",
+    );
   });
 
   it("clamps to maxLength", () => {
