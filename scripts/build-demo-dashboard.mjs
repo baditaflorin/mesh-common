@@ -21,6 +21,7 @@ const REGISTRY_PATH_2 = path.resolve(ROOT, "..", "..", "services-registry", "ser
 const REGISTRY_PATH = existsSync(REGISTRY_PATH_1) ? REGISTRY_PATH_1 : REGISTRY_PATH_2;
 const OUT_PATH = path.join(DEMOS_DIR, "index.html");
 const TAXONOMY_OUT_PATH = path.join(DEMOS_DIR, "taxonomy.json");
+const CATALOG_OUT_PATH = path.join(DEMOS_DIR, "catalog.json");
 const SCENARIOS_DIR = path.join(ROOT, "scenarios");
 const checkOnly = process.argv.includes("--check-recordings");
 
@@ -76,6 +77,7 @@ if (checkOnly) {
 
 const cards = [];
 const taxonomy = {};
+const catalog = [];
 let okCount = 0;
 let failCount = 0;
 
@@ -97,6 +99,25 @@ for (const app of entries) {
   const ok = status === "OK" && hasGif;
   if (ok) okCount++;
   else failCount++;
+
+  // Public, machine-readable catalog: consumers such as Rootless Computing
+  // should never have to scrape this dashboard's HTML or carry their own
+  // stale hand-written app list.
+  catalog.push({
+    id: app,
+    name,
+    description: reg?.description || "",
+    liveUrl: pagesUrl,
+    sourceUrl: reg?.repo_url || `https://github.com/baditaflorin/${app}`,
+    status: ok ? "ok" : "needs-attention",
+    recordingStatus: status,
+    recordingUrl: hasGif ? `https://baditaflorin.github.io/mesh-common/demos/${app}/demo.gif` : null,
+    previewUrl: hasPng ? `https://baditaflorin.github.io/mesh-common/demos/${app}/preview.png` : null,
+    trl: trl === "" ? null : Number(trl),
+    category: classification.category,
+    subcategory: classification.subcategory,
+    useCases: classification.useCases,
+  });
 
   // Extract a short error hint if the record failed
   let errHint = "";
@@ -406,7 +427,17 @@ const html = `<!doctype html>
 
 await writeFile(OUT_PATH, html);
 await writeFile(TAXONOMY_OUT_PATH, `${JSON.stringify(taxonomy, null, 2)}\n`);
+await writeFile(
+  CATALOG_OUT_PATH,
+  `${JSON.stringify({
+    schemaVersion: 1,
+    generatedAt,
+    total: catalog.length,
+    demos: catalog,
+  }, null, 2)}\n`,
+);
 console.log(`wrote ${OUT_PATH}`);
 console.log(`  total apps: ${entries.length}`);
 console.log(`  OK:         ${okCount}`);
 console.log(`  failed:     ${failCount}`);
+console.log(`  catalog:    ${CATALOG_OUT_PATH}`);
