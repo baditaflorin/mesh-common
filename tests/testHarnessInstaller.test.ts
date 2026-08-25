@@ -41,6 +41,12 @@ describe("install-ux-foundation-probe", () => {
     expect(smoke).toContain("closeInitiallyOpenSettings");
     expect(mesh).toContain("closeInitiallyOpenSettings");
     expect(ux).toContain("MeshShell provides the UX foundation");
+    expect(ux).toContain('const settingsFab = shell.locator(".mesh-settings-fab");');
+    expect(ux).toContain("await expect(settingsFab).toBeVisible();");
+    expect(ux).toContain("await expect(settingsFab).toBeEnabled();");
+    expect(ux).not.toContain(
+      'page.getByRole("button", { name: "Open settings" }).click()',
+    );
     expect(perf).toContain("closeInitiallyOpenSettings");
     expect(leak).toContain("closeInitiallyOpenSettings");
     expect(leak).toContain("element.click()");
