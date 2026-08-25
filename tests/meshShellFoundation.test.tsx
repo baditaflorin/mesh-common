@@ -124,6 +124,31 @@ describe("MeshShell foundation bridge", () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 
+  it("keeps the shell settings FAB distinct from an app-local Open settings control", () => {
+    localStorage.setItem("__mesh_beacon_optout", "1");
+    render(
+      <MeshShell
+        config={config}
+        roomId="shared-room"
+        room={createMockRoom({ peerId: "duplicate-settings-label" })}
+        onRoomChange={() => {}}
+        fleetIdentityServiceUrl={null}
+      >
+        <button type="button">Open settings</button>
+        <p>Feature</p>
+      </MeshShell>,
+    );
+
+    expect(screen.getAllByRole("button", { name: "Open settings" })).toHaveLength(2);
+    const shellFab = document.querySelector<HTMLButtonElement>(
+      ".mesh-settings-fab",
+    );
+    expect(shellFab).not.toBeNull();
+    expect(shellFab?.disabled).toBe(false);
+    fireEvent.click(shellFab!);
+    expect(screen.getByRole("dialog", { name: "Settings" })).toBeTruthy();
+  });
+
   it("opens awareness-backed diagnostics without restarting its own ping loop", async () => {
     localStorage.setItem("__mesh_beacon_optout", "1");
     const doc = new Y.Doc();

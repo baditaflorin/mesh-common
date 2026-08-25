@@ -37,7 +37,13 @@ test("MeshShell provides the UX foundation without a third-party network probe",
 
   const settings = page.getByRole("dialog", { name: "Settings" });
   if (!(await settings.isVisible())) {
-    await page.getByRole("button", { name: "Open settings" }).click();
+    // Apps may have their own onboarding or feature-level "Open settings"
+    // button. Scope this contract to MeshShell's actual FAB so those controls
+    // cannot make the generic test ambiguous or open unrelated UI.
+    const settingsFab = shell.locator(".mesh-settings-fab");
+    await expect(settingsFab).toBeVisible();
+    await expect(settingsFab).toBeEnabled();
+    await settingsFab.click();
   }
   await expect(settings).toBeVisible();
 
