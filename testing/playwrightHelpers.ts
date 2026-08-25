@@ -7,6 +7,54 @@ export type MeshPair = {
   cleanup: () => Promise<void>;
 };
 
+type PeerOptions = {
+  /** Storage prefix used by the app (matches MeshConfig.storagePrefix). */
+  storagePrefix: string;
+  /** Room ID all peers join. Default: `e2e-${random}`. */
+  roomId?: string;
+  /** Override the signaling URL. Default: unreachable port. */
+  signalingUrl?: string;
+  /**
+   * Stable device IDs to simulate. Defaults to one distinct device per page.
+   * Pass the same value intentionally when a test needs two tabs on one device.
+   */
+  deviceIds?: readonly string[];
+};
+
+function nextDeviceId(index: number): string {
+  return `e2e-device-${index}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+/**
+ * Pages in one Playwright browser context share localStorage, but test peers
+ * represent independent physical devices by default. Scope the device-id key
+ * per page before app code runs so `ensureDeviceId()` observes that identity
+ * without breaking the shared room/signaling storage that powers the local
+ * BroadcastChannel transport.
+ */
+async function installPageDeviceId(
+  page: Page,
+  storagePrefix: string,
+  deviceId: string,
+): Promise<void> {
+  await page.addInitScript(
+    ({ key, id }) => {
+      const storage = Storage.prototype;
+      const getItem = storage.getItem;
+      const setItem = storage.setItem;
+
+      storage.getItem = function getPageDeviceId(itemKey: string): string | null {
+        return itemKey === key ? id : getItem.call(this, itemKey);
+      };
+      storage.setItem = function setPageDeviceId(itemKey: string, value: string): void {
+        if (itemKey === key) return;
+        setItem.call(this, itemKey, value);
+      };
+    },
+    { key: `${storagePrefix}:deviceId:v1`, id: deviceId },
+  );
+}
+
 /**
  * Open two pages in the SAME browser context, pointed at the same app path
  * with the same room ID. y-webrtc's BroadcastChannel fallback syncs them
@@ -28,14 +76,7 @@ export type MeshPair = {
 export async function openTwoPeers(
   browser: Browser,
   url: string,
-  options: {
-    /** Storage prefix used by the app (matches MeshConfig.storagePrefix). */
-    storagePrefix: string;
-    /** Room ID both peers join. Default: `e2e-${random}`. */
-    roomId?: string;
-    /** Override the signaling URL. Default: unreachable port. */
-    signalingUrl?: string;
-  },
+  options: PeerOptions,
 ): Promise<MeshPair> {
   // `browser.newContext()` does NOT inherit baseURL from project config, so
   // callers must pass an absolute URL (typically the `baseURL` fixture).
@@ -61,6 +102,10 @@ export async function openTwoPeers(
 
   const a = await context.newPage();
   const b = await context.newPage();
+  await Promise.all([
+    installPageDeviceId(a, options.storagePrefix, options.deviceIds?.[0] ?? nextDeviceId(0)),
+    installPageDeviceId(b, options.storagePrefix, options.deviceIds?.[1] ?? nextDeviceId(1)),
+  ]);
   await Promise.all([a.goto(url), b.goto(url)]);
 
   return {
@@ -97,15 +142,9 @@ export type MeshGroup = {
 export async function openNPeers(
   browser: Browser,
   url: string,
-  options: {
-    /** Storage prefix used by the app (matches MeshConfig.storagePrefix). */
-    storagePrefix: string;
+  options: PeerOptions & {
     /** How many peers to open. Must be >= 1. */
     count: number;
-    /** Room ID all peers join. Default: `e2e-${random}`. */
-    roomId?: string;
-    /** Override the signaling URL. Default: unreachable port. */
-    signalingUrl?: string;
   },
 ): Promise<MeshGroup> {
   const count = Math.max(1, Math.floor(options.count));
@@ -130,6 +169,15 @@ export async function openNPeers(
 
   const peers: Page[] = [];
   for (let i = 0; i < count; i++) peers.push(await context.newPage());
+  await Promise.all(
+    peers.map((page, index) =>
+      installPageDeviceId(
+        page,
+        options.storagePrefix,
+        options.deviceIds?.[index] ?? nextDeviceId(index),
+      ),
+    ),
+  );
   await Promise.all(peers.map((p) => p.goto(url)));
 
   return {
