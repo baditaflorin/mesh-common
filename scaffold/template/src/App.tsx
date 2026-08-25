@@ -21,7 +21,10 @@ export function App() {
 
   const room = useYRoom(config, roomId);
   const lifecycle = useRoomLifecycle(room);
-  const network = useNetworkOnline();
+  // The shared shell needs an honest browser online/offline signal, not an
+  // unsolicited third-party reachability request on every first visit.
+  // Feature code can opt into a specific probe when that signal matters.
+  const network = useNetworkOnline({ probeUrl: false });
 
   return (
     <MeshThemeProvider tokens={{ accent: config.accentHex }}>

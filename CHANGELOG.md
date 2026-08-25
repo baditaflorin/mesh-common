@@ -15,6 +15,9 @@
   rosters no longer collapse simultaneously connected tabs by browser id.
 - Countdown/cue visuals no longer announce every tick to assistive technology;
   optional announcements occur only on meaningful lifecycle transitions.
+- Legacy `MeshShell` apps keep their full-height dark layout while adopting
+  semantic theme variables. Apps whose features own a room after an explicit
+  gesture no longer show a fabricated lifecycle state or connection panel.
 
 ### Added
 
@@ -31,6 +34,19 @@
 - The application scaffold now composes `MeshThemeProvider`,
   `MeshAppProvider`, and `MeshAppFrame`, and `MeshUiToaster` follows the
   active mesh theme instead of always rendering dark.
+- **Fleet compatibility bridge:** every existing `MeshShell` app now receives
+  `MeshThemeProvider`, `MeshAppProvider`, and `MeshSessionProvider` without a
+  source-tree rewrite. Room-backed apps also get contract-safe lifecycle
+  markers and progressive connection diagnostics inside Settings. The shell
+  uses the new `useNetworkOnline({ probeUrl: false })` passive mode, so this
+  shared context and newly scaffolded apps do not add a third-party
+  reachability request to every visit. Feature-owned room apps can report an
+  honest post-gesture connection through `MeshShellConnectionBridge` rather
+  than creating a second transport just for shared chrome.
+- `fleet-ux-check.mjs` is a catalog-driven, read-only 20-app batch verifier
+  with bounded typecheck/unit/smoke/e2e execution and unique Playwright ports.
+  `install-ux-foundation-probe.sh` installs the observable per-app shell
+  contract test before an app release.
 - `useImageCapture` now provides `captureBlob()` for an explicit, local JPEG
   Blob capture path; `useFileShare` yields between bounded chunk batches so a
   camera image cannot monopolize the mobile browser main thread while sharing.

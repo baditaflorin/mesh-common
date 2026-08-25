@@ -33,6 +33,14 @@
   box-sizing: border-box;
 }
 
+/* The compatibility theme wrapper sits between #root and the legacy shell.
+ * Preserve the percentage-height chain used by fullscreen/canvas apps. */
+.mesh-shell-theme {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+
 .mesh-settings-fab {
   position: absolute;
   top: max(env(safe-area-inset-top), 1rem);

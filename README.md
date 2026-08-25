@@ -126,6 +126,17 @@ does this by default. `MeshThemeProvider` exposes `meshLightThemeTokens`,
   room/config/network context. `MeshAsyncAction` and `useMeshAsyncAction`
   protect against double submission and announce success or failures; use
   `MeshAsyncActionState` / `MeshAsyncActionStatus` when supplying custom UI.
+  Existing `MeshShell` applications inherit the provider, semantic dark
+  compatibility theme, and `MeshSessionProvider` automatically. When an app
+  passes its `room` to the shell, Settings also gains progressive connection
+  diagnostics and a contract-safe lifecycle marker. Apps that deliberately
+  create a room deeper in their feature tree retain honest no-room shell
+  state until they render `MeshShellConnectionBridge` with their own real
+  room/lifecycle after its user gesture—no duplicate WebRTC room is created.
+  `MeshShellConnectionBridgeProvider`, `useMeshShellConnectionBridge`, and
+  `useOptionalMeshShellConnectionBridge` support declarative or event-driven
+  status handoff. The shell uses `useNetworkOnline({ probeUrl: false })`, a passive
+  browser online/offline signal that does not make a third-party probe request.
 - **Responsive, accessible UI:** `MeshPage`, `MeshStack`, `MeshCluster`,
   `MeshGrid`, and `MeshBottomBar` provide responsive, safe-area-aware layout.
   `MeshForm`, `useMeshForm`, `useOptionalMeshForm`, `MeshField`,
@@ -169,7 +180,8 @@ are public too: `MeshAppContextValue`, `MeshAppFrameShellOptions`,
 `MeshRosterPeerState`, `MeshRosterState`, `MeshSessionActivity`,
 `MeshSessionIdentity`, `MeshOnboardingStep`,
 `MeshOnboardingStepDefinition`, `MeshOnboardingController`, and
-`MeshUxContractResult`. UI contracts include `MeshThemeProviderProps`,
+`MeshUxContractResult`, `MeshShellConnection`, and
+`MeshShellConnectionBridgeValue`. UI contracts include `MeshThemeProviderProps`,
 `MeshThemeContextValue`, `MeshThemeMode`, `MeshResolvedTheme`,
 `MeshThemeTokens`, `UseMeshAsyncActionOptions`, `MeshAsyncActionProps`,
 `MeshPageProps`, `MeshStackProps`, `MeshClusterProps`, `MeshGridProps`,
@@ -339,6 +351,31 @@ bash mesh-common/scripts/mesh-doctor.sh --fleet   # audit every sibling mesh-*
 ```
 
 Reports mesh-common pin freshness, scaffold completeness, `MeshShell` presence, e2e spec count, Pages output, and README-vs-imports drift. Fails on missing essentials; warns on stale pins.
+
+### Fleet UX rollout checks
+
+`MeshShell` is the compatibility boundary for existing applications, so a
+fleet release rebuilds each app's committed Pages bundle against the current
+local `mesh-common` checkout. Use the catalog-driven runner rather than a
+directory glob: it includes every published card and uses deterministic
+20-app batches.
+
+```bash
+# Read-only inventory for the first 20 catalog apps.
+node scripts/fleet-ux-check.mjs --list
+
+# Test one batch with bounded workers and collision-free Playwright ports.
+node scripts/fleet-ux-check.mjs --batch 1 --run typecheck,unit,smoke,e2e --jobs 4
+
+# Install the observable MeshShell contract probe before a per-app release.
+bash scripts/install-ux-foundation-probe.sh ../mesh-queue
+```
+
+The runner never clones, installs, edits, commits, or pushes by itself.
+App-release automation must deliberately install the probe, run the checks,
+review the generated `docs/` bundle, and merge each app's PR. The probe
+checks real shell/theme/settings behavior and distinguishes a shell-owned room
+from a feature-owned room so it does not reward a fabricated connection state.
 
 ## Documentation drift policy
 
