@@ -7,6 +7,8 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
+import { Awareness } from "y-protocols/awareness.js";
+import * as Y from "yjs";
 import { createMeshConfig } from "../src/MeshConfig";
 import { MeshShell } from "../src/MeshShell";
 import { MeshShellConnectionBridge } from "../src/MeshShellConnectionBridge";
@@ -19,6 +21,7 @@ import { useMeshSessionContext } from "../src/meshSession";
 import { useMeshTheme } from "../src/ui/MeshThemeProvider";
 import type { NetworkOnlineState } from "../src/useNetworkOnline";
 import type { RoomLifecycle } from "../src/useRoomLifecycle";
+import type { YRoom } from "../src/useYRoom";
 import { createMockRoom } from "../testing/createMockRoom";
 
 afterEach(() => {
@@ -119,6 +122,45 @@ describe("MeshShell foundation bridge", () => {
     expect(screen.getByRole("status").textContent).toContain("Connected");
     expect(screen.getByText("Connection details")).toBeTruthy();
     expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("opens awareness-backed diagnostics without restarting its own ping loop", async () => {
+    localStorage.setItem("__mesh_beacon_optout", "1");
+    const doc = new Y.Doc();
+    const awareness = new Awareness(doc);
+    const setLocalState = vi.spyOn(awareness, "setLocalState");
+    const pingWrites = () =>
+      setLocalState.mock.calls.filter(([state]) =>
+        Boolean((state as { pingNonce?: string } | null)?.pingNonce),
+      ).length;
+    const room: YRoom = {
+      doc,
+      provider: { connected: true, awareness } as unknown as YRoom["provider"],
+      peerId: "diagnostics-awareness",
+      peerCount: 0,
+      roomId: "awareness-settings",
+    };
+
+    try {
+      render(
+        <MeshShell
+          config={config}
+          roomId="shared-room"
+          room={room}
+          onRoomChange={() => {}}
+          fleetIdentityServiceUrl={null}
+        >
+          <p>Feature</p>
+        </MeshShell>,
+      );
+
+      fireEvent.click(screen.getByRole("button", { name: "Open settings" }));
+      expect(screen.getByRole("dialog", { name: "Settings" })).toBeTruthy();
+      expect(screen.getByLabelText("Connection diagnostics")).toBeTruthy();
+      await waitFor(() => expect(pingWrites()).toBe(1));
+    } finally {
+      doc.destroy();
+    }
   });
 
   it("maps legacy lifecycle values to contract-safe shell states", () => {

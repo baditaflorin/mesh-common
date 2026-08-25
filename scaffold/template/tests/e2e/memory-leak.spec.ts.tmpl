@@ -1,4 +1,5 @@
-import { test, expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
+import { expect, test } from "@playwright/test";
 
 /**
  * Long-running room leak detector. Boots two peers, runs the generic
@@ -22,8 +23,19 @@ import { test, expect } from "@playwright/test";
 const DURATION = Number(process.env.MESH_LEAK_DURATION_MS ?? 60_000);
 const BUDGET_MB = Number(process.env.MESH_LEAK_BUDGET_MB ?? 15);
 const NOISE_OPS = Number(process.env.MESH_LEAK_NOISE_OPS ?? 200);
+const ENABLED = process.env.MESH_RUN_LEAK_TEST === "1";
+const pkg = JSON.parse(readFileSync(new URL("../../package.json", import.meta.url), "utf8")) as {
+  name: string;
+};
+const APP_NAME = pkg.name;
 
-test("memory leak — heap growth stays under budget over a long-running room", async ({ browser }) => {
+test("memory leak — heap growth stays under budget over a long-running room", async ({
+  browser,
+}) => {
+  // Keep the expensive detector opt-in. It is deliberately installed with
+  // `test:e2e`, but only `npm run test:leak` enables its 60-second run.
+  test.skip(!ENABLED, "run with `npm run test:leak`");
+  test.setTimeout(Math.max(30_000, DURATION + 15_000));
   const ctx = await browser.newContext();
   await ctx.addInitScript(
     ({ prefix, room }) => {
@@ -33,14 +45,14 @@ test("memory leak — heap growth stays under budget over a long-running room", 
         /* private mode */
       }
     },
-    { prefix: "__APP_NAME__", room: `leak-${Date.now()}` },
+    { prefix: APP_NAME, room: `leak-${Date.now()}` },
   );
 
   const a = await ctx.newPage();
   const b = await ctx.newPage();
   await Promise.all([
-    a.goto("/__APP_NAME__/", { waitUntil: "domcontentloaded" }),
-    b.goto("/__APP_NAME__/", { waitUntil: "domcontentloaded" }),
+    a.goto(`/${APP_NAME}/`, { waitUntil: "domcontentloaded" }),
+    b.goto(`/${APP_NAME}/`, { waitUntil: "domcontentloaded" }),
   ]);
 
   // Settle the initial mount + first GC opportunity.
@@ -59,7 +71,9 @@ test("memory leak — heap growth stays under budget over a long-running room", 
 
   const after = await measureHeap(a);
   const grewMB = (after - before) / (1024 * 1024);
-  console.log(`[mem-leak] before=${(before / 1e6).toFixed(1)}MB after=${(after / 1e6).toFixed(1)}MB grew=${grewMB.toFixed(2)}MB (budget=${BUDGET_MB}MB)`);
+  console.log(
+    `[mem-leak] before=${(before / 1e6).toFixed(1)}MB after=${(after / 1e6).toFixed(1)}MB grew=${grewMB.toFixed(2)}MB (budget=${BUDGET_MB}MB)`,
+  );
 
   expect(grewMB, `JS heap grew beyond budget (${BUDGET_MB}MB)`).toBeLessThanOrEqual(BUDGET_MB);
 
@@ -74,11 +88,15 @@ async function measureHeap(page: import("@playwright/test").Page): Promise<numbe
   await cdp.send("HeapProfiler.collectGarbage");
   await page.waitForTimeout(100);
   // performance.memory is Chromium-specific. Playwright runs Chromium.
-  return page.evaluate(() => (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? 0);
+  return page.evaluate(
+    () =>
+      (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory
+        ?.usedJSHeapSize ?? 0,
+  );
 }
 
 async function clickAnything(page: import("@playwright/test").Page): Promise<void> {
-  const btn = page.locator("button:visible").first();
+  const btn = page.locator("button:not([disabled]):not([aria-disabled='true']):visible").first();
   if ((await btn.count()) === 0) return;
   await btn.click({ trial: false, timeout: 2000 }).catch(() => undefined);
 }
