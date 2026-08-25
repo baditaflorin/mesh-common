@@ -113,5 +113,12 @@ async function measureHeap(page: import("@playwright/test").Page): Promise<numbe
 async function clickAnything(page: import("@playwright/test").Page): Promise<void> {
   const btn = page.locator("button:not([disabled]):not([aria-disabled='true']):visible").first();
   if ((await btn.count()) === 0) return;
-  await btn.click({ trial: false, timeout: 2000 }).catch(() => undefined);
+  // Dispatch directly instead of using Playwright's actionability wait. The
+  // probe needs to exercise the application's handler, not assert that every
+  // stateful control remains actionable while two peers churn concurrently.
+  // This keeps a short accelerated leak gate bounded for controls that
+  // intentionally disappear or rerender after their first click.
+  await btn
+    .evaluate((element: HTMLButtonElement) => element.click(), undefined, { timeout: 500 })
+    .catch(() => undefined);
 }
