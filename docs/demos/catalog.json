@@ -1,0 +1,3826 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-25T11:00:16.598Z",
+  "total": 201,
+  "demos": [
+    {
+      "id": "mesh-2-truths-1-lie",
+      "name": "mesh-2-truths-1-lie",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-2-truths-1-lie/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-2-truths-1-lie",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-2-truths-1-lie/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-2-truths-1-lie/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-2fa-bridge",
+      "name": "mesh-2fa-bridge",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-2fa-bridge/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-2fa-bridge",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-2fa-bridge/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-2fa-bridge/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Identity & private exchange",
+      "useCases": [
+        "private exchange",
+        "onboarding",
+        "personal tools"
+      ]
+    },
+    {
+      "id": "mesh-agenda-runner",
+      "name": "Mesh Agenda Runner",
+      "description": "A shared, live agenda for lightweight facilitated sessions.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-agenda-runner/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-agenda-runner",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-agenda-runner/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-agenda-runner/preview.png",
+      "trl": null,
+      "category": "Productivity",
+      "subcategory": "Coordination & planning",
+      "useCases": [
+        "meetings",
+        "facilitation",
+        "planning"
+      ]
+    },
+    {
+      "id": "mesh-allowance",
+      "name": "mesh-allowance",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-allowance/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-allowance",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-allowance/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-allowance/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Identity & private exchange",
+      "useCases": [
+        "private exchange",
+        "onboarding",
+        "personal tools"
+      ]
+    },
+    {
+      "id": "mesh-anonymous-qa",
+      "name": "mesh-anonymous-qa",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-anonymous-qa/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-anonymous-qa",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-anonymous-qa/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-anonymous-qa/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Identity & private exchange",
+      "useCases": [
+        "private exchange",
+        "onboarding",
+        "personal tools"
+      ]
+    },
+    {
+      "id": "mesh-applause",
+      "name": "mesh-applause",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-applause/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-applause",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-applause/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-applause/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-applause-bracket",
+      "name": "mesh-applause-bracket",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-applause-bracket/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-applause-bracket",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-applause-bracket/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-applause-bracket/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Celebration & support",
+      "useCases": [
+        "celebrations",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-attendance",
+      "name": "mesh-attendance",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-attendance/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-attendance",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-attendance/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-attendance/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Check-in & assignments",
+      "useCases": [
+        "events",
+        "volunteers",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-attendance-stamp",
+      "name": "mesh-attendance-stamp",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-attendance-stamp/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-attendance-stamp",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-attendance-stamp/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-attendance-stamp/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Camera & vision",
+      "useCases": [
+        "mobile devices",
+        "co-located groups",
+        "capture"
+      ]
+    },
+    {
+      "id": "mesh-bench-archive",
+      "name": "Mesh Bench Archive",
+      "description": "Peer-to-peer mesh: voice notes tied to a place. Scan a QR sticker on a bench, hear the last visitors. Audio lives only in browsers that have scanned.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-bench-archive/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-bench-archive",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-bench-archive/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-bench-archive/preview.png",
+      "trl": 5,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-bingo-blitz",
+      "name": "Mesh Bingo Blitz",
+      "description": "A browser-local social bingo board with individual claims.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-bingo-blitz/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-bingo-blitz",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-bingo-blitz/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-bingo-blitz/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "events",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-blind-date",
+      "name": "mesh-blind-date",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-blind-date/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-blind-date",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-blind-date/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-blind-date/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "icebreakers",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-book-club-lottery",
+      "name": "Mesh Book Club Lottery",
+      "description": "A browser-local book-club lottery with one nomination per peer and a transparent draw.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-book-club-lottery/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-book-club-lottery",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-book-club-lottery/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-book-club-lottery/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Selection & ranking",
+      "useCases": [
+        "team decisions",
+        "choices",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-bookmark-board",
+      "name": "Mesh Bookmark Board",
+      "description": "A peer-attributed shared board for useful links in the room.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-bookmark-board/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-bookmark-board",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-bookmark-board/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-bookmark-board/preview.png",
+      "trl": null,
+      "category": "Productivity",
+      "subcategory": "Coordination & planning",
+      "useCases": [
+        "research",
+        "workshops",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-borrow-board",
+      "name": "Mesh Borrow Board",
+      "description": "A browser-local lending board for things neighbours can borrow and return.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-borrow-board/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-borrow-board",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-borrow-board/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-borrow-board/preview.png",
+      "trl": null,
+      "category": "Community",
+      "subcategory": "Neighbours & mutual aid",
+      "useCases": [
+        "neighbourhoods",
+        "sharing",
+        "local groups"
+      ]
+    },
+    {
+      "id": "mesh-bracket",
+      "name": "mesh-bracket",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-bracket/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-bracket",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-bracket/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-bracket/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-brain-write",
+      "name": "mesh-brain-write",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-brain-write/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-brain-write",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-brain-write/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-brain-write/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-breakout-pairs",
+      "name": "Mesh Breakout Pairs",
+      "description": "Facilitator-led peer breakout rotations for small group conversations.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-breakout-pairs/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-breakout-pairs",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-breakout-pairs/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-breakout-pairs/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "events",
+        "teams",
+        "neighbourhoods"
+      ]
+    },
+    {
+      "id": "mesh-budget-pot",
+      "name": "Mesh Budget Pot",
+      "description": "Browser-local peer-to-peer Mesh Common service",
+      "liveUrl": "https://baditaflorin.github.io/mesh-budget-pot/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-budget-pot",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-budget-pot/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-budget-pot/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "shared costs",
+        "events",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-bus-factor",
+      "name": "mesh-bus-factor",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-bus-factor/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-bus-factor",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-bus-factor/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-bus-factor/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-business-card",
+      "name": "mesh-business-card",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-business-card/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-business-card",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-business-card/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-business-card/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-buzzer",
+      "name": "mesh-buzzer",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-buzzer/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-buzzer",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-buzzer/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-buzzer/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-caption-clash",
+      "name": "Mesh Caption Clash",
+      "description": "A shared caption contest with one entry and independent votes per peer.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-caption-clash/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-caption-clash",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-caption-clash/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-caption-clash/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "friends"
+      ]
+    },
+    {
+      "id": "mesh-card-sorter",
+      "name": "Mesh Card Sorter",
+      "description": "Browser-local peer-to-peer Mesh Common service",
+      "liveUrl": "https://baditaflorin.github.io/mesh-card-sorter/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-card-sorter",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-card-sorter/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-card-sorter/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Selection & ranking",
+      "useCases": [
+        "prioritization",
+        "workshops",
+        "team decisions"
+      ]
+    },
+    {
+      "id": "mesh-carpool-bingo",
+      "name": "Mesh Carpool Bingo",
+      "description": "Peer-to-peer mesh: road-trip bingo. Per-phone unique 5x5 cards, shared claim space across the car. First to a line wins.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-carpool-bingo/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-carpool-bingo",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-carpool-bingo/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-carpool-bingo/preview.png",
+      "trl": 4,
+      "category": "Community",
+      "subcategory": "Neighbours & mutual aid",
+      "useCases": [
+        "neighbourhoods",
+        "sharing",
+        "local groups"
+      ]
+    },
+    {
+      "id": "mesh-choice-board",
+      "name": "Mesh Choice Board",
+      "description": "A shared, multi-select decision board for small groups.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-choice-board/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-choice-board",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-choice-board/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-choice-board/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Selection & ranking",
+      "useCases": [
+        "prioritization",
+        "workshops",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-chore-rotation",
+      "name": "mesh-chore-rotation",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-chore-rotation/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-chore-rotation",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-chore-rotation/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-chore-rotation/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Check-in & assignments",
+      "useCases": [
+        "events",
+        "volunteers",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-clap-track",
+      "name": "mesh-clap-track",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-clap-track/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-clap-track",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-clap-track/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-clap-track/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Audio & haptics",
+      "useCases": [
+        "sound",
+        "performances",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-class-checkin",
+      "name": "mesh-class-checkin",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-class-checkin/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-class-checkin",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-class-checkin/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-class-checkin/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Check-in & assignments",
+      "useCases": [
+        "events",
+        "volunteers",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-clipboard-bridge",
+      "name": "mesh-clipboard-bridge",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-clipboard-bridge/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-clipboard-bridge",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-clipboard-bridge/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-clipboard-bridge/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Links, QR & transfer",
+      "useCases": [
+        "sharing",
+        "onboarding",
+        "personal tools"
+      ]
+    },
+    {
+      "id": "mesh-cohort-scheduler",
+      "name": "Mesh Cohort Scheduler",
+      "description": "A browser-local shared availability picker for small cohorts.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-cohort-scheduler/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-cohort-scheduler",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-cohort-scheduler/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-cohort-scheduler/preview.png",
+      "trl": null,
+      "category": "Productivity",
+      "subcategory": "Coordination & planning",
+      "useCases": [
+        "study groups",
+        "meetings",
+        "planning"
+      ]
+    },
+    {
+      "id": "mesh-compliment-roulette",
+      "name": "mesh-compliment-roulette",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-compliment-roulette/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-compliment-roulette",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-compliment-roulette/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-compliment-roulette/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "icebreakers",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-conversation-cards",
+      "name": "mesh-conversation-cards",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-conversation-cards/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-conversation-cards",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-conversation-cards/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-conversation-cards/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "icebreakers",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-countdown-wall",
+      "name": "Mesh Countdown Wall",
+      "description": "Browser-local mesh service built with mesh-common",
+      "liveUrl": "https://baditaflorin.github.io/mesh-countdown-wall/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-countdown-wall",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-countdown-wall/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-countdown-wall/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "workshops",
+        "meetings",
+        "sprints"
+      ]
+    },
+    {
+      "id": "mesh-crowd-map",
+      "name": "Mesh Crowd Map",
+      "description": "A privacy-safe shared board for coarse, short-lived observations.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-crowd-map/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-crowd-map",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-crowd-map/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-crowd-map/preview.png",
+      "trl": null,
+      "category": "Community",
+      "subcategory": "Neighbours & mutual aid",
+      "useCases": [
+        "neighbourhoods",
+        "sharing",
+        "local groups"
+      ]
+    },
+    {
+      "id": "mesh-daily-question",
+      "name": "Mesh Daily Question",
+      "description": "A browser-local daily question room for one thoughtful answer per peer.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-daily-question/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-daily-question",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-daily-question/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-daily-question/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-dare-wheel",
+      "name": "mesh-dare-wheel",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-dare-wheel/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-dare-wheel",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-dare-wheel/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-dare-wheel/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-deadline-pact",
+      "name": "Mesh Deadline Pact",
+      "description": "A browser-local peer commitment room with shared deadlines and check-ins.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-deadline-pact/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-deadline-pact",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-deadline-pact/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-deadline-pact/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "events",
+        "teams",
+        "neighbourhoods"
+      ]
+    },
+    {
+      "id": "mesh-debate-clock",
+      "name": "mesh-debate-clock",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-debate-clock/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-debate-clock",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-debate-clock/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-debate-clock/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-decision-room",
+      "name": "Mesh Decision Room",
+      "description": "A browser-local ranked decision room for small groups.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-decision-room/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-decision-room",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-decision-room/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-decision-room/preview.png",
+      "trl": null,
+      "category": "Productivity",
+      "subcategory": "Decision making",
+      "useCases": [
+        "team decisions",
+        "prioritization",
+        "meetings"
+      ]
+    },
+    {
+      "id": "mesh-direction-finder",
+      "name": "mesh-direction-finder",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-direction-finder/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-direction-finder",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-direction-finder/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-direction-finder/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Motion & orientation",
+      "useCases": [
+        "mobile devices",
+        "movement",
+        "sensors"
+      ]
+    },
+    {
+      "id": "mesh-dj-deck",
+      "name": "mesh-dj-deck",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-dj-deck/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-dj-deck",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-dj-deck/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-dj-deck/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Audio & haptics",
+      "useCases": [
+        "sound",
+        "performances",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-doorbell",
+      "name": "mesh-doorbell",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-doorbell/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-doorbell",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-doorbell/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-doorbell/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Audio & haptics",
+      "useCases": [
+        "sound",
+        "performances",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-emoji-rain",
+      "name": "mesh-emoji-rain",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-emoji-rain/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-emoji-rain",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-emoji-rain/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-emoji-rain/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Visual making",
+      "useCases": [
+        "creative sessions",
+        "shared media",
+        "performances"
+      ]
+    },
+    {
+      "id": "mesh-energy-curve",
+      "name": "mesh-energy-curve",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-energy-curve/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-energy-curve",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-energy-curve/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-energy-curve/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Social energy & check-ins",
+      "useCases": [
+        "wellbeing",
+        "teams",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-exit-ticket",
+      "name": "Mesh Exit Ticket",
+      "description": "A browser-local end-of-session feedback board.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-exit-ticket/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-exit-ticket",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-exit-ticket/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-exit-ticket/preview.png",
+      "trl": null,
+      "category": "Education",
+      "subcategory": "Session feedback",
+      "useCases": [
+        "workshops",
+        "classes",
+        "retrospectives"
+      ]
+    },
+    {
+      "id": "mesh-exquisite-corpse",
+      "name": "mesh-exquisite-corpse",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-exquisite-corpse/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-exquisite-corpse",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-exquisite-corpse/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-exquisite-corpse/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Arcade & reaction",
+      "useCases": [
+        "game night",
+        "two players",
+        "quick rounds"
+      ]
+    },
+    {
+      "id": "mesh-eye-contact",
+      "name": "mesh-eye-contact",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-eye-contact/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-eye-contact",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-eye-contact/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-eye-contact/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Camera & vision",
+      "useCases": [
+        "mobile devices",
+        "co-located groups",
+        "capture"
+      ]
+    },
+    {
+      "id": "mesh-face-grid",
+      "name": "mesh-face-grid",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-face-grid/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-face-grid",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-face-grid/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-face-grid/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Camera & vision",
+      "useCases": [
+        "mobile devices",
+        "co-located groups",
+        "capture"
+      ]
+    },
+    {
+      "id": "mesh-favor-bank",
+      "name": "mesh-favor-bank",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-favor-bank/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-favor-bank",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-favor-bank/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-favor-bank/preview.png",
+      "trl": null,
+      "category": "Community",
+      "subcategory": "Neighbours & mutual aid",
+      "useCases": [
+        "neighbourhoods",
+        "sharing",
+        "local groups"
+      ]
+    },
+    {
+      "id": "mesh-find-my-family",
+      "name": "mesh-find-my-family",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-find-my-family/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-find-my-family",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-find-my-family/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-find-my-family/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Location & field tools",
+      "useCases": [
+        "outdoors",
+        "neighbourhoods",
+        "events"
+      ]
+    },
+    {
+      "id": "mesh-finger-relay",
+      "name": "mesh-finger-relay",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-finger-relay/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-finger-relay",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-finger-relay/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-finger-relay/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-firefly-walk",
+      "name": "Mesh Firefly Walk",
+      "description": "Peer-to-peer mesh: phones pulse soft yellow in clock-synced unison for a swarm-of-fireflies effect on a night walk.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-firefly-walk/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-firefly-walk",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-firefly-walk/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-firefly-walk/preview.png",
+      "trl": 4,
+      "category": "Devices & spaces",
+      "subcategory": "Shared displays & installations",
+      "useCases": [
+        "installations",
+        "shared screens",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-fist-of-five",
+      "name": "mesh-fist-of-five",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-fist-of-five/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-fist-of-five",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-fist-of-five/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-fist-of-five/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-five-second-rule",
+      "name": "Mesh Five Second Rule",
+      "description": "A fast, peer-to-peer answer game where every voice gets five seconds.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-five-second-rule/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-five-second-rule",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-five-second-rule/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-five-second-rule/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-flash-mob",
+      "name": "mesh-flash-mob",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-flash-mob/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-flash-mob",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-flash-mob/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-flash-mob/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Performance & sound",
+      "useCases": [
+        "performances",
+        "co-located groups",
+        "shared media"
+      ]
+    },
+    {
+      "id": "mesh-flashcard-swarm",
+      "name": "Mesh Flashcard Swarm",
+      "description": "A browser-local peer-authored flashcard review room.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-flashcard-swarm/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-flashcard-swarm",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-flashcard-swarm/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-flashcard-swarm/preview.png",
+      "trl": null,
+      "category": "Education",
+      "subcategory": "Study & practice",
+      "useCases": [
+        "study groups",
+        "classes",
+        "practice"
+      ]
+    },
+    {
+      "id": "mesh-focus-sprint",
+      "name": "Mesh Focus Sprint",
+      "description": "A browser-local shared focus sprint with an honest timer.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-focus-sprint/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-focus-sprint",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-focus-sprint/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-focus-sprint/preview.png",
+      "trl": null,
+      "category": "Productivity",
+      "subcategory": "Focus & routines",
+      "useCases": [
+        "study",
+        "coworking",
+        "pomodoro"
+      ]
+    },
+    {
+      "id": "mesh-fortune-cookie",
+      "name": "mesh-fortune-cookie",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-fortune-cookie/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-fortune-cookie",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-fortune-cookie/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-fortune-cookie/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-fundraiser-bar",
+      "name": "mesh-fundraiser-bar",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-fundraiser-bar/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-fundraiser-bar",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-fundraiser-bar/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-fundraiser-bar/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Celebration & support",
+      "useCases": [
+        "celebrations",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-gift-exchange",
+      "name": "Mesh Gift Exchange",
+      "description": "A fair, private gift draw that stays directly between the people in your room.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-gift-exchange/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-gift-exchange",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-gift-exchange/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-gift-exchange/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Identity & private exchange",
+      "useCases": [
+        "private exchange",
+        "onboarding",
+        "personal tools"
+      ]
+    },
+    {
+      "id": "mesh-habit-sprint",
+      "name": "Mesh Habit Sprint",
+      "description": "A time-boxed peer-to-peer habit challenge with shared check-ins and progress.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-habit-sprint/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-habit-sprint",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-habit-sprint/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-habit-sprint/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Mindfulness & focus",
+      "useCases": [
+        "wellbeing",
+        "facilitation",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-handshake-chain",
+      "name": "mesh-handshake-chain",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-handshake-chain/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-handshake-chain",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-handshake-chain/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-handshake-chain/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Motion & orientation",
+      "useCases": [
+        "mobile devices",
+        "movement",
+        "sensors"
+      ]
+    },
+    {
+      "id": "mesh-heads-up",
+      "name": "Mesh Heads Up",
+      "description": "A browser-local clue passing game for a room of peers.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-heads-up/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-heads-up",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-heads-up/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-heads-up/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-host-handoff",
+      "name": "Mesh Host Handoff",
+      "description": "A shared peer-to-peer host handoff board for facilitation without accounts.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-host-handoff/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-host-handoff",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-host-handoff/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-host-handoff/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Facilitation & reflection",
+      "useCases": [
+        "facilitation",
+        "meetings",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-hot-potato",
+      "name": "mesh-hot-potato",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-hot-potato/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-hot-potato",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-hot-potato/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-hot-potato/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-icebreaker",
+      "name": "mesh-icebreaker",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-icebreaker/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-icebreaker",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-icebreaker/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-icebreaker/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "icebreakers",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-icebreaker-bingo",
+      "name": "mesh-icebreaker-bingo",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-icebreaker-bingo/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-icebreaker-bingo",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-icebreaker-bingo/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-icebreaker-bingo/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "icebreakers",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-idea-market",
+      "name": "Mesh Idea Market",
+      "description": "A peer-to-peer idea market where every participant invests a shared budget.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-idea-market/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-idea-market",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-idea-market/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-idea-market/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-improv-director",
+      "name": "Mesh Improv Director",
+      "description": "A browser-local shared prompt director for accessible improv sessions.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-improv-director/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-improv-director",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-improv-director/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-improv-director/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-invite-pocket",
+      "name": "Mesh Invite Pocket",
+      "description": "Browser-local mesh service built with mesh-common",
+      "liveUrl": "https://baditaflorin.github.io/mesh-invite-pocket/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-invite-pocket",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-invite-pocket/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-invite-pocket/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Identity & private exchange",
+      "useCases": [
+        "events",
+        "clubs",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-jellybean",
+      "name": "mesh-jellybean",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-jellybean/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-jellybean",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-jellybean/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-jellybean/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-kiosk-wall",
+      "name": "mesh-kiosk-wall",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-kiosk-wall/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-kiosk-wall",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-kiosk-wall/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-kiosk-wall/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Shared displays & installations",
+      "useCases": [
+        "installations",
+        "shared screens",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-laser-tag",
+      "name": "mesh-laser-tag",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-laser-tag/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-laser-tag",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-laser-tag/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-laser-tag/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Arcade & reaction",
+      "useCases": [
+        "game night",
+        "two players",
+        "quick rounds"
+      ]
+    },
+    {
+      "id": "mesh-light-paint",
+      "name": "mesh-light-paint",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-light-paint/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-light-paint",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-light-paint/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-light-paint/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Visual making",
+      "useCases": [
+        "creative sessions",
+        "shared media",
+        "performances"
+      ]
+    },
+    {
+      "id": "mesh-lightning-flash",
+      "name": "Mesh Lightning Flash",
+      "description": "Peer-to-peer mesh: all phone flashlights strobe in single-millisecond sync to light a group photo from many angles at once.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-lightning-flash/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-lightning-flash",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-lightning-flash/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-lightning-flash/preview.png",
+      "trl": 4,
+      "category": "Devices & spaces",
+      "subcategory": "Shared displays & installations",
+      "useCases": [
+        "installations",
+        "shared screens",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-lightning-poll",
+      "name": "Mesh Lightning Poll",
+      "description": "A one-choice-per-peer live poll.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-lightning-poll/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-lightning-poll",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-lightning-poll/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-lightning-poll/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "quick decisions",
+        "meetings",
+        "community input"
+      ]
+    },
+    {
+      "id": "mesh-link-share",
+      "name": "mesh-link-share",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-link-share/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-link-share",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-link-share/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-link-share/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Links, QR & transfer",
+      "useCases": [
+        "sharing",
+        "onboarding",
+        "personal tools"
+      ]
+    },
+    {
+      "id": "mesh-live-poll",
+      "name": "mesh-live-poll",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-live-poll/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-live-poll",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-live-poll/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-live-poll/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-lost-found",
+      "name": "Mesh Lost Found",
+      "description": "A browser-local shared missing and found board with private claimant flow.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-lost-found/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-lost-found",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-lost-found/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-lost-found/preview.png",
+      "trl": null,
+      "category": "Community",
+      "subcategory": "Neighbours & mutual aid",
+      "useCases": [
+        "neighbourhoods",
+        "sharing",
+        "local groups"
+      ]
+    },
+    {
+      "id": "mesh-lucky-draw",
+      "name": "Mesh Lucky Draw",
+      "description": "A peer-to-peer lucky draw for a room.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-lucky-draw/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-lucky-draw",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-lucky-draw/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-lucky-draw/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "events"
+      ]
+    },
+    {
+      "id": "mesh-lunch-roulette",
+      "name": "mesh-lunch-roulette",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-lunch-roulette/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-lunch-roulette",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-lunch-roulette/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-lunch-roulette/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Selection & ranking",
+      "useCases": [
+        "team decisions",
+        "choices",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-mad-libs",
+      "name": "mesh-mad-libs",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-mad-libs/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-mad-libs",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mad-libs/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mad-libs/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Writing & storytelling",
+      "useCases": [
+        "creative sessions",
+        "writing",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-mafia",
+      "name": "Mesh Mafia",
+      "description": "Peer-to-peer Werewolf: phones are role cards assigned via cryptographic commit-reveal; no server ever learns who's the wolf.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-mafia/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-mafia",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mafia/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mafia/preview.png",
+      "trl": 5,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-meeting-cost",
+      "name": "mesh-meeting-cost",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-meeting-cost/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-meeting-cost",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-meeting-cost/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-meeting-cost/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "events",
+        "teams",
+        "neighbourhoods"
+      ]
+    },
+    {
+      "id": "mesh-meme-quote",
+      "name": "mesh-meme-quote",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-meme-quote/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-meme-quote",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-meme-quote/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-meme-quote/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Visual making",
+      "useCases": [
+        "creative sessions",
+        "shared media",
+        "performances"
+      ]
+    },
+    {
+      "id": "mesh-memory-match",
+      "name": "Mesh Memory Match",
+      "description": "An accessible browser-local matching game for small groups.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-memory-match/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-memory-match",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-memory-match/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-memory-match/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Arcade & reaction",
+      "useCases": [
+        "game night",
+        "two players",
+        "quick rounds"
+      ]
+    },
+    {
+      "id": "mesh-message-drop",
+      "name": "Mesh Message Drop",
+      "description": "A lightweight peer-to-peer message stream for a shared room.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-message-drop/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-message-drop",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-message-drop/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-message-drop/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "events",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-metronome",
+      "name": "Mesh Metronome",
+      "description": "Peer-to-peer mesh: 4 phones become a polyrhythm grid, each playing a clock-synced subdivision of the same BPM.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-metronome/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-metronome",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-metronome/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-metronome/preview.png",
+      "trl": 5,
+      "category": "Devices & spaces",
+      "subcategory": "Audio & haptics",
+      "useCases": [
+        "sound",
+        "performances",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-mic-drop-quiz",
+      "name": "mesh-mic-drop-quiz",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-mic-drop-quiz/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-mic-drop-quiz",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mic-drop-quiz/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mic-drop-quiz/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Audio & haptics",
+      "useCases": [
+        "sound",
+        "performances",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-milestone-map",
+      "name": "Mesh Milestone Map",
+      "description": "A peer-to-peer shared milestone map.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-milestone-map/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-milestone-map",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-milestone-map/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-milestone-map/preview.png",
+      "trl": null,
+      "category": "Productivity",
+      "subcategory": "Coordination & planning",
+      "useCases": [
+        "roadmaps",
+        "teams",
+        "planning"
+      ]
+    },
+    {
+      "id": "mesh-mind-meld",
+      "name": "mesh-mind-meld",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-mind-meld/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-mind-meld",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mind-meld/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mind-meld/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "icebreakers",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-mirror",
+      "name": "Mesh Mirror",
+      "description": "Peer-to-peer mesh: phones in a ring show each other's live camera feed — phone N's screen shows phone (N+1)'s view, creating a low-fi infinite mirror.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-mirror/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-mirror",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mirror/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mirror/preview.png",
+      "trl": 5,
+      "category": "Devices & spaces",
+      "subcategory": "Camera & vision",
+      "useCases": [
+        "mobile devices",
+        "co-located groups",
+        "capture"
+      ]
+    },
+    {
+      "id": "mesh-mood-check",
+      "name": "mesh-mood-check",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-mood-check/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-mood-check",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mood-check/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mood-check/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Social energy & check-ins",
+      "useCases": [
+        "wellbeing",
+        "teams",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-mood-ring",
+      "name": "mesh-mood-ring",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-mood-ring/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-mood-ring",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mood-ring/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-mood-ring/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Social energy & check-ins",
+      "useCases": [
+        "wellbeing",
+        "teams",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-name-game",
+      "name": "mesh-name-game",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-name-game/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-name-game",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-name-game/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-name-game/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "icebreakers",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-network-builder",
+      "name": "mesh-network-builder",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-network-builder/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-network-builder",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-network-builder/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-network-builder/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Links, QR & transfer",
+      "useCases": [
+        "sharing",
+        "onboarding",
+        "personal tools"
+      ]
+    },
+    {
+      "id": "mesh-never-have-i",
+      "name": "mesh-never-have-i",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-never-have-i/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-never-have-i",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-never-have-i/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-never-have-i/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-new-year",
+      "name": "mesh-new-year",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-new-year/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-new-year",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-new-year/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-new-year/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Celebration & support",
+      "useCases": [
+        "celebrations",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-note-pile",
+      "name": "Mesh Note Pile",
+      "description": "Peer-to-peer browser service built with mesh-common.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-note-pile/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-note-pile",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-note-pile/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-note-pile/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Facilitation & reflection",
+      "useCases": [
+        "retrospectives",
+        "workshops",
+        "brainstorming"
+      ]
+    },
+    {
+      "id": "mesh-one-word-wall",
+      "name": "Mesh One Word Wall",
+      "description": "A shared one-word wall for group reflection and check-ins.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-one-word-wall/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-one-word-wall",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-one-word-wall/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-one-word-wall/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Social energy & check-ins",
+      "useCases": [
+        "check-ins",
+        "reflection",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-open-house",
+      "name": "Mesh Open House",
+      "description": "A browser-local RSVP board for a welcoming shared event.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-open-house/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-open-house",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-open-house/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-open-house/preview.png",
+      "trl": null,
+      "category": "Community",
+      "subcategory": "Events & volunteering",
+      "useCases": [
+        "events",
+        "rsvp",
+        "hosting"
+      ]
+    },
+    {
+      "id": "mesh-orientation-mosaic",
+      "name": "mesh-orientation-mosaic",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-orientation-mosaic/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-orientation-mosaic",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-orientation-mosaic/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-orientation-mosaic/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Motion & orientation",
+      "useCases": [
+        "mobile devices",
+        "movement",
+        "sensors"
+      ]
+    },
+    {
+      "id": "mesh-overrated-underrated",
+      "name": "mesh-overrated-underrated",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-overrated-underrated/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-overrated-underrated",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-overrated-underrated/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-overrated-underrated/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-pair-mixer",
+      "name": "Mesh Pair Mixer",
+      "description": "A browser-local shared pair maker for small groups.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-pair-mixer/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-pair-mixer",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pair-mixer/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pair-mixer/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Check-in & assignments",
+      "useCases": [
+        "breakouts",
+        "workshops",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-pair-rotation",
+      "name": "mesh-pair-rotation",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-pair-rotation/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-pair-rotation",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pair-rotation/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pair-rotation/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "events",
+        "teams",
+        "neighbourhoods"
+      ]
+    },
+    {
+      "id": "mesh-particles",
+      "name": "Mesh Particles",
+      "description": "Installation rehearsal: synchronized screen light, optional torch, and local multi-angle capture.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-particles/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-particles",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-particles/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-particles/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Shared displays & installations",
+      "useCases": [
+        "art installations",
+        "festivals",
+        "photo moments"
+      ]
+    },
+    {
+      "id": "mesh-pass-the-phone",
+      "name": "Mesh Pass The Phone",
+      "description": "A browser-local rotating prompt game for a room of peers.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-pass-the-phone/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-pass-the-phone",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pass-the-phone/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pass-the-phone/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-passport",
+      "name": "mesh-passport",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-passport/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-passport",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-passport/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-passport/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Identity & private exchange",
+      "useCases": [
+        "private exchange",
+        "onboarding",
+        "personal tools"
+      ]
+    },
+    {
+      "id": "mesh-petition",
+      "name": "mesh-petition",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-petition/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-petition",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-petition/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-petition/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-pictionary",
+      "name": "mesh-pictionary",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-pictionary/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-pictionary",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pictionary/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pictionary/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-pitch-pong",
+      "name": "mesh-pitch-pong",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-pitch-pong/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-pitch-pong",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pitch-pong/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pitch-pong/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-pixel-party",
+      "name": "Mesh Pixel Party",
+      "description": "A compact shared pixel-art canvas for small rooms.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-pixel-party/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-pixel-party",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pixel-party/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pixel-party/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Visual making",
+      "useCases": [
+        "creative sessions",
+        "workshops",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-playlist-pass",
+      "name": "Mesh Playlist Pass",
+      "description": "Browser-local shared listening queue for passing the next pick between friends",
+      "liveUrl": "https://baditaflorin.github.io/mesh-playlist-pass/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-playlist-pass",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-playlist-pass/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-playlist-pass/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Performance & sound",
+      "useCases": [
+        "music",
+        "parties",
+        "shared media"
+      ]
+    },
+    {
+      "id": "mesh-pomodoro-room",
+      "name": "mesh-pomodoro-room",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-pomodoro-room/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-pomodoro-room",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pomodoro-room/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pomodoro-room/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Mindfulness & focus",
+      "useCases": [
+        "wellbeing",
+        "facilitation",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-potluck",
+      "name": "mesh-potluck",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-potluck/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-potluck",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-potluck/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-potluck/preview.png",
+      "trl": null,
+      "category": "Community",
+      "subcategory": "Neighbours & mutual aid",
+      "useCases": [
+        "neighbourhoods",
+        "sharing",
+        "local groups"
+      ]
+    },
+    {
+      "id": "mesh-prediction-pool",
+      "name": "mesh-prediction-pool",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-prediction-pool/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-prediction-pool",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-prediction-pool/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-prediction-pool/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-privacy-drop",
+      "name": "Mesh Privacy Drop",
+      "description": "QR-paired, short-lived encrypted file transfer directly between browsers.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-privacy-drop/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-privacy-drop",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-privacy-drop/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-privacy-drop/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Identity & private exchange",
+      "useCases": [
+        "private exchange",
+        "onboarding",
+        "personal tools"
+      ]
+    },
+    {
+      "id": "mesh-prompt-deck",
+      "name": "Mesh Prompt Deck",
+      "description": "A shared conversation prompt deck for a group in one room.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-prompt-deck/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-prompt-deck",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-prompt-deck/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-prompt-deck/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "icebreakers",
+        "facilitation"
+      ]
+    },
+    {
+      "id": "mesh-prompt-ladder",
+      "name": "Mesh Prompt Ladder",
+      "description": "A browser-local staged discussion prompt ladder for groups.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-prompt-ladder/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-prompt-ladder",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-prompt-ladder/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-prompt-ladder/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-pulse-photo",
+      "name": "mesh-pulse-photo",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-pulse-photo/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-pulse-photo",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pulse-photo/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pulse-photo/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Camera & vision",
+      "useCases": [
+        "mobile devices",
+        "co-located groups",
+        "capture"
+      ]
+    },
+    {
+      "id": "mesh-pyramid",
+      "name": "mesh-pyramid",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-pyramid/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-pyramid",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pyramid/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-pyramid/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-qr-snake",
+      "name": "mesh-qr-snake",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-qr-snake/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-qr-snake",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-qr-snake/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-qr-snake/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Arcade & reaction",
+      "useCases": [
+        "game night",
+        "two players",
+        "quick rounds"
+      ]
+    },
+    {
+      "id": "mesh-questions-only",
+      "name": "mesh-questions-only",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-questions-only/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-questions-only",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-questions-only/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-questions-only/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "icebreakers",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-queue",
+      "name": "Mesh Queue",
+      "description": "A shared take-a-number queue that works directly between browsers.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-queue/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-queue",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-queue/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-queue/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "events",
+        "teams",
+        "neighbourhoods"
+      ]
+    },
+    {
+      "id": "mesh-quick-draw-duel",
+      "name": "Mesh Quick Draw Duel",
+      "description": "A browser-local two-peer drawing race with a shared timer and accessible fallback controls.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-quick-draw-duel/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-quick-draw-duel",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-quick-draw-duel/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-quick-draw-duel/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Arcade & reaction",
+      "useCases": [
+        "game night",
+        "two players",
+        "quick rounds"
+      ]
+    },
+    {
+      "id": "mesh-quiet-cheer",
+      "name": "mesh-quiet-cheer",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-quiet-cheer/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-quiet-cheer",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-quiet-cheer/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-quiet-cheer/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Mindfulness & focus",
+      "useCases": [
+        "wellbeing",
+        "facilitation",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-quiet-quest",
+      "name": "mesh-quiet-quest",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-quiet-quest/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-quiet-quest",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-quiet-quest/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-quiet-quest/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Mindfulness & focus",
+      "useCases": [
+        "wellbeing",
+        "facilitation",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-ranked-vote",
+      "name": "mesh-ranked-vote",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-ranked-vote/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-ranked-vote",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-ranked-vote/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-ranked-vote/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-rating-board",
+      "name": "Mesh Rating Board",
+      "description": "A shared five-star room temperature check.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-rating-board/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-rating-board",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-rating-board/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-rating-board/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "feedback",
+        "workshops",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-reaction-wall",
+      "name": "Mesh Reaction Wall",
+      "description": "A shared, de-duplicated reaction wall powered by mesh-common.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-reaction-wall/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-reaction-wall",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-reaction-wall/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-reaction-wall/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Celebration & support",
+      "useCases": [
+        "community feedback",
+        "celebrations",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-recipe-relay",
+      "name": "Mesh Recipe Relay",
+      "description": "A browser-local, turn-based recipe relay with one safe step per peer.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-recipe-relay/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-recipe-relay",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-recipe-relay/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-recipe-relay/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-remote-retro-standup",
+      "name": "Mesh Remote Retro Standup",
+      "description": "A browser-local, time-boxed remote standup with one validated update per peer.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-remote-retro-standup/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-remote-retro-standup",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-remote-retro-standup/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-remote-retro-standup/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-retro",
+      "name": "mesh-retro",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-retro/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-retro",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-retro/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-retro/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-roast-or-toast",
+      "name": "mesh-roast-or-toast",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-roast-or-toast/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-roast-or-toast",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-roast-or-toast/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-roast-or-toast/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Writing & storytelling",
+      "useCases": [
+        "creative sessions",
+        "writing",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-role-draw",
+      "name": "Mesh Role Draw",
+      "description": "A first-claim role picker for a small group.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-role-draw/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-role-draw",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-role-draw/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-role-draw/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Check-in & assignments",
+      "useCases": [
+        "facilitation",
+        "teams",
+        "workshops"
+      ]
+    },
+    {
+      "id": "mesh-room-norms",
+      "name": "Mesh Room Norms",
+      "description": "A browser-local shared agreement board for group room norms.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-room-norms/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-room-norms",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-room-norms/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-room-norms/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Facilitation & reflection",
+      "useCases": [
+        "facilitation",
+        "workshops",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-room-soundtrack",
+      "name": "mesh-room-soundtrack",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-room-soundtrack/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-room-soundtrack",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-room-soundtrack/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-room-soundtrack/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Audio & haptics",
+      "useCases": [
+        "sound",
+        "performances",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-round-counter",
+      "name": "Mesh Round Counter",
+      "description": "Peer-to-peer browser service built with mesh-common.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-round-counter/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-round-counter",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-round-counter/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-round-counter/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "quick rounds",
+        "facilitation",
+        "game night"
+      ]
+    },
+    {
+      "id": "mesh-route-share",
+      "name": "mesh-route-share",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-route-share/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-route-share",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-route-share/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-route-share/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Location & field tools",
+      "useCases": [
+        "outdoors",
+        "neighbourhoods",
+        "events"
+      ]
+    },
+    {
+      "id": "mesh-rps-arena",
+      "name": "mesh-rps-arena",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-rps-arena/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-rps-arena",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-rps-arena/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-rps-arena/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Arcade & reaction",
+      "useCases": [
+        "game night",
+        "two players",
+        "quick rounds"
+      ]
+    },
+    {
+      "id": "mesh-rsvp",
+      "name": "mesh-rsvp",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-rsvp/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-rsvp",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-rsvp/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-rsvp/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "events",
+        "teams",
+        "neighbourhoods"
+      ]
+    },
+    {
+      "id": "mesh-scoreboard",
+      "name": "Mesh Scoreboard",
+      "description": "A small shared score board for browser-local games and challenges.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-scoreboard/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-scoreboard",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-scoreboard/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-scoreboard/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "party games",
+        "challenges",
+        "score keeping"
+      ]
+    },
+    {
+      "id": "mesh-secret-ballot",
+      "name": "mesh-secret-ballot",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-secret-ballot/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-secret-ballot",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-secret-ballot/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-secret-ballot/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-shadow-paint",
+      "name": "mesh-shadow-paint",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-shadow-paint/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-shadow-paint",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shadow-paint/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shadow-paint/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Visual making",
+      "useCases": [
+        "creative sessions",
+        "shared media",
+        "performances"
+      ]
+    },
+    {
+      "id": "mesh-shake-dice",
+      "name": "mesh-shake-dice",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-shake-dice/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-shake-dice",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shake-dice/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shake-dice/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Motion & orientation",
+      "useCases": [
+        "mobile devices",
+        "movement",
+        "sensors"
+      ]
+    },
+    {
+      "id": "mesh-shared-checklist",
+      "name": "Mesh Shared Checklist",
+      "description": "A shared, assigned checklist for small groups.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-shared-checklist/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-shared-checklist",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shared-checklist/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shared-checklist/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "events",
+        "teams",
+        "neighbourhoods"
+      ]
+    },
+    {
+      "id": "mesh-shared-timer",
+      "name": "mesh-shared-timer",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-shared-timer/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-shared-timer",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shared-timer/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shared-timer/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-shared-window",
+      "name": "Mesh Shared Window",
+      "description": "Peer-to-peer mesh: 2-4 friends in different homes each point their camera at a view they like; every phone tiles all the others' feeds into one composite.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-shared-window/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-shared-window",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shared-window/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shared-window/preview.png",
+      "trl": 5,
+      "category": "Devices & spaces",
+      "subcategory": "Shared displays & installations",
+      "useCases": [
+        "installations",
+        "shared screens",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-shhh-meter",
+      "name": "mesh-shhh-meter",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-shhh-meter/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-shhh-meter",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shhh-meter/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shhh-meter/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Mindfulness & focus",
+      "useCases": [
+        "wellbeing",
+        "facilitation",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-show-of-hands",
+      "name": "mesh-show-of-hands",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-show-of-hands/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-show-of-hands",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-show-of-hands/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-show-of-hands/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-shower-thoughts",
+      "name": "mesh-shower-thoughts",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-shower-thoughts/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-shower-thoughts",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shower-thoughts/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-shower-thoughts/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Facilitation & reflection",
+      "useCases": [
+        "facilitation",
+        "workshops",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-silence-counter",
+      "name": "Mesh Silence Counter",
+      "description": "Peer-to-peer mesh: group meditation timer. Phones detect stillness via accelerometer and aggregate the count anonymously.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-silence-counter/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-silence-counter",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-silence-counter/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-silence-counter/preview.png",
+      "trl": 4,
+      "category": "Wellbeing",
+      "subcategory": "Mindfulness & focus",
+      "useCases": [
+        "wellbeing",
+        "facilitation",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-silent-vote",
+      "name": "mesh-silent-vote",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-silent-vote/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-silent-vote",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-silent-vote/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-silent-vote/preview.png",
+      "trl": null,
+      "category": "Decisions",
+      "subcategory": "Voting & consensus",
+      "useCases": [
+        "team decisions",
+        "community input",
+        "prioritization"
+      ]
+    },
+    {
+      "id": "mesh-six-degrees",
+      "name": "mesh-six-degrees",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-six-degrees/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-six-degrees",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-six-degrees/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-six-degrees/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "icebreakers",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-skill-challenge",
+      "name": "Mesh Skill Challenge",
+      "description": "An accessible browser-local board for small shared skill challenges.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-skill-challenge/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-skill-challenge",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-skill-challenge/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-skill-challenge/preview.png",
+      "trl": null,
+      "category": "Education",
+      "subcategory": "Study & practice",
+      "useCases": [
+        "study groups",
+        "classes",
+        "practice"
+      ]
+    },
+    {
+      "id": "mesh-skill-swap",
+      "name": "mesh-skill-swap",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-skill-swap/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-skill-swap",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-skill-swap/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-skill-swap/preview.png",
+      "trl": null,
+      "category": "Education",
+      "subcategory": "Study & practice",
+      "useCases": [
+        "study groups",
+        "classes",
+        "practice"
+      ]
+    },
+    {
+      "id": "mesh-skill-tree",
+      "name": "mesh-skill-tree",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-skill-tree/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-skill-tree",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-skill-tree/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-skill-tree/preview.png",
+      "trl": null,
+      "category": "Education",
+      "subcategory": "Study & practice",
+      "useCases": [
+        "study groups",
+        "classes",
+        "practice"
+      ]
+    },
+    {
+      "id": "mesh-snap",
+      "name": "mesh-snap",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-snap/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-snap",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-snap/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-snap/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-snowball",
+      "name": "mesh-snowball",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-snowball/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-snowball",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-snowball/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-snowball/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-social-battery",
+      "name": "Mesh Social Battery",
+      "description": "A browser-local, accessible shared social-energy check-in.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-social-battery/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-social-battery",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-social-battery/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-social-battery/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Social energy & check-ins",
+      "useCases": [
+        "wellbeing",
+        "teams",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-sound-guess",
+      "name": "Mesh Sound Guess",
+      "description": "An accessible browser-local shared sound and emoji clue guessing game.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-sound-guess/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-sound-guess",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-sound-guess/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-sound-guess/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-speed-type",
+      "name": "Mesh Speed Type",
+      "description": "A shared, peer-to-peer typing sprint with a live WPM leaderboard.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-speed-type/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-speed-type",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-speed-type/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-speed-type/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Arcade & reaction",
+      "useCases": [
+        "game night",
+        "two players",
+        "quick rounds"
+      ]
+    },
+    {
+      "id": "mesh-split-the-bill",
+      "name": "mesh-split-the-bill",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-split-the-bill/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-split-the-bill",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-split-the-bill/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-split-the-bill/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "events",
+        "teams",
+        "neighbourhoods"
+      ]
+    },
+    {
+      "id": "mesh-spot-it",
+      "name": "Mesh Spot It",
+      "description": "An accessible browser-local shared matching-symbol race.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-spot-it/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-spot-it",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-spot-it/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-spot-it/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Arcade & reaction",
+      "useCases": [
+        "game night",
+        "two players",
+        "quick rounds"
+      ]
+    },
+    {
+      "id": "mesh-spotlight",
+      "name": "mesh-spotlight",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-spotlight/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-spotlight",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-spotlight/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-spotlight/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-spyfall",
+      "name": "mesh-spyfall",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-spyfall/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-spyfall",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-spyfall/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-spyfall/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-standup",
+      "name": "mesh-standup",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-standup/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-standup",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-standup/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-standup/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-step-circle",
+      "name": "mesh-step-circle",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-step-circle/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-step-circle",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-step-circle/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-step-circle/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Motion & orientation",
+      "useCases": [
+        "mobile devices",
+        "movement",
+        "sensors"
+      ]
+    },
+    {
+      "id": "mesh-step-relay",
+      "name": "mesh-step-relay",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-step-relay/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-step-relay",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-step-relay/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-step-relay/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Motion & orientation",
+      "useCases": [
+        "mobile devices",
+        "movement",
+        "sensors"
+      ]
+    },
+    {
+      "id": "mesh-sticky-board",
+      "name": "Mesh Sticky Board",
+      "description": "A shared spatial sticky-note board for quick group thinking.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-sticky-board/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-sticky-board",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-sticky-board/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-sticky-board/preview.png",
+      "trl": null,
+      "category": "Work & learning",
+      "subcategory": "Collaboration & practice",
+      "useCases": [
+        "workshops",
+        "retrospectives",
+        "study groups"
+      ]
+    },
+    {
+      "id": "mesh-storyworm",
+      "name": "mesh-storyworm",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-storyworm/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-storyworm",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-storyworm/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-storyworm/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Writing & storytelling",
+      "useCases": [
+        "creative sessions",
+        "writing",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-stretch-class",
+      "name": "mesh-stretch-class",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-stretch-class/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-stretch-class",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-stretch-class/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-stretch-class/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Mindfulness & focus",
+      "useCases": [
+        "wellbeing",
+        "facilitation",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-taboo-clues",
+      "name": "Mesh Taboo Clues",
+      "description": "A peer-to-peer clue game with shared turns, timer, and taboo flags.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-taboo-clues/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-taboo-clues",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-taboo-clues/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-taboo-clues/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-tag",
+      "name": "mesh-tag",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-tag/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-tag",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tag/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tag/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-takes-blitz",
+      "name": "mesh-takes-blitz",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-takes-blitz/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-takes-blitz",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-takes-blitz/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-takes-blitz/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-tap-symphony",
+      "name": "Mesh Tap Symphony",
+      "description": "Peer-to-peer mesh: each phone is one drum; 30 seconds of taps records a synced loop that replays on every phone.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-tap-symphony/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-tap-symphony",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tap-symphony/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tap-symphony/preview.png",
+      "trl": 4,
+      "category": "Devices & spaces",
+      "subcategory": "Audio & haptics",
+      "useCases": [
+        "sound",
+        "performances",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-thank-you-token",
+      "name": "mesh-thank-you-token",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-thank-you-token/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-thank-you-token",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-thank-you-token/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-thank-you-token/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Celebration & support",
+      "useCases": [
+        "celebrations",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-tic-tac-toe",
+      "name": "mesh-tic-tac-toe",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-tic-tac-toe/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-tic-tac-toe",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tic-tac-toe/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tic-tac-toe/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Arcade & reaction",
+      "useCases": [
+        "game night",
+        "two players",
+        "quick rounds"
+      ]
+    },
+    {
+      "id": "mesh-tide-pool",
+      "name": "mesh-tide-pool",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-tide-pool/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-tide-pool",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tide-pool/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tide-pool/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-tilt-marble",
+      "name": "mesh-tilt-marble",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-tilt-marble/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-tilt-marble",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tilt-marble/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tilt-marble/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Motion & orientation",
+      "useCases": [
+        "mobile devices",
+        "movement",
+        "sensors"
+      ]
+    },
+    {
+      "id": "mesh-time-capsule",
+      "name": "mesh-time-capsule",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-time-capsule/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-time-capsule",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-time-capsule/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-time-capsule/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Writing & storytelling",
+      "useCases": [
+        "creative sessions",
+        "writing",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-toast-stack",
+      "name": "mesh-toast-stack",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-toast-stack/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-toast-stack",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-toast-stack/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-toast-stack/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Celebration & support",
+      "useCases": [
+        "celebrations",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-trade-cards",
+      "name": "mesh-trade-cards",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-trade-cards/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-trade-cards",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-trade-cards/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-trade-cards/preview.png",
+      "trl": null,
+      "category": "Privacy & utilities",
+      "subcategory": "Identity & private exchange",
+      "useCases": [
+        "private exchange",
+        "onboarding",
+        "personal tools"
+      ]
+    },
+    {
+      "id": "mesh-treasure-hunt",
+      "name": "mesh-treasure-hunt",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-treasure-hunt/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-treasure-hunt",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-treasure-hunt/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-treasure-hunt/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Location & field tools",
+      "useCases": [
+        "outdoors",
+        "neighbourhoods",
+        "events"
+      ]
+    },
+    {
+      "id": "mesh-tremor-map",
+      "name": "mesh-tremor-map",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-tremor-map/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-tremor-map",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tremor-map/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tremor-map/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Motion & orientation",
+      "useCases": [
+        "mobile devices",
+        "movement",
+        "sensors"
+      ]
+    },
+    {
+      "id": "mesh-trivia",
+      "name": "mesh-trivia",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-trivia/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-trivia",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-trivia/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-trivia/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-truth-bomb",
+      "name": "mesh-truth-bomb",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-truth-bomb/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-truth-bomb",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-truth-bomb/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-truth-bomb/preview.png",
+      "trl": null,
+      "category": "Social",
+      "subcategory": "Conversation & connection",
+      "useCases": [
+        "friends",
+        "communities",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-tug-of-war",
+      "name": "Mesh Tug Of War",
+      "description": "Two teams tap frantically — the rope moves live on every phone",
+      "liveUrl": "https://baditaflorin.github.io/mesh-tug-of-war/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-tug-of-war",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tug-of-war/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-tug-of-war/preview.png",
+      "trl": 5,
+      "category": "Games",
+      "subcategory": "Arcade & reaction",
+      "useCases": [
+        "game night",
+        "two players",
+        "quick rounds"
+      ]
+    },
+    {
+      "id": "mesh-turn-taker",
+      "name": "Mesh Turn Taker",
+      "description": "A browser-local shared turn order for small groups.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-turn-taker/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-turn-taker",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-turn-taker/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-turn-taker/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "turn taking",
+        "game night",
+        "facilitation"
+      ]
+    },
+    {
+      "id": "mesh-vibe-check",
+      "name": "mesh-vibe-check",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-vibe-check/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-vibe-check",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-vibe-check/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-vibe-check/preview.png",
+      "trl": null,
+      "category": "Wellbeing",
+      "subcategory": "Social energy & check-ins",
+      "useCases": [
+        "wellbeing",
+        "teams",
+        "self-reflection"
+      ]
+    },
+    {
+      "id": "mesh-volunteer-desk",
+      "name": "Mesh Volunteer Desk",
+      "description": "A browser-local capacity-safe volunteer shift desk.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-volunteer-desk/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-volunteer-desk",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-volunteer-desk/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-volunteer-desk/preview.png",
+      "trl": null,
+      "category": "Community",
+      "subcategory": "Events & volunteering",
+      "useCases": [
+        "events",
+        "volunteers",
+        "check-in"
+      ]
+    },
+    {
+      "id": "mesh-volunteer-shift",
+      "name": "mesh-volunteer-shift",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-volunteer-shift/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-volunteer-shift",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-volunteer-shift/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-volunteer-shift/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "events",
+        "teams",
+        "neighbourhoods"
+      ]
+    },
+    {
+      "id": "mesh-watch-party-sync",
+      "name": "mesh-watch-party-sync",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-watch-party-sync/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-watch-party-sync",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-watch-party-sync/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-watch-party-sync/preview.png",
+      "trl": null,
+      "category": "Devices & spaces",
+      "subcategory": "Shared displays & installations",
+      "useCases": [
+        "installations",
+        "shared screens",
+        "co-located groups"
+      ]
+    },
+    {
+      "id": "mesh-wave-canvas",
+      "name": "Mesh Wave Canvas",
+      "description": "Peer-to-peer mesh: arrange phones in a row; tap one and a ripple expands across all phones as if they were one continuous canvas.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-wave-canvas/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-wave-canvas",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-wave-canvas/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-wave-canvas/preview.png",
+      "trl": 5,
+      "category": "Devices & spaces",
+      "subcategory": "Motion & orientation",
+      "useCases": [
+        "mobile devices",
+        "movement",
+        "sensors"
+      ]
+    },
+    {
+      "id": "mesh-werewolf-roles",
+      "name": "mesh-werewolf-roles",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-werewolf-roles/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-werewolf-roles",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-werewolf-roles/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-werewolf-roles/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-when2meet",
+      "name": "mesh-when2meet",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-when2meet/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-when2meet",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-when2meet/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-when2meet/preview.png",
+      "trl": null,
+      "category": "Coordination",
+      "subcategory": "Planning & logistics",
+      "useCases": [
+        "events",
+        "teams",
+        "neighbourhoods"
+      ]
+    },
+    {
+      "id": "mesh-word-chain",
+      "name": "Mesh Word Chain",
+      "description": "A quick peer-to-peer word chain with shared turns and a round clock.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-word-chain/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-word-chain",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-word-chain/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-word-chain/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Party & tabletop",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-word-cloud",
+      "name": "Mesh Word Cloud",
+      "description": "A shared one-word reflection cloud for live groups.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-word-cloud/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-word-cloud",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-word-cloud/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-word-cloud/preview.png",
+      "trl": null,
+      "category": "Creative",
+      "subcategory": "Writing & storytelling",
+      "useCases": [
+        "reflection",
+        "workshops",
+        "teams"
+      ]
+    },
+    {
+      "id": "mesh-word-relay",
+      "name": "Mesh Word Relay",
+      "description": "A browser-local word and micro-story relay for groups.",
+      "liveUrl": "https://baditaflorin.github.io/mesh-word-relay/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-word-relay",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-word-relay/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-word-relay/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    },
+    {
+      "id": "mesh-would-rather",
+      "name": "mesh-would-rather",
+      "description": "",
+      "liveUrl": "https://baditaflorin.github.io/mesh-would-rather/",
+      "sourceUrl": "https://github.com/baditaflorin/mesh-would-rather",
+      "status": "ok",
+      "recordingStatus": "OK",
+      "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-would-rather/demo.gif",
+      "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-would-rather/preview.png",
+      "trl": null,
+      "category": "Games",
+      "subcategory": "Conversation & bluffing",
+      "useCases": [
+        "icebreakers",
+        "game night",
+        "small groups"
+      ]
+    }
+  ]
+}
