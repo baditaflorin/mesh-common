@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
-# install-ux-foundation-probe.sh — install the generic MeshShell UX contract
-# test into one existing mesh-* app without changing its feature source.
+# install-ux-foundation-probe.sh — install the observable MeshShell contract
+# plus corrected generic performance/leak probes into one existing mesh-* app
+# without changing its feature source.
 #
 # Usage:
 #   bash mesh-common/scripts/install-ux-foundation-probe.sh <path-to-app>
@@ -30,4 +31,5 @@ fi
 
 mkdir -p "$TARGET/tests/e2e"
 cp "$TEMPLATE" "$TARGET/tests/e2e/mesh-shell-foundation.spec.ts"
-echo "installed UX foundation probe in $TARGET/tests/e2e/mesh-shell-foundation.spec.ts"
+bash "$SCRIPT_DIR/install-perf-checks.sh" "$TARGET"
+echo "installed UX foundation and generic e2e probes in $TARGET/tests/e2e"

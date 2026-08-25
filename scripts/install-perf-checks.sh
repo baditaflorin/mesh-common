@@ -1,21 +1,23 @@
 #!/usr/bin/env bash
 #
-# install-perf-checks.sh — copy perf-budget.spec.ts and memory-leak.spec.ts
-# into a mesh-* app, substituting __APP_NAME__. Idempotent.
+# install-perf-checks.sh — refresh the generic performance and leak probes in
+# a mesh-* app. Idempotent.
 #
 # Usage:
-#   cd mesh-foo
+#   bash mesh-common/scripts/install-perf-checks.sh <path-to-mesh-app>
+#   # or from the app directory:
 #   bash ../mesh-common/scripts/install-perf-checks.sh
 #
 # What it does:
-#   - Writes tests/e2e/perf-budget.spec.ts (always; ~3s, fits in pre-push)
-#   - Writes tests/e2e/memory-leak.spec.ts (long; you opt-in via npm script)
-#   - Adds a `test:leak` script to package.json if missing
+#   - Writes tests/e2e/perf-budget.spec.ts (always; budget smoke coverage)
+#   - Writes tests/e2e/memory-leak.spec.ts (skipped unless `test:leak` enables it)
+#   - Adds or upgrades the conventional `test:leak` script without replacing
+#     a custom command.
 #
 set -euo pipefail
 
-APP_DIR="$(pwd)"
-APP_NAME="$(basename "$APP_DIR")"
+APP_DIR="${1:-$PWD}"
+APP_DIR="$(cd "$APP_DIR" && pwd)"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMMON_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
@@ -33,25 +35,29 @@ for tmpl in perf-budget memory-leak; do
     echo "[install-perf-checks] missing template $src" >&2
     exit 2
   fi
-  sed "s|__APP_NAME__|$APP_NAME|g" "$src" > "$dst"
+  cp "$src" "$dst"
   echo "[install-perf-checks] wrote $dst"
 done
 
-# Add test:leak script via node so we don't shell-edit JSON.
-node -e '
+# Add/update the conventional test:leak command via node so custom scripts
+# are never clobbered. The spec itself remains a fast skip under test:e2e.
+node - "$APP_DIR/package.json" <<'NODE'
   const fs = require("fs");
-  const p = JSON.parse(fs.readFileSync("package.json", "utf8"));
+  const path = process.argv[2];
+  const p = JSON.parse(fs.readFileSync(path, "utf8"));
   p.scripts ||= {};
   let changed = false;
-  if (!p.scripts["test:leak"]) {
-    p.scripts["test:leak"] = "playwright test tests/e2e/memory-leak.spec.ts";
+  const conventional = "MESH_RUN_LEAK_TEST=1 playwright test tests/e2e/memory-leak.spec.ts";
+  const legacy = "playwright test tests/e2e/memory-leak.spec.ts";
+  if (!p.scripts["test:leak"] || p.scripts["test:leak"] === legacy) {
+    p.scripts["test:leak"] = conventional;
     changed = true;
   }
   if (changed) {
-    fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n");
-    console.log("[install-perf-checks] added test:leak script to package.json");
+    fs.writeFileSync(path, JSON.stringify(p, null, 2) + "\n");
+    console.log("[install-perf-checks] installed conventional test:leak script");
   } else {
-    console.log("[install-perf-checks] package.json already has test:leak");
+    console.log("[install-perf-checks] preserved custom test:leak script");
   }
-'
+NODE
 echo "[install-perf-checks] done"

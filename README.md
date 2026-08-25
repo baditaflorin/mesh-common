@@ -242,7 +242,7 @@ Build once (GPU), run many times (CPU). Three test layers, all in the scaffold s
 npm install
 npm run test:unit                          # 200-700 ms, runs everywhere
 npx playwright install chromium            # one-time, ~120 MB, cached globally
-npm run test:e2e                           # 3-5 s per app
+npm run test:e2e                           # ~15-25 s per app (the long leak test skips)
 ```
 
 ### Cross-repo orchestration
@@ -325,7 +325,7 @@ bash ../mesh-common/scripts/install-perf-checks.sh
 This drops two specs and adds one `npm` script:
 
 - `tests/e2e/perf-budget.spec.ts` — captures LCP + TBT on cold load + INP after one interaction; fails over configurable thresholds (defaults: LCP ≤ 2500 ms, TBT ≤ 600 ms, INP ≤ 300 ms). Runs in the default Playwright pass (≈3 s).
-- `tests/e2e/memory-leak.spec.ts` — two-peer 60 s noise loop, before/after heap deltas, fails over 15 MB growth. Long-running, so it's opt-in via `npm run test:leak`.
+- `tests/e2e/memory-leak.spec.ts` — two-peer 60 s noise loop, before/after heap deltas, fails over 15 MB growth. It stays installed but skips during `test:e2e`; `npm run test:leak` explicitly enables it and gets a duration-aware timeout.
 
 Override thresholds per app via env vars:
 
@@ -367,15 +367,18 @@ node scripts/fleet-ux-check.mjs --list
 # Test one batch with bounded workers and collision-free Playwright ports.
 node scripts/fleet-ux-check.mjs --batch 1 --run typecheck,unit,smoke,e2e --jobs 4
 
-# Install the observable MeshShell contract probe before a per-app release.
+# Refresh the observable MeshShell contract plus the generic performance and
+# opt-in leak probes before a per-app release.
 bash scripts/install-ux-foundation-probe.sh ../mesh-queue
 ```
 
 The runner never clones, installs, edits, commits, or pushes by itself.
-App-release automation must deliberately install the probe, run the checks,
-review the generated `docs/` bundle, and merge each app's PR. The probe
+App-release automation must deliberately install the probes, run the checks,
+review the generated `docs/` bundle, and merge each app's PR. The UX probe
 checks real shell/theme/settings behavior and distinguishes a shell-owned room
 from a feature-owned room so it does not reward a fabricated connection state.
+The installer also refreshes the package-derived generic URLs and safe enabled
+button selection used by the performance/leak tests.
 
 ## Documentation drift policy
 

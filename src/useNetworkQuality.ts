@@ -55,40 +55,46 @@ export function useNetworkQuality(
   const idleInterval = opts?.idleIntervalMs ?? 30_000;
   const staleAfterMs = opts?.staleAfterMs ?? 30_000;
 
-  const awareness = useAwareness<PingState>(room);
-  const [rtts, setRtts] = useState<Record<string, { value: number; at: number }>>({});
+  const { local, peers, setLocal } = useAwareness<PingState>(room);
+  // `useYRoom` intentionally publishes a fresh wrapper when awareness or
+  // peer counts change. Quality instrumentation must survive those wrapper
+  // updates without treating its own ping as a reason to tear down and start
+  // a new interval. The document is the stable room-identity boundary.
+  const roomDocument = room?.doc ?? null;
+  const [rtts, setRtts] = useState<
+    Record<string, { value: number; at: number }>
+  >({});
   const lastNonce = useRef<string | null>(null);
   const lastSentAt = useRef<number | null>(null);
 
   // Periodic ping
   useEffect(() => {
-    if (!room) return;
+    if (!roomDocument) return;
     const tick = () => {
       const nonce = newNonce();
       lastNonce.current = nonce;
       lastSentAt.current = Date.now();
-      awareness.setLocal({ pingNonce: nonce, pingAt: Date.now() });
+      setLocal({ pingNonce: nonce, pingAt: Date.now() });
     };
     tick();
-    const peers = awareness.peers.size;
-    const dt = peers > 0 ? interval : idleInterval;
+    const dt = peers.size > 0 ? interval : idleInterval;
     const id = setInterval(tick, dt);
     return () => clearInterval(id);
-  }, [room, awareness, interval, idleInterval, awareness.peers.size]);
+  }, [roomDocument, setLocal, interval, idleInterval, peers.size]);
 
   // Observe peers
   useEffect(() => {
-    if (!room) return;
+    if (!roomDocument) return;
     const next: Record<string, { value: number; at: number }> = { ...rtts };
     let changed = false;
-    for (const [peerId, s] of awareness.peers.entries()) {
+    for (const [peerId, s] of peers.entries()) {
       if (!s) continue;
 
       // If a peer pinged us, we owe them a pong (carry their nonce + a fresh pongAt).
       if (s.pingNonce && s.pingAt) {
-        const existing = awareness.local ?? ({} as PingState);
+        const existing = local ?? ({} as PingState);
         if (existing.pongNonce !== s.pingNonce) {
-          awareness.setLocal({
+          setLocal({
             pongNonce: s.pingNonce,
             pongAt: Date.now(),
           });
@@ -112,7 +118,7 @@ export function useNetworkQuality(
     }
     if (changed) setRtts(next);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [room, awareness.peers, awareness.local]);
+  }, [roomDocument, peers, local, setLocal]);
 
   const result = useMemo<NetworkQualityState>(() => {
     const cutoff = Date.now() - staleAfterMs;

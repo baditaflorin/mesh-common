@@ -18,6 +18,10 @@
 - Legacy `MeshShell` apps keep their full-height dark layout while adopting
   semantic theme variables. Apps whose features own a room after an explicit
   gesture no longer show a fabricated lifecycle state or connection panel.
+- Opening Settings with an awareness-backed room no longer enters a React
+  update loop. `useNetworkQuality` now keys its ping lifecycle to the stable
+  Yjs document and callback rather than the awareness API or transient room
+  wrapper recreated by awareness updates.
 
 ### Added
 
@@ -46,7 +50,10 @@
 - `fleet-ux-check.mjs` is a catalog-driven, read-only 20-app batch verifier
   with bounded typecheck/unit/smoke/e2e execution and unique Playwright ports.
   `install-ux-foundation-probe.sh` installs the observable per-app shell
-  contract test before an app release.
+  contract test before an app release. It also refreshes the generic
+  performance and opt-in memory-leak probes: they derive the app path from
+  `package.json`, ignore disabled controls, and give an explicitly enabled
+  long leak run a duration-aware timeout.
 - `useImageCapture` now provides `captureBlob()` for an explicit, local JPEG
   Blob capture path; `useFileShare` yields between bounded chunk batches so a
   camera image cannot monopolize the mobile browser main thread while sharing.

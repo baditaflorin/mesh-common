@@ -36,6 +36,7 @@ mkdir -p tests/unit tests/e2e
 cp "$TEMPLATE_DIR/tests/setup.ts" tests/setup.ts
 cp "$TEMPLATE_DIR/tests/e2e/smoke.spec.ts" tests/e2e/smoke.spec.ts
 cp "$TEMPLATE_DIR/tests/e2e/mesh.spec.ts" tests/e2e/mesh.spec.ts
+bash "$SCRIPT_DIR/install-ux-foundation-probe.sh" "$TARGET"
 
 # 2. Drop in the placeholder unit test only if (a) src/Feature.tsx exists (the
 #    canonical mesh-common-scaffolded shape), and (b) no unit tests exist yet.
