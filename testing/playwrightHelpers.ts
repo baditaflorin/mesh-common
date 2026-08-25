@@ -15,6 +15,11 @@ type PeerOptions = {
   /** Override the signaling URL. Default: unreachable port. */
   signalingUrl?: string;
   /**
+   * Override the TURN credential endpoint. Defaults to a closed loopback
+   * port so tests cannot wait on or contact a real credential service.
+   */
+  turnTokenUrl?: string;
+  /**
    * Stable device IDs to simulate. Defaults to one distinct device per page.
    * Pass the same value intentionally when a test needs two tabs on one device.
    */
@@ -43,10 +48,15 @@ async function installPageDeviceId(
       const getItem = storage.getItem;
       const setItem = storage.setItem;
 
-      storage.getItem = function getPageDeviceId(itemKey: string): string | null {
+      storage.getItem = function getPageDeviceId(
+        itemKey: string,
+      ): string | null {
         return itemKey === key ? id : getItem.call(this, itemKey);
       };
-      storage.setItem = function setPageDeviceId(itemKey: string, value: string): void {
+      storage.setItem = function setPageDeviceId(
+        itemKey: string,
+        value: string,
+      ): void {
         if (itemKey === key) return;
         setItem.call(this, itemKey, value);
       };
@@ -60,8 +70,9 @@ async function installPageDeviceId(
  * with the same room ID. y-webrtc's BroadcastChannel fallback syncs them
  * directly inside the browser — no signaling server, no STUN, no internet.
  *
- * The signaling URL is overridden to an unreachable port so the WebSocket
- * connection fails fast and doesn't add latency to tests.
+ * The signaling and TURN-token URLs are overridden to closed loopback ports
+ * so their failures are local and fast; neither can delay the
+ * BroadcastChannel-only test path.
  *
  * Use this for Playwright multi-peer tests:
  *
@@ -85,26 +96,42 @@ export async function openTwoPeers(
     options.roomId ?? `e2e-${Math.random().toString(36).slice(2, 8)}`;
   const signalingUrl =
     options.signalingUrl ?? "ws://localhost:1/never-connects";
+  const turnTokenUrl =
+    options.turnTokenUrl ?? "http://127.0.0.1:1/never-connects";
 
   await context.addInitScript(
-    ({ prefix, room, sig }) => {
+    ({ prefix, room, sig, turn }) => {
       try {
         localStorage.setItem(`${prefix}:room`, room);
         localStorage.setItem(`${prefix}:signalingUrl`, sig);
+        localStorage.setItem(`${prefix}:turnTokenUrl`, turn);
         // Ensure no stale TURN creds carry over between tests
         localStorage.removeItem(`${prefix}:iceServers`);
       } catch {
         // ignore in environments without localStorage
       }
     },
-    { prefix: options.storagePrefix, room: roomId, sig: signalingUrl },
+    {
+      prefix: options.storagePrefix,
+      room: roomId,
+      sig: signalingUrl,
+      turn: turnTokenUrl,
+    },
   );
 
   const a = await context.newPage();
   const b = await context.newPage();
   await Promise.all([
-    installPageDeviceId(a, options.storagePrefix, options.deviceIds?.[0] ?? nextDeviceId(0)),
-    installPageDeviceId(b, options.storagePrefix, options.deviceIds?.[1] ?? nextDeviceId(1)),
+    installPageDeviceId(
+      a,
+      options.storagePrefix,
+      options.deviceIds?.[0] ?? nextDeviceId(0),
+    ),
+    installPageDeviceId(
+      b,
+      options.storagePrefix,
+      options.deviceIds?.[1] ?? nextDeviceId(1),
+    ),
   ]);
   await Promise.all([a.goto(url), b.goto(url)]);
 
@@ -153,18 +180,26 @@ export async function openNPeers(
     options.roomId ?? `e2e-${Math.random().toString(36).slice(2, 8)}`;
   const signalingUrl =
     options.signalingUrl ?? "ws://localhost:1/never-connects";
+  const turnTokenUrl =
+    options.turnTokenUrl ?? "http://127.0.0.1:1/never-connects";
 
   await context.addInitScript(
-    ({ prefix, room, sig }) => {
+    ({ prefix, room, sig, turn }) => {
       try {
         localStorage.setItem(`${prefix}:room`, room);
         localStorage.setItem(`${prefix}:signalingUrl`, sig);
+        localStorage.setItem(`${prefix}:turnTokenUrl`, turn);
         localStorage.removeItem(`${prefix}:iceServers`);
       } catch {
         // ignore in environments without localStorage
       }
     },
-    { prefix: options.storagePrefix, room: roomId, sig: signalingUrl },
+    {
+      prefix: options.storagePrefix,
+      room: roomId,
+      sig: signalingUrl,
+      turn: turnTokenUrl,
+    },
   );
 
   const peers: Page[] = [];
