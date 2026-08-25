@@ -30,6 +30,18 @@
 
 ### Added
 
+- **Visual foundation for product-quality first views:** `createMeshConfig`
+  now separates a stable `appName` from a human `displayName` and optional
+  `visualProfile`. `MeshAppBar`, `MeshVisualProfileProvider`, `MeshSurface`,
+  `MeshButton`, `MeshStatusPill`, `MeshPresence`, and `MeshLaunch` give apps a
+  calm visual vocabulary for entry states, hierarchy, presence, and primary
+  actions without forcing a single app skin. Apps opt into the text-first
+  `MeshShell` utility bar with an explicit `shellLayout`, replacing emoji
+  floating controls and permanent source/tip/version footer; source, support,
+  version, and commit now live in Settings → About. `meshAccentText()` and
+  `MeshThemeProvider` automatically select a readable black/white action
+  foreground when an app supplies only a hex accent.
+
 - **Fleet UX foundation (20 composable improvements):** `MeshAppProvider`,
   `MeshAppFrame`, `useRoomDiagnostics`, `MeshRoomGate`,
   `MeshConnectionPanel`, `MeshCapabilityGate`, `MeshReadinessPanel`,

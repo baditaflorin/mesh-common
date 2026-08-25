@@ -8,6 +8,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
+import { meshAccentText } from "../MeshConfig";
 
 export type MeshThemeMode = "light" | "dark" | "system";
 export type MeshResolvedTheme = Exclude<MeshThemeMode, "system">;
@@ -192,15 +193,21 @@ export function MeshThemeProvider({
     return () => query.removeEventListener?.("change", update);
   }, []);
 
-  const tokens = useMemo<Readonly<MeshThemeTokens>>(
-    () => ({
-      ...(resolvedTheme === "dark"
-        ? meshDarkThemeTokens
-        : meshLightThemeTokens),
-      ...tokenOverrides,
-    }),
-    [resolvedTheme, tokenOverrides],
-  );
+  const tokens = useMemo<Readonly<MeshThemeTokens>>(() => {
+    const base =
+      resolvedTheme === "dark" ? meshDarkThemeTokens : meshLightThemeTokens;
+    const merged = { ...base, ...tokenOverrides };
+    // App configs commonly supply only an accent. Derive a readable foreground
+    // automatically unless a caller deliberately provides its own verified
+    // accentText token.
+    if (tokenOverrides?.accent && tokenOverrides.accentText === undefined) {
+      merged.accentText = meshAccentText(
+        tokenOverrides.accent,
+        base.accentText,
+      );
+    }
+    return merged;
+  }, [resolvedTheme, tokenOverrides]);
   const variables = useMemo(() => meshThemeVariables(tokens), [tokens]);
 
   const setMode = useCallback(

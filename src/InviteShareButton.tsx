@@ -4,13 +4,23 @@ import { useWebShare } from "./useWebShare";
 import { MeshSheet } from "./ui/MeshSheet";
 
 type Props = {
-  /** App name shown in the modal title + native share sheet. */
+  /** Human-facing app name shown in the modal title + native share sheet. */
   appName: string;
   roomId: string;
   /** Inviter peer id — embedded as `p=` so the receiver can record a chain edge. */
   peerId?: string;
   /** Optional extra slot rendered under the QR (e.g. chain stats from useInviteChain). */
   extras?: ReactNode;
+  /**
+   * The visible trigger label. The old floating control used an emoji, which
+   * made an otherwise polished app read as a prototype. Text is also much
+   * clearer to keyboard and screen-reader users.
+   */
+  label?: ReactNode;
+  /** Accessible name for the trigger. Defaults preserve the original API. */
+  ariaLabel?: string;
+  /** Additional trigger class names for a host app's compact action bar. */
+  className?: string;
 };
 
 function buildInviteUrl(roomId: string, peerId: string | undefined): string {
@@ -29,7 +39,15 @@ function buildInviteUrl(roomId: string, peerId: string | undefined): string {
  * auto-join the room AND record the chain edge if the host app uses
  * `useInviteChain`.
  */
-export function InviteShareButton({ appName, roomId, peerId, extras }: Props) {
+export function InviteShareButton({
+  appName,
+  roomId,
+  peerId,
+  extras,
+  label = "Invite",
+  ariaLabel = "invite via QR",
+  className,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const ws = useWebShare();
@@ -61,12 +79,12 @@ export function InviteShareButton({ appName, roomId, peerId, extras }: Props) {
     <>
       <button
         type="button"
-        className="mesh-invite-fab"
+        className={`mesh-invite-trigger ${className ?? ""}`}
         onClick={() => setOpen(true)}
-        aria-label="invite via QR"
-        title="invite via QR"
+        aria-label={ariaLabel}
+        title={typeof label === "string" ? label : ariaLabel}
       >
-        📡
+        {label}
       </button>
       <MeshSheet
         open={open}
@@ -76,37 +94,37 @@ export function InviteShareButton({ appName, roomId, peerId, extras }: Props) {
         className="mesh-invite-sheet"
       >
         <div className="mesh-invite-content">
-            <div className="mesh-invite-qr">
-              <PersonalQR payload={url} size={240} ariaLabel="room invite QR" />
-            </div>
+          <div className="mesh-invite-qr">
+            <PersonalQR payload={url} size={240} ariaLabel="room invite QR" />
+          </div>
+          <button
+            type="button"
+            className="mesh-invite-url"
+            onClick={onCopy}
+            title="Copy invite link"
+          >
+            {url}
+          </button>
+          <div className="mesh-invite-actions">
             <button
               type="button"
-              className="mesh-invite-url"
-              onClick={onCopy}
-              title="Copy invite link"
+              className="mesh-invite-share"
+              onClick={onShare}
+              aria-label="share invite link"
             >
-              {url}
+              {ws.supported ? "share" : "copy link"}
             </button>
-            <div className="mesh-invite-actions">
-              <button
-                type="button"
-                className="mesh-invite-share"
-                onClick={onShare}
-                aria-label="share invite link"
-              >
-                {ws.supported ? "share" : "copy link"}
-              </button>
-              {copied && <span className="mesh-invite-copied">copied!</span>}
-            </div>
-            {extras && <div className="mesh-invite-extras">{extras}</div>}
-            <p className="mesh-invite-room">
-              room: <code>{roomId}</code>
-              {peerId && (
-                <>
-                  {" · "}you: <code>{peerId.slice(0, 6)}</code>
-                </>
-              )}
-            </p>
+            {copied && <span className="mesh-invite-copied">copied!</span>}
+          </div>
+          {extras && <div className="mesh-invite-extras">{extras}</div>}
+          <p className="mesh-invite-room">
+            room: <code>{roomId}</code>
+            {peerId && (
+              <>
+                {" · "}you: <code>{peerId.slice(0, 6)}</code>
+              </>
+            )}
+          </p>
         </div>
       </MeshSheet>
     </>

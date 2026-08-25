@@ -1,5 +1,9 @@
-import { useEffect, useState, type ReactNode } from "react";
-import type { MeshConfig } from "./MeshConfig";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import {
+  humanizeMeshAppName,
+  meshAccentText,
+  type MeshConfig,
+} from "./MeshConfig";
 import {
   MeshShellConnectionBridgeProvider,
   useOptionalMeshShellConnectionBridge,
@@ -20,6 +24,8 @@ import {
   useOptionalMeshTheme,
   type MeshThemeTokens,
 } from "./ui/MeshThemeProvider";
+import { MeshAppBar, type MeshAppBarState } from "./ui/MeshAppBar";
+import { getMeshVisualProfileTokens } from "./ui/MeshVisualProfile";
 import { FleetIdentityPanel } from "./FleetIdentityPanel";
 
 type Props = {
@@ -64,22 +70,61 @@ function shellRoomState(
 }
 
 function legacyShellTokens(config: MeshConfig): Partial<MeshThemeTokens> {
+  // A config with no explicit visual profile is a pre-foundation app. Keep
+  // its established palette until its own visual migration chooses a profile
+  // and a shell layout; changing hundreds of applications by accident is not
+  // a product redesign.
+  if (!config.shellLayout) {
+    return {
+      canvas: "#0b0a06",
+      surface: "#1b1810",
+      surfaceRaised: "#242017",
+      text: "#f6e9c0",
+      textMuted: "#8a7a4a",
+      accent: config.accentHex,
+      accentText: meshAccentText(config.accentHex, "#0b0a06"),
+    };
+  }
+  const profile = getMeshVisualProfileTokens(config.visualProfile ?? "utility");
   return {
-    canvas: "#0b0a06",
-    surface: "#1b1810",
-    surfaceRaised: "#242017",
-    text: "#f6e9c0",
-    textMuted: "#8a7a4a",
+    // Profiles deliberately supply full semantic foundations. The app accent
+    // remains app-owned, so a product preserves its recognizable action color
+    // while shedding the old universal brown/black demo skin.
+    ...profile,
     accent: config.accentHex,
-    accentText: "#0b0a06",
+    accentText: meshAccentText(config.accentHex, profile.accentText),
+    focusRing: config.accentHex,
   };
+}
+
+function displayNameFor(config: MeshConfig): string {
+  return config.displayName?.trim() || humanizeMeshAppName(config.appName);
+}
+
+function appBarState(
+  roomState: ShellRoomState | undefined,
+): MeshAppBarState | undefined {
+  switch (roomState) {
+    case "connected":
+      return "ready";
+    case "loading":
+      return "idle";
+    case "joining":
+      return "joining";
+    case "offline":
+      return "offline";
+    case "error":
+      return "error";
+    default:
+      return undefined;
+  }
 }
 
 /**
  * Standard chrome for every mesh-* app:
- *   - 📡 FAB → modal with dynamic invite QR + share / copy-link (every app)
- *   - ⚙ FAB → settings drawer (room id, signaling, TURN)
- *   - Bottom-right self-ref bar with source / tip / version
+ *   - a compact, human-named utility bar with invite + settings actions
+ *   - invite modal with dynamic QR + share / copy-link (every app)
+ *   - settings drawer with room, identity, connection, and About details
  *   - Shared invite-chain tracker (`__mesh_invites` Y.Array) when `room` is provided
  *
  * Apps render their own UI as children and pass app-specific settings via
@@ -94,6 +139,14 @@ function MeshShellContent({
   fleetIdentityServiceUrl,
   children,
 }: Props) {
+  const displayName = displayNameFor(config);
+  const visualProfile = config.visualProfile ?? "utility";
+  const hasModernChrome = config.shellLayout !== undefined;
+  const shellLayout = config.shellLayout ?? "legacy";
+  const shellStyle = {
+    "--mesh-accent": config.accentHex,
+    "--mesh-accent-text": meshAccentText(config.accentHex),
+  } as CSSProperties;
   const app = useOptionalMeshApp();
   const bridge = useOptionalMeshShellConnectionBridge();
   const reported = bridge?.connection;
@@ -129,39 +182,91 @@ function MeshShellContent({
       className="mesh-app-root"
       data-mesh-app-shell=""
       data-mesh-room-state={hasRoomOwner ? roomState : undefined}
+      data-mesh-visual-profile={visualProfile}
+      data-mesh-shell-layout={shellLayout}
+      data-mesh-app-id={config.appName}
+      style={shellStyle}
     >
-      {children}
-      <InviteShareButton
-        appName={config.appName}
-        roomId={roomId}
-        peerId={activeRoom?.peerId}
-        extras={
-          chain.edges.length > 0 ? (
-            <div className="mesh-invite-chain">
-              <span>
-                your invites: <strong>{chain.myDirectInvites}</strong>
-              </span>
-              <span>
-                downstream: <strong>{chain.mySubtree.length}</strong>
-              </span>
-              {chain.myDepth > 0 && (
-                <span>
-                  your depth: <strong>{chain.myDepth}</strong>
-                </span>
-              )}
-            </div>
-          ) : null
-        }
-      />
-      <button
-        type="button"
-        className="mesh-settings-fab"
-        onClick={() => setSettingsOpen(true)}
-        aria-label="Open settings"
-      >
-        ⚙
-      </button>
-      <SelfRefBar config={config} />
+      {hasModernChrome ? (
+        <MeshAppBar
+          title={displayName}
+          state={appBarState(roomState)}
+          actions={
+            <>
+              <InviteShareButton
+                appName={displayName}
+                roomId={roomId}
+                peerId={activeRoom?.peerId}
+                label="Invite"
+                ariaLabel={`Invite people to ${displayName}`}
+                className="mesh-app-bar-action mesh-app-bar-invite"
+                extras={
+                  chain.edges.length > 0 ? (
+                    <div className="mesh-invite-chain">
+                      <span>
+                        your invites: <strong>{chain.myDirectInvites}</strong>
+                      </span>
+                      <span>
+                        downstream: <strong>{chain.mySubtree.length}</strong>
+                      </span>
+                      {chain.myDepth > 0 && (
+                        <span>
+                          your depth: <strong>{chain.myDepth}</strong>
+                        </span>
+                      )}
+                    </div>
+                  ) : null
+                }
+              />
+              <button
+                type="button"
+                className="mesh-app-bar-action mesh-settings-fab"
+                onClick={() => setSettingsOpen(true)}
+                aria-label="Open settings"
+              >
+                Settings
+              </button>
+            </>
+          }
+        />
+      ) : null}
+      <div className="mesh-app-content">{children}</div>
+      {!hasModernChrome ? (
+        <>
+          <InviteShareButton
+            appName={config.appName}
+            roomId={roomId}
+            peerId={activeRoom?.peerId}
+            className="mesh-legacy-invite"
+            extras={
+              chain.edges.length > 0 ? (
+                <div className="mesh-invite-chain">
+                  <span>
+                    your invites: <strong>{chain.myDirectInvites}</strong>
+                  </span>
+                  <span>
+                    downstream: <strong>{chain.mySubtree.length}</strong>
+                  </span>
+                  {chain.myDepth > 0 && (
+                    <span>
+                      your depth: <strong>{chain.myDepth}</strong>
+                    </span>
+                  )}
+                </div>
+              ) : null
+            }
+          />
+          <button
+            type="button"
+            className="mesh-settings-fab"
+            onClick={() => setSettingsOpen(true)}
+            aria-label="Open settings"
+          >
+            ⚙
+          </button>
+          <SelfRefBar config={config} />
+        </>
+      ) : null}
       <SettingsDrawer
         config={config}
         open={settingsOpen}

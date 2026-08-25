@@ -28,9 +28,9 @@ function BeaconOptOutToggle() {
       />{" "}
       Opt out of anonymous pageview pings
       <p className="mesh-settings-help">
-        Each app fires a 1×1 GIF beacon with room id + first 6 chars of your peer
-        id when you join a room. IPs are truncated; Do-Not-Track is honoured.
-        Toggle this to disable per-device.
+        Each app fires a 1×1 GIF beacon with room id + first 6 chars of your
+        peer id when you join a room. IPs are truncated; Do-Not-Track is
+        honoured. Toggle this to disable per-device.
       </p>
     </label>
   );
@@ -46,7 +46,14 @@ type Props = {
   children?: ReactNode;
 };
 
-export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, children }: Props) {
+export function SettingsDrawer({
+  config,
+  open,
+  onClose,
+  roomId,
+  onRoomChange,
+  children,
+}: Props) {
   const s = useMemo(
     () =>
       iceStorage(config.storagePrefix, {
@@ -57,12 +64,14 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
   );
   const [signaling, setSignaling] = useState(() => loadSignalingUrl(s));
   const [tokenUrl, setTokenUrl] = useState(() => loadTurnTokenUrl(s));
-  const signalingError = signaling.trim() && !isValidSignalingUrl(signaling)
-    ? "Use a ws:// or wss:// URL."
-    : "";
-  const tokenUrlError = tokenUrl.trim() && !isValidTurnTokenUrl(tokenUrl)
-    ? "Use an http:// or https:// URL."
-    : "";
+  const signalingError =
+    signaling.trim() && !isValidSignalingUrl(signaling)
+      ? "Use a ws:// or wss:// URL."
+      : "";
+  const tokenUrlError =
+    tokenUrl.trim() && !isValidTurnTokenUrl(tokenUrl)
+      ? "Use an http:// or https:// URL."
+      : "";
   const hasEndpointError = Boolean(signalingError || tokenUrlError);
 
   useEffect(() => {
@@ -84,9 +93,14 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
       className="mesh-settings-sheet"
       footer={
         <footer className="mesh-settings-footer">
-          <a href={config.repositoryUrl} target="_blank" rel="noreferrer">
-            source on github
-          </a>
+          <span className="mesh-settings-about-links">
+            <a href={config.repositoryUrl} target="_blank" rel="noreferrer">
+              source
+            </a>
+            <a href={config.paypalUrl} target="_blank" rel="noreferrer">
+              support
+            </a>
+          </span>
           <span>
             v{config.version} · {config.commit}
           </span>
@@ -110,8 +124,9 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
 
         <h3>Self-hosted infra (advanced)</h3>
         <p className="mesh-settings-help">
-          Override the default signaling and TURN endpoints. Leave blank to use the built-in
-          defaults (<code>{config.signalingUrl}</code> and <code>{config.turnTokenUrl}</code>).
+          Override the default signaling and TURN endpoints. Leave blank to use
+          the built-in defaults (<code>{config.signalingUrl}</code> and{" "}
+          <code>{config.turnTokenUrl}</code>).
         </p>
 
         <label>
@@ -125,9 +140,19 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
             autoComplete="url"
             spellCheck={false}
             aria-invalid={Boolean(signalingError)}
-            aria-describedby={signalingError ? "mesh-signaling-error" : undefined}
+            aria-describedby={
+              signalingError ? "mesh-signaling-error" : undefined
+            }
           />
-          {signalingError && <span id="mesh-signaling-error" role="alert" className="mesh-settings-error">{signalingError}</span>}
+          {signalingError && (
+            <span
+              id="mesh-signaling-error"
+              role="alert"
+              className="mesh-settings-error"
+            >
+              {signalingError}
+            </span>
+          )}
         </label>
 
         <label>
@@ -141,9 +166,19 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
             autoComplete="url"
             spellCheck={false}
             aria-invalid={Boolean(tokenUrlError)}
-            aria-describedby={tokenUrlError ? "mesh-turn-token-error" : undefined}
+            aria-describedby={
+              tokenUrlError ? "mesh-turn-token-error" : undefined
+            }
           />
-          {tokenUrlError && <span id="mesh-turn-token-error" role="alert" className="mesh-settings-error">{tokenUrlError}</span>}
+          {tokenUrlError && (
+            <span
+              id="mesh-turn-token-error"
+              role="alert"
+              className="mesh-settings-error"
+            >
+              {tokenUrlError}
+            </span>
+          )}
         </label>
 
         <div className="mesh-settings-actions">
@@ -181,7 +216,6 @@ export function SettingsDrawer({ config, open, onClose, roomId, onRoomChange, ch
         <BeaconOptOutToggle />
 
         <hr />
-
       </div>
     </MeshSheet>
   );

@@ -10,10 +10,10 @@
 
 :root {
   --mesh-accent: #3aa8a1;
-  --mesh-fg: #f6e9c0;
-  --mesh-bg: #0b0a06;
-  --mesh-muted: #8a7a4a;
-  --mesh-surface: #1b1810;
+  --mesh-fg: #f1f5f9;
+  --mesh-bg: #10151d;
+  --mesh-muted: #9aa7b9;
+  --mesh-surface: #171d26;
 }
 
 /* Theme providers supply semantic tokens; keep the original mesh variables as
@@ -24,13 +24,40 @@
   --mesh-fg: var(--mesh-text);
   --mesh-muted: var(--mesh-text-muted);
   color: var(--mesh-text);
+  font-family: var(--mesh-font-sans);
 }
 
 .mesh-app-root {
+  --mesh-shell-top-clearance: max(
+    4.5rem,
+    calc(env(safe-area-inset-top) + 3.75rem)
+  );
   position: relative;
   height: 100%;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
   box-sizing: border-box;
+  isolation: isolate;
+}
+
+/* Shell controls are intentionally in the normal page geometry. This avoids
+ * the old floating-control collision with an app's own hero, canvas, or
+ * topbar while preserving a full-height child area below the utility bar. */
+.mesh-app-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* An app opts into inset when it is a document-style or dashboard-like first
+ * view. Legacy apps omit shellLayout until their full-viewport canvas or
+ * topbar has a deliberate visual migration. */
+.mesh-app-root[data-mesh-shell-layout="inset"] .mesh-app-content {
+  height: calc(100% - var(--mesh-shell-top-clearance));
+  margin-top: var(--mesh-shell-top-clearance);
 }
 
 /* The compatibility theme wrapper sits between #root and the legacy shell.
@@ -39,6 +66,9 @@
   width: 100%;
   height: 100%;
   min-height: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 .mesh-settings-fab {
@@ -185,6 +215,548 @@
 
 .mesh-self-ref a:hover {
   opacity: 0.7;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Visual foundation — deliberate product chrome, not floating demo controls. */
+/* ------------------------------------------------------------------------- */
+
+.mesh-app-bar {
+  position: absolute;
+  top: max(env(safe-area-inset-top), 0.75rem);
+  right: max(env(safe-area-inset-right), 0.75rem);
+  left: max(env(safe-area-inset-left), 0.75rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.mesh-app-bar-brand,
+.mesh-app-bar-actions {
+  min-width: 0;
+  pointer-events: auto;
+}
+
+/* Legacy canvas stages own their first-screen composition. Keep the product
+ * name in their own title rather than duplicating a second top-left label. */
+.mesh-app-root[data-mesh-shell-layout="overlay"] .mesh-app-bar-brand {
+  display: none;
+}
+
+.mesh-app-bar-brand {
+  display: inline-flex;
+  min-height: 2.5rem;
+  max-width: min(28rem, calc(100vw - 12rem));
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.42rem 0.68rem;
+  overflow: hidden;
+  border: 1px solid var(--mesh-border, rgb(255 255 255 / 16%));
+  border-radius: var(--mesh-radius-lg, 1rem);
+  background: var(--mesh-surface);
+  background: color-mix(in srgb, var(--mesh-surface) 87%, transparent);
+  box-shadow: 0 0.65rem 1.7rem rgb(0 0 0 / 19%);
+  backdrop-filter: blur(16px);
+  color: var(--mesh-fg);
+  white-space: nowrap;
+}
+
+.mesh-app-bar-eyebrow {
+  color: var(--mesh-muted);
+  font-size: 0.67rem;
+  font-weight: 740;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.mesh-app-bar-title {
+  overflow: hidden;
+  color: var(--mesh-fg);
+  font-size: 0.82rem;
+  font-weight: 720;
+  letter-spacing: -0.012em;
+  text-overflow: ellipsis;
+}
+
+.mesh-app-bar-state {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.28rem;
+  padding-left: 0.55rem;
+  border-left: 1px solid var(--mesh-border, rgb(255 255 255 / 14%));
+  color: var(--mesh-muted);
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.mesh-app-bar-state::before {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: var(--mesh-warning, #e6b65f);
+  content: "";
+}
+
+.mesh-app-bar-state--ready::before {
+  background: var(--mesh-success, #65c997);
+}
+
+.mesh-app-bar-state--offline::before,
+.mesh-app-bar-state--error::before {
+  background: var(--mesh-danger, #f08c99);
+}
+
+.mesh-app-bar-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.mesh-app-bar-action,
+.mesh-invite-trigger {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.48rem 0.74rem;
+  border: 1px solid var(--mesh-border, rgb(255 255 255 / 16%));
+  border-radius: var(--mesh-radius-md, 0.75rem);
+  background: var(--mesh-surface);
+  background: color-mix(in srgb, var(--mesh-surface) 88%, transparent);
+  box-shadow: 0 0.65rem 1.7rem rgb(0 0 0 / 19%);
+  color: var(--mesh-fg);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.79rem;
+  font-weight: 680;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.mesh-app-bar-action.mesh-settings-fab {
+  position: static;
+  width: auto;
+  height: auto;
+  border-radius: var(--mesh-radius-md, 0.75rem);
+  background: var(--mesh-surface);
+  background: color-mix(in srgb, var(--mesh-surface) 88%, transparent);
+  box-shadow: 0 0.65rem 1.7rem rgb(0 0 0 / 19%);
+  backdrop-filter: blur(16px);
+  color: var(--mesh-fg);
+  font-size: 0.79rem;
+  z-index: auto;
+}
+
+.mesh-app-bar-invite {
+  background: var(--mesh-accent);
+  border-color: transparent;
+  color: var(--mesh-accent-text, #0c1118);
+}
+
+.mesh-app-bar-action:hover,
+.mesh-invite-trigger:hover {
+  border-color: var(--mesh-accent);
+  transform: translateY(-1px);
+}
+
+.mesh-app-bar-invite:hover {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--mesh-accent) 88%, white);
+}
+
+/* Legacy controls stay supported while an app is being migrated. Keep Invite
+ * clear of the settings cog—the two controls otherwise occupy the same
+ * top-right coordinate. */
+.mesh-invite-trigger:not(.mesh-app-bar-action) {
+  position: absolute;
+  top: max(env(safe-area-inset-top), 0.75rem);
+  right: max(env(safe-area-inset-right), 0.75rem);
+  z-index: 60;
+}
+
+.mesh-invite-trigger.mesh-legacy-invite {
+  right: calc(max(env(safe-area-inset-right), 0.75rem) + 2.5rem + 0.4rem);
+}
+
+@media (max-width: 42rem) {
+  .mesh-app-bar-brand {
+    max-width: calc(100vw - 11.5rem);
+  }
+
+  .mesh-app-bar-eyebrow,
+  .mesh-app-bar-state {
+    display: none;
+  }
+
+  .mesh-app-bar-action,
+  .mesh-invite-trigger {
+    min-height: 2.75rem;
+    padding-inline: 0.72rem;
+  }
+}
+
+@media (max-width: 25rem) {
+  .mesh-app-bar-brand {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mesh-app-bar-action,
+  .mesh-invite-trigger {
+    transition: none;
+  }
+}
+
+/* A profile changes the atmosphere and density of shared components without
+ * imposing a second product identity on an app's own feature surface. */
+.mesh-app-root[data-mesh-visual-profile="utility"],
+.mesh-visual-profile--utility {
+  --mesh-ambient: rgb(79 120 198 / 15%);
+}
+
+.mesh-app-root[data-mesh-visual-profile="play"],
+.mesh-visual-profile--play {
+  --mesh-ambient: rgb(245 185 66 / 17%);
+}
+
+.mesh-app-root[data-mesh-visual-profile="studio"],
+.mesh-visual-profile--studio {
+  --mesh-ambient: rgb(177 139 226 / 17%);
+}
+
+.mesh-app-root[data-mesh-visual-profile="gather"],
+.mesh-visual-profile--gather {
+  --mesh-ambient: rgb(89 199 180 / 16%);
+}
+
+.mesh-app-root[data-mesh-visual-profile="field"],
+.mesh-visual-profile--field {
+  --mesh-ambient: rgb(225 183 73 / 16%);
+}
+
+.mesh-surface {
+  min-width: 0;
+  border: 1px solid var(--mesh-border, rgb(255 255 255 / 13%));
+  border-radius: var(--mesh-radius-lg, 1.25rem);
+  background: var(--mesh-surface);
+  color: var(--mesh-fg);
+}
+
+.mesh-surface-raised {
+  background: var(--mesh-surface-raised, var(--mesh-surface));
+  box-shadow: var(--mesh-shadow, 0 18px 44px rgb(0 0 0 / 24%));
+}
+
+.mesh-surface-quiet {
+  background: color-mix(in srgb, var(--mesh-surface) 60%, transparent);
+}
+
+.mesh-surface-accent {
+  border-color: color-mix(in srgb, var(--mesh-accent) 42%, var(--mesh-border));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--mesh-accent) 12%, var(--mesh-surface)),
+    var(--mesh-surface)
+  );
+}
+
+.mesh-surface-padding-none {
+  padding: 0;
+}
+
+.mesh-surface-padding-sm {
+  padding: var(--mesh-space-sm, 0.5rem);
+}
+
+.mesh-surface-padding-md {
+  padding: var(--mesh-space-md, 1rem);
+}
+
+.mesh-surface-padding-lg {
+  padding: var(--mesh-space-lg, 1.5rem);
+}
+
+.mesh-button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.68rem 0.95rem;
+  border: 1px solid transparent;
+  border-radius: var(--mesh-radius-md, 0.875rem);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 710;
+  line-height: 1.15;
+  text-align: center;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.mesh-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.mesh-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.mesh-button-primary {
+  background: var(--mesh-accent);
+  color: var(--mesh-accent-text, #0c1118);
+  box-shadow: 0 0.55rem 1.6rem var(--mesh-ambient, rgb(0 0 0 / 18%));
+}
+
+.mesh-button-secondary {
+  border-color: var(--mesh-border, rgb(255 255 255 / 16%));
+  background: var(--mesh-surface-raised, var(--mesh-surface));
+  color: var(--mesh-fg);
+}
+
+.mesh-button-quiet {
+  background: transparent;
+  color: var(--mesh-fg);
+}
+
+.mesh-button-danger {
+  background: var(--mesh-danger, #d85163);
+  color: #fff;
+}
+
+.mesh-button-sm {
+  min-height: 2.25rem;
+  padding: 0.48rem 0.68rem;
+  font-size: 0.84rem;
+}
+
+.mesh-button-lg {
+  min-height: 3.2rem;
+  padding: 0.88rem 1.18rem;
+  font-size: 1rem;
+}
+
+.mesh-button-full-width {
+  width: 100%;
+}
+
+.mesh-status-pill,
+.mesh-presence {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.38rem;
+  border: 1px solid var(--mesh-border, rgb(255 255 255 / 13%));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--mesh-surface) 82%, transparent);
+  color: var(--mesh-fg);
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.mesh-status-pill {
+  padding: 0.32rem 0.56rem;
+}
+
+.mesh-status-pill-md,
+.mesh-presence-md {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.86rem;
+}
+
+.mesh-status-pill-dot,
+.mesh-presence-indicator {
+  width: 0.44rem;
+  height: 0.44rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--mesh-muted);
+}
+
+.mesh-status-pill-info .mesh-status-pill-dot {
+  background: var(--mesh-accent);
+}
+
+.mesh-status-pill-success .mesh-status-pill-dot,
+.mesh-status-pill-live .mesh-status-pill-dot,
+.mesh-presence-connected .mesh-presence-indicator {
+  background: var(--mesh-success, #65c997);
+}
+
+.mesh-status-pill-warning .mesh-status-pill-dot,
+.mesh-presence-connecting .mesh-presence-indicator {
+  background: var(--mesh-warning, #e6b65f);
+}
+
+.mesh-status-pill-danger .mesh-status-pill-dot,
+.mesh-presence-offline .mesh-presence-indicator {
+  background: var(--mesh-danger, #f08c99);
+}
+
+.mesh-presence {
+  padding: 0.32rem 0.56rem;
+  color: var(--mesh-muted);
+}
+
+.mesh-presence-count {
+  color: var(--mesh-fg);
+  font-weight: 750;
+}
+
+.mesh-launch {
+  display: grid;
+  width: min(100%, 44rem);
+  min-height: min(38rem, calc(100dvh - 4rem));
+  place-items: center;
+  margin: 0 auto;
+  padding: clamp(4.75rem, 12vw, 7.5rem) clamp(1rem, 5vw, 3rem) 2rem;
+  overflow: hidden;
+  border-radius: clamp(1.25rem, 4vw, 2.25rem);
+  background:
+    radial-gradient(
+      circle at 82% 17%,
+      var(--mesh-ambient, rgb(79 120 198 / 15%)),
+      transparent 34%
+    ),
+    linear-gradient(
+      145deg,
+      var(--mesh-surface-raised, var(--mesh-surface)),
+      var(--mesh-canvas)
+    );
+  box-shadow: var(--mesh-shadow, 0 18px 44px rgb(0 0 0 / 24%));
+  color: var(--mesh-fg);
+}
+
+.mesh-launch-content {
+  display: grid;
+  width: min(100%, 34rem);
+  gap: 1.25rem;
+}
+
+.mesh-launch-header {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.mesh-launch-eyebrow {
+  margin: 0;
+  color: var(--mesh-accent);
+  font-size: 0.72rem;
+  font-weight: 760;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.mesh-launch h1,
+.mesh-launch h2,
+.mesh-launch h3 {
+  max-width: 15ch;
+  margin: 0;
+  color: var(--mesh-fg);
+  font-size: clamp(2.25rem, 7vw, 4.5rem);
+  letter-spacing: -0.06em;
+  line-height: 0.94;
+}
+
+.mesh-launch-promise {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--mesh-muted);
+  font-size: clamp(1rem, 2.8vw, 1.18rem);
+  line-height: 1.55;
+}
+
+.mesh-launch-presence,
+.mesh-launch-connection {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  color: var(--mesh-muted);
+  font-size: 0.85rem;
+}
+
+.mesh-launch-preview {
+  min-width: 0;
+}
+
+.mesh-launch-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.mesh-launch-action {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--mesh-radius-md, 0.875rem);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 720;
+  text-decoration: none;
+}
+
+.mesh-launch-action-primary {
+  background: var(--mesh-accent);
+  color: var(--mesh-accent-text, #0c1118);
+}
+
+.mesh-launch-action-secondary {
+  border-color: var(--mesh-border, rgb(255 255 255 / 16%));
+  background: transparent;
+  color: var(--mesh-fg);
+}
+
+.mesh-launch-connection-indicator {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 999px;
+  background: var(--mesh-warning, #e6b65f);
+}
+
+@media (max-width: 36rem) {
+  .mesh-surface-bleed-mobile {
+    margin-inline: calc(-1 * var(--mesh-space-md, 1rem));
+    border-radius: 0;
+  }
+
+  .mesh-launch {
+    min-height: calc(100dvh - 1rem);
+    padding-top: 5.25rem;
+    border-radius: 0;
+  }
+
+  .mesh-launch-actions,
+  .mesh-launch-action {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mesh-button {
+    transition: none;
+  }
 }
 
 /* SettingsDrawer now composes the Radix-backed MeshSheet. Keep the settings
@@ -355,8 +927,15 @@
 .mesh-settings-footer {
   display: flex;
   justify-content: space-between;
+  gap: 0.75rem;
   font-size: 0.75rem;
   color: var(--mesh-muted);
+}
+
+.mesh-settings-about-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
 }
 
 .mesh-settings-footer a {

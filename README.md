@@ -18,10 +18,11 @@ Shared scaffolding + runtime for the `baditaflorin/mesh-*` family of rootless pe
 
 | Module                                                                | Purpose                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `createMeshConfig`                                                    | One-call config factory: app name, accent, version, commit, plus signaling / TURN / PayPal defaults                                                                                                                                                                                                                                                                                                                          |
-| `MeshShell`                                                           | Top-level chrome: ⚙ FAB → settings drawer, self-ref footer (source / tip / version)                                                                                                                                                                                                                                                                                                                                          |
-| `SettingsDrawer`                                                      | Room ID + signaling / TURN overrides → localStorage                                                                                                                                                                                                                                                                                                                                                                          |
-| `SelfRefBar`                                                          | Bottom-right footer with GitHub link, PayPal link, version + commit                                                                                                                                                                                                                                                                                                                                                          |
+| `createMeshConfig`                                                    | One-call config factory: stable app ID, human display name, visual profile, shell layout, accent, version, commit, plus signaling / TURN / PayPal defaults. `meshAccentText()` keeps hex-accent actions readable.                                                                                                                                                                                                            |
+| `MeshShell`                                                           | Product utility bar with Invite + Settings; connection diagnostics and About details are progressive rather than permanent viewport chrome                                                                                                                                                                                                                                                                                   |
+| `SettingsDrawer`                                                      | Room ID + signaling / TURN overrides → localStorage, plus source/support/version/commit in its About footer                                                                                                                                                                                                                                                                                                                  |
+| `MeshVisualProfileProvider` / `MeshLaunch` / presentation primitives  | Calm profiles plus reusable entry, surface, button, presence, and status components for a polished first viewport                                                                                                                                                                                                                                                                                                            |
+| `SelfRefBar`                                                          | Optional legacy compact source/support/version strip; no longer mounted by `MeshShell`                                                                                                                                                                                                                                                                                                                                       |
 | `useYRoom`                                                            | React hook → `{ doc, provider, peerId, peerCount }` for a given room ID                                                                                                                                                                                                                                                                                                                                                      |
 | `iceConfig`                                                           | Load/save signaling URL, TURN token URL, ICE servers; dead-server pruning                                                                                                                                                                                                                                                                                                                                                    |
 | `clockSync`                                                           | NTP-over-Yjs offset → mesh-median time, stable to ~10–30 ms                                                                                                                                                                                                                                                                                                                                                                  |
@@ -144,6 +145,20 @@ does this by default. `MeshThemeProvider` exposes `meshLightThemeTokens`,
   validated forms. `MeshListbox` and `MeshCommandList` provide a searchable,
   roving-focus selection model via `MeshListboxOption`,
   `MeshListboxOptionState`, and `MeshCommand`.
+- **Visual entry and hierarchy:** `MeshVisualProfileProvider` and
+  `MeshVisualProfile` offer the five intentional profiles (`utility`, `play`,
+  `studio`, `gather`, and `field`). `MeshAppBar`, `MeshLaunch`, `MeshSurface`,
+  `MeshButton`, `MeshStatusPill`, and `MeshPresence` provide text-first,
+  mobile-safe chrome, entry states, hierarchy, primary actions, and humane
+  room presence. `humanizeMeshAppName()` gives legacy `mesh-*` identifiers a
+  clean default product name without changing URLs, rooms, storage, or repos.
+  Add an explicit `shellLayout` as part of an app visual migration:
+  `"inset"` reserves a real top row for document-style and dashboard apps,
+  while `"overlay"` is only for an app that has made its own safe space for
+  compact controls. Omitting it preserves legacy chrome until that app has a
+  deliberate first-viewport redesign.
+  `meshAccentText()` is also applied by `MeshThemeProvider` when an app
+  overrides only its hex accent, preserving readable primary-action text.
 - **Session and media workflows:** `MeshSessionProvider`, `useMeshSession`,
   `useMeshSessionContext`, `sharesKnownBrowserDevice`, `MeshRoster`,
   `useMeshRoster`, and `meshSessionLabel` make local-vs-other device state
@@ -190,14 +205,13 @@ are public too: `MeshAppContextValue`, `MeshAppFrameShellOptions`,
 `MeshSelectOption`, `MeshSelectProps`, `MeshTextAreaProps`,
 `MeshFormSubmitProps`, `MeshListboxProps`, and `MeshCommandListProps`.
 
-## Live links displayed on every app
+## About details
 
-Each app scaffolded from this template includes a `SelfRefBar` showing, on every screen of the live page:
-
-- `source` → `https://github.com/baditaflorin/<app-name>`
-- `tip ♥` → `https://www.paypal.com/paypalme/florinbadita`
-- `v<version>` → from `package.json`
-- short git commit SHA → injected at build time
+`MeshShell` keeps the first viewport focused on the app itself. Source,
+support, version, and commit stay available in **Settings** rather than being
+permanently overlaid on the live product surface. `SelfRefBar` remains public
+for a deliberately embedded or internal view, but is no longer mounted by the
+default shell.
 
 ## Scaffolding a new app
 
