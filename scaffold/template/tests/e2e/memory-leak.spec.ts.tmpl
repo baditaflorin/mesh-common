@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 /**
  * Long-running room leak detector. Boots two peers, runs the generic
@@ -29,6 +29,18 @@ const pkg = JSON.parse(readFileSync(new URL("../../package.json", import.meta.ur
 };
 const APP_NAME = pkg.name;
 
+async function closeInitiallyOpenSettings(page: Page): Promise<void> {
+  const settings = page.getByRole("dialog", { name: "Settings" });
+  if (!(await settings.isVisible().catch(() => false))) return;
+  const close = settings.getByRole("button", { name: "close" });
+  if (await close.isVisible().catch(() => false)) {
+    await close.click();
+  } else {
+    await page.keyboard.press("Escape");
+  }
+  await expect(settings).toBeHidden();
+}
+
 test("memory leak — heap growth stays under budget over a long-running room", async ({
   browser,
 }) => {
@@ -54,6 +66,9 @@ test("memory leak — heap growth stays under budget over a long-running room", 
     a.goto(`/${APP_NAME}/`, { waitUntil: "domcontentloaded" }),
     b.goto(`/${APP_NAME}/`, { waitUntil: "domcontentloaded" }),
   ]);
+  // Make the noise loop exercise the app surface, not a first-visit Settings
+  // overlay which intentionally intercepts background pointer events.
+  await Promise.all([closeInitiallyOpenSettings(a), closeInitiallyOpenSettings(b)]);
 
   // Settle the initial mount + first GC opportunity.
   await a.waitForTimeout(1500);

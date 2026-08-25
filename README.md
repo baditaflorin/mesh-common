@@ -367,8 +367,8 @@ node scripts/fleet-ux-check.mjs --list
 # Test one batch with bounded workers and collision-free Playwright ports.
 node scripts/fleet-ux-check.mjs --batch 1 --run typecheck,unit,smoke,e2e --jobs 4
 
-# Refresh the observable MeshShell contract plus the generic performance and
-# opt-in leak probes before a per-app release.
+# Refresh the generic smoke/mesh suite, observable MeshShell contract, and
+# generic performance + opt-in leak probes before a per-app release.
 bash scripts/install-ux-foundation-probe.sh ../mesh-queue
 ```
 
@@ -377,8 +377,11 @@ App-release automation must deliberately install the probes, run the checks,
 review the generated `docs/` bundle, and merge each app's PR. The UX probe
 checks real shell/theme/settings behavior and distinguishes a shell-owned room
 from a feature-owned room so it does not reward a fabricated connection state.
-The installer also refreshes the package-derived generic URLs and safe enabled
-button selection used by the performance/leak tests.
+The installer also refreshes generic Settings-dialog handling: an intentional
+first-visit Settings sheet is closed only inside content/performance/leak
+checks, while the Settings check itself validates the accessible dialog. It
+then refreshes the package-derived generic URLs and safe enabled button
+selection used by the performance/leak tests.
 
 ## Documentation drift policy
 

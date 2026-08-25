@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 /**
  * Local performance budget — fails the smoke run if the app's LCP or INP
@@ -20,6 +20,18 @@ const pkg = JSON.parse(readFileSync(new URL("../../package.json", import.meta.ur
   name: string;
 };
 const APP_NAME = pkg.name;
+
+async function closeInitiallyOpenSettings(page: Page): Promise<void> {
+  const settings = page.getByRole("dialog", { name: "Settings" });
+  if (!(await settings.isVisible().catch(() => false))) return;
+  const close = settings.getByRole("button", { name: "close" });
+  if (await close.isVisible().catch(() => false)) {
+    await close.click();
+  } else {
+    await page.keyboard.press("Escape");
+  }
+  await expect(settings).toBeHidden();
+}
 
 test("perf budget — LCP + TBT under threshold on cold load", async ({ page }) => {
   const cdp = await page.context().newCDPSession(page);
@@ -69,6 +81,10 @@ test("perf budget — LCP + TBT under threshold on cold load", async ({ page }) 
 
 test("perf budget — INP under threshold after one interaction", async ({ page }) => {
   await page.goto(`/${APP_NAME}/`, { waitUntil: "domcontentloaded" });
+  // A first-visit Settings dialog correctly traps pointer events. Dismiss it
+  // before choosing a representative app interaction, rather than attempting
+  // to click a visible-but-inert control behind its overlay.
+  await closeInitiallyOpenSettings(page);
 
   // Pick whatever's clickable; the budget cares about *any* interaction's
   // INP, not a specific feature. If nothing is clickable we pass trivially.

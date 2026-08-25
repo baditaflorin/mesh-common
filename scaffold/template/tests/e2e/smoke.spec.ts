@@ -1,5 +1,48 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 import { captureConsoleErrors } from "@baditaflorin/mesh-common/testing";
+
+function settingsDialog(page: Page): Locator {
+  return page.getByRole("dialog", { name: "Settings" });
+}
+
+function legacySettingsDrawer(page: Page): Locator {
+  return page.locator(".mesh-settings-drawer, .settings-drawer").first();
+}
+
+async function isVisible(locator: Locator): Promise<boolean> {
+  return locator.isVisible().catch(() => false);
+}
+
+/**
+ * First-visit flows may intentionally open the accessible Settings sheet.
+ * Radix correctly makes the background inaccessible while it is open, so
+ * content-level assertions must close it first rather than mistake that for
+ * a missing page. This remains scoped to the test; the app owns onboarding.
+ */
+async function closeInitiallyOpenSettings(page: Page): Promise<void> {
+  const dialog = settingsDialog(page);
+  if (!(await isVisible(dialog))) return;
+  const close = dialog.getByRole("button", { name: "close" });
+  if (await isVisible(close)) {
+    await close.click();
+  } else {
+    await page.keyboard.press("Escape");
+  }
+  await expect(dialog).toBeHidden();
+}
+
+async function openSettings(page: Page): Promise<Locator> {
+  const dialog = settingsDialog(page);
+  if (await isVisible(dialog)) return dialog;
+
+  const legacyDrawer = legacySettingsDrawer(page);
+  if (await isVisible(legacyDrawer)) return legacyDrawer;
+
+  await page.getByLabel("Open settings").click();
+  if (await isVisible(dialog)) return dialog;
+  await expect(legacyDrawer).toBeVisible();
+  return legacyDrawer;
+}
 
 /**
  * Generic smoke test — works for any mesh-* app without modification.
@@ -10,6 +53,7 @@ import { captureConsoleErrors } from "@baditaflorin/mesh-common/testing";
 test("page loads with version + source + tip visible", async ({ page }) => {
   const c = captureConsoleErrors(page);
   await page.goto("./");
+  await closeInitiallyOpenSettings(page);
 
   // Self-ref bar contains a "source" link, a "tip" link, and a version stamp.
   await expect(page.getByRole("link", { name: /source/i }).first()).toBeVisible();
@@ -37,13 +81,10 @@ test("settings drawer can be opened (or is already open) and shows infra fields"
   page,
 }) => {
   await page.goto("./");
-  // Some legacy apps auto-open the drawer on first load (e.g. when no name
-  // is set yet). Click the FAB only if the drawer isn't already showing.
-  const drawer = page.locator(".mesh-settings-drawer, .settings-drawer");
-  if ((await drawer.count()) === 0) {
-    await page.getByLabel("Open settings").click();
-  }
-  await expect(page.getByText(/Self-hosted infra/i)).toBeVisible();
-  await expect(page.getByText(/Signaling URL/i)).toBeVisible();
-  await expect(page.getByText(/TURN credentials URL/i)).toBeVisible();
+  // Settings is an accessible Radix dialog in the current shell. Keep the
+  // legacy drawer fallback for older app bundles that are refreshed in place.
+  const drawer = await openSettings(page);
+  await expect(drawer.getByText(/Self-hosted infra/i)).toBeVisible();
+  await expect(drawer.getByText(/Signaling URL/i)).toBeVisible();
+  await expect(drawer.getByText(/TURN credentials URL/i)).toBeVisible();
 });
