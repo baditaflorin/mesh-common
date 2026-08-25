@@ -16,6 +16,16 @@
   --mesh-surface: #1b1810;
 }
 
+/* Theme providers supply semantic tokens; keep the original mesh variables as
+ * aliases so existing apps opt into them without a visual rewrite. */
+.mesh-theme,
+[data-mesh-theme] {
+  --mesh-bg: var(--mesh-canvas);
+  --mesh-fg: var(--mesh-text);
+  --mesh-muted: var(--mesh-text-muted);
+  color: var(--mesh-text);
+}
+
 .mesh-app-root {
   position: relative;
   height: 100%;
@@ -289,10 +299,26 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
-.mesh-permission-gate p { margin: 0; }
-.mesh-live-region { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-.mesh-qr-dialog { display: grid; justify-items: center; gap: 0.75rem; }
-.mesh-qr-dialog code { max-width: 100%; overflow-wrap: anywhere; font-size: 0.72rem; }
+.mesh-permission-gate p {
+  margin: 0;
+}
+.mesh-live-region {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.mesh-qr-dialog {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+}
+.mesh-qr-dialog code {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: 0.72rem;
+}
 
 .mesh-settings-actions {
   display: flex;
@@ -909,7 +935,9 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.05);
   color: var(--mesh-fg);
-  transition: background-color 120ms ease, transform 80ms ease;
+  transition:
+    background-color 120ms ease,
+    transform 80ms ease;
 }
 .mesh-btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.1);
@@ -1342,6 +1370,543 @@
 }
 .mesh-empty-lg .mesh-empty-icon {
   font-size: 3.2rem;
+}
+
+/* =========================================================================
+   UX foundation primitives — semantic, responsive defaults. Apps may layer
+   their own visual identity without rebuilding focus, safe-area, or status UI.
+   ========================================================================= */
+
+.mesh-app-frame {
+  width: min(100%, 76rem);
+  min-height: 100%;
+  margin-inline: auto;
+  padding: max(1rem, env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
+}
+.mesh-app-frame-header,
+.mesh-app-frame-actions,
+.mesh-app-frame-navigation,
+.mesh-app-frame-footer {
+  display: flex;
+  gap: 0.75rem;
+}
+.mesh-app-frame-header {
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+.mesh-app-frame-heading {
+  min-width: 0;
+}
+.mesh-app-frame-heading h1 {
+  margin: 0.15rem 0 0;
+  color: var(--mesh-fg);
+  font-size: clamp(1.65rem, 5vw, 2.6rem);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+.mesh-app-frame-eyebrow {
+  color: var(--mesh-accent);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.mesh-app-frame-description {
+  max-width: 60ch;
+  margin-top: 0.5rem;
+  color: var(--mesh-muted);
+}
+.mesh-app-frame-actions {
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.mesh-app-frame-navigation {
+  flex-wrap: wrap;
+  margin: 0 0 1rem;
+}
+.mesh-app-frame-main {
+  min-width: 0;
+}
+.mesh-app-frame-footer {
+  margin-top: 1.5rem;
+  color: var(--mesh-muted);
+  font-size: 0.85rem;
+}
+
+.mesh-room-gate,
+.mesh-connection-panel,
+.mesh-capability-gate,
+.mesh-readiness-panel,
+.mesh-roster,
+.mesh-onboarding {
+  border: 1px solid var(--mesh-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--mesh-radius-md, 0.75rem);
+  color: var(--mesh-fg);
+  background: var(--mesh-surface-raised, var(--mesh-surface));
+  box-shadow: var(--mesh-shadow, none);
+}
+.mesh-room-gate {
+  display: grid;
+  justify-items: start;
+  gap: 0.7rem;
+  padding: 1.15rem;
+}
+.mesh-room-gate h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.mesh-room-gate p {
+  margin: 0;
+  color: var(--mesh-muted);
+}
+.mesh-room-gate[data-status="error"],
+.mesh-room-gate[data-status="stale"] {
+  border-color: var(--mesh-warning, #f5b85a);
+}
+.mesh-room-gate[data-status="offline"] {
+  border-color: var(--mesh-danger, #ff8a8a);
+}
+
+.mesh-connection-panel {
+  padding: 0.75rem 0.9rem;
+}
+.mesh-connection-panel-summary {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.mesh-connection-panel-summary > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 700;
+}
+.mesh-connection-panel-summary > span:first-child::before {
+  width: 0.58rem;
+  height: 0.58rem;
+  border-radius: 50%;
+  background: var(--mesh-warning, #f5b85a);
+  content: "";
+}
+.mesh-connection-panel-connected
+  .mesh-connection-panel-summary
+  > span:first-child::before {
+  background: var(--mesh-success, #5bd68a);
+}
+.mesh-connection-panel-offline
+  .mesh-connection-panel-summary
+  > span:first-child::before,
+.mesh-connection-panel-error
+  .mesh-connection-panel-summary
+  > span:first-child::before {
+  background: var(--mesh-danger, #ff8a8a);
+}
+.mesh-connection-panel details {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--mesh-border, rgba(255, 255, 255, 0.12));
+  padding-top: 0.75rem;
+}
+.mesh-connection-panel dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 0.75rem;
+  margin: 0 0 0.75rem;
+  color: var(--mesh-muted);
+  font-size: 0.82rem;
+}
+.mesh-connection-panel dt {
+  font-weight: 700;
+}
+.mesh-connection-panel dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.mesh-capability-gate {
+  padding: 1rem;
+}
+.mesh-capability-gate h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+.mesh-capability-gate-description {
+  margin-top: 0.4rem;
+  color: var(--mesh-muted);
+}
+.mesh-capability-list,
+.mesh-readiness-panel ul,
+.mesh-roster-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.mesh-capability-row,
+.mesh-readiness-panel li,
+.mesh-roster-peer {
+  border: 1px solid var(--mesh-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--mesh-radius-sm, 0.5rem);
+  padding: 0.7rem;
+  background: color-mix(
+    in srgb,
+    var(--mesh-surface-raised, var(--mesh-surface)) 86%,
+    transparent
+  );
+}
+.mesh-capability-row-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.6rem;
+}
+.mesh-capability-row-main span {
+  color: var(--mesh-muted);
+  font-size: 0.78rem;
+}
+.mesh-capability-description,
+.mesh-capability-fallback,
+.mesh-capability-test {
+  margin-top: 0.5rem;
+  color: var(--mesh-muted);
+  font-size: 0.86rem;
+}
+.mesh-capability-row .mesh-btn {
+  margin-top: 0.65rem;
+}
+.mesh-capability-gate-fallback {
+  margin-top: 0.85rem;
+  border-left: 3px solid var(--mesh-warning, #f5b85a);
+  padding-left: 0.7rem;
+}
+
+.mesh-readiness-panel {
+  padding: 1rem;
+}
+.mesh-readiness-panel > div:first-child {
+  margin-bottom: 0.1rem;
+}
+.mesh-readiness-panel li {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, auto) minmax(7rem, 1fr) minmax(0, 1.4fr);
+  gap: 0.45rem 0.7rem;
+  color: var(--mesh-muted);
+  font-size: 0.84rem;
+}
+.mesh-readiness-panel li strong {
+  color: var(--mesh-warning, #f5b85a);
+}
+.mesh-readiness-panel li[data-ready="true"] strong {
+  color: var(--mesh-success, #5bd68a);
+}
+.mesh-readiness-panel > .mesh-btn {
+  margin-top: 0.85rem;
+}
+
+.mesh-roster {
+  padding: 1rem;
+}
+.mesh-roster-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+.mesh-roster-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.mesh-roster-disclaimer {
+  margin: 0.75rem 0 0;
+  color: var(--mesh-muted);
+  font-size: 0.78rem;
+}
+.mesh-roster-peer {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.mesh-roster-peer-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.12rem;
+}
+.mesh-roster-peer-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mesh-roster-peer-state,
+.mesh-roster-peer-capabilities {
+  color: var(--mesh-muted);
+  font-size: 0.76rem;
+}
+.mesh-roster-peer-stale {
+  opacity: 0.65;
+}
+
+.mesh-countdown {
+  display: inline-grid;
+  min-width: 8rem;
+  gap: 0.1rem;
+  border: 1px solid var(--mesh-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--mesh-radius-sm, 0.5rem);
+  padding: 0.55rem 0.7rem;
+  background: var(--mesh-surface-raised, var(--mesh-surface));
+  font-variant-numeric: tabular-nums;
+}
+.mesh-countdown-label,
+.mesh-countdown-state {
+  color: var(--mesh-muted);
+  font-size: 0.72rem;
+}
+.mesh-countdown-value {
+  color: var(--mesh-fg);
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+.mesh-cue-banner {
+  display: grid;
+  gap: 0.65rem;
+  border-left: 3px solid var(--mesh-accent);
+  border-radius: 0 var(--mesh-radius-sm, 0.5rem) var(--mesh-radius-sm, 0.5rem) 0;
+  padding: 0.75rem 0.85rem;
+  background: var(--mesh-surface-raised, var(--mesh-surface));
+}
+.mesh-cue-banner-expired {
+  border-left-color: var(--mesh-warning, #f5b85a);
+}
+.mesh-cue-banner-cancelled {
+  border-left-color: var(--mesh-muted);
+}
+.mesh-cue-banner footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mesh-onboarding {
+  width: min(100%, 42rem);
+  padding: clamp(1rem, 4vw, 1.5rem);
+}
+.mesh-onboarding h1 {
+  margin: 0;
+  font-size: clamp(1.45rem, 5vw, 2rem);
+}
+.mesh-onboarding nav ol {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
+.mesh-onboarding nav button {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--mesh-border, rgba(255, 255, 255, 0.12));
+  border-radius: 50%;
+  color: var(--mesh-fg);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 700;
+}
+.mesh-onboarding li[aria-current="step"] button {
+  border-color: transparent;
+  color: var(--mesh-accent-text, #0e1726);
+  background: var(--mesh-accent);
+}
+.mesh-onboarding > section {
+  min-height: 8rem;
+  border-top: 1px solid var(--mesh-border, rgba(255, 255, 255, 0.12));
+  padding-top: 1rem;
+}
+.mesh-onboarding > section h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.2rem;
+}
+.mesh-onboarding > section p {
+  margin: 0;
+  color: var(--mesh-muted);
+}
+.mesh-onboarding footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+.mesh-onboarding footer button {
+  min-height: 2.65rem;
+  border: 1px solid var(--mesh-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--mesh-radius-sm, 0.5rem);
+  padding: 0.5rem 0.85rem;
+  color: var(--mesh-fg);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
+.mesh-onboarding footer button:last-child {
+  border-color: transparent;
+  color: var(--mesh-accent-text, #0e1726);
+  background: var(--mesh-accent);
+  font-weight: 700;
+}
+
+.mesh-async-action {
+  display: inline-grid;
+  gap: 0.3rem;
+}
+.mesh-async-action > button {
+  min-height: 2.65rem;
+  border: 1px solid transparent;
+  border-radius: var(--mesh-radius-sm, 0.5rem);
+  padding: 0.5rem 0.85rem;
+  color: var(--mesh-accent-text, #0e1726);
+  background: var(--mesh-accent);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+.mesh-async-action-status {
+  min-height: 1.1em;
+  color: var(--mesh-muted);
+  font-size: 0.78rem;
+}
+
+.mesh-form-error-summary {
+  margin-bottom: 1rem;
+  border-left: 3px solid var(--mesh-danger, #ff8a8a);
+  padding: 0.65rem 0.8rem;
+  color: var(--mesh-fg);
+  background: color-mix(in srgb, var(--mesh-danger, #ff8a8a) 12%, transparent);
+}
+.mesh-form-error-summary ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1.15rem;
+}
+.mesh-field {
+  display: grid;
+  gap: 0.35rem;
+}
+.mesh-field-label {
+  color: var(--mesh-fg);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+.mesh-field-hint {
+  color: var(--mesh-muted);
+  font-size: 0.78rem;
+}
+.mesh-field-error {
+  color: var(--mesh-danger, #ff8a8a);
+  font-size: 0.8rem;
+}
+.mesh-field input,
+.mesh-field select,
+.mesh-field textarea,
+.mesh-listbox-search {
+  width: 100%;
+  border: 1px solid var(--mesh-border, rgba(255, 255, 255, 0.16));
+  border-radius: var(--mesh-radius-sm, 0.5rem);
+  padding: 0.62rem 0.72rem;
+  color: var(--mesh-fg);
+  background: color-mix(
+    in srgb,
+    var(--mesh-surface-raised, var(--mesh-surface)) 78%,
+    transparent
+  );
+  font: inherit;
+}
+.mesh-field textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+.mesh-field--invalid input,
+.mesh-field--invalid select,
+.mesh-field--invalid textarea {
+  border-color: var(--mesh-danger, #ff8a8a);
+}
+
+.mesh-listbox {
+  display: grid;
+  gap: 0.5rem;
+}
+.mesh-listbox-label {
+  color: var(--mesh-fg);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+.mesh-listbox-options {
+  display: grid;
+  gap: 0.35rem;
+  max-height: min(20rem, 45vh);
+  overflow: auto;
+  border: 1px solid var(--mesh-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--mesh-radius-sm, 0.5rem);
+  padding: 0.35rem;
+  background: var(--mesh-surface-raised, var(--mesh-surface));
+}
+.mesh-listbox-option {
+  display: grid;
+  gap: 0.15rem;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: calc(var(--mesh-radius-sm, 0.5rem) - 0.15rem);
+  padding: 0.6rem 0.65rem;
+  color: var(--mesh-fg);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+.mesh-listbox-option:hover,
+.mesh-listbox-option.is-active {
+  border-color: color-mix(in srgb, var(--mesh-accent) 60%, transparent);
+  background: color-mix(in srgb, var(--mesh-accent) 12%, transparent);
+}
+.mesh-listbox-option.is-selected {
+  border-color: var(--mesh-accent);
+}
+.mesh-listbox-option-description,
+.mesh-listbox-empty {
+  margin: 0;
+  color: var(--mesh-muted);
+  font-size: 0.8rem;
+}
+
+.mesh-page :focus-visible,
+.mesh-theme :focus-visible {
+  outline: 3px solid var(--mesh-focus-ring, var(--mesh-accent));
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .mesh-app-frame-header {
+    flex-direction: column;
+  }
+  .mesh-app-frame-actions {
+    justify-content: flex-start;
+  }
+  .mesh-readiness-panel li {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+  .mesh-connection-panel dl {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+  }
+  .mesh-connection-panel dd {
+    margin-bottom: 0.45rem;
+  }
 }
 
 /* ---- MeshProgressBar ---- */

@@ -47,12 +47,21 @@ export function useCamera(opts?: {
   const wantedHeight = opts?.height ?? 480;
 
   useEffect(() => {
-    if (!armed) return;
+    // A later user-gesture retry must not inherit an old denial/error. The
+    // current attempt remains responsible for publishing a new failure.
+    if (!armed) {
+      setError(null);
+      return;
+    }
     let cancelled = false;
     let active: MediaStream | null = null;
     (async () => {
       try {
-        if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
+        setError(null);
+        if (
+          typeof navigator === "undefined" ||
+          !navigator.mediaDevices?.getUserMedia
+        ) {
           setError("mediaDevices unavailable");
           return;
         }
@@ -69,6 +78,7 @@ export function useCamera(opts?: {
           return;
         }
         active = s;
+        setError(null);
         setStream(s);
         if (videoRef.current) {
           videoRef.current.srcObject = s;

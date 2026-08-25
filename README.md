@@ -103,6 +103,81 @@ Shared scaffolding + runtime for the `baditaflorin/mesh-*` family of rootless pe
 
 Apps depend on this via `file:../mesh-common` (publish to npm later if/when useful — Vite bundles the package output into each app's `docs/` so live sites are self-contained).
 
+## UX foundation for every mesh app
+
+The shared app layer removes repeated connection, capability, mobile-layout,
+form, and workflow code from individual services. Start new applications with
+`MeshThemeProvider`, `MeshAppProvider`, and `MeshAppFrame`; the scaffold now
+does this by default. `MeshThemeProvider` exposes `meshLightThemeTokens`,
+`meshDarkThemeTokens`, `meshThemeVariables`, `useMeshTheme`, and
+`useOptionalMeshTheme` for a controlled light, dark, or system palette.
+
+- **Room and readiness:** `useRoomDiagnostics` turns connection state into
+  `RoomDiagnostics` / `RoomDiagnosticStatus`, while `MeshRoomGate`,
+  `MeshConnectionPanel`, `MeshCapabilityGate`, and `MeshReadinessPanel` give
+  users a clear, keyboard-accessible route through offline, reconnecting,
+  permission, and waiting states—including Safari-style gesture-only
+  capability fallbacks. `MeshAppCapabilityState`,
+  `MeshCapabilityDefinition`, `MeshCapabilitySnapshot`,
+  `MeshCapabilityStatus`, and `MeshPeerReadiness` keep custom presentations
+  headless and typed.
+- **Shared chrome and feedback:** `MeshAppProvider`, `useMeshApp`,
+  `useOptionalMeshApp`, `MeshAppFrame`, and `MeshToastController` centralize
+  room/config/network context. `MeshAsyncAction` and `useMeshAsyncAction`
+  protect against double submission and announce success or failures; use
+  `MeshAsyncActionState` / `MeshAsyncActionStatus` when supplying custom UI.
+- **Responsive, accessible UI:** `MeshPage`, `MeshStack`, `MeshCluster`,
+  `MeshGrid`, and `MeshBottomBar` provide responsive, safe-area-aware layout.
+  `MeshForm`, `useMeshForm`, `useOptionalMeshForm`, `MeshField`,
+  `MeshSelect`, `MeshTextArea`, and `MeshFormSubmit` provide labelled,
+  validated forms. `MeshListbox` and `MeshCommandList` provide a searchable,
+  roving-focus selection model via `MeshListboxOption`,
+  `MeshListboxOptionState`, and `MeshCommand`.
+- **Session and media workflows:** `MeshSessionProvider`, `useMeshSession`,
+  `useMeshSessionContext`, `sharesKnownBrowserDevice`, `MeshRoster`,
+  `useMeshRoster`, and `meshSessionLabel` make local-vs-other device state
+  honest instead of guessing from browser tabs. `useMeshMediaFlow` exposes a
+  consent → capture → review → share state machine through
+  `MeshMediaFlowState` and `MeshMediaFlow`, so sensitive media work remains
+  explicit, cancellable, and never opens a camera merely from persisted
+  consent.
+- **Shared flow primitives:** `MeshCountdown`, `MeshCueBanner`,
+  `formatMeshDuration`, and `meshCueMessage` keep timed moments readable and
+  in sync without announcing every visual tick. `defineSharedEntity` creates
+  bounded, validated shared records
+  with `SharedEntityAction`, `SharedEntityContext`, `SharedEntityDefinition`,
+  `DefinedSharedEntity`, and `DefinedSharedEntityCollection` rather than
+  duplicating CRDT guard code. `MeshOnboarding`, `useMeshOnboarding`, and
+  `MESH_ONBOARDING_STEPS` make the first-use flow resumable and accessible.
+- **Fleet quality gate:** `evaluateMeshUxContract`, `assertMeshUxContract`,
+  `MeshUxContractError`, `MeshUxViolation`, `MeshUxViolationCode`, and
+  `MeshAppLifecycleState` provide a deterministic DOM-level UX check for
+  common app regressions before release.
+
+All components accept typed `*Props` / options types (`MeshAppProviderProps`,
+`MeshAppFrameProps`, `RoomDiagnosticsOptions`, `MeshRoomGateProps`,
+`MeshConnectionPanelProps`, `MeshCapabilityGateProps`,
+`MeshReadinessPanelProps`, `MeshRosterOptions`, `MeshRosterProps`,
+`MeshSessionOptions`, `MeshSessionProviderProps`, `MeshMediaFlowOptions`,
+`MeshCountdownProps`, `MeshCueBannerProps`, `MeshOnboardingProps`,
+`UseMeshOnboardingOptions`, and `MeshUxContractOptions`) so apps can use
+the shared behavior without adopting a fixed visual skin.
+
+For fully custom compositions, the corresponding state and render contracts
+are public too: `MeshAppContextValue`, `MeshAppFrameShellOptions`,
+`MeshRoomGateRenderState`, `MeshRoomGateFallback`, `MeshRosterPeer`,
+`MeshRosterPeerState`, `MeshRosterState`, `MeshSessionActivity`,
+`MeshSessionIdentity`, `MeshOnboardingStep`,
+`MeshOnboardingStepDefinition`, `MeshOnboardingController`, and
+`MeshUxContractResult`. UI contracts include `MeshThemeProviderProps`,
+`MeshThemeContextValue`, `MeshThemeMode`, `MeshResolvedTheme`,
+`MeshThemeTokens`, `UseMeshAsyncActionOptions`, `MeshAsyncActionProps`,
+`MeshPageProps`, `MeshStackProps`, `MeshClusterProps`, `MeshGridProps`,
+`MeshBottomBarProps`, `MeshFormProps`, `MeshFormState`, `MeshFormStatus`,
+`MeshFormErrorValue`, `MeshFormErrors`, `MeshFormResult`, `MeshFieldProps`,
+`MeshSelectOption`, `MeshSelectProps`, `MeshTextAreaProps`,
+`MeshFormSubmitProps`, `MeshListboxProps`, and `MeshCommandListProps`.
+
 ## Live links displayed on every app
 
 Each app scaffolded from this template includes a `SelfRefBar` showing, on every screen of the live page:

@@ -41,10 +41,19 @@ const ROSTER_DEVICE_KEY = "__mesh_roster_device";
  */
 export function useRoster(
   room: YRoom | null,
-  opts?: { heartbeatMs?: number; freshnessMs?: number },
+  opts?: {
+    heartbeatMs?: number;
+    freshnessMs?: number;
+    /**
+     * Keep every browser session instead of collapsing tabs by persisted
+     * browser id. Defaults to true for person-oriented roster use cases.
+     */
+    dedupeByDevice?: boolean;
+  },
 ): RosterState {
   const heartbeatMs = opts?.heartbeatMs ?? 5_000;
   const freshnessMs = opts?.freshnessMs ?? 15_000;
+  const dedupeByDevice = opts?.dedupeByDevice ?? true;
   const [, rerender] = useState(0);
   const [now, setNow] = useState(Date.now());
   const beating = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -69,7 +78,7 @@ export function useRoster(
     // Best-effort GC: this browser's earlier sessions (pre-refresh peerIds)
     // left roster entries tagged with the same deviceId. Drop them now that
     // we know this device has rejoined under a new peerId.
-    if (room.deviceId) {
+    if (room.deviceId && dedupeByDevice) {
       const stale: string[] = [];
       d.forEach((otherDeviceId, otherPeerId) => {
         if (otherPeerId !== room.peerId && otherDeviceId === room.deviceId) {
@@ -87,10 +96,13 @@ export function useRoster(
     return () => {
       if (beating.current) clearInterval(beating.current);
     };
-  }, [room, heartbeatMs]);
+  }, [dedupeByDevice, room, heartbeatMs]);
 
   useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), Math.min(heartbeatMs, 2000));
+    const id = setInterval(
+      () => setNow(Date.now()),
+      Math.min(heartbeatMs, 2000),
+    );
     return () => clearInterval(id);
   }, [heartbeatMs]);
 
@@ -106,9 +118,15 @@ export function useRoster(
     // before this dedup existed.
     const bestOfGroup = new Map<string, { peerId: string; ts: number }>();
     map.forEach((ts, peerId) => {
-      const groupKey = deviceMap?.get(peerId) ?? `peer:${peerId}`;
+      const groupKey = dedupeByDevice
+        ? (deviceMap?.get(peerId) ?? `peer:${peerId}`)
+        : `peer:${peerId}`;
       const current = bestOfGroup.get(groupKey);
-      if (!current || ts > current.ts || (ts === current.ts && peerId < current.peerId)) {
+      if (
+        !current ||
+        ts > current.ts ||
+        (ts === current.ts && peerId < current.peerId)
+      ) {
         bestOfGroup.set(groupKey, { peerId, ts });
       }
     });
