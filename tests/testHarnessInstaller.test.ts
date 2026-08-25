@@ -43,6 +43,9 @@ describe("install-ux-foundation-probe", () => {
     expect(ux).toContain("MeshShell provides the UX foundation");
     expect(perf).toContain("closeInitiallyOpenSettings");
     expect(leak).toContain("closeInitiallyOpenSettings");
+    expect(leak).toContain("element.click()");
+    expect(leak).toContain("timeout: 500");
+    expect(leak).not.toContain("btn.click({ trial: false, timeout: 2000 })");
     expect(pkg.scripts["test:leak"]).toBe(
       "MESH_RUN_LEAK_TEST=1 playwright test tests/e2e/memory-leak.spec.ts",
     );
