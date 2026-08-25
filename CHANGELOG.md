@@ -22,6 +22,11 @@
   update loop. `useNetworkQuality` now keys its ping lifecycle to the stable
   Yjs document and callback rather than the awareness API or transient room
   wrapper recreated by awareness updates.
+- Generic browser probes now recognize the accessible `Settings` dialog used
+  by `MeshShell`. First-visit onboarding sheets are closed only for assertions
+  that require the underlying page or a clickable feature control, so smoke,
+  mesh, performance, and leak checks remain meaningful without changing an
+  app's onboarding behavior.
 
 ### Added
 
@@ -50,10 +55,11 @@
 - `fleet-ux-check.mjs` is a catalog-driven, read-only 20-app batch verifier
   with bounded typecheck/unit/smoke/e2e execution and unique Playwright ports.
   `install-ux-foundation-probe.sh` installs the observable per-app shell
-  contract test before an app release. It also refreshes the generic
-  performance and opt-in memory-leak probes: they derive the app path from
-  `package.json`, ignore disabled controls, and give an explicitly enabled
-  long leak run a duration-aware timeout.
+  contract test before an app release. It also refreshes generic smoke/mesh,
+  performance, and opt-in memory-leak probes: they derive the app path from
+  `package.json`, handle first-visit Settings sheets safely, ignore disabled
+  controls, and give an explicitly enabled long leak run a duration-aware
+  timeout.
 - `useImageCapture` now provides `captureBlob()` for an explicit, local JPEG
   Blob capture path; `useFileShare` yields between bounded chunk batches so a
   camera image cannot monopolize the mobile browser main thread while sharing.
