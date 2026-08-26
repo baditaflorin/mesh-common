@@ -4,7 +4,11 @@ import * as Y from "yjs";
 import type { MeshConfig } from "./MeshConfig";
 import { iceStorage, maybeFetchTurnCredentials } from "./iceConfig";
 import { createRoomSync } from "./yjsRoom";
-import type { YRoom } from "./useYRoom";
+import {
+  getKnownPeerCount,
+  type PeerAwareProvider,
+  type YRoom,
+} from "./useYRoom";
 
 /**
  * Manage *several* Yjs WebRTC rooms in one browser tab. The active room is
@@ -54,10 +58,15 @@ export function useMultiRoom(
   initialRoomIds: string[],
   opts?: { initialActive?: string },
 ): MultiRoomApi {
-  const [roomIds, setRoomIds] = useState<string[]>(() => Array.from(new Set(initialRoomIds)));
-  const [activeId, setActiveId] = useState<string | null>(() => opts?.initialActive ?? initialRoomIds[0] ?? null);
+  const [roomIds, setRoomIds] = useState<string[]>(() =>
+    Array.from(new Set(initialRoomIds)),
+  );
+  const [activeId, setActiveId] = useState<string | null>(
+    () => opts?.initialActive ?? initialRoomIds[0] ?? null,
+  );
   const [entries, setEntries] = useState<Record<string, YRoom | null>>({});
   const syncs = useRef<Map<string, Sync>>(new Map());
+  const detachPeerListeners = useRef<Map<string, () => void>>(new Map());
 
   const s = useMemo(
     () =>
@@ -81,12 +90,8 @@ export function useMultiRoom(
 
       const refresh = () => {
         if (disposed) return;
-        const aw = (
-          sync.provider as unknown as {
-            awareness?: { getStates: () => Map<number, unknown> };
-          } | null
-        )?.awareness;
-        const peerCount = aw ? Math.max(0, aw.getStates().size - 1) : 0;
+        const provider = sync.provider as PeerAwareProvider | null;
+        const peerCount = getKnownPeerCount(provider);
         setEntries((prev) => ({
           ...prev,
           [roomId]: {
@@ -100,19 +105,21 @@ export function useMultiRoom(
       };
       refresh();
 
-      const aw = (
-        sync.provider as unknown as {
-          awareness?: { on: (e: string, cb: () => void) => void; off: (e: string, cb: () => void) => void };
-        } | null
-      )?.awareness;
-      if (aw) {
-        aw.on("change", refresh);
-      }
+      const provider = sync.provider as PeerAwareProvider | null;
+      const awareness = provider?.awareness;
+      awareness?.on("change", refresh);
+      provider?.on?.("peers", refresh);
+      detachPeerListeners.current.set(roomId, () => {
+        awareness?.off("change", refresh);
+        provider?.off?.("peers", refresh);
+      });
     };
 
     const teardownRoom = (roomId: string) => {
       const sync = syncs.current.get(roomId);
       if (!sync) return;
+      detachPeerListeners.current.get(roomId)?.();
+      detachPeerListeners.current.delete(roomId);
       try {
         sync.provider?.destroy();
         sync.doc.destroy();
@@ -161,8 +168,11 @@ export function useMultiRoom(
     room: entries[id] ?? null,
     ready: !!entries[id],
   }));
-  const active = activeId ? entries[activeId] ?? null : null;
-  const totalPeerCount = rooms.reduce((sum, r) => sum + (r.room?.peerCount ?? 0), 0);
+  const active = activeId ? (entries[activeId] ?? null) : null;
+  const totalPeerCount = rooms.reduce(
+    (sum, r) => sum + (r.room?.peerCount ?? 0),
+    0,
+  );
 
   return { rooms, active, activeId, setActive, add, remove, totalPeerCount };
 }

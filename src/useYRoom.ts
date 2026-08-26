@@ -16,9 +16,51 @@ export type YRoom = {
    * treat a missing value the same as "no device-scoped dedup available".
    */
   deviceId?: string;
+  /**
+   * Known other sessions in this room. This combines Yjs awareness with the
+   * provider's local BroadcastChannel discovery so same-browser peers are not
+   * hidden when awareness lags behind the local fallback.
+   */
   peerCount: number;
   roomId: string;
 };
+
+export type PeerAwareProvider = {
+  awareness?: {
+    getStates: () => Map<unknown, unknown>;
+    on: (event: "change", callback: () => void) => void;
+    off: (event: "change", callback: () => void) => void;
+  };
+  /**
+   * y-webrtc keeps a direct view of peers reached through BroadcastChannel.
+   * `room` is intentionally read structurally: it is public on y-webrtc's
+   * provider but may be null while its async key setup finishes.
+   */
+  room?: {
+    bcConns?: { size: number };
+  } | null;
+  on?: (event: "peers", callback: () => void) => void;
+  off?: (event: "peers", callback: () => void) => void;
+};
+
+/**
+ * Awareness normally tells us about every remote session, but y-webrtc's
+ * BroadcastChannel-only path can establish document sync before awareness
+ * has surfaced the other tab. The provider emits `peers` for that path.
+ *
+ * We use the larger of BroadcastChannel discovery and awareness rather than
+ * adding those views together, avoiding a double-count when awareness catches
+ * up. WebRTC connection attempts are deliberately not counted here: y-webrtc
+ * exposes them before a peer is actually connected, while awareness is the
+ * reliable live-session source for that route.
+ */
+export function getKnownPeerCount(provider: PeerAwareProvider | null): number {
+  const awarenessPeers = provider?.awareness
+    ? Math.max(0, provider.awareness.getStates().size - 1)
+    : 0;
+  const broadcastChannelPeers = provider?.room?.bcConns?.size ?? 0;
+  return Math.max(awarenessPeers, broadcastChannelPeers);
+}
 
 /**
  * Bootstraps a Yjs WebRTC room for the given config + roomId.
@@ -46,6 +88,7 @@ export function useYRoom(config: MeshConfig, roomId: string): YRoom | null {
     let disposed = false;
     const myVersion = ++versionRef.current;
     let sync: ReturnType<typeof createRoomSync> | null = null;
+    let detachPeerListeners: (() => void) | null = null;
 
     const boot = async () => {
       await maybeFetchTurnCredentials(s);
@@ -55,12 +98,8 @@ export function useYRoom(config: MeshConfig, roomId: string): YRoom | null {
 
       const updatePeers = () => {
         if (disposed) return;
-        const aw = (
-          sync?.provider as unknown as {
-            awareness?: { getStates: () => Map<number, unknown> };
-          } | null
-        )?.awareness;
-        const count = aw ? Math.max(0, aw.getStates().size - 1) : 0;
+        const provider = sync?.provider as PeerAwareProvider | null;
+        const count = getKnownPeerCount(provider);
         setRoom({
           doc: sync!.doc,
           provider: sync!.provider,
@@ -72,20 +111,21 @@ export function useYRoom(config: MeshConfig, roomId: string): YRoom | null {
       };
       updatePeers();
 
-      const aw = (
-        sync.provider as unknown as {
-          awareness?: { on: (e: string, cb: () => void) => void; off: (e: string, cb: () => void) => void };
-        } | null
-      )?.awareness;
-      if (aw) {
-        aw.on("change", updatePeers);
-      }
+      const provider = sync.provider as PeerAwareProvider | null;
+      const awareness = provider?.awareness;
+      awareness?.on("change", updatePeers);
+      provider?.on?.("peers", updatePeers);
+      detachPeerListeners = () => {
+        awareness?.off("change", updatePeers);
+        provider?.off?.("peers", updatePeers);
+      };
     };
 
     void boot();
 
     return () => {
       disposed = true;
+      detachPeerListeners?.();
       try {
         sync?.provider?.destroy();
         sync?.doc.destroy();
