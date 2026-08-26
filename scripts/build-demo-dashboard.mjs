@@ -12,13 +12,33 @@
 import { readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { assertCategoryDiversity, taxonomyFor } from "../scenarios/taxonomy.mjs";
+import {
+  assertCategoryDiversity,
+  taxonomyFor,
+} from "../scenarios/taxonomy.mjs";
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const ROOT = path.resolve(
+  path.dirname(new URL(import.meta.url).pathname),
+  "..",
+);
 const DEMOS_DIR = path.join(ROOT, "docs", "demos");
-const REGISTRY_PATH_1 = path.resolve(ROOT, "..", "services-registry", "services.json");
-const REGISTRY_PATH_2 = path.resolve(ROOT, "..", "..", "services-registry", "services.json");
-const REGISTRY_PATH = existsSync(REGISTRY_PATH_1) ? REGISTRY_PATH_1 : REGISTRY_PATH_2;
+const METADATA_PATH = path.join(DEMOS_DIR, "metadata.json");
+const REGISTRY_PATH_1 = path.resolve(
+  ROOT,
+  "..",
+  "services-registry",
+  "services.json",
+);
+const REGISTRY_PATH_2 = path.resolve(
+  ROOT,
+  "..",
+  "..",
+  "services-registry",
+  "services.json",
+);
+const REGISTRY_PATH = existsSync(REGISTRY_PATH_1)
+  ? REGISTRY_PATH_1
+  : REGISTRY_PATH_2;
 const OUT_PATH = path.join(DEMOS_DIR, "index.html");
 const TAXONOMY_OUT_PATH = path.join(DEMOS_DIR, "taxonomy.json");
 const CATALOG_OUT_PATH = path.join(DEMOS_DIR, "catalog.json");
@@ -26,7 +46,13 @@ const SCENARIOS_DIR = path.join(ROOT, "scenarios");
 const checkOnly = process.argv.includes("--check-recordings");
 
 const escapeHtml = (s) =>
-  String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[c]));
+  String(s).replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
 
 const registryById = new Map();
 if (existsSync(REGISTRY_PATH)) {
@@ -37,6 +63,56 @@ if (existsSync(REGISTRY_PATH)) {
     console.warn("registry parse failed:", e.message);
   }
 }
+
+// The services registry is the broad fleet source. Demo metadata is an
+// explicit release override for browser-only apps that have shipped to Pages
+// before a registry record exists, and retains the product-facing name used by
+// the released app rather than its repo slug.
+const demoMetadataById = new Map();
+if (existsSync(METADATA_PATH)) {
+  try {
+    const data = JSON.parse(await readFile(METADATA_PATH, "utf8"));
+    for (const [id, metadata] of Object.entries(data?.demos ?? {})) {
+      if (metadata && typeof metadata === "object")
+        demoMetadataById.set(id, metadata);
+    }
+  } catch (error) {
+    console.warn("demo metadata parse failed:", error.message);
+  }
+}
+
+const asNonEmptyString = (value) =>
+  typeof value === "string" && value.trim() ? value.trim() : "";
+const isGitSha = (value) =>
+  typeof value === "string" && /^[a-f0-9]{7,64}$/i.test(value);
+
+const readProvenance = async (appDir) => {
+  const provenancePath = path.join(appDir, "provenance.json");
+  if (!existsSync(provenancePath)) return null;
+
+  try {
+    const data = JSON.parse(await readFile(provenancePath, "utf8"));
+    const sourceCommit = isGitSha(data?.sourceCommit)
+      ? data.sourceCommit
+      : null;
+    const releaseCommit = isGitSha(data?.releaseCommit)
+      ? data.releaseCommit
+      : null;
+    const recordedAt = asNonEmptyString(data?.recordedAt);
+    if (!sourceCommit && !releaseCommit && !recordedAt) return null;
+    return {
+      ...(sourceCommit ? { sourceCommit } : {}),
+      ...(releaseCommit ? { releaseCommit } : {}),
+      ...(recordedAt ? { recordedAt } : {}),
+    };
+  } catch (error) {
+    console.warn(
+      `recording provenance parse failed for ${path.basename(appDir)}:`,
+      error.message,
+    );
+    return null;
+  }
+};
 
 const entries = (await readdir(DEMOS_DIR, { withFileTypes: true }))
   .filter((d) => d.isDirectory())
@@ -51,7 +127,13 @@ assertCategoryDiversity(entries);
 // not a service scenario.
 const scenarioFiles = existsSync(SCENARIOS_DIR)
   ? (await readdir(SCENARIOS_DIR, { withFileTypes: true }))
-      .filter((entry) => entry.isFile() && entry.name.endsWith(".mjs") && !entry.name.startsWith("_") && entry.name !== "taxonomy.mjs")
+      .filter(
+        (entry) =>
+          entry.isFile() &&
+          entry.name.endsWith(".mjs") &&
+          !entry.name.startsWith("_") &&
+          entry.name !== "taxonomy.mjs",
+      )
       .map((entry) => entry.name.slice(0, -4))
       .sort()
   : [];
@@ -61,17 +143,25 @@ for (const app of scenarioFiles) {
   const status = existsSync(path.join(appDir, "status"))
     ? (await readFile(path.join(appDir, "status"), "utf8")).trim()
     : "MISSING";
-  const hasGif = existsSync(path.join(appDir, "demo.gif")) && (await stat(path.join(appDir, "demo.gif"))).size > 0;
-  const hasPng = existsSync(path.join(appDir, "preview.png")) && (await stat(path.join(appDir, "preview.png"))).size > 0;
+  const hasGif =
+    existsSync(path.join(appDir, "demo.gif")) &&
+    (await stat(path.join(appDir, "demo.gif"))).size > 0;
+  const hasPng =
+    existsSync(path.join(appDir, "preview.png")) &&
+    (await stat(path.join(appDir, "preview.png"))).size > 0;
   if (status !== "OK" || !hasGif || !hasPng) {
-    missingRecordings.push(`${app} (status=${status}, gif=${hasGif}, preview=${hasPng})`);
+    missingRecordings.push(
+      `${app} (status=${status}, gif=${hasGif}, preview=${hasPng})`,
+    );
   }
 }
 if (missingRecordings.length > 0) {
   throw new Error(`recording gate failed:\n${missingRecordings.join("\n")}`);
 }
 if (checkOnly) {
-  console.log(`recording gate passed: ${scenarioFiles.length} app scenarios have OK status, GIF, and preview`);
+  console.log(
+    `recording gate passed: ${scenarioFiles.length} app scenarios have OK status, GIF, and preview`,
+  );
   process.exit(0);
 }
 
@@ -87,14 +177,25 @@ for (const app of entries) {
   const gifPath = path.join(appDir, "demo.gif");
   const pngPath = path.join(appDir, "preview.png");
   const logPath = path.join(appDir, "record.log");
-  const status = existsSync(statusPath) ? (await readFile(statusPath, "utf8")).trim() : "MISSING";
+  const status = existsSync(statusPath)
+    ? (await readFile(statusPath, "utf8")).trim()
+    : "MISSING";
   const hasGif = existsSync(gifPath) && (await stat(gifPath)).size > 0;
   const hasPng = existsSync(pngPath) && (await stat(pngPath)).size > 0;
   const reg = registryById.get(app);
-  const name = reg?.name || app;
+  const metadata = demoMetadataById.get(app);
+  const name = asNonEmptyString(metadata?.name) || reg?.name || app;
   const trl = reg?.trl ?? "";
-  const pagesUrl = reg?.url || `https://baditaflorin.github.io/${app}/`;
+  const pagesUrl =
+    asNonEmptyString(metadata?.liveUrl) ||
+    reg?.url ||
+    `https://baditaflorin.github.io/${app}/`;
+  const sourceUrl =
+    asNonEmptyString(metadata?.sourceUrl) ||
+    reg?.repo_url ||
+    `https://github.com/baditaflorin/${app}`;
   const classification = taxonomyFor(app);
+  const provenance = await readProvenance(appDir);
   taxonomy[app] = classification;
   const ok = status === "OK" && hasGif;
   if (ok) okCount++;
@@ -103,21 +204,28 @@ for (const app of entries) {
   // Public, machine-readable catalog: consumers such as Rootless Computing
   // should never have to scrape this dashboard's HTML or carry their own
   // stale hand-written app list.
-  catalog.push({
+  const catalogEntry = {
     id: app,
     name,
-    description: reg?.description || "",
+    description:
+      asNonEmptyString(metadata?.description) || reg?.description || "",
     liveUrl: pagesUrl,
-    sourceUrl: reg?.repo_url || `https://github.com/baditaflorin/${app}`,
+    sourceUrl,
     status: ok ? "ok" : "needs-attention",
     recordingStatus: status,
-    recordingUrl: hasGif ? `https://baditaflorin.github.io/mesh-common/demos/${app}/demo.gif` : null,
-    previewUrl: hasPng ? `https://baditaflorin.github.io/mesh-common/demos/${app}/preview.png` : null,
+    recordingUrl: hasGif
+      ? `https://baditaflorin.github.io/mesh-common/demos/${app}/demo.gif`
+      : null,
+    previewUrl: hasPng
+      ? `https://baditaflorin.github.io/mesh-common/demos/${app}/preview.png`
+      : null,
     trl: trl === "" ? null : Number(trl),
     category: classification.category,
     subcategory: classification.subcategory,
     useCases: classification.useCases,
-  });
+  };
+  if (provenance) catalogEntry.provenance = provenance;
+  catalog.push(catalogEntry);
 
   // Extract a short error hint if the record failed
   let errHint = "";
@@ -141,11 +249,13 @@ for (const app of entries) {
       data-usecases="${escapeHtml(classification.useCases.join("|"))}"
     >
       <div class="media">
-        ${hasGif
-          ? `<img class="gif" src="${escapeHtml(app)}/demo.gif" alt="${escapeHtml(name)} demo" loading="lazy" />`
-          : hasPng
-          ? `<img class="gif" src="${escapeHtml(app)}/preview.png" alt="${escapeHtml(name)} preview" loading="lazy" />`
-          : `<div class="empty">no recording</div>`}
+        ${
+          hasGif
+            ? `<img class="gif" src="${escapeHtml(app)}/demo.gif" alt="${escapeHtml(name)} demo" loading="lazy" />`
+            : hasPng
+              ? `<img class="gif" src="${escapeHtml(app)}/preview.png" alt="${escapeHtml(name)} preview" loading="lazy" />`
+              : `<div class="empty">no recording</div>`
+        }
       </div>
       <div class="card-body">
         <div class="card-meta"><span class="status status-${ok ? "ok" : "fail"}" aria-label="Recording status: ${escapeHtml(status)}">${escapeHtml(status)}</span>${trl !== "" ? `<span class="trl trl-${trl}">TRL ${escapeHtml(trl)}</span>` : ""}</div>
@@ -429,12 +539,16 @@ await writeFile(OUT_PATH, html);
 await writeFile(TAXONOMY_OUT_PATH, `${JSON.stringify(taxonomy, null, 2)}\n`);
 await writeFile(
   CATALOG_OUT_PATH,
-  `${JSON.stringify({
-    schemaVersion: 1,
-    generatedAt,
-    total: catalog.length,
-    demos: catalog,
-  }, null, 2)}\n`,
+  `${JSON.stringify(
+    {
+      schemaVersion: 1,
+      generatedAt,
+      total: catalog.length,
+      demos: catalog,
+    },
+    null,
+    2,
+  )}\n`,
 );
 console.log(`wrote ${OUT_PATH}`);
 console.log(`  total apps: ${entries.length}`);

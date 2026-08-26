@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-26T01:16:22.613Z",
+  "generatedAt": "2026-08-26T03:33:33.594Z",
   "total": 201,
   "demos": [
     {
@@ -43,8 +43,8 @@
     },
     {
       "id": "mesh-agenda-runner",
-      "name": "Mesh Agenda Runner",
-      "description": "A shared, live agenda for lightweight facilitated sessions.",
+      "name": "Agenda Runner",
+      "description": "A live run of show that keeps every person in the room on the same beat.",
       "liveUrl": "https://baditaflorin.github.io/mesh-agenda-runner/",
       "sourceUrl": "https://github.com/baditaflorin/mesh-agenda-runner",
       "status": "ok",
@@ -58,7 +58,12 @@
         "meetings",
         "facilitation",
         "planning"
-      ]
+      ],
+      "provenance": {
+        "sourceCommit": "6ac1021545b6ea4dc0f253d078af52ba0c6df18d",
+        "releaseCommit": "6ac1021545b6ea4dc0f253d078af52ba0c6df18d",
+        "recordedAt": "2026-08-26T03:03:52Z"
+      }
     },
     {
       "id": "mesh-allowance",
@@ -100,8 +105,8 @@
     },
     {
       "id": "mesh-applause",
-      "name": "mesh-applause",
-      "description": "",
+      "name": "Appreciation Circle",
+      "description": "A peer-to-peer appreciation ritual: write a private note, then reveal the room's thanks together.",
       "liveUrl": "https://baditaflorin.github.io/mesh-applause/",
       "sourceUrl": "https://github.com/baditaflorin/mesh-applause",
       "status": "ok",
@@ -109,13 +114,18 @@
       "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-applause/demo.gif",
       "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-applause/preview.png",
       "trl": null,
-      "category": "Decisions",
-      "subcategory": "Voting & consensus",
+      "category": "Social",
+      "subcategory": "Celebration & support",
       "useCases": [
-        "team decisions",
-        "community input",
-        "prioritization"
-      ]
+        "appreciation",
+        "team rituals",
+        "standups"
+      ],
+      "provenance": {
+        "sourceCommit": "b6ae25226dda9feb56fbb6a8f83aedecc0f2ffc2",
+        "releaseCommit": "b6ae25226dda9feb56fbb6a8f83aedecc0f2ffc2",
+        "recordedAt": "2026-08-26T03:04:18Z"
+      }
     },
     {
       "id": "mesh-applause-bracket",
@@ -1829,8 +1839,8 @@
     },
     {
       "id": "mesh-network-builder",
-      "name": "mesh-network-builder",
-      "description": "",
+      "name": "Linkfield",
+      "description": "Build a consented contact map with two-way QR confirmation and export-ready records.",
       "liveUrl": "https://baditaflorin.github.io/mesh-network-builder/",
       "sourceUrl": "https://github.com/baditaflorin/mesh-network-builder",
       "status": "ok",
@@ -1844,7 +1854,12 @@
         "sharing",
         "onboarding",
         "personal tools"
-      ]
+      ],
+      "provenance": {
+        "sourceCommit": "ce2cf8ed4b9cff3a122202d2e659e28eb6d70acb",
+        "releaseCommit": "2ae8be4ddc26e2b87ae20c955889ce44dcf3fc09",
+        "recordedAt": "2026-08-26T03:03:21Z"
+      }
     },
     {
       "id": "mesh-never-have-i",
@@ -2608,8 +2623,8 @@
     },
     {
       "id": "mesh-room-soundtrack",
-      "name": "mesh-room-soundtrack",
-      "description": "",
+      "name": "Room Soundtrack",
+      "description": "A democratic shared listening queue: every person can add a track, vote, and agree on what comes next.",
       "liveUrl": "https://baditaflorin.github.io/mesh-room-soundtrack/",
       "sourceUrl": "https://github.com/baditaflorin/mesh-room-soundtrack",
       "status": "ok",
@@ -2617,13 +2632,18 @@
       "recordingUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-room-soundtrack/demo.gif",
       "previewUrl": "https://baditaflorin.github.io/mesh-common/demos/mesh-room-soundtrack/preview.png",
       "trl": null,
-      "category": "Devices & spaces",
-      "subcategory": "Audio & haptics",
+      "category": "Creative",
+      "subcategory": "Performance & sound",
       "useCases": [
-        "sound",
-        "performances",
+        "music",
+        "shared media",
         "co-located groups"
-      ]
+      ],
+      "provenance": {
+        "sourceCommit": "b33229ad9ea51e7c375b3a575849130c43b799e5",
+        "releaseCommit": "b33229ad9ea51e7c375b3a575849130c43b799e5",
+        "recordedAt": "2026-08-26T03:32:59Z"
+      }
     },
     {
       "id": "mesh-round-counter",
@@ -2703,8 +2723,8 @@
     },
     {
       "id": "mesh-scoreboard",
-      "name": "Mesh Scoreboard",
-      "description": "A small shared score board for browser-local games and challenges.",
+      "name": "Scoreboard",
+      "description": "A shared, peer-to-peer match board for keeping every point visible to the room.",
       "liveUrl": "https://baditaflorin.github.io/mesh-scoreboard/",
       "sourceUrl": "https://github.com/baditaflorin/mesh-scoreboard",
       "status": "ok",
@@ -2718,7 +2738,12 @@
         "party games",
         "challenges",
         "score keeping"
-      ]
+      ],
+      "provenance": {
+        "sourceCommit": "077b248f252b97e134173fcc30c9c53d28fa1e0f",
+        "releaseCommit": "077b248f252b97e134173fcc30c9c53d28fa1e0f",
+        "recordedAt": "2026-08-26T03:03:52Z"
+      }
     },
     {
       "id": "mesh-secret-ballot",
@@ -2741,8 +2766,8 @@
     },
     {
       "id": "mesh-shadow-paint",
-      "name": "mesh-shadow-paint",
-      "description": "",
+      "name": "Shadow Paint",
+      "description": "A browser-local lighting studio that turns nearby phones into coordinated fill panels for deliberate shadows.",
       "liveUrl": "https://baditaflorin.github.io/mesh-shadow-paint/",
       "sourceUrl": "https://github.com/baditaflorin/mesh-shadow-paint",
       "status": "ok",
@@ -2756,7 +2781,12 @@
         "creative sessions",
         "shared media",
         "performances"
-      ]
+      ],
+      "provenance": {
+        "sourceCommit": "2f67564f16a6034f2e9530226592cb1d4c9fe149",
+        "releaseCommit": "2f67564f16a6034f2e9530226592cb1d4c9fe149",
+        "recordedAt": "2026-08-26T03:03:22Z"
+      }
     },
     {
       "id": "mesh-shake-dice",
@@ -2912,8 +2942,8 @@
     },
     {
       "id": "mesh-silent-vote",
-      "name": "mesh-silent-vote",
-      "description": "",
+      "name": "Quiet Vote",
+      "description": "A peer-to-peer room for transparent ranked, approval, and score decisions. Every participant can inspect the shared ballots.",
       "liveUrl": "https://baditaflorin.github.io/mesh-silent-vote/",
       "sourceUrl": "https://github.com/baditaflorin/mesh-silent-vote",
       "status": "ok",
@@ -2927,7 +2957,12 @@
         "team decisions",
         "community input",
         "prioritization"
-      ]
+      ],
+      "provenance": {
+        "sourceCommit": "6dcbc24113b6f64a7a2cb9f96ec71477c6da7794",
+        "releaseCommit": "6dcbc24113b6f64a7a2cb9f96ec71477c6da7794",
+        "recordedAt": "2026-08-26T03:32:59Z"
+      }
     },
     {
       "id": "mesh-six-degrees",

@@ -1,28 +1,36 @@
-// Both queue songs and up/downvote each other's.
-import { tryName, fillFirst, clickByText, wait, tapMany } from "./_helpers.mjs";
+export default async function roomSoundtrackScenario(alice, bob) {
+  await alice.getByLabel("Your name").fill("Mira");
+  await bob.getByLabel("Your name").fill("Noah");
 
-export default async function (a, b) {
-  await tryName(a, "alice");
-  await tryName(b, "bob");
+  await alice.getByLabel("Track title").fill("Morning Signal");
+  await alice.getByLabel("Artist").fill("Mira & the Mesh");
+  await alice.locator(".track-source-details summary").click();
+  await alice
+    .getByLabel("Source link")
+    .fill("https://example.com/morning-signal");
+  await alice
+    .getByRole("button", { name: "Add to queue", exact: true })
+    .click();
 
-  await fillFirst(a, [/title/i], "Wonderwall");
-  await fillFirst(a, [/artist/i], "Oasis");
-  await clickByText(a, /queue it|^queue$|^add$|submit/i);
-  await wait(a, 800);
+  await alice.waitForTimeout(450);
+  await alice.getByLabel("Track title").fill("Golden Hour");
+  await alice.getByLabel("Artist").fill("Mira & the Mesh");
+  await alice
+    .getByRole("button", { name: "Add to queue", exact: true })
+    .click();
 
-  await fillFirst(b, [/title/i], "Take On Me");
-  await fillFirst(b, [/artist/i], "a-ha");
-  await clickByText(b, /queue it|^queue$|^add$|submit/i);
-  await wait(a, 1500);
+  await bob.waitForTimeout(650);
+  await bob.getByRole("button", { name: "upvote Golden Hour" }).click();
 
-  // Both upvote each other
-  await tapMany(a, 'button:has-text("▲"), button:has-text("↑"), [aria-label*="upvote" i]', 1, 250);
-  await tapMany(b, 'button:has-text("▲"), button:has-text("↑"), [aria-label*="upvote" i]', 1, 250);
+  await bob.waitForTimeout(450);
+  await bob.getByLabel("Track title").fill("Late Set");
+  await bob.getByLabel("Artist").fill("Noah’s Quartet");
+  await bob.getByRole("button", { name: "Add to queue", exact: true }).click();
 
-  // A queues another
-  await fillFirst(a, [/title/i], "Mr. Blue Sky");
-  await fillFirst(a, [/artist/i], "ELO");
-  await clickByText(a, /queue it|^queue$|^add$|submit/i);
-
-  await wait(a, 3500);
+  await alice.waitForTimeout(3200);
+  await Promise.all([
+    alice.evaluate(() => window.scrollTo({ top: 0, behavior: "auto" })),
+    bob.evaluate(() => window.scrollTo({ top: 0, behavior: "auto" })),
+  ]);
+  await alice.waitForTimeout(250);
 }

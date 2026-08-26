@@ -6,9 +6,11 @@
 # Outputs (into $DEMO_OUT, default docs/):
 #   preview.png      composited side-by-side final frame (peer A | peer B)
 #   demo.gif         15s GIF (10fps, side-by-side composite, palette-quantised)
+#   provenance.json  source/release revisions used to make the recording
 #
 # Optional: tests/demo/scenario.mjs exporting `default async (a, b) => …`
-# drives the interaction. Without one, a generic ~13s scenario runs.
+# drives the interaction. Without one, a generic ~13s scenario runs. Set
+# DEMO_RELEASE_SHA to the deployed revision when it differs from source HEAD.
 #
 # Requirements: node, @playwright/test (in mesh-common's node_modules), ffmpeg.
 #
@@ -222,4 +224,32 @@ rm -f /tmp/ffmpeg-$$.log
 rm -rf "$TMP_VIDEO_DIR"
 
 GIF_SIZE="$(stat -f '%z' "$OUT_DIR/demo.gif" 2>/dev/null || stat -c '%s' "$OUT_DIR/demo.gif")"
-echo "==> [$APP_NAME] done — $OUT_DIR/demo.gif ($((GIF_SIZE / 1024)) KB) + $OUT_DIR/preview.png"
+SOURCE_COMMIT="$(git -C "$APP_DIR" rev-parse HEAD)"
+RELEASE_COMMIT="${DEMO_RELEASE_SHA:-$SOURCE_COMMIT}"
+RECORDED_AT="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+
+if [[ ! "$RELEASE_COMMIT" =~ ^[0-9a-fA-F]{7,64}$ ]]; then
+  echo "[record-demo] DEMO_RELEASE_SHA must be a Git commit SHA" >&2
+  exit 1
+fi
+
+DEMO_OUT_DIR="$OUT_DIR" \
+  DEMO_APP_NAME="$APP_NAME" \
+  DEMO_SOURCE_COMMIT="$SOURCE_COMMIT" \
+  DEMO_RELEASE_COMMIT="$RELEASE_COMMIT" \
+  DEMO_RECORDED_AT="$RECORDED_AT" \
+  node --input-type=module -e '
+    import { writeFile } from "node:fs/promises";
+    import path from "node:path";
+
+    const provenance = {
+      schemaVersion: 1,
+      app: process.env.DEMO_APP_NAME,
+      sourceCommit: process.env.DEMO_SOURCE_COMMIT,
+      releaseCommit: process.env.DEMO_RELEASE_COMMIT,
+      recordedAt: process.env.DEMO_RECORDED_AT,
+    };
+    await writeFile(path.join(process.env.DEMO_OUT_DIR, "provenance.json"), `${JSON.stringify(provenance, null, 2)}\n`);
+  '
+
+echo "==> [$APP_NAME] done — $OUT_DIR/demo.gif ($((GIF_SIZE / 1024)) KB) + $OUT_DIR/preview.png + provenance.json"

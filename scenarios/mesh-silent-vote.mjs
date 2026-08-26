@@ -1,17 +1,23 @@
-// Both join. Vote on options. A reveals.
-import { clickByText, wait, clickNthButtons } from "./_helpers.mjs";
+export default async function quietVoteScenario(a, b) {
+  await Promise.all([
+    a.getByRole("button", { name: "Enter this decision room" }).click(),
+    b.getByRole("button", { name: "Enter this decision room" }).click(),
+  ]);
 
-export default async function (a, b) {
-  await clickByText(a, /join room|^join$|enter/i);
-  await clickByText(b, /join room|^join$|enter/i);
-  await wait(a, 800);
+  await a
+    .getByRole("textbox", { name: "Options" })
+    .fill("Dinner at Nola\nDinner at Kismet\nDinner at Haneul");
+  await a.getByRole("button", { name: "Open voting" }).click();
+  await b.getByRole("heading", { name: "Choose your position" }).waitFor();
 
-  // For approval mode, click a couple of option checkboxes/buttons
-  await clickNthButtons(a, [0, 2]);
-  await clickNthButtons(b, [1, 2]);
-  await wait(a, 1500);
-
-  await clickByText(a, /reveal results|reveal/i);
-
-  await wait(a, 6000);
+  await a.getByRole("checkbox", { name: "Dinner at Nola" }).check();
+  await b.getByRole("checkbox", { name: "Dinner at Kismet" }).check();
+  await b.getByRole("button", { name: "Reveal the room tally" }).click();
+  await a.getByRole("heading", { name: "Room tally" }).waitFor();
+  await a.waitForTimeout(900);
+  await Promise.all([
+    a.evaluate(() => window.scrollTo({ top: 0, behavior: "auto" })),
+    b.evaluate(() => window.scrollTo({ top: 0, behavior: "auto" })),
+  ]);
+  await a.waitForTimeout(250);
 }

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "demos": {
+    "mesh-agenda-runner": {
+      "name": "Agenda Runner",
+      "description": "A live run of show that keeps every person in the room on the same beat."
+    },
+    "mesh-applause": {
+      "name": "Appreciation Circle",
+      "description": "A peer-to-peer appreciation ritual: write a private note, then reveal the room's thanks together."
+    },
+    "mesh-network-builder": {
+      "name": "Linkfield",
+      "description": "Build a consented contact map with two-way QR confirmation and export-ready records."
+    },
+    "mesh-room-soundtrack": {
+      "name": "Room Soundtrack",
+      "description": "A democratic shared listening queue: every person can add a track, vote, and agree on what comes next."
+    },
+    "mesh-scoreboard": {
+      "name": "Scoreboard",
+      "description": "A shared, peer-to-peer match board for keeping every point visible to the room."
+    },
+    "mesh-shadow-paint": {
+      "name": "Shadow Paint",
+      "description": "A browser-local lighting studio that turns nearby phones into coordinated fill panels for deliberate shadows."
+    },
+    "mesh-silent-vote": {
+      "name": "Quiet Vote",
+      "description": "A peer-to-peer room for transparent ranked, approval, and score decisions. Every participant can inspect the shared ballots."
+    }
+  }
+}

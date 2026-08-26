@@ -6,6 +6,7 @@
 #
 #   mesh-common/docs/demos/<app>/demo.gif
 #   mesh-common/docs/demos/<app>/preview.png
+#   mesh-common/docs/demos/<app>/provenance.json
 #
 # Plus a single status log per app at:
 #
