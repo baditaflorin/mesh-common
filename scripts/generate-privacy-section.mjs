@@ -102,11 +102,14 @@ function renderBlock(usedIdents) {
     .sort();
 
   if (relevant.length === 0) {
-    return `${MARK_START}\n*(no capability-bearing primitives detected — this app only uses pure CRDT primitives)*\n${MARK_END}`;
+    return `${MARK_START}\n\n*(no capability-bearing primitives detected — this app only uses pure CRDT primitives)*\n\n${MARK_END}`;
   }
 
   const lines = relevant.map((id) => `- ${CAPABILITY_MAP[id]}`);
-  return `${MARK_START}\n${lines.join("\n")}\n${MARK_END}`;
+  // Markdown formatters (including the fleet's Prettier gate) preserve this
+  // blank-line form. Without it, `fmt:check` and `--check` oscillate forever:
+  // Prettier adds the blank lines, then this generator removes them.
+  return `${MARK_START}\n\n${lines.join("\n")}\n\n${MARK_END}`;
 }
 
 function rewriteCapabilitiesBlock(text, newBlock) {
