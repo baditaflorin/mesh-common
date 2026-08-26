@@ -93,6 +93,22 @@ describe("MeshBreadcrumbs", () => {
         name: "Breadcrumb Shell location",
       }),
     ).toBeNull();
+
+    rerender(
+      <MeshShell
+        config={{ ...config, breadcrumbs: { items: [] } }}
+        fleetIdentityServiceUrl={null}
+        onRoomChange={() => {}}
+        roomId="test-room"
+      >
+        <p>Feature</p>
+      </MeshShell>,
+    );
+    expect(
+      document
+        .querySelector("[data-mesh-app-shell]")
+        ?.getAttribute("data-mesh-breadcrumbs"),
+    ).toBeNull();
   });
 
   it("lets a MeshAppFrame display a feature-specific trail", () => {

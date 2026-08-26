@@ -245,8 +245,11 @@
 }
 
 /* Legacy canvas stages own their first-screen composition. Keep the product
- * name in their own title rather than duplicating a second top-left label. */
-.mesh-app-root[data-mesh-shell-layout="overlay"] .mesh-app-bar-brand {
+ * name in their own title unless the app explicitly opts into a location trail. */
+.mesh-app-root[data-mesh-shell-layout="overlay"]:not(
+    [data-mesh-breadcrumbs="enabled"]
+  )
+  .mesh-app-bar-brand {
   display: none;
 }
 
@@ -505,7 +508,7 @@
 }
 
 @media (max-width: 25rem) {
-  .mesh-app-bar-brand {
+  .mesh-app-root:not([data-mesh-breadcrumbs="enabled"]) .mesh-app-bar-brand {
     display: none;
   }
 }

@@ -141,7 +141,10 @@ function MeshShellContent({
   children,
 }: Props) {
   const displayName = displayNameFor(config);
-  const breadcrumbs = config.breadcrumbs;
+  const breadcrumbs =
+    config.breadcrumbs && config.breadcrumbs.items.length > 0
+      ? config.breadcrumbs
+      : undefined;
   const visualProfile = config.visualProfile ?? "utility";
   const hasModernChrome = config.shellLayout !== undefined;
   const shellLayout = config.shellLayout ?? "legacy";
@@ -195,7 +198,7 @@ function MeshShellContent({
           title={displayName}
           state={appBarState(roomState)}
           breadcrumbs={
-            breadcrumbs && breadcrumbs.items.length > 0 ? (
+            breadcrumbs ? (
               <MeshBreadcrumbs
                 ariaLabel={breadcrumbs.ariaLabel ?? `${displayName} location`}
                 compact
