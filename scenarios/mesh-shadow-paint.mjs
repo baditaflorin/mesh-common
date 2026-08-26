@@ -1,14 +1,7 @@
-// A connects as camera, B as lamp; reshuffle palette.
-import { clickByText, wait } from "./_helpers.mjs";
-
-export default async function (a, b) {
-  await clickByText(a, /connect as camera|^camera$|arm/i);
-  await clickByText(b, /connect as lamp|^lamp$|arm/i);
-  await wait(a, 2000);
-
-  await clickByText(b, /reshuffle palette|reshuffle|shuffle/i);
-  await wait(a, 4000);
-  await clickByText(a, /reshuffle palette|reshuffle|shuffle/i);
-
-  await wait(a, 5000);
+export default async function shadowPaintScenario(a, b) {
+  await a.getByRole("button", { name: "Arm light panel" }).click();
+  await b.getByRole("button", { name: "Arm light panel" }).click();
+  await a.waitForTimeout(900);
+  await a.getByRole("button", { name: "Rotate lighting palette" }).click();
+  await b.waitForTimeout(1_200);
 }

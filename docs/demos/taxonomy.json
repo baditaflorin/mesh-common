@@ -45,12 +45,12 @@
     ]
   },
   "mesh-applause": {
-    "category": "Decisions",
-    "subcategory": "Voting & consensus",
+    "category": "Social",
+    "subcategory": "Celebration & support",
     "useCases": [
-      "team decisions",
-      "community input",
-      "prioritization"
+      "appreciation",
+      "team rituals",
+      "standups"
     ]
   },
   "mesh-applause-bracket": {
@@ -1233,11 +1233,11 @@
     ]
   },
   "mesh-room-soundtrack": {
-    "category": "Devices & spaces",
-    "subcategory": "Audio & haptics",
+    "category": "Creative",
+    "subcategory": "Performance & sound",
     "useCases": [
-      "sound",
-      "performances",
+      "music",
+      "shared media",
       "co-located groups"
     ]
   },
