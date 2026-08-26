@@ -1,13 +1,16 @@
 import { describe, expect, it } from "vitest";
+import { execFileSync } from "node:child_process";
 import {
   mkdtempSync,
   mkdirSync,
   readFileSync,
   rmSync,
+  symlinkSync,
   writeFileSync,
 } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   migrateBreadcrumbConfig,
   planBreadcrumbConfig,
@@ -101,6 +104,38 @@ const two = createMeshConfig({
       ).toBe("already");
     } finally {
       rmSync(appDirectory, { force: true, recursive: true });
+    }
+  });
+
+  it("runs through the package bin symlink instead of silently doing nothing", () => {
+    const directory = mkdtempSync(path.join(os.tmpdir(), "mesh-breadcrumb-bin-"));
+    const appDirectory = path.join(directory, "app");
+    const configDirectory = path.join(appDirectory, "src");
+    const binPath = path.join(directory, "mesh-breadcrumbs");
+    const scriptPath = fileURLToPath(
+      new URL("../scripts/add-breadcrumbs-config.mjs", import.meta.url),
+    );
+
+    mkdirSync(configDirectory, { recursive: true });
+    writeFileSync(path.join(configDirectory, "config.ts"), createConfig);
+    symlinkSync(scriptPath, binPath);
+
+    try {
+      expect(
+        execFileSync(binPath, ["--write", appDirectory], {
+          encoding: "utf8",
+        }),
+      ).toContain("added breadcrumbs config");
+      expect(
+        readFileSync(path.join(configDirectory, "config.ts"), "utf8"),
+      ).toContain("breadcrumbs: false");
+      expect(
+        execFileSync(binPath, ["--check", appDirectory], {
+          encoding: "utf8",
+        }),
+      ).toContain("kept breadcrumbs config");
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
     }
   });
 });

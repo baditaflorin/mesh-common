@@ -175,7 +175,18 @@ function main(args) {
   console.log(`${verb} breadcrumbs config: ${result.configPath}`);
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+function isCliInvocation() {
+  const invokedPath = process.argv[1];
+  if (!invokedPath) return false;
+
+  try {
+    return fs.realpathSync(invokedPath) === fileURLToPath(import.meta.url);
+  } catch {
+    return false;
+  }
+}
+
+if (isCliInvocation()) {
   try {
     main(process.argv.slice(2));
   } catch (error) {
