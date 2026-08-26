@@ -25,6 +25,7 @@ import {
   type MeshThemeTokens,
 } from "./ui/MeshThemeProvider";
 import { MeshAppBar, type MeshAppBarState } from "./ui/MeshAppBar";
+import { MeshBreadcrumbs } from "./ui/MeshBreadcrumbs";
 import { getMeshVisualProfileTokens } from "./ui/MeshVisualProfile";
 import { FleetIdentityPanel } from "./FleetIdentityPanel";
 
@@ -140,6 +141,7 @@ function MeshShellContent({
   children,
 }: Props) {
   const displayName = displayNameFor(config);
+  const breadcrumbs = config.breadcrumbs;
   const visualProfile = config.visualProfile ?? "utility";
   const hasModernChrome = config.shellLayout !== undefined;
   const shellLayout = config.shellLayout ?? "legacy";
@@ -185,12 +187,22 @@ function MeshShellContent({
       data-mesh-visual-profile={visualProfile}
       data-mesh-shell-layout={shellLayout}
       data-mesh-app-id={config.appName}
+      data-mesh-breadcrumbs={breadcrumbs ? "enabled" : undefined}
       style={shellStyle}
     >
       {hasModernChrome ? (
         <MeshAppBar
           title={displayName}
           state={appBarState(roomState)}
+          breadcrumbs={
+            breadcrumbs && breadcrumbs.items.length > 0 ? (
+              <MeshBreadcrumbs
+                ariaLabel={breadcrumbs.ariaLabel ?? `${displayName} location`}
+                compact
+                items={breadcrumbs.items}
+              />
+            ) : undefined
+          }
           actions={
             <>
               <InviteShareButton

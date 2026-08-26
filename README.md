@@ -20,6 +20,7 @@ Shared scaffolding + runtime for the `baditaflorin/mesh-*` family of rootless pe
 | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `createMeshConfig`                                                    | One-call config factory: stable app ID, human display name, visual profile, shell layout, accent, version, commit, plus signaling / TURN / PayPal defaults. `meshAccentText()` keeps hex-accent actions readable.                                                                                                                                                                                                            |
 | `MeshShell`                                                           | Product utility bar with Invite + Settings; connection diagnostics and About details are progressive rather than permanent viewport chrome                                                                                                                                                                                                                                                                                   |
+| `MeshBreadcrumbs`                                                     | Semantic, responsive location trail with native links or local-state buttons; apps start disabled until they can describe real navigation                                                                                                                                                                                                                                                                                    |
 | `SettingsDrawer`                                                      | Room ID + signaling / TURN overrides → localStorage, plus source/support/version/commit in its About footer                                                                                                                                                                                                                                                                                                                  |
 | `MeshVisualProfileProvider` / `MeshLaunch` / presentation primitives  | Calm profiles plus reusable entry, surface, button, presence, and status components for a polished first viewport                                                                                                                                                                                                                                                                                                            |
 | `SelfRefBar`                                                          | Optional legacy compact source/support/version strip; no longer mounted by `MeshShell`                                                                                                                                                                                                                                                                                                                                       |
@@ -147,7 +148,7 @@ does this by default. `MeshThemeProvider` exposes `meshLightThemeTokens`,
   `MeshListboxOptionState`, and `MeshCommand`.
 - **Visual entry and hierarchy:** `MeshVisualProfileProvider` and
   `MeshVisualProfile` offer the five intentional profiles (`utility`, `play`,
-  `studio`, `gather`, and `field`). `MeshAppBar`, `MeshLaunch`, `MeshSurface`,
+  `studio`, `gather`, and `field`). `MeshAppBar`, `MeshBreadcrumbs`, `MeshLaunch`, `MeshSurface`,
   `MeshButton`, `MeshStatusPill`, and `MeshPresence` provide text-first,
   mobile-safe chrome, entry states, hierarchy, primary actions, and humane
   room presence. `humanizeMeshAppName()` gives legacy `mesh-*` identifiers a
@@ -157,6 +158,15 @@ does this by default. `MeshThemeProvider` exposes `meshLightThemeTokens`,
   while `"overlay"` is only for an app that has made its own safe space for
   compact controls. Omitting it preserves legacy chrome until that app has a
   deliberate first-viewport redesign.
+  `breadcrumbs: false` is the deliberate default. When an app gains genuine
+  locations, give its config a stable trail for modern shell chrome, or render
+  `<MeshBreadcrumbs>` / pass `breadcrumbs` to `MeshAppFrame` for stateful
+  feature navigation. Do not add a one-item or invented trail just to make an
+  app look more complex.
+  For a safe fleet baseline, run
+  `node ../mesh-common/scripts/add-breadcrumbs-config.mjs --write .` from an
+  app checkout; it parses the supported config shapes and makes exactly one
+  insertion after `appName`. Use `--check` in a rollout gate once configured.
   `meshAccentText()` is also applied by `MeshThemeProvider` when an app
   overrides only its hex accent, preserving readable primary-action text.
 - **Session and media workflows:** `MeshSessionProvider`, `useMeshSession`,

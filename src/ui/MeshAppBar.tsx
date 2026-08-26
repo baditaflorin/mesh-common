@@ -10,6 +10,8 @@ export type MeshAppBarProps = {
   eyebrow?: ReactNode;
   /** Honest room state. It is deliberately small so it never becomes a blank screen. */
   state?: MeshAppBarState;
+  /** Optional semantic location trail. It replaces the duplicate title text. */
+  breadcrumbs?: ReactNode;
   /** Compact, keyboard-accessible actions such as Invite and Settings. */
   actions?: ReactNode;
   className?: string;
@@ -32,6 +34,7 @@ export function MeshAppBar({
   title,
   eyebrow = "Mesh",
   state,
+  breadcrumbs,
   actions,
   className,
 }: MeshAppBarProps) {
@@ -39,7 +42,11 @@ export function MeshAppBar({
     <div className={`mesh-app-bar ${className ?? ""}`}>
       <div className="mesh-app-bar-brand">
         <span className="mesh-app-bar-eyebrow">{eyebrow}</span>
-        <span className="mesh-app-bar-title">{title}</span>
+        {breadcrumbs ? (
+          <div className="mesh-app-bar-breadcrumbs">{breadcrumbs}</div>
+        ) : (
+          <span className="mesh-app-bar-title">{title}</span>
+        )}
         {state ? (
           <span
             className={`mesh-app-bar-state mesh-app-bar-state--${state}`}

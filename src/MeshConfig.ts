@@ -19,6 +19,23 @@ export type MeshVisualProfileName =
 /** How shared shell chrome coexists with an app's own first viewport. */
 export type MeshShellLayout = "overlay" | "inset";
 
+export type MeshBreadcrumbConfigItem = {
+  /** Human-facing location label. The final item is the current location. */
+  label: string;
+  /** Optional native destination for a non-current location. */
+  href?: string;
+};
+
+export type MeshBreadcrumbsConfig = {
+  /** Ordered from the broadest location to the current location. */
+  items: readonly MeshBreadcrumbConfigItem[];
+  /** Accessible landmark label. Defaults to the product's location trail. */
+  ariaLabel?: string;
+};
+
+/** `false` keeps the trail out of an app until it has real navigation state. */
+export type MeshBreadcrumbsOption = false | MeshBreadcrumbsConfig;
+
 export type MeshConfig = {
   /** Stable repository/storage identifier, e.g. `mesh-queue`. */
   appName: string;
@@ -37,6 +54,11 @@ export type MeshConfig = {
    * real first row for the shared product bar. Optional for legacy literals.
    */
   shellLayout?: MeshShellLayout;
+  /**
+   * Optional location trail for modern shared chrome. Existing literal config
+   * objects remain valid, while new configs resolve to `false` by default.
+   */
+  breadcrumbs?: MeshBreadcrumbsOption;
   storagePrefix: string;
   description: string;
   accentHex: string;
@@ -62,6 +84,11 @@ export type MeshConfigInput = {
    * Omit this while migrating an existing app to preserve its current shell.
    */
   shellLayout?: MeshShellLayout;
+  /**
+   * Starts disabled so a single-view app never gains pretend navigation.
+   * Enable only with a real ordered trail, for example `Lobby › Round`.
+   */
+  breadcrumbs?: MeshBreadcrumbsOption;
   description: string;
   accentHex: string;
   version: string;
@@ -294,6 +321,7 @@ export function createMeshConfig(input: MeshConfigInput): MeshConfig {
     // scaffolded apps set `inset` explicitly; existing apps opt in as they
     // receive a deliberate visual pass.
     shellLayout: input.shellLayout,
+    breadcrumbs: input.breadcrumbs ?? false,
     storagePrefix,
     description: input.description,
     accentHex: input.accentHex,

@@ -41,6 +41,7 @@ describe("createMeshConfig defaults", () => {
     expect(c.displayName).toBe("2FA Bridge");
     expect(c.visualProfile).toBe("utility");
     expect(c.shellLayout).toBeUndefined();
+    expect(c.breadcrumbs).toBe(false);
   });
 });
 
@@ -99,6 +100,22 @@ describe("createMeshConfig URL derivation", () => {
 });
 
 describe("createMeshConfig overrides", () => {
+  it("keeps an explicit breadcrumb trail for a modern app", () => {
+    const c = createMeshConfig({
+      appName: "mesh-foo",
+      breadcrumbs: {
+        items: [{ label: "Workspace", href: "./" }, { label: "Review" }],
+      },
+      description: "x",
+      accentHex: "#abc",
+      version: "0.1.0",
+      commit: "abc",
+    });
+    expect(c.breadcrumbs).toEqual({
+      items: [{ label: "Workspace", href: "./" }, { label: "Review" }],
+    });
+  });
+
   it("accepts explicit signaling override", () => {
     const c = createMeshConfig({
       appName: "mesh-foo",

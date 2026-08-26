@@ -46,6 +46,11 @@ export {
   type MeshAppBarState,
 } from "./MeshAppBar";
 export {
+  MeshBreadcrumbs,
+  type MeshBreadcrumbItem,
+  type MeshBreadcrumbsProps,
+} from "./MeshBreadcrumbs";
+export {
   MeshVisualProfileProvider,
   MESH_VISUAL_PROFILES,
   meshVisualProfiles,

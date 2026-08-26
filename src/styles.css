@@ -285,6 +285,101 @@
   text-overflow: ellipsis;
 }
 
+.mesh-app-bar-breadcrumbs {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.mesh-breadcrumbs {
+  min-width: 0;
+  color: var(--mesh-muted);
+}
+
+.mesh-breadcrumbs-list {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.mesh-breadcrumbs-list::-webkit-scrollbar {
+  display: none;
+}
+
+.mesh-breadcrumbs-item {
+  display: inline-flex;
+  min-width: 0;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mesh-breadcrumbs-separator {
+  color: var(--mesh-muted);
+  opacity: 0.64;
+}
+
+.mesh-breadcrumbs-link,
+.mesh-breadcrumbs-button,
+.mesh-breadcrumbs-current {
+  overflow: hidden;
+  max-width: min(24rem, 58vw);
+  color: var(--mesh-fg);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 670;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mesh-breadcrumbs-link,
+.mesh-breadcrumbs-button {
+  color: var(--mesh-muted);
+  text-decoration: none;
+}
+
+.mesh-breadcrumbs-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mesh-breadcrumbs-link:hover,
+.mesh-breadcrumbs-button:hover {
+  color: var(--mesh-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.mesh-breadcrumbs-button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.mesh-breadcrumbs--compact .mesh-breadcrumbs-list {
+  gap: 0.3rem;
+}
+
+.mesh-breadcrumbs--compact .mesh-breadcrumbs-item {
+  gap: 0.3rem;
+}
+
+.mesh-breadcrumbs--compact .mesh-breadcrumbs-link,
+.mesh-breadcrumbs--compact .mesh-breadcrumbs-button,
+.mesh-breadcrumbs--compact .mesh-breadcrumbs-current {
+  font-size: 0.76rem;
+}
+
 .mesh-app-bar-state {
   display: inline-flex;
   flex: 0 0 auto;
@@ -2050,6 +2145,9 @@
 .mesh-app-frame-navigation {
   flex-wrap: wrap;
   margin: 0 0 1rem;
+}
+.mesh-app-frame-breadcrumbs {
+  margin: 0 0 0.85rem;
 }
 .mesh-app-frame-main {
   min-width: 0;
