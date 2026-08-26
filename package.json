@@ -24,6 +24,7 @@
   "bin": {
     "create-mesh-app": "./scaffold/create-mesh-app.sh",
     "mesh-across": "./scripts/across.sh",
+    "mesh-breadcrumbs": "./scripts/add-breadcrumbs-config.mjs",
     "mesh-privacy": "./scripts/generate-privacy-section.mjs"
   },
   "scripts": {

@@ -4,6 +4,7 @@ import { MeshConnectionStatus } from "./MeshConnectionStatus";
 import { MeshShell } from "./MeshShell";
 import { useOptionalMeshApp } from "./MeshAppProvider";
 import type { YRoom } from "./useYRoom";
+import { MeshBreadcrumbs, type MeshBreadcrumbItem } from "./ui/MeshBreadcrumbs";
 
 type ContractLifecycleState =
   "loading" | "joining" | "connected" | "offline" | "error";
@@ -43,6 +44,8 @@ export type MeshAppFrameProps = {
   /** Content shown before the standard title block, such as a compact score. */
   eyebrow?: ReactNode;
   actions?: ReactNode;
+  /** A real feature location trail, shown before the page header. */
+  breadcrumbs?: readonly MeshBreadcrumbItem[];
   navigation?: ReactNode;
   footer?: ReactNode;
   /** `undefined` uses the provider's compact connection status; `false` hides it. */
@@ -69,6 +72,7 @@ export function MeshAppFrame({
   description,
   eyebrow,
   actions,
+  breadcrumbs,
   navigation,
   footer,
   connection,
@@ -101,6 +105,12 @@ export function MeshAppFrame({
 
   const frame = (
     <div className={`mesh-app-frame ${className ?? ""}`}>
+      {breadcrumbs && breadcrumbs.length > 0 ? (
+        <MeshBreadcrumbs
+          className="mesh-app-frame-breadcrumbs"
+          items={breadcrumbs}
+        />
+      ) : null}
       {hasHeading ? (
         <header className="mesh-app-frame-header">
           <div className="mesh-app-frame-heading">

@@ -1,6 +1,9 @@
 export type {
   MeshConfig,
   MeshConfigInput,
+  MeshBreadcrumbConfigItem,
+  MeshBreadcrumbsConfig,
+  MeshBreadcrumbsOption,
   MeshShellLayout,
   MeshVisualProfileName,
 } from "./MeshConfig";
