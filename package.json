@@ -43,7 +43,7 @@
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "typescript": "^5.9.0",
-    "vitest": "^4.1.6",
+    "vitest": "4.1.11",
     "y-webrtc": "^10.3.0",
     "yjs": "^13.6.27"
   },
@@ -78,5 +78,9 @@
     "react-day-picker": "^9.4.0",
     "sonner": "^1.7.1",
     "zod": "^4.4.3"
+  },
+  "overrides": {
+    "@vitest/mocker": "4.1.11",
+    "undici": "7.29.1"
   }
 }
