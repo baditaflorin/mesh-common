@@ -30,6 +30,15 @@
 
 ### Added
 
+- `defineInteractiveArtifact` / `parseInteractiveArtifact` for strict,
+  versioned, public-only interactive-artwork manifests; `useArtworkTarget`
+  normalizes QR, marker, and adapter-provided reference-image detections with
+  confidence and stale-tracking bounds.
+- `useMicrophone`, `useSpeechSynthesis`, and `useVoiceTurn` for explicit
+  microphone lifecycle, browser-native speech output, and an abortable,
+  provider-neutral local conversation turn. They intentionally do not ship
+  AI-provider keys, model prompts, analytics, or visitor persistence.
+
 - **Visual foundation for product-quality first views:** `createMeshConfig`
   now separates a stable `appName` from a human `displayName` and optional
   `visualProfile`. `MeshAppBar`, `MeshVisualProfileProvider`, `MeshSurface`,
