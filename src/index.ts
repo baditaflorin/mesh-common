@@ -721,6 +721,42 @@ export {
   type SharedBingoCell,
 } from "./useSharedBingoBoard";
 
+// ---- seventeenth primitive wave: interactive artifacts + voice (2026-10) ----
+export {
+  defineInteractiveArtifact,
+  parseInteractiveArtifact,
+  InteractiveArtifactSchema,
+  type InteractiveArtifact,
+} from "./interactiveArtifact";
+export {
+  useMicrophone,
+  type MicrophoneApi,
+  type MicrophoneOptions,
+  type MicrophoneStatus,
+} from "./useMicrophone";
+export {
+  useSpeechSynthesis,
+  type SpeakOptions,
+  type SpeechSynthesisApi,
+  type SpeechSynthesisStatus,
+} from "./useSpeechSynthesis";
+export {
+  useVoiceTurn,
+  type VoiceTurn,
+  type VoiceTurnAdapter,
+  type VoiceTurnApi,
+  type VoiceTurnOptions,
+  type VoiceTurnStatus,
+} from "./useVoiceTurn";
+export {
+  useArtworkTarget,
+  type ArtworkDetection,
+  type ArtworkTarget,
+  type ArtworkTargetKind,
+  type ArtworkTargetOptions,
+  type ArtworkTargetState,
+} from "./useArtworkTarget";
+
 // ---- first-wave collection, coordination, and browser primitives (2026-08) ----
 export {
   useSharedCollection,
