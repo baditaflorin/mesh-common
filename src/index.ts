@@ -596,6 +596,24 @@ export {
 export { useSharedForm, type SharedForm } from "./useSharedForm";
 export { useMediaRecorder, type MediaRecorderState } from "./useMediaRecorder";
 export { useScreenShare, type ScreenShareState } from "./useScreenShare";
+export {
+  useMediaRoom,
+  type MediaRoomStatus,
+  type MediaRoomPeer,
+  type MediaRoomEvent,
+  type MediaRoomJoinOptions,
+  type MediaRoomSession,
+  type MediaRoomTransport,
+  type UseMediaRoomOptions,
+  type MediaRoomState,
+} from "./mediaRoom";
+export {
+  useMediaDiagnostics,
+  summarizeMediaStats,
+  type MediaDiagnosticsSnapshot,
+  type MediaDiagnosticsOptions,
+  type MediaDiagnosticsState,
+} from "./mediaDiagnostics";
 
 // ---- eighth primitive wave: group coordination + local capture (2026-08) ----
 export {

@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Added
+
+- Added `MediaRoomTransport` and `useMediaRoom` for transport-neutral live
+  media sessions with explicit join, publish, unpublish, and leave controls.
+  Added `useMediaDiagnostics` and `summarizeMediaStats` for compact WebRTC
+  bitrate, packet-loss, jitter, and RTT measurements. Signaling and SFU routing
+  remain supplied by an app transport.
+
 ### Fixed
 
 - Fixed `useScheduledCue.scheduleIn()` rejecting a delay exactly equal to `minLeadMs` when a shared clock advanced between internal reads. A one-second cue can now be scheduled reliably at its configured one-second minimum.

@@ -8,6 +8,11 @@ validated shared coordination surfaces.
 `useImageCapture`, `useMediaRecorder`, and `useScreenShare` wrap browser
 capture lifecycles without acquiring a stream or sending media anywhere on
 their own.
+`useMediaRoom` provides the transport-neutral live-room lifecycle, while
+`MediaRoomTransport` lets an app supply its own signaling or SFU client.
+`useMediaDiagnostics` samples connection quality without taking ownership of
+the peer connection. These primitives do not include a signaling server or
+media relay.
 
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 [![version](https://img.shields.io/badge/version-0.1.0-blue)](./package.json)
@@ -179,6 +184,11 @@ does this by default. `MeshThemeProvider` exposes `meshLightThemeTokens`,
   `MeshMediaFlowState` and `MeshMediaFlow`, so sensitive media work remains
   explicit, cancellable, and never opens a camera merely from persisted
   consent.
+  `useMediaRoom` adds explicit join/publish/unpublish/leave controls around an
+  injected `MediaRoomTransport`; the transport owns signaling and routing.
+  `useMediaDiagnostics` reports bitrate, packet loss, jitter, and RTT from a
+  transport-owned `RTCPeerConnection`. Existing `useScreenShare` and
+  `useMicrophone` remain responsible for user-gesture capture.
 - **Shared flow primitives:** `MeshCountdown`, `MeshCueBanner`,
   `formatMeshDuration`, and `meshCueMessage` keep timed moments readable and
   in sync without announcing every visual tick. `defineSharedEntity` creates
