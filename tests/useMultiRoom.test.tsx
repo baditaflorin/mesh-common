@@ -79,11 +79,64 @@ describe("useMultiRoom", () => {
     await act(async () => {
       await new Promise((r) => setTimeout(r, 50));
     });
+    const alphaBefore = result.current.active!;
+    let alphaDestroyed = false;
+    alphaBefore.doc.on("destroy", () => {
+      alphaDestroyed = true;
+    });
+    alphaBefore.doc.getMap("notes").set("n1", "kept");
     act(() => result.current.add("gamma"));
     await act(async () => {
       await new Promise((r) => setTimeout(r, 50));
     });
     expect(result.current.rooms.map((r) => r.roomId).sort()).toEqual(["alpha", "gamma"]);
+    // Same live doc and peer, with its data — not a fresh, empty replacement.
+    const alphaAfter = result.current.rooms.find((r) => r.roomId === "alpha")!.room!;
+    expect(alphaDestroyed).toBe(false);
+    expect(alphaAfter.doc).toBe(alphaBefore.doc);
+    expect(alphaAfter.peerId).toBe(alphaBefore.peerId);
+    expect(alphaAfter.doc.getMap("notes").get("n1")).toBe("kept");
+  });
+
+  it("remove tears down only the removed room", async () => {
+    const { result } = renderHook(() => useMultiRoom(config, ["alpha", "beta"]));
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 50));
+    });
+    const alpha = result.current.rooms.find((r) => r.roomId === "alpha")!.room!;
+    const beta = result.current.rooms.find((r) => r.roomId === "beta")!.room!;
+    const destroyed: string[] = [];
+    alpha.doc.on("destroy", () => destroyed.push("alpha"));
+    beta.doc.on("destroy", () => destroyed.push("beta"));
+    act(() => result.current.remove("alpha"));
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 50));
+    });
+    expect(destroyed).toEqual(["alpha"]);
+    expect(result.current.rooms[0]!.room!.doc).toBe(beta.doc);
+  });
+
+  it("unmount tears down every room", async () => {
+    const { result, unmount } = renderHook(() => useMultiRoom(config, ["alpha", "beta"]));
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 50));
+    });
+    const destroyed: string[] = [];
+    for (const r of result.current.rooms) r.room!.doc.on("destroy", () => destroyed.push(r.roomId));
+    unmount();
+    expect(destroyed.sort()).toEqual(["alpha", "beta"]);
+  });
+
+  it("a room removed while booting is not resurrected", async () => {
+    const { result } = renderHook(() => useMultiRoom(config, ["alpha"]));
+    act(() => {
+      result.current.add("gamma");
+    });
+    act(() => result.current.remove("gamma"));
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 50));
+    });
+    expect(result.current.rooms.map((r) => r.roomId)).toEqual(["alpha"]);
   });
 
   it("setActive(new) adds + activates", async () => {

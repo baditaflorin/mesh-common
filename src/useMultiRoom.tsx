@@ -67,6 +67,13 @@ export function useMultiRoom(
   const [entries, setEntries] = useState<Record<string, YRoom | null>>({});
   const syncs = useRef<Map<string, Sync>>(new Map());
   const detachPeerListeners = useRef<Map<string, () => void>>(new Map());
+  // Rooms that should be live right now; a boot that finishes after its room
+  // was removed must not resurrect it.
+  const wanted = useRef<Set<string>>(new Set());
+  // Bumped on unmount and on endpoint changes so in-flight boots bail out.
+  const generation = useRef(0);
+  // roomId -> generation of the boot in flight, so one room never boots twice.
+  const booting = useRef<Map<string, number>>(new Map());
 
   const s = useMemo(
     () =>
@@ -76,20 +83,60 @@ export function useMultiRoom(
       }),
     [config.storagePrefix, config.signalingUrl, config.turnTokenUrl],
   );
+  const endpoints = `${config.storagePrefix}|${ensureSafe(config)}`;
+
+  const teardownRoom = (roomId: string) => {
+    const sync = syncs.current.get(roomId);
+    if (!sync) return;
+    detachPeerListeners.current.get(roomId)?.();
+    detachPeerListeners.current.delete(roomId);
+    try {
+      sync.provider?.destroy();
+      sync.doc.destroy();
+    } catch {
+      // ignore teardown errors
+    }
+    syncs.current.delete(roomId);
+    setEntries((prev) => {
+      const next = { ...prev };
+      delete next[roomId];
+      return next;
+    });
+  };
+
+  // Effect: own every room's lifetime. Rooms are torn down only on unmount
+  // or when the endpoints change (which re-boots them), never just because
+  // another room was added or removed.
+  useEffect(() => {
+    return () => {
+      generation.current += 1;
+      booting.current.clear();
+      for (const id of Array.from(syncs.current.keys())) teardownRoom(id);
+    };
+  }, [endpoints, s]);
 
   // Effect: keep the set of live syncs in sync with `roomIds`.
   useEffect(() => {
-    let disposed = false;
+    wanted.current = new Set(roomIds);
 
     const ensureRoom = async (roomId: string) => {
-      if (syncs.current.has(roomId)) return;
-      await maybeFetchTurnCredentials(s);
-      if (disposed) return;
+      const gen = generation.current;
+      if (syncs.current.has(roomId) || booting.current.get(roomId) === gen) return;
+      booting.current.set(roomId, gen);
+      try {
+        await maybeFetchTurnCredentials(s);
+      } finally {
+        if (booting.current.get(roomId) === gen) booting.current.delete(roomId);
+      }
+      // Unmounted, endpoints changed, room removed, or already booted meanwhile.
+      if (gen !== generation.current || !wanted.current.has(roomId) || syncs.current.has(roomId)) {
+        return;
+      }
       const sync = createRoomSync(config.storagePrefix, roomId, s);
       syncs.current.set(roomId, sync);
 
       const refresh = () => {
-        if (disposed) return;
+        if (syncs.current.get(roomId) !== sync) return;
         const provider = sync.provider as PeerAwareProvider | null;
         const peerCount = getKnownPeerCount(provider);
         setEntries((prev) => ({
@@ -115,39 +162,16 @@ export function useMultiRoom(
       });
     };
 
-    const teardownRoom = (roomId: string) => {
-      const sync = syncs.current.get(roomId);
-      if (!sync) return;
-      detachPeerListeners.current.get(roomId)?.();
-      detachPeerListeners.current.delete(roomId);
-      try {
-        sync.provider?.destroy();
-        sync.doc.destroy();
-      } catch {
-        // ignore teardown errors
-      }
-      syncs.current.delete(roomId);
-      setEntries((prev) => {
-        const next = { ...prev };
-        delete next[roomId];
-        return next;
-      });
-    };
-
     // Boot any new rooms.
     for (const id of roomIds) void ensureRoom(id);
 
-    // Tear down any rooms that have been removed.
+    // Tear down only the rooms that have been removed.
     for (const id of Array.from(syncs.current.keys())) {
       if (!roomIds.includes(id)) teardownRoom(id);
     }
-
-    return () => {
-      disposed = true;
-      for (const id of Array.from(syncs.current.keys())) teardownRoom(id);
-    };
-    // Note: include all referenced config bits so a config change re-boots.
-  }, [roomIds, config.storagePrefix, s, ensureSafe(config)]);
+    // Note: include all referenced config bits so a config change re-boots
+    // (the lifetime effect above has already torn the old rooms down).
+  }, [roomIds, endpoints, s]);
 
   const setActive = useCallback((roomId: string) => {
     setActiveId(roomId);
