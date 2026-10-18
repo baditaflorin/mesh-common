@@ -73,7 +73,7 @@ function sortKeysDeep(value: unknown): unknown {
  * aren't also top-level key names of `payload` silently serializes as `{}`.
  * That previously meant `signPayload`/`hashPayload` on a wrapped payload like
  * `{ payload: {amount, item}, peerId, ts }` (the shape `useSignedWrite`
- * always uses) never actually covered `payload`'s contents — a peer could
+ * signed at the time) never actually covered `payload`'s contents — a peer could
  * swap the real data without invalidating the signature. Building a fully
  * sorted plain object first and stringifying it with no replacer avoids that
  * trap entirely.
