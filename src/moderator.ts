@@ -29,6 +29,9 @@ import { usePeerRegistry, type PeerRegistry } from "./tofuRegistry";
 
 export const DEFAULT_MODERATOR_TTL_MS = 30 * 60 * 1000;
 
+/** How far in the future a claim's `claimedAt` may be, to absorb clock skew. */
+const MAX_CLAIM_CLOCK_SKEW_MS = 5 * 60 * 1000;
+
 export type ModeratorClaim = {
   peerId: string;
   pubkey: string;
@@ -67,8 +70,13 @@ function randomNonce(): string {
   return Array.from(buf, (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-function verifyClaim(c: ModeratorClaim, registry: PeerRegistry): boolean {
+function verifyClaim(c: ModeratorClaim, registry: PeerRegistry, ttlMs: number): boolean {
   if (!c || !c.pubkey || !c.sig) return false;
+  // The claimant picks its own timestamps, so bound them: a claim may last
+  // at most one TTL and may not start in the future (beyond clock skew).
+  if (!Number.isFinite(c.claimedAt) || !Number.isFinite(c.expiresAt)) return false;
+  if (c.expiresAt <= c.claimedAt || c.expiresAt - c.claimedAt > ttlMs) return false;
+  if (c.claimedAt > nowMs() + MAX_CLAIM_CLOCK_SKEW_MS) return false;
   // The claim must be self-signed (the pubkey field IS the verifier key)
   const ok = verifyPayload(
     {
@@ -84,17 +92,21 @@ function verifyClaim(c: ModeratorClaim, registry: PeerRegistry): boolean {
   if (!ok) return false;
   // Additionally check that the registry-recorded pubkey for this peerId
   // matches — i.e., this peer is who they claim to be in our TOFU view.
+  // Fail closed: null means unknown or a TOFU mismatch, and both are
+  // rejected. `claim()` publishes the registry entry in the same update, so
+  // an honest first claim is never in the "unknown" state.
   const registered = registry.getPubkey(c.peerId);
-  // If unregistered (peer hasn't published yet), accept self-signed for now
-  // — this is the bootstrap case for the very first moderator.
-  if (registered && registered !== c.pubkey) return false;
-  return true;
+  return registered !== null && registered === c.pubkey;
 }
 
 export type UseModeratorOptions = {
   /** TTL in ms (default 30 minutes). After this, the slot is treated as vacant. */
   ttlMs?: number;
-  /** Auto-register this peer in the TOFU registry on first claim. Default true. */
+  /**
+   * Auto-register this peer in the TOFU registry on first claim. Default true.
+   * With false, the app must register the peer itself: claims from peers
+   * without a registry entry are rejected.
+   */
   autoRegister?: boolean;
 };
 
@@ -140,7 +152,7 @@ export function useModerator(
 
   const slot = room.doc.getMap<ModeratorClaim>("__mesh_moderator");
   const raw = slot.get("current") ?? null;
-  const valid = raw && verifyClaim(raw, registry) ? raw : null;
+  const valid = raw && verifyClaim(raw, registry, ttlMs) ? raw : null;
   const expired = valid ? valid.expiresAt <= nowMs() : true;
   const current = expired ? null : valid;
   const isMe = !!current && current.peerId === room.peerId;
@@ -148,7 +160,6 @@ export function useModerator(
 
   const claim = () => {
     if (current && !expired) return; // someone else still holds it
-    if (autoRegister) registry.register(room.peerId, identity.pubkey, identity.sign);
     const claimedAt = nowMs();
     const payload = {
       peerId: room.peerId,
@@ -160,8 +171,13 @@ export function useModerator(
     const sig = identity.sign(payload);
     // Partition-aware tiebreak: lower claimedAt wins. If an existing claim
     // arrives later via merge, our local view will switch only if their
-    // claimedAt is lower. CRDT merge handles the rest.
-    slot.set("current", { ...payload, sig });
+    // claimedAt is lower. CRDT merge handles the rest. The registry entry
+    // rides in the same update so peers never see the claim before the
+    // claimant's pubkey.
+    room.doc.transact(() => {
+      if (autoRegister) registry.register(room.peerId, identity.pubkey, identity.sign);
+      slot.set("current", { ...payload, sig });
+    });
   };
 
   const relinquish = () => {

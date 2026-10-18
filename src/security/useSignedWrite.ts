@@ -1,7 +1,31 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { verifyPayload, type Identity } from "../identity";
 import { usePeerRegistry } from "../tofuRegistry";
 import type { YRoom } from "../useYRoom";
+
+/** Domain tag mixed into every signature so it cannot verify in another context. */
+const SIGNED_WRITE_DOMAIN = "mesh-common/signed-write/v2";
+
+/**
+ * What actually gets signed. Binding the room, map and entry key means a
+ * valid record copied to another key, map or room no longer verifies.
+ */
+function signedEnvelope<T>(
+  roomId: string,
+  map: string,
+  innerKey: string,
+  rec: { payload: T; peerId: string; ts: number },
+) {
+  return {
+    domain: SIGNED_WRITE_DOMAIN,
+    room: roomId,
+    map,
+    key: innerKey,
+    payload: rec.payload,
+    peerId: rec.peerId,
+    ts: rec.ts,
+  };
+}
 
 export type SignedRecord<T> = {
   /** Payload chosen by the app. */
@@ -40,6 +64,11 @@ export type SignedWriter<T> = {
  *
  * The Y.Map stores `SignedRecord<T>` values; verification happens at read
  * time so a hostile peer cannot forge a record without the pubkey.
+ *
+ * Verification fails closed: a record only verifies when the author has a
+ * registry entry whose pinned pubkey matches the record's, and the signature
+ * covers this room, map and entry key. Records signed by mesh-common before
+ * this envelope existed no longer verify.
  */
 export function useSignedWrite<T>(
   room: YRoom | null,
@@ -49,6 +78,9 @@ export function useSignedWrite<T>(
   // NB: storagePrefix arg added to usePeerRegistry by a parallel refactor;
   // we pass the Y-doc-key as a stable namespace until callers pass their own.
   const registry = usePeerRegistry(room, key);
+  // The registry object is rebuilt every render; keep setSigned stable.
+  const registryRef = useRef(registry);
+  registryRef.current = registry;
 
   // Register self in TOFU once identity + room are available.
   useEffect(() => {
@@ -64,8 +96,9 @@ export function useSignedWrite<T>(
     (innerKey: string, payload: T) => {
       if (!room || !identity) return;
       const ts = Date.now();
-      const payloadWithMeta = { payload, peerId: room.peerId, ts };
-      const sig = identity.sign(payloadWithMeta);
+      const sig = identity.sign(
+        signedEnvelope(room.roomId, key, innerKey, { payload, peerId: room.peerId, ts }),
+      );
       const record: SignedRecord<T> = {
         payload,
         sig,
@@ -73,7 +106,16 @@ export function useSignedWrite<T>(
         peerId: room.peerId,
         ts,
       };
-      room.doc.getMap<SignedRecord<T>>(key).set(innerKey, record);
+      // Readers reject records from unregistered authors, so publish our
+      // registry entry in the same update as the record.
+      room.doc.transact(() => {
+        try {
+          registryRef.current.register(room.peerId, identity.pubkey, identity.sign);
+        } catch {
+          /* registry not ready */
+        }
+        room.doc.getMap<SignedRecord<T>>(key).set(innerKey, record);
+      });
     },
     [room, identity, key],
   );
@@ -88,16 +130,19 @@ export function useSignedWrite<T>(
 
   const getVerified = useCallback(
     (innerKey: string): T | null => {
+      if (!room) return null;
       const rec = getRecord(innerKey);
       if (!rec) return null;
-      const payloadWithMeta = { payload: rec.payload, peerId: rec.peerId, ts: rec.ts };
-      if (!verifyPayload(payloadWithMeta, rec.sig, rec.pubkey)) return null;
-      // Enforce TOFU: pubkey must match what we first saw for this peer.
+      const envelope = signedEnvelope(room.roomId, key, innerKey, rec);
+      if (!verifyPayload(envelope, rec.sig, rec.pubkey)) return null;
+      // Enforce TOFU, failing closed: the author must have a registry entry
+      // and its pinned pubkey must be the one that signed this record. A
+      // null lookup means unknown or mismatched, and both are rejected.
       const pinnedPubkey = registry.getPubkey(rec.peerId);
-      if (pinnedPubkey && pinnedPubkey !== rec.pubkey) return null;
+      if (pinnedPubkey === null || pinnedPubkey !== rec.pubkey) return null;
       return rec.payload;
     },
-    [getRecord, registry],
+    [room, key, getRecord, registry],
   );
 
   const verifiedEntries = useCallback((): Array<[string, T]> => {
