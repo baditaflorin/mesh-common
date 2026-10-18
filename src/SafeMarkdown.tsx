@@ -1,6 +1,6 @@
 import { useMemo, type CSSProperties, type ReactElement } from "react";
-import { marked } from "marked";
-import { safeText } from "./security/safeText";
+import { Marked } from "marked";
+import { safeUrl } from "./security/safeUrl";
 
 /**
  * Markdown renderer for chat / notes / decision logs. Backed by `marked`
@@ -10,9 +10,9 @@ import { safeText } from "./security/safeText";
  * for chat-shaped markdown, an allow-list of tags + attributes is enough:
  *
  *   allowed tags: p, br, strong, em, code, pre, blockquote, ul, ol, li, h1..h6, hr,
- *                 a (href only, scheme-validated), del, span (class only)
+ *                 a (href only, scheme-allowlisted), del, span (class only)
  *   stripped: script, style, iframe, object, embed, link, meta, on* attrs,
- *             javascript:/data: URLs (except data:image), srcset, etc.
+ *             any link whose parsed scheme is not http/https/mailto/tel, srcset, etc.
  *
  * If you need raw HTML pass-through, use a different renderer. If you need
  * tables/footnotes/etc., enable the `gfm` flag (default off — keeps the
@@ -40,6 +40,23 @@ const ALLOWED_ATTRS: Record<string, ReadonlyArray<string>> = {
   span: ["class"],
 };
 
+// Links are checked on the URL the browser will actually navigate to, not on
+// the raw attribute text: a scheme regex misses `jav&#x09;ascript:` and
+// leading control characters, which the URL parser strips.
+const LINK_SCHEMES = ["http:", "https:", "mailto:", "tel:"];
+
+// A private instance, so our options never leak into (or get changed by)
+// other code on the page that uses the global `marked`.
+const parsers = new Map<boolean, Marked>();
+function parserFor(gfm: boolean): Marked {
+  let parser = parsers.get(gfm);
+  if (!parser) {
+    parser = new Marked({ gfm, breaks: true, async: false });
+    parsers.set(gfm, parser);
+  }
+  return parser;
+}
+
 function sanitizeHtml(html: string): string {
   if (typeof document === "undefined") return ""; // SSR: just drop it
   const tmpl = document.createElement("template");
@@ -59,17 +76,13 @@ function sanitizeHtml(html: string): string {
           continue;
         }
         if (tag === "a" && attr.name === "href") {
-          const safe = safeText(attr.value); // overkill but cheap
-          void safe;
-          const v = attr.value.trim();
-          // Block dangerous schemes; allow http(s), mailto, tel, relative, hash.
-          if (
-            /^javascript:/i.test(v) ||
-            (/^data:/i.test(v) && !/^data:image\//i.test(v)) ||
-            /^vbscript:/i.test(v)
-          ) {
+          // Relative and hash links resolve against the page, so they pass
+          // as http(s); everything else must parse to an allowed scheme.
+          const safe = safeUrl(attr.value, { allowSchemes: LINK_SCHEMES });
+          if (!safe) {
             node.removeAttribute("href");
           } else {
+            node.setAttribute("href", safe);
             node.setAttribute("rel", "noopener noreferrer");
             node.setAttribute("target", "_blank");
           }
@@ -87,8 +100,8 @@ function sanitizeHtml(html: string): string {
 }
 
 export function renderMarkdownToSafeHtml(source: string, gfm = false, inline = false): string {
-  marked.setOptions({ gfm, breaks: true, async: false });
-  const raw = inline ? marked.parseInline(source) : marked.parse(source);
+  const parser = parserFor(gfm);
+  const raw = inline ? parser.parseInline(source) : parser.parse(source);
   if (typeof raw !== "string") return "";
   return sanitizeHtml(raw);
 }

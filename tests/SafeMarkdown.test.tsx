@@ -12,7 +12,7 @@ describe("renderMarkdownToSafeHtml", () => {
 
   it("preserves safe links and adds rel/target", () => {
     const html = renderMarkdownToSafeHtml("[ok](https://example.com)");
-    expect(html).toContain('href="https://example.com"');
+    expect(html).toContain('href="https://example.com/"');
     expect(html).toContain('rel="noopener noreferrer"');
     expect(html).toContain('target="_blank"');
   });
@@ -29,6 +29,50 @@ describe("renderMarkdownToSafeHtml", () => {
     expect(bad).not.toContain("data:text/html");
     // The renderer doesn't currently produce <img> from markdown text by default in this minimal config —
     // we just verify it doesn't accept data:text/* on anchors.
+  });
+
+  // Obfuscated schemes that a regex on the raw attribute misses but the
+  // browser's URL parser still resolves to a script-capable scheme.
+  const hostileLinks = [
+    "[x](jav&#x09;ascript:alert(1))",
+    "[x](java&#10;script:alert(1))",
+    "[x](javascript&colon;alert(1))",
+    "[x](JaVaScRiPt:alert(1))",
+    "[x](data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=)",
+    "[x](data:text/html,<script>alert(1)</script>)",
+    '<a href="&#x01;javascript:alert(1)">x</a>',
+    '<a href="&#x00;javascript:alert(1)">x</a>',
+    '<a href=" javascript:alert(1)">x</a>',
+    '<a href="jav&#x0D;ascript:alert(1)">x</a>',
+    '<a href="vbscript:msgbox(1)">x</a>',
+    '<a href="blob:https://example.com/uuid">x</a>',
+    '<a href="file:///etc/passwd">x</a>',
+  ];
+  const allowed = new Set(["http:", "https:", "mailto:", "tel:"]);
+
+  it.each(hostileLinks)("never emits a link outside http/https/mailto/tel: %s", (src) => {
+    const tmpl = document.createElement("template");
+    tmpl.innerHTML = renderMarkdownToSafeHtml(src);
+    for (const a of Array.from(tmpl.content.querySelectorAll("a[href]"))) {
+      const href = a.getAttribute("href") ?? "";
+      expect(allowed.has(new URL(href, window.location.href).protocol)).toBe(true);
+    }
+  });
+
+  it.each([
+    ["[mail](mailto:a@example.com)", "mailto:a@example.com"],
+    ["[call](tel:+40123456)", "tel:+40123456"],
+    ["[rel](/docs/page)", new URL("/docs/page", window.location.href).toString()],
+  ])("keeps a legitimate link: %s", (src, expected) => {
+    expect(renderMarkdownToSafeHtml(src)).toContain(`href="${expected}"`);
+  });
+
+  it("does not change the global marked options", async () => {
+    const { marked } = await import("marked");
+    marked.setOptions({ breaks: false, gfm: false });
+    renderMarkdownToSafeHtml("a\nb", true);
+    expect(marked.defaults.breaks).toBe(false);
+    expect(marked.defaults.gfm).toBe(false);
   });
 
   it("strips disallowed tags (e.g. <img>)", () => {
