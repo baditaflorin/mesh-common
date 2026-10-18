@@ -3,6 +3,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { SUBPROCESS_TEST_TIMEOUT_MS } from "./timeouts";
 
 type AuditEntry = {
   id: string;
@@ -52,7 +53,7 @@ function renderAudit({
   }
 }
 
-describe("render-security-audit", () => {
+describe("render-security-audit", { timeout: SUBPROCESS_TEST_TIMEOUT_MS }, () => {
   it("describes an app-specific UI audit without inventing a moderator flow", () => {
     const markdown = renderAudit({
       ranUi: true,

@@ -81,6 +81,8 @@
   dropped; DOM tests select jsdom with their `@vitest-environment` docblock. A
   shared setup file runs React Testing Library `cleanup()` after each test, and
   the per-test timeout is 15 s so slow tests do not time out on a loaded host.
+  Tests that spawn node, bash or git, or load the TypeScript compiler, get
+  60 s (`tests/timeouts.ts`).
 - `tsc --noEmit` now type-checks `testing/` and `tests/` as well as `src/`.
 
 ### Added

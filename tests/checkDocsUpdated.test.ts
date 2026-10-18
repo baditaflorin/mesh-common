@@ -5,6 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { afterEach, describe, expect, it } from "vitest";
+import { SUBPROCESS_TEST_TIMEOUT_MS } from "./timeouts";
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 const lister = path.join(repoRoot, "scripts/list-public-exports.mjs");
@@ -80,7 +81,7 @@ function gitFixture(): { cwd: string; base: string } {
   return { cwd, base: commitAll(cwd, "base") };
 }
 
-describe("list-public-exports", () => {
+describe("list-public-exports", { timeout: SUBPROCESS_TEST_TIMEOUT_MS }, () => {
   it("lists multi-line, type-only, aliased, declared and star re-exported names", () => {
     const cwd = fixture({
       "src/index.ts": `export {
@@ -141,7 +142,17 @@ export default 1;
       { ...ts.sys, onUnRecoverableConfigFileDiagnostic: () => {} },
     );
     const entry = path.join(repoRoot, "src/index.ts");
-    const program = ts.createProgram([entry], config?.options ?? {});
+    // Export names need only mesh-common's own modules: src/ re-exports
+    // nothing from packages, so skip lib and node_modules declarations.
+    const options = { ...config?.options, noLib: true, types: [] };
+    const host = ts.createCompilerHost(options);
+    const readSourceFile = host.getSourceFile.bind(host);
+    const srcDirectory = path.join(repoRoot, "src") + path.sep;
+    host.getSourceFile = (fileName, ...rest) =>
+      path.resolve(fileName).startsWith(srcDirectory)
+        ? readSourceFile(fileName, ...rest)
+        : undefined;
+    const program = ts.createProgram({ rootNames: [entry], options, host });
     const checker = program.getTypeChecker();
     const moduleSymbol = checker.getSymbolAtLocation(program.getSourceFile(entry)!);
     const expected = checker
@@ -151,10 +162,10 @@ export default 1;
 
     expect(expected.length).toBeGreaterThan(500);
     expect(listExports(repoRoot)).toEqual(expected);
-  }, 60_000);
+  });
 });
 
-describe("check-docs-updated", () => {
+describe("check-docs-updated", { timeout: SUBPROCESS_TEST_TIMEOUT_MS }, () => {
   it("fails a range that adds an export without README and CHANGELOG updates", () => {
     const { cwd, base } = gitFixture();
     writeFiles(cwd, {
