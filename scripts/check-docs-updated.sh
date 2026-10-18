@@ -5,25 +5,33 @@
 # same commit. Without that, primitives ship silently and apps never learn
 # about them.
 #
-# Wire this into mesh-common/.husky/pre-commit (or run manually):
+# CI (.woodpecker.yml) runs it on every pull request as
+# `--range origin/main..HEAD`. Run it by hand before committing:
 #
 #   bash scripts/check-docs-updated.sh
 #
 # Behavior:
-#   1. Compute set of public idents currently exported from src/index.ts.
-#   2. Compute set from src/index.ts at HEAD (git show).
-#   3. If new idents appeared:
+#   1. List every public name exported from src/index.ts at the new state,
+#      with scripts/list-public-exports.mjs (TypeScript compiler API: sees
+#      multi-line and type-only `export { … }`, declarations and
+#      `export * from` re-exports).
+#   2. List the same at the old state.
+#   3. If new names appeared (names starting with `_` are ignored):
 #       a. Each must be name-mentioned in README.md            → else FAIL
-#       b. CHANGELOG.md must be in the staged diff             → else FAIL
+#       b. CHANGELOG.md must be changed too                    → else FAIL
 #
 # Modes:
-#   --staged   (default) compare working-tree index.ts against HEAD.
-#   --range A..B          compare end of range vs start (for PR review).
+#   --staged   (default) compare working-tree src/ against HEAD.
+#   --range A..B          compare B against merge-base(A, B), as a PR review
+#                         sees it; CI runs `--range origin/main..HEAD`.
+#
+# Needs node and the repo's devDependencies (`npm ci`).
 #
 # Exit codes:
 #   0  no new exports, or all properly documented.
 #   1  new exports missing README mention or CHANGELOG entry.
-#   2  not run from mesh-common root.
+#   2  not run from mesh-common root, missing dependencies, unknown
+#      revision, or src/index.ts could not be parsed.
 #
 set -euo pipefail
 
@@ -31,57 +39,64 @@ if [ ! -f src/index.ts ] || [ ! -f README.md ]; then
   echo "[check-docs-updated] run me from the mesh-common repo root" >&2
   exit 2
 fi
+# The lister and its typescript dependency come from the checkout this
+# script lives in; git state comes from the current directory.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LISTER="$SCRIPT_DIR/list-public-exports.mjs"
+if ! command -v node >/dev/null 2>&1 || [ ! -d "$SCRIPT_DIR/../node_modules/typescript" ]; then
+  echo "[check-docs-updated] needs node and node_modules/typescript; run npm ci" >&2
+  exit 2
+fi
 
 MODE="${1:---staged}"
 
-# Identifier extraction: every `export { … }` or `export function|class|const NAME` line.
-extract_exports() {
-  # stdin = an index.ts file body
-  awk '
-    /^export[[:space:]]*\{/ {
-      gsub(/.*\{/, "")
-      gsub(/\}.*/, "")
-      n = split($0, parts, ",")
-      for (i = 1; i <= n; i++) {
-        ident = parts[i]
-        # strip "type ", " as alias", whitespace
-        gsub(/[[:space:]]+/, " ", ident)
-        gsub(/^[[:space:]]+|[[:space:]]+$/, "", ident)
-        sub(/^type /, "", ident)
-        # take just the identifier (before any " as ")
-        split(ident, p, " as ")
-        ident = p[1]
-        if (ident ~ /^[A-Za-z_][A-Za-z0-9_]*$/) print ident
-      }
-    }
-    /^export[[:space:]]+(function|class|const|let|var|type|interface|enum)[[:space:]]+[A-Za-z_]/ {
-      for (i = 1; i <= NF; i++) {
-        if ($i ~ /^(function|class|const|let|var|type|interface|enum)$/) {
-          ident = $(i+1)
-          gsub(/[<(:=].*/, "", ident)
-          if (ident ~ /^[A-Za-z_][A-Za-z0-9_]*$/) print ident
-          break
-        }
-      }
-    }
-  ' | sort -u
+# Public names exported by src/index.ts, sorted for comm. With a revision,
+# read from git; without one, from the working tree. A lister failure is
+# fatal (exit 2) rather than an empty list that would make every export look
+# new or removed.
+list_exports() {
+  local out
+  if [ $# -eq 0 ]; then
+    out="$(node "$LISTER")" || exit 2
+  else
+    out="$(node "$LISTER" --rev "$1")" || exit 2
+  fi
+  printf '%s\n' "$out" | grep -v '^_' | grep -v '^$' | LC_ALL=C sort -u || true
+}
+
+verify_rev() {
+  if ! git rev-parse --verify --quiet "$1^{commit}" >/dev/null; then
+    echo "[check-docs-updated] unknown revision: $1 (fetch it first)" >&2
+    exit 2
+  fi
 }
 
 case "$MODE" in
   --staged)
-    NEW="$(extract_exports < src/index.ts)"
+    NEW="$(list_exports)"
     if git rev-parse --verify HEAD >/dev/null 2>&1; then
-      OLD="$(git show HEAD:src/index.ts 2>/dev/null | extract_exports || true)"
+      OLD="$(list_exports HEAD)"
     else
       OLD=""
     fi
     ;;
   --range)
     RANGE="${2:?--range A..B}"
-    BASE="${RANGE%..*}"
+    case "$RANGE" in
+      *...*) echo "[check-docs-updated] use A..B; the merge-base is computed for you" >&2; exit 2 ;;
+      *..*) ;;
+      *) echo "[check-docs-updated] --range needs A..B" >&2; exit 2 ;;
+    esac
+    FROM="${RANGE%%..*}"
     TIP="${RANGE#*..}"
-    OLD="$(git show "$BASE:src/index.ts" 2>/dev/null | extract_exports || true)"
-    NEW="$(git show "$TIP:src/index.ts" 2>/dev/null | extract_exports || true)"
+    verify_rev "$FROM"
+    verify_rev "$TIP"
+    if ! BASE="$(git merge-base "$FROM" "$TIP")"; then
+      echo "[check-docs-updated] no merge-base for $RANGE (shallow clone? fetch more history)" >&2
+      exit 2
+    fi
+    OLD="$(list_exports "$BASE")"
+    NEW="$(list_exports "$TIP")"
     ;;
   *)
     echo "[check-docs-updated] unknown mode: $MODE" >&2
@@ -89,7 +104,9 @@ case "$MODE" in
     ;;
 esac
 
-ADDED="$(comm -23 <(printf '%s\n' "$NEW") <(printf '%s\n' "$OLD"))"
+echo "[check-docs-updated] $(printf '%s\n' "$NEW" | grep -c . || true) public exports (was $(printf '%s\n' "$OLD" | grep -c . || true))"
+
+ADDED="$(LC_ALL=C comm -23 <(printf '%s\n' "$NEW") <(printf '%s\n' "$OLD") | grep -v '^$' || true)"
 
 if [ -z "$ADDED" ]; then
   echo "[check-docs-updated] no new public exports — ok"
@@ -116,7 +133,7 @@ case "$MODE" in
     if git status --porcelain CHANGELOG.md 2>/dev/null | grep -q .; then CHANGELOG_TOUCHED=1; fi
     ;;
   --range)
-    if git diff --name-only "$RANGE" | grep -qx CHANGELOG.md; then CHANGELOG_TOUCHED=1; fi
+    if git diff --name-only "$BASE" "$TIP" | grep -qx CHANGELOG.md; then CHANGELOG_TOUCHED=1; fi
     ;;
 esac
 

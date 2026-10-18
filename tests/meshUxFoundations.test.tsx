@@ -385,7 +385,7 @@ describe("MeshCapabilityGate", () => {
       if (originalPermissions) {
         Object.defineProperty(navigator, "permissions", originalPermissions);
       } else {
-        delete (navigator as Navigator & { permissions?: unknown }).permissions;
+        delete (navigator as { permissions?: unknown }).permissions;
       }
     }
   });

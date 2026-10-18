@@ -1,8 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as Y from "yjs";
 
-/** A feature-owned shared type, such as a Y.Map, Y.Array, or Y.Text. */
-export type CrdtUndoScope = Y.AbstractType<unknown>;
+/**
+ * A feature-owned shared type, such as a Y.Map, Y.Array, or Y.Text.
+ *
+ * `AbstractType<any>` matches `Y.UndoManager`'s own scope type. The event
+ * parameter is invariant, so `AbstractType<unknown>` rejected every concrete
+ * shared type (`doc.getText()`, `doc.getArray()`, `doc.getMap()`).
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type CrdtUndoScope = Y.AbstractType<any>;
 
 export type CrdtUndoOptions = {
   /**
@@ -91,7 +98,7 @@ export function useCrdtUndo(
     optionsRef.current?.ignoreRemoteMapChanges !== managerOptions.ignoreRemoteMapChanges
   ) {
     managerRef.current = new Y.UndoManager(
-      scopeList as Y.AbstractType<unknown> | Y.AbstractType<unknown>[],
+      scopeList as CrdtUndoScope[],
       managerOptions,
     );
     scopeRef.current = scopeList;

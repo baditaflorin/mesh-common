@@ -51,7 +51,7 @@ describe("MeshAsyncAction", () => {
       />,
     );
 
-    const button = screen.getByRole("button", { name: "Send" });
+    const button = screen.getByRole<HTMLButtonElement>("button", { name: "Send" });
     fireEvent.click(button);
     fireEvent.click(button);
     expect(action).toHaveBeenCalledOnce();

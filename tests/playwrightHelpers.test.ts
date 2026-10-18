@@ -77,6 +77,7 @@ describe("Playwright peer helpers", () => {
 
     expect(fake.context.pages).toHaveLength(2);
     const [first, second] = fake.context.pages.map(pageDevice);
+    if (!first || !second) throw new Error("expected two peer pages");
     expect(first.key).toBe("mesh-test:deviceId:v1");
     expect(second.key).toBe("mesh-test:deviceId:v1");
     expect(first.id).not.toBe(second.id);

@@ -8,8 +8,8 @@ import { createMockRoom, linkMockRooms } from "../testing/createMockRoom";
  */
 
 describe.each([
-  ["Y.Map<string,string>", "items", () => new Map<string, string>()],
-  ["Y.Map<string,boolean>", "votes", () => new Map<string, boolean>()],
+  ["Y.Map<string,string>", "items"],
+  ["Y.Map<string,boolean>", "votes"],
 ])("linkMockRooms relays %s edits", (_label, mapKey) => {
   it("a→b", () => {
     const a = createMockRoom();

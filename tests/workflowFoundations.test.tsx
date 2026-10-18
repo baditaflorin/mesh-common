@@ -341,8 +341,7 @@ describe("workflow foundations", () => {
       if (originalMediaDevices) {
         Object.defineProperty(navigator, "mediaDevices", originalMediaDevices);
       } else {
-        delete (navigator as Navigator & { mediaDevices?: unknown })
-          .mediaDevices;
+        delete (navigator as { mediaDevices?: unknown }).mediaDevices;
       }
     }
   });
@@ -382,8 +381,7 @@ describe("workflow foundations", () => {
       if (originalMediaDevices) {
         Object.defineProperty(navigator, "mediaDevices", originalMediaDevices);
       } else {
-        delete (navigator as Navigator & { mediaDevices?: unknown })
-          .mediaDevices;
+        delete (navigator as { mediaDevices?: unknown }).mediaDevices;
       }
     }
   });

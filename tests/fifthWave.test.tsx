@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { useHapticPattern } from "../src/useHapticPattern";
 import { useIdleDetector } from "../src/useIdleDetector";
 import { useRoomLifecycle } from "../src/useRoomLifecycle";
+import type { YRoom } from "../src/useYRoom";
 import { createMockRoom } from "../testing/createMockRoom";
 
 afterEach(() => {
@@ -27,7 +28,7 @@ describe("fifth primitive wave", () => {
           listeners.add(callback),
         off: (_: string, callback: (event: { status?: string }) => void) =>
           listeners.delete(callback),
-      },
+      } as unknown as YRoom["provider"],
     };
     const { result } = renderHook(() => useRoomLifecycle(roomWithProvider));
     expect(result.current.status).toBe("joining");
@@ -55,7 +56,7 @@ describe("fifth primitive wave", () => {
           listeners.add(callback),
         off: (_: string, callback: (event: { status?: string }) => void) =>
           listeners.delete(callback),
-      },
+      } as unknown as YRoom["provider"],
     };
     const { result } = renderHook(() => useRoomLifecycle(roomWithProvider));
     act(() => expect(result.current.reconnect()).toBe(false));

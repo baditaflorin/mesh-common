@@ -64,9 +64,30 @@
   that require the underlying page or a clickable feature control, so smoke,
   mesh, performance, and leak checks remain meaningful without changing an
   app's onboarding behavior.
+- `useCrdtUndo` now accepts concrete Yjs shared types such as
+  `doc.getText()`, `doc.getArray()` and `doc.getMap()`. `CrdtUndoScope` was
+  `Y.AbstractType<unknown>`, which rejected all of them at compile time; it is
+  now `Y.AbstractType<any>`, the type `Y.UndoManager` itself accepts.
+- `useSpeechSynthesis` unsubscribes from and cancels the speech engine it
+  subscribed to on unmount, instead of re-reading `window.speechSynthesis`,
+  which threw when the global had been replaced or removed in the meantime.
+- `scripts/check-docs-updated.sh` now lists exports with the TypeScript
+  compiler API (`scripts/list-public-exports.mjs`), so it sees all 747 public
+  exports of `src/index.ts`, including multi-line and type-only
+  `export { … }` and `export * from` re-exports. The old awk parser saw 122.
+  `--range A..B` compares against the merge-base, unknown revisions exit 2,
+  and `_`-prefixed names are ignored as documented.
+- The test suite no longer uses `environmentMatchGlobs`, which Vitest 4
+  dropped; DOM tests select jsdom with their `@vitest-environment` docblock. A
+  shared setup file runs React Testing Library `cleanup()` after each test, and
+  the per-test timeout is 15 s so slow tests do not time out on a loaded host.
+- `tsc --noEmit` now type-checks `testing/` and `tests/` as well as `src/`.
 
 ### Added
 
+- Woodpecker CI (`.woodpecker.yml`) on pull requests and pushes to `main`:
+  `npm ci`, `tsc --noEmit`, `vitest run`, `npm run demo:check`, and on pull
+  requests the docs gate against `origin/main`.
 - `defineInteractiveArtifact` / `parseInteractiveArtifact` for strict,
   versioned, public-only interactive-artwork manifests; `useArtworkTarget`
   normalizes QR, marker, and adapter-provided reference-image detections with
