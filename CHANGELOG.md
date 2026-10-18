@@ -2,8 +2,45 @@
 
 ## Unreleased
 
+### Security
+
+- `SafeMarkdown` / `renderMarkdownToSafeHtml` now check links with the URL
+  parser through `safeUrl()` (http, https, mailto, tel) instead of a scheme
+  regex on the raw attribute. Obfuscated links such as `jav&#x09;ascript:` or
+  a leading control character previously passed the filter and rendered as
+  clickable `javascript:` links; `data:`, `blob:` and `file:` links are now
+  removed too. The normalized URL is written back to `href`, and rendering
+  uses a private `Marked` instance instead of changing the global `marked`
+  options.
+- `useSignedWrite` and `useModerator` now fail closed: a record or claim
+  verifies only when the author has a TOFU registry entry whose pinned pubkey
+  matches. Before, an unregistered peer, or an impostor who had overwritten
+  the victim's registry entry, was accepted. `setSigned` and `claim()`
+  publish the author's registry entry in the same Yjs transaction.
+- **BREAKING (signed-record format):** `useSignedWrite` signs a
+  domain-separated envelope that includes the room, map and entry key, so a
+  valid record replayed under another key, map or room no longer verifies.
+  Records signed by older builds no longer verify; rooms are not persisted,
+  so this only affects old and new tabs mixed in one live room.
+- Moderator claims may last at most one TTL and may not start more than five
+  minutes in the future, so a claimant can no longer hold the role
+  indefinitely. With `autoRegister: false`, the app must register the peer
+  itself before claiming.
+
 ### Fixed
 
+- `clockSync` no longer drifts: a peer is re-sampled only when its published
+  timestamp changes. Before, every awareness change re-read the old timestamp
+  against the current time (a peer 250 ms ahead read as up to -1250 ms) and
+  kept a silent peer's sample from expiring. The median now includes this
+  peer's own clock, so peers agree on mesh time instead of each adopting the
+  other's clock, and clocks more than 10 minutes off are ignored.
+- `useMultiRoom` no longer tears down every room when the room list changes:
+  `add()` used to replace existing rooms with new, empty docs. Rooms are now
+  torn down only when removed, on unmount, or when the endpoints change.
+- Room boot no longer hangs: the TURN credential fetch times out after 3 s
+  and falls back to STUN, and signaling/TURN URL reads fall back to the
+  defaults when `localStorage` is blocked.
 - Fixed `useScheduledCue.scheduleIn()` rejecting a delay exactly equal to `minLeadMs` when a shared clock advanced between internal reads. A one-second cue can now be scheduled reliably at its configured one-second minimum.
 - Permission gates now retain an explicit Enable path on Safari and embedded
   browsers when `navigator.permissions` is absent or rejects a particular
