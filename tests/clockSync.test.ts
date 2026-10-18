@@ -76,12 +76,13 @@ describe("createClockSync with no peers", () => {
   });
 });
 
+// The median always includes this peer's own clock (offset 0).
 describe.each([
-  ["single peer +250 ms ahead", [+250], +250],
-  ["single peer -250 ms behind", [-250], -250],
-  ["two peers, +100 and +200 → median 150", [+100, +200], +150],
-  ["three peers, +0 +100 +200 → median 100", [+0, +100, +200], +100],
-  ["outlier resistance: -1000 -100 -50 0 +50 → median ≈ -50", [-1000, -100, -50, 0, +50], -50],
+  ["single peer +250 ms ahead → median of 0, +250", [+250], +125],
+  ["single peer -250 ms behind → median of -250, 0", [-250], -125],
+  ["two peers, +100 and +200 → median of 0, +100, +200", [+100, +200], +100],
+  ["three peers, +0 +100 +200 → median of 0, 0, +100, +200", [+0, +100, +200], +50],
+  ["outlier resistance: -1000 -100 -50 0 +50 → median ≈ -25", [-1000, -100, -50, 0, +50], -25],
   ["all equal +500 → +500", [+500, +500, +500], +500],
 ])("meshNow offset matrix: %s", (_label, offsets, expectedMedian) => {
   it(`computes meshNow ≈ Date.now() + ${expectedMedian}`, () => {
@@ -120,11 +121,76 @@ describe("sample TTL (5 s)", () => {
     const fake = makeFakeProvider();
     const sync = createClockSync(fake.provider);
     fake.injectPeer(100, realNow + 200);
-    expect(sync.meshNow()).toBe(realNow + 200);
+    expect(sync.meshNow()).toBe(realNow + 100); // median of self (0) and +200
 
     vi.setSystemTime(realNow + 6_000);
     // Sample has expired; meshNow falls back to local time.
     expect(sync.meshNow()).toBe(realNow + 6_000);
+    sync.destroy();
+  });
+
+  it("expires a silent peer even while our own publishes keep changing awareness", () => {
+    const fake = makeFakeProvider();
+    const sync = createClockSync(fake.provider);
+    fake.injectPeer(100, realNow + 200);
+    // Four of our own 1.5 s publishes fire awareness changes; the peer stays silent.
+    vi.advanceTimersByTime(6_000);
+    expect(sync.meshNow()).toBe(Date.now());
+    sync.destroy();
+  });
+});
+
+describe("stale timestamps", () => {
+  it("keeps the offset stable across 10 publish cycles", () => {
+    const fake = makeFakeProvider();
+    const sync = createClockSync(fake.provider);
+    fake.injectPeer(100, realNow + 250);
+    for (let cycle = 0; cycle < 10; cycle++) {
+      // Our own publish fires first; the peer's last `t` is now 1.5 s old.
+      vi.advanceTimersByTime(1500);
+      expect(Math.abs(sync.meshNow() - Date.now() - 125)).toBeLessThanOrEqual(5);
+      fake.injectPeer(100, Date.now() + 250);
+      expect(Math.abs(sync.meshNow() - Date.now() - 125)).toBeLessThanOrEqual(5);
+    }
+    sync.destroy();
+  });
+});
+
+describe("agreement", () => {
+  it("two peers 250 ms apart compute the same mesh time", () => {
+    // Peer A's clock reads realNow; peer B's reads realNow + 250 at the same instant.
+    const a = makeFakeProvider(1);
+    const syncA = createClockSync(a.provider);
+    a.injectPeer(2, realNow + 250);
+    const meshA = syncA.meshNow();
+
+    vi.setSystemTime(realNow + 250);
+    const b = makeFakeProvider(2);
+    const syncB = createClockSync(b.provider);
+    b.injectPeer(1, realNow);
+    const meshB = syncB.meshNow();
+
+    expect(meshA).toBe(meshB);
+    syncA.destroy();
+    syncB.destroy();
+  });
+});
+
+describe("hostile or broken clocks", () => {
+  it("ignores a peer more than 10 minutes off", () => {
+    const fake = makeFakeProvider();
+    const sync = createClockSync(fake.provider);
+    fake.injectPeer(100, realNow + 60 * 60_000);
+    expect(sync.meshNow()).toBe(realNow);
+    expect(sync.peerCount()).toBe(0);
+    sync.destroy();
+  });
+
+  it("ignores a non-finite timestamp", () => {
+    const fake = makeFakeProvider();
+    const sync = createClockSync(fake.provider);
+    fake.injectPeer(100, Number.POSITIVE_INFINITY);
+    expect(sync.meshNow()).toBe(realNow);
     sync.destroy();
   });
 });
