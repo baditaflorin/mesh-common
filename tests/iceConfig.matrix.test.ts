@@ -5,7 +5,7 @@
  * override layer that every mesh-* app depends on.
  */
 
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   DEFAULT_ICE_SERVERS,
   iceStorage,
@@ -14,6 +14,7 @@ import {
   loadIceServers,
   loadSignalingUrl,
   loadTurnTokenUrl,
+  maybeFetchTurnCredentials,
   resetIceServers,
   saveIceServers,
   saveSignalingUrl,
@@ -198,4 +199,67 @@ describe("multi-prefix isolation (two apps sharing one origin)", () => {
       expect(s.tokenUrlKey).toBe(`${prefix}:turnTokenUrl`);
     },
   );
+});
+
+describe("room boot path never blocks", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
+  });
+
+  it("falls back to defaults when localStorage throws", () => {
+    const throwing = () => {
+      throw new DOMException("blocked", "SecurityError");
+    };
+    vi.stubGlobal("localStorage", {
+      getItem: throwing,
+      setItem: throwing,
+      removeItem: throwing,
+      clear: throwing,
+      key: throwing,
+      length: 0,
+    });
+    const s = makeStorage();
+    expect(loadSignalingUrl(s)).toBe(DEFAULTS.signalingUrl);
+    expect(loadTurnTokenUrl(s)).toBe(DEFAULTS.turnTokenUrl);
+    expect(loadIceServers(s)).toEqual(DEFAULT_ICE_SERVERS);
+  });
+
+  it("gives up on a token server that never answers within 3.5 s", async () => {
+    vi.useFakeTimers();
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    vi.stubGlobal("fetch", () => new Promise(() => undefined));
+    let done = false;
+    const pending = maybeFetchTurnCredentials(makeStorage()).then(() => {
+      done = true;
+    });
+    await vi.advanceTimersByTimeAsync(3500);
+    await pending;
+    expect(done).toBe(true);
+    expect(loadIceServers(makeStorage())).toEqual(DEFAULT_ICE_SERVERS);
+  });
+
+  it("aborts the request when it times out", async () => {
+    vi.useFakeTimers();
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    let signal: AbortSignal | undefined;
+    vi.stubGlobal("fetch", (_url: string, init?: RequestInit) => {
+      signal = init?.signal ?? undefined;
+      return new Promise(() => undefined);
+    });
+    const pending = maybeFetchTurnCredentials(makeStorage());
+    await vi.advanceTimersByTimeAsync(3500);
+    await pending;
+    expect(signal?.aborted).toBe(true);
+  });
+
+  it("still stores TURN servers from a prompt answer", async () => {
+    vi.stubGlobal("fetch", async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({ username: "u", password: "p", ttl: 60, uris: ["turn:turn.example.test:3478"] }),
+    }));
+    await maybeFetchTurnCredentials(makeStorage());
+    expect(loadIceServers(makeStorage()).map((x) => x.urls)).toContain("turn:turn.example.test:3478");
+  });
 });
