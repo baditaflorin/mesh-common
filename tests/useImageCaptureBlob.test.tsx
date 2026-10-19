@@ -33,7 +33,7 @@ describe("useImageCapture captureBlob", () => {
     });
     Object.defineProperty(result.current.videoRef, "current", { value: video });
 
-    let image: Awaited<ReturnType<typeof result.current.captureBlob>> = null;
+    let image = null as Awaited<ReturnType<typeof result.current.captureBlob>>;
     await act(async () => {
       image = await result.current.captureBlob(0.5);
     });

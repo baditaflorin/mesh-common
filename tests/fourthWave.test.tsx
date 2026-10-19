@@ -13,8 +13,8 @@ describe("fourth primitive wave", () => {
     const alice = createMockRoom({ peerId: "alice" });
     const bob = createMockRoom({ peerId: "bob" });
     const unlink = linkMockRooms(alice, bob);
-    const aSet = renderHook(() => useSharedSet(alice, "topics", { validate: (value) => value.length > 1 }));
-    const bSet = renderHook(() => useSharedSet(bob, "topics"));
+    const aSet = renderHook(() => useSharedSet<string>(alice, "topics", { validate: (value) => value.length > 1 }));
+    const bSet = renderHook(() => useSharedSet<string>(bob, "topics"));
     const aCounter = renderHook(() => useSharedCounter(alice, "score", { min: 0, max: 3 }));
     const bCounter = renderHook(() => useSharedCounter(bob, "score", { min: 0, max: 3 }));
 

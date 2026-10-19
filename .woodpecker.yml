@@ -1,0 +1,65 @@
+# Woodpecker CI for mesh-common (services-registry ADR-0035; AGENTS.md: use
+# Woodpecker, never GitHub Actions). Every mesh-* app builds against this repo
+# through `file:../mesh-common`, so a red main reaches every app on its next
+# build. These steps are the AGENTS.md baseline: typecheck, tests, recording
+# gate, plus the docs gate on pull requests.
+#
+# Triggers: the fleet template (services-registry templates/woodpecker-go-ci.yml).
+# One pipeline per PR update and one per push to main; a push to a PR branch is
+# covered by its pull_request run. CLAUDE.md/AGENTS.md-only changes are skipped.
+when:
+  - event: pull_request
+    path:
+      exclude:
+        - CLAUDE.md
+        - AGENTS.md
+  - event: push
+    branch: main
+    path:
+      exclude:
+        - CLAUDE.md
+        - AGENTS.md
+  - event: manual
+
+# Steps run in order and share the workspace, so node_modules from `install`
+# is reused. Pinned by digest (node:24-bookworm = Node 24.22.0, built
+# 2026-10-14); bump it deliberately. The full image carries git and bash,
+# which the tests and the docs gate need.
+steps:
+  install:
+    image: node:24-bookworm@sha256:14078204b6bb268c107ceff6d3c43f45a888105e5c2b18b14c32b3409d93a1b0
+    commands:
+      - node --version
+      - npm --version
+      - npm ci --no-audit --no-fund
+
+  typecheck:
+    image: node:24-bookworm@sha256:14078204b6bb268c107ceff6d3c43f45a888105e5c2b18b14c32b3409d93a1b0
+    commands:
+      # tsconfig.json includes src, testing and tests.
+      - npx tsc --noEmit
+
+  test:
+    image: node:24-bookworm@sha256:14078204b6bb268c107ceff6d3c43f45a888105e5c2b18b14c32b3409d93a1b0
+    commands:
+      - npx vitest run
+
+  demo-check:
+    image: node:24-bookworm@sha256:14078204b6bb268c107ceff6d3c43f45a888105e5c2b18b14c32b3409d93a1b0
+    commands:
+      - npm run demo:check
+
+  docs-gate:
+    image: node:24-bookworm@sha256:14078204b6bb268c107ceff6d3c43f45a888105e5c2b18b14c32b3409d93a1b0
+    commands:
+      # No $VARS in these commands: Woodpecker substitutes them in the YAML
+      # before the shell runs. git refuses a checkout owned by another user
+      # ("dubious ownership"); the container is throwaway, so trust all.
+      - git config --global --add safe.directory '*'
+      # The clone may be shallow and holds only the PR head; the gate needs
+      # main and the merge-base. mesh-common is public, so no credential.
+      - if [ -f .git/shallow ]; then git fetch --no-tags --quiet --unshallow origin; fi
+      - git fetch --no-tags --quiet origin +refs/heads/main:refs/remotes/origin/main
+      - bash scripts/check-docs-updated.sh --range origin/main..HEAD
+    when:
+      - event: pull_request

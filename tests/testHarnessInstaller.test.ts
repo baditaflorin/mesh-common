@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
+import { SUBPROCESS_TEST_TIMEOUT_MS } from "./timeouts";
 
 const installer = fileURLToPath(
   new URL("../scripts/install-ux-foundation-probe.sh", import.meta.url),
@@ -16,7 +17,7 @@ afterEach(() => {
   }
 });
 
-describe("install-ux-foundation-probe", () => {
+describe("install-ux-foundation-probe", { timeout: SUBPROCESS_TEST_TIMEOUT_MS }, () => {
   it("refreshes dialog-aware smoke, mesh, UX, performance, and leak probes", () => {
     const app = mkdtempSync(join(tmpdir(), "mesh-test-harness-"));
     temporaryApps.push(app);

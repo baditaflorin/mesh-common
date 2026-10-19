@@ -1,11 +1,12 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { render, fireEvent, act, cleanup } from "@testing-library/react";
+import type { ReactElement } from "react";
 import { MeshErrorBoundary } from "../src/MeshErrorBoundary";
 
 afterEach(() => cleanup());
 
-function Boom({ throwIt }: { throwIt: boolean }): JSX.Element {
+function Boom({ throwIt }: { throwIt: boolean }): ReactElement {
   if (throwIt) throw new Error("kaboom");
   return <div>ok</div>;
 }

@@ -49,13 +49,13 @@ export function useSpeechSynthesis(): SpeechSynthesisApi {
   useEffect(() => {
     refreshVoices();
     if (!supported) return;
-    window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
+    // Unsubscribe from the engine we subscribed to; the global may have been
+    // replaced or removed by unmount time.
+    const engine = window.speechSynthesis;
+    engine.addEventListener("voiceschanged", refreshVoices);
     return () => {
-      window.speechSynthesis.removeEventListener(
-        "voiceschanged",
-        refreshVoices,
-      );
-      window.speechSynthesis.cancel();
+      engine.removeEventListener("voiceschanged", refreshVoices);
+      engine.cancel();
     };
   }, [refreshVoices, supported]);
 

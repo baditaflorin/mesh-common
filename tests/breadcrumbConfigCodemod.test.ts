@@ -15,6 +15,7 @@ import {
   migrateBreadcrumbConfig,
   planBreadcrumbConfig,
 } from "../scripts/add-breadcrumbs-config.mjs";
+import { SUBPROCESS_TEST_TIMEOUT_MS } from "./timeouts";
 
 const createConfig = `import { createMeshConfig } from "@baditaflorin/mesh-common";
 
@@ -24,7 +25,7 @@ export const config = createMeshConfig({
 });
 `;
 
-describe("add-breadcrumbs-config", () => {
+describe("add-breadcrumbs-config", { timeout: SUBPROCESS_TEST_TIMEOUT_MS }, () => {
   it("makes one exact insertion in a canonical createMeshConfig source", () => {
     const plan = planBreadcrumbConfig(createConfig);
     expect(plan.status).toBe("add");

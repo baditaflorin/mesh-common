@@ -9,6 +9,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { SUBPROCESS_TEST_TIMEOUT_MS } from "./timeouts";
 
 const generator = join(
   process.cwd(),
@@ -18,7 +19,7 @@ const generator = join(
 const start = "<!-- mesh:capabilities-block:start -->";
 const end = "<!-- mesh:capabilities-block:end -->";
 
-describe("generate-privacy-section", () => {
+describe("generate-privacy-section", { timeout: SUBPROCESS_TEST_TIMEOUT_MS }, () => {
   it("emits a Prettier-stable capability block that passes a later --check", () => {
     const appDir = mkdtempSync(join(tmpdir(), "mesh-privacy-generator-"));
     const sourceDir = join(appDir, "src");
